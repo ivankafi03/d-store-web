@@ -1,9 +1,19 @@
 import "./globals.css";
 
 export const metadata = {
-  title: "D Store | Reseller Cloud Dashboard",
-  description: "Dashboard Reseller Pribadi D Store terhubung Google Spreadsheet Cloud & Google Gemini AI.",
-  manifest: "/manifest.json"
+  title: "D Store | Akun Premium & Lisensi Digital",
+  description: "Pusat Akun Premium & Lisensi Digital Bergaransi. Streaming, AI Tools, Software, dan lebih banyak lagi.",
+  manifest: "/manifest.json",
+  icons: {
+    icon: [
+      { url: "/favicon-32.png", sizes: "32x32", type: "image/png" },
+      { url: "/icon-192.png", sizes: "192x192", type: "image/png" },
+    ],
+    apple: [
+      { url: "/apple-touch-icon.png", sizes: "180x180", type: "image/png" },
+    ],
+    shortcut: "/favicon-32.png",
+  },
 };
 
 export const viewport = {

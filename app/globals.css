@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f4f4f0;
+  --background: #FDFBF7;
   --foreground: #111111;
 }
 
@@ -10,13 +10,19 @@
   --color-foreground: var(--foreground);
 }
 
+html {
+  background-color: #FDFBF7;
+  min-height: 100%;
+}
+
 body {
-  background-color: #f4f4f0;
+  background-color: #FDFBF7;
   color: #111111;
-  background-image: radial-gradient(#d1d1d1 2px, transparent 2px);
-  background-size: 20px 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
+  min-height: 100%;
+  margin: 0;
+  padding: 0;
 }
 
 /* Sembunyikan scrollbar native pada kontainer scroll horizontal */

@@ -498,7 +498,7 @@ export default function ResellerStudioPage() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FFFDF0] text-black font-sans pb-20 selection:bg-[#FFE600] selection:text-black">
+    <div className="min-h-screen min-h-[100dvh] bg-[#FFFDF0] text-black font-sans pb-16 sm:pb-20 selection:bg-[#FFE600] selection:text-black">
       {/* Toast Notification Container */}
       <div className="fixed bottom-4 right-4 z-50 flex flex-col gap-2 max-w-sm w-full pointer-events-none px-3">
         {toasts.map((t) => (

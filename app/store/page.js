@@ -150,41 +150,41 @@ export default function StoreFront() {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-black font-sans pb-16 selection:bg-[#FFE600] selection:text-black">
+    <div className="min-h-screen min-h-[100dvh] bg-[#FDFBF7] text-black font-sans pb-10 sm:pb-16 selection:bg-[#FFE600] selection:text-black">
       
       {/* 1. TOP ANNOUNCEMENT & CONTACT BAR */}
-      <div className="bg-black text-[#FFE600] border-b-3 border-black py-2 px-3 text-xs font-black uppercase tracking-wider">
-        <div className="max-w-6xl mx-auto flex flex-col sm:flex-row items-center justify-between gap-1.5 sm:gap-4">
-          <div className="flex items-center gap-2">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
-            <span>Toko Buka Setiap Hari (08.00 - 23.00 WIB) • Garansi Resmi Aktif</span>
+      <div className="bg-black text-[#FFE600] border-b-2 sm:border-b-3 border-black py-1.5 px-3 text-[11px] sm:text-xs font-black uppercase tracking-wider">
+        <div className="max-w-6xl mx-auto flex items-center justify-between gap-2">
+          <div className="flex items-center gap-1.5 truncate">
+            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+            <span className="truncate">Buka 08.00 - 23.00 WIB • Garansi Resmi</span>
           </div>
-          <div className="flex items-center gap-3">
+          <div className="flex items-center gap-2 sm:gap-3 shrink-0 text-white text-[10px] sm:text-xs font-black">
             <a 
               href="https://wa.me/6281230112240" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover:underline flex items-center gap-1 text-white"
+              className="hover:text-emerald-300 transition"
             >
-              <span>WA: 0812-3011-2240</span>
+              WhatsApp
             </a>
-            <span className="text-zinc-600">|</span>
+            <span className="text-zinc-600">•</span>
             <a 
               href="https://t.me/dewipermata03" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover:underline flex items-center gap-1 text-cyan-300"
+              className="hover:text-cyan-300 transition"
             >
-              <span>Tele: @dewipermata03</span>
+              Telegram
             </a>
-            <span className="text-zinc-600">|</span>
+            <span className="text-zinc-600">•</span>
             <a 
               href="https://t.me/dstore00000" 
               target="_blank" 
               rel="noopener noreferrer"
-              className="hover:underline flex items-center gap-1 text-[#FFE600] font-black"
+              className="text-[#FFE600] hover:underline transition"
             >
-              <span>Grup Tele: @dstore00000</span>
+              Grup
             </a>
           </div>
         </div>
@@ -416,14 +416,14 @@ export default function StoreFront() {
         </div>
 
         {/* Filters: Category Pills & Stock Toggle */}
-        <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-3 pt-1">
+        <div className="space-y-2.5 pt-1">
           
           {/* Category Horizontal Scroll Pills */}
-          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar flex-1">
+          <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
             <button
               type="button"
               onClick={() => setSelectedCategory('all')}
-              className={`px-3 py-1.5 rounded-lg border-2 border-black text-xs font-black uppercase tracking-tight whitespace-nowrap cursor-pointer transition ${
+              className={`px-3 py-1.5 rounded-lg border-2 border-black text-xs font-black uppercase tracking-tight whitespace-nowrap cursor-pointer transition shrink-0 ${
                 selectedCategory === 'all'
                   ? 'bg-black text-[#FFE600] shadow-[2px_2px_0_#FFE600]'
                   : 'bg-white hover:bg-yellow-100 text-black shadow-[2px_2px_0_#000]'
@@ -442,7 +442,7 @@ export default function StoreFront() {
                   key={c.id}
                   type="button"
                   onClick={() => setSelectedCategory(c.id)}
-                  className={`px-3 py-1.5 rounded-lg border-2 border-black text-xs font-black uppercase tracking-tight whitespace-nowrap cursor-pointer transition ${
+                  className={`px-3 py-1.5 rounded-lg border-2 border-black text-xs font-black uppercase tracking-tight whitespace-nowrap cursor-pointer transition shrink-0 ${
                     isActive
                       ? 'bg-black text-[#FFE600] shadow-[2px_2px_0_#FFE600]'
                       : 'bg-white hover:bg-yellow-100 text-black shadow-[2px_2px_0_#000]'
@@ -454,27 +454,32 @@ export default function StoreFront() {
             })}
           </div>
 
-          {/* Stock Filter Switch */}
-          <div className="flex items-center gap-1 shrink-0 self-end sm:self-auto bg-white p-1 rounded-xl border-2 border-black shadow-[2px_2px_0_#000]">
-            <button
-              type="button"
-              onClick={() => setStockFilter('all')}
-              className={`px-2.5 py-1 text-[11px] font-black uppercase rounded-lg transition ${
-                stockFilter === 'all' ? 'bg-[#FFE600] text-black border border-black' : 'text-zinc-600 hover:text-black'
-              }`}
-            >
-              Semua
-            </button>
-            <button
-              type="button"
-              onClick={() => setStockFilter('ready_only')}
-              className={`px-2.5 py-1 text-[11px] font-black uppercase rounded-lg transition flex items-center gap-1 ${
-                stockFilter === 'ready_only' ? 'bg-emerald-400 text-black border border-black' : 'text-zinc-600 hover:text-black'
-              }`}
-            >
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-700"></span>
-              <span>Hanya Ready ({totalReadyVariants})</span>
-            </button>
+          {/* Stock Filter Row: Balanced and properly aligned */}
+          <div className="flex items-center justify-between gap-2">
+            <span className="text-[11px] font-black uppercase tracking-wider text-zinc-700">
+              Filter Stok:
+            </span>
+            <div className="inline-flex items-center gap-1 bg-white p-1 rounded-xl border-2 border-black shadow-[2px_2px_0_#000]">
+              <button
+                type="button"
+                onClick={() => setStockFilter('all')}
+                className={`px-3 py-1 text-[11px] font-black uppercase rounded-lg transition cursor-pointer ${
+                  stockFilter === 'all' ? 'bg-[#FFE600] text-black border border-black shadow-[1px_1px_0_#000]' : 'text-zinc-600 hover:text-black'
+                }`}
+              >
+                Semua
+              </button>
+              <button
+                type="button"
+                onClick={() => setStockFilter('ready_only')}
+                className={`px-3 py-1 text-[11px] font-black uppercase rounded-lg transition flex items-center gap-1.5 cursor-pointer ${
+                  stockFilter === 'ready_only' ? 'bg-emerald-400 text-black border border-black shadow-[1px_1px_0_#000]' : 'text-zinc-600 hover:text-black'
+                }`}
+              >
+                <span className="w-2 h-2 rounded-full bg-emerald-700 shrink-0"></span>
+                <span className="whitespace-nowrap">Hanya Ready ({totalReadyVariants})</span>
+              </button>
+            </div>
           </div>
 
         </div>

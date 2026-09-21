@@ -47,3 +47,5 @@ data/db.json
 
 # D Store - internal scripts (berisi credential/session logic)
 scripts/
+
+.vercel

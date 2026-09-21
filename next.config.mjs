@@ -3,19 +3,6 @@ const nextConfig = {
   turbopack: {
     root: '.'
   },
-  async redirects() {
-    // Di production (Vercel), root / diredirect ke /store
-    if (process.env.VERCEL === '1') {
-      return [
-        {
-          source: '/',
-          destination: '/store',
-          permanent: false,
-        }
-      ];
-    }
-    return [];
-  },
   async headers() {
     return [
       {

@@ -32,6 +32,19 @@ export default function StoreFront() {
   const [selectedVariantOrder, setSelectedVariantOrder] = useState(null); // Modal Order State
   const [copiedLink, setCopiedLink] = useState(false);
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
+  const [isScrolled, setIsScrolled] = useState(false);
+
+  // Monitor scroll position untuk memunculkan running text reseller di bawah header
+  useEffect(() => {
+    const handleScroll = () => {
+      if (typeof window !== 'undefined') {
+        setIsScrolled(window.scrollY > 40);
+      }
+    };
+    window.addEventListener('scroll', handleScroll, { passive: true });
+    handleScroll();
+    return () => window.removeEventListener('scroll', handleScroll);
+  }, []);
 
   // Load katalog aman dari API publik
   const loadKatalog = async () => {
@@ -340,6 +353,54 @@ export default function StoreFront() {
             </button>
           </div>
         )}
+
+        {/* Animated Running Text Banner: Promosi Fitur Reseller (Muncul ketika scroll ke bawah) */}
+        <div
+          className={`overflow-hidden transition-all duration-300 ease-in-out border-t-2 border-black ${
+            isScrolled
+              ? 'max-h-12 opacity-100 py-1 sm:py-1.5 bg-black'
+              : 'max-h-0 opacity-0 py-0 border-t-0 pointer-events-none'
+          }`}
+        >
+          <Link
+            href="/reseller"
+            className="flex items-center gap-2 group cursor-pointer"
+            title="Buka Fitur Reseller D Store (dstore.sbs/reseller)"
+          >
+            {/* Tag Badge Tetap di Kiri */}
+            <div className="shrink-0 z-10 px-2 sm:px-2.5 py-0.5 bg-[#FFE600] text-black border-r-2 border-black text-[10px] sm:text-xs font-black uppercase tracking-tight flex items-center gap-1 shadow-[2px_0_0_#000]">
+              <TrendingUp className="w-3.5 h-3.5 text-black" />
+              <span>Jual Lagi</span>
+            </div>
+
+            {/* Tulisan Berjalan (Marquee) */}
+            <div className="overflow-hidden whitespace-nowrap flex-1">
+              <div className="animate-marquee flex items-center gap-8 text-[11px] sm:text-xs font-black uppercase tracking-wider text-[#FFE600] group-hover:text-white transition">
+                <span>
+                  Bisa jual lagi semua produk ini dengan keuntungan bebas! Bikin poster promosi otomatis &amp; salin format chat WA langsung di Studio Reseller. Klik di sini!
+                </span>
+                <span className="text-zinc-600">•</span>
+                <span>
+                  Fitur menarik di dstore.sbs/reseller: Pasang nama tokomu sendiri, atur margin harga suka-suka, dan download poster HD siap posting!
+                </span>
+                <span className="text-zinc-600">•</span>
+                <span>
+                  Bisa jual lagi semua produk ini dengan keuntungan bebas! Bikin poster promosi otomatis &amp; salin format chat WA langsung di Studio Reseller. Klik di sini!
+                </span>
+                <span className="text-zinc-600">•</span>
+                <span>
+                  Fitur menarik di dstore.sbs/reseller: Pasang nama tokomu sendiri, atur margin harga suka-suka, dan download poster HD siap posting!
+                </span>
+              </div>
+            </div>
+
+            {/* Tombol Aksi di Kanan */}
+            <div className="shrink-0 z-10 px-2 sm:px-3 text-[10px] sm:text-xs font-black uppercase text-[#FFE600] group-hover:underline flex items-center gap-1">
+              <span className="hidden sm:inline">Buka Reseller</span>
+              <ChevronRight className="w-3.5 h-3.5" />
+            </div>
+          </Link>
+        </div>
       </header>
 
       {/* 3. HERO & VALUE PROPOSITIONS */}

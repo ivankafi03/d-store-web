@@ -39,3 +39,11 @@ yarn-error.log*
 # typescript
 *.tsbuildinfo
 next-env.d.ts
+
+# D Store - sensitive runtime files
+session.txt
+data/db.json
+.lynk_profile/
+
+# D Store - internal scripts (berisi credential/session logic)
+scripts/

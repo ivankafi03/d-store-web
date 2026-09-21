@@ -38,7 +38,7 @@ export default function StoreFront() {
   useEffect(() => {
     const handleScroll = () => {
       if (typeof window !== 'undefined') {
-        setIsScrolled(window.scrollY > 40);
+        setIsScrolled(window.scrollY > 15);
       }
     };
     window.addEventListener('scroll', handleScroll, { passive: true });
@@ -789,6 +789,43 @@ export default function StoreFront() {
           Hak Cipta D STORE. Solusi Akun Premium &amp; Layanan Digital Cepat dan Terpercaya.
         </p>
       </footer>
+
+      {/* 8. FIXED MOBILE BOTTOM ACTION BAR (Posisi Tetap di Bawah, Mengunci Navigasi Mobile) */}
+      <div className="sm:hidden fixed bottom-0 left-0 right-0 z-40 bg-white border-t-3 border-black shadow-[0_-3px_0_0_#000] px-3 py-2 pb-[calc(0.5rem+env(safe-area-inset-bottom))]">
+        <div className="flex items-center gap-2 max-w-md mx-auto">
+          {/* Chat WA */}
+          <a
+            href="https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store,%20saya%20mau%20order"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="flex-1 py-2 px-2 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-black border-2 border-black font-black text-[11px] uppercase tracking-tight flex items-center justify-center gap-1.5 shadow-[1.5px_1.5px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition"
+          >
+            <MessageCircle className="w-3.5 h-3.5 fill-black text-emerald-400 shrink-0" />
+            <span>Chat WA</span>
+          </a>
+
+          {/* Grup Tele */}
+          <a
+            href="https://t.me/dstore00000"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="py-2 px-2.5 rounded-xl bg-cyan-300 hover:bg-cyan-200 text-black border-2 border-black font-black text-[11px] uppercase tracking-tight flex items-center justify-center gap-1 shadow-[1.5px_1.5px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition shrink-0"
+            title="Grup Telegram"
+          >
+            <Send className="w-3.5 h-3.5 shrink-0" />
+            <span>Grup</span>
+          </a>
+
+          {/* Studio Reseller */}
+          <Link
+            href="/reseller"
+            className="flex-1 py-2 px-2 rounded-xl bg-[#FFE600] hover:bg-yellow-300 text-black border-2 border-black font-black text-[11px] uppercase tracking-tight flex items-center justify-center gap-1.5 shadow-[1.5px_1.5px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition"
+          >
+            <TrendingUp className="w-3.5 h-3.5 shrink-0" />
+            <span>Jual Lagi</span>
+          </Link>
+        </div>
+      </div>
 
     </div>
   );

@@ -97,6 +97,9 @@ export async function GET() {
         const sellingPrice = Number(item.sellingPrice || item.harga_jual || item.price) || 0;
         const isAvail = item.isAvailable !== false && item.isAvailable !== 'false' && String(item.isAvailable).toLowerCase() !== 'kosong';
 
+        // Abaikan baris placeholder tanpa varian atau harga 0
+        if (!vName || vName === '-' || sellingPrice <= 0) continue;
+
         prodMap.get(pId).variants.push({
           id: item.variantId || `${pId}_${prodMap.get(pId).variants.length}`,
           name: vName,
@@ -105,7 +108,7 @@ export async function GET() {
           isAvailable: isAvail
         });
       }
-      publicProducts = Array.from(prodMap.values());
+      publicProducts = Array.from(prodMap.values()).filter(p => p.variants && p.variants.length > 0);
     } else {
       // Gunakan database lokal db.json sebagai sumber data yang selalu siap
       const products = db.products || [];

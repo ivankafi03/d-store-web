@@ -3635,8 +3635,7 @@ export default function Dashboard() {
                             'Ziem7_bot',
                             'buatprem_bot',
                             'bagahstorebot',
-                            'prabumailbot',
-                            'YSAutoOrderBot'
+                            'prabumailbot'
                           ].map((bot) => (
                             <button
                               key={bot}

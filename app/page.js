@@ -6417,8 +6417,8 @@ export default function Dashboard() {
                   className="w-full px-3 py-2.5 bg-white border-2 border-black text-xs font-bold text-black outline-none shadow-[2px_2px_0_#000] rounded-xl cursor-pointer"
                 >
                   <option value="all">Semua Kategori</option>
-                  {categories.filter(c => c !== 'all').map(c => (
-                    <option key={c} value={c}>{c}</option>
+                  {categories.filter(c => c.id !== 'all').map(c => (
+                    <option key={c.id} value={c.id}>{c.name}</option>
                   ))}
                 </select>
               </div>
@@ -6440,16 +6440,20 @@ export default function Dashboard() {
             {/* Preview count */}
             {(() => {
               const previewCount = variants.filter(v => {
-                const catOk = bulkCategoryFilter === 'all' || v.category === bulkCategoryFilter;
-                const supOk = bulkSupplierFilter === 'all' || (v.supplierOffers || []).some(o => o.supplierName === bulkSupplierFilter);
+                const prod = products.find(p => p.id === v.productId);
+                const catOk = bulkCategoryFilter === 'all' || (prod && prod.categoryId === bulkCategoryFilter);
+                const supOk = bulkSupplierFilter === 'all'
+                  || (v.supplier || '').toLowerCase() === bulkSupplierFilter.toLowerCase()
+                  || (v.supplierOffers || []).some(o => (o.supplier || '').toLowerCase() === bulkSupplierFilter.toLowerCase());
                 return catOk && supOk;
               }).length;
+              const catLabel = bulkCategoryFilter !== 'all' ? categories.find(c => c.id === bulkCategoryFilter)?.name : null;
               return (
                 <div className="bg-emerald-50 border-2 border-emerald-400 rounded-xl px-4 py-3 flex items-center gap-2">
                   <Zap className="w-4 h-4 text-emerald-700 shrink-0" />
                   <p className="text-xs font-black text-emerald-900">
                     <span className="text-base">{previewCount}</span> varian akan diupdate
-                    {bulkCategoryFilter !== 'all' && <span className="font-bold text-emerald-700"> · {bulkCategoryFilter}</span>}
+                    {catLabel && <span className="font-bold text-emerald-700"> · {catLabel}</span>}
                     {bulkSupplierFilter !== 'all' && <span className="font-bold text-emerald-700"> · {bulkSupplierFilter}</span>}
                   </p>
                 </div>

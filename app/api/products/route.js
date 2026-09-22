@@ -200,7 +200,11 @@ export async function POST(request) {
         }
         if (supplierFilter !== 'all') {
           const vSupp = (v.supplier || '').toLowerCase();
-          if (vSupp !== supplierFilter.toLowerCase()) return false;
+          const suppMatch = vSupp === supplierFilter.toLowerCase()
+            || (Array.isArray(v.supplierOffers) && v.supplierOffers.some(
+              o => (o.supplier || '').toLowerCase() === supplierFilter.toLowerCase()
+            ));
+          if (!suppMatch) return false;
         }
         if (categoryFilter !== 'all') {
           const p = products.find(prod => prod.id === v.productId);

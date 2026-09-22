@@ -28,7 +28,13 @@ export async function GET() {
 
     // 1. Coba tarik data live dari Google Spreadsheet Webhook
     const DEFAULT_SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwHn2YFwV8udrqwbc8cwZUeBiXCPkZ3NtFRcxTtxMB1CI5knWee9JGl50GyqtAlUxs/exec';
-    const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK || DEFAULT_SHEET_WEBHOOK;
+    let webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK;
+    if (!webhookUrl || typeof webhookUrl !== 'string' || !webhookUrl.startsWith('http') || webhookUrl.includes('undefined')) {
+      webhookUrl = DEFAULT_SHEET_WEBHOOK;
+    }
+
+    let fetchDebug = { url: webhookUrl.slice(0, 50) + '...', error: null, itemsCount: 0 };
+
     if (webhookUrl) {
       try {
         const sheetRes = await fetch(webhookUrl, {
@@ -36,14 +42,18 @@ export async function GET() {
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'read_all' }),
           redirect: 'follow',
-          next: { revalidate: 15 } // Revalidate setiap 15 detik di Vercel Edge
+          cache: 'no-store'
         });
         const sheetData = await sheetRes.json();
         if (sheetData && sheetData.status === 'ok' && Array.isArray(sheetData.items) && sheetData.items.length > 0) {
           rawItems = sheetData.items;
+          fetchDebug.itemsCount = rawItems.length;
+        } else {
+          fetchDebug.error = 'sheetData status: ' + (sheetData ? sheetData.status : 'null');
         }
       } catch (err) {
         console.warn('[Store API] Live Google Sheets fetch failed, falling back to local DB:', err.message);
+        fetchDebug.error = err.message;
       }
     }
 
@@ -143,7 +153,8 @@ export async function GET() {
       storeName: 'D STORE',
       totalProducts: publicProducts.length,
       categories: categories,
-      products: publicProducts
+      products: publicProducts,
+      debug: fetchDebug
     }, {
       headers: {
         'Cache-Control': 'public, s-maxage=15, stale-while-revalidate=45',

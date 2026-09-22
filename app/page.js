@@ -4134,121 +4134,16 @@ export default function Dashboard() {
                             </tr>
                           </thead>
                           <tbody className="divide-y-2 divide-zinc-200 bg-white">
-                            {changes.map((c, idx) => {
-                              const matchedVariant = variants.find(v => v.id === c.id);
-                              const currentSellingPrice = matchedVariant?.price ?? 0;
-                              const [editingPrice, setEditingPrice] = useState(null);
-                              const [savingIdx, setSavingIdx] = useState(false);
-
-                              const handleSaveQuickPrice = async () => {
-                                if (!matchedVariant || editingPrice === null) return;
-                                const newPrice = parseInt(String(editingPrice).replace(/\D/g, ''), 10);
-                                if (!newPrice || newPrice <= 0) {
-                                  showToast('Harga jual tidak valid.', 'error');
-                                  return;
-                                }
-                                setSavingIdx(true);
-                                try {
-                                  const res = await fetch('/api/products', {
-                                    method: 'POST',
-                                    headers: { 'Content-Type': 'application/json' },
-                                    body: JSON.stringify({
-                                      action: 'update_price',
-                                      variantId: matchedVariant.id,
-                                      sellingPrice: newPrice
-                                    })
-                                  });
-                                  const data = await res.json();
-                                  if (data.status === 'ok') {
-                                    setVariants(prev => prev.map(v => v.id === matchedVariant.id ? { ...v, price: newPrice } : v));
-                                    setEditingPrice(null);
-                                    showToast(`Harga jual ${c.variantName} diperbarui ke Rp ${newPrice.toLocaleString('id-ID')}`, 'success');
-                                  } else {
-                                    showToast('Gagal simpan: ' + (data.message || 'Error'), 'error');
-                                  }
-                                } catch (err) {
-                                  showToast('Error: ' + err.message, 'error');
-                                } finally {
-                                  setSavingIdx(false);
-                                }
-                              };
-
-                              const margin = currentSellingPrice - c.newCost;
-                              const isLoss = margin <= 0;
-
-                              return (
-                                <tr
-                                  key={idx}
-                                  className={`transition ${editingPrice !== null ? 'bg-yellow-50' : 'hover:bg-yellow-50/40 cursor-pointer'}`}
-                                  onClick={() => {
-                                    if (editingPrice === null && matchedVariant) {
-                                      setEditingPrice(currentSellingPrice);
-                                    }
-                                  }}
-                                >
-                                  <td className="p-2.5 font-black text-black">{c.productName}</td>
-                                  <td className="p-2.5 font-bold text-zinc-700 text-[11px]">{c.variantName}</td>
-                                  <td className="p-2.5 font-mono font-black text-black">
-                                    {formatRupiah(c.newCost)}
-                                    <span className={`ml-1 text-[10px] font-black ${c.diff > 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
-                                      {c.diff > 0 ? `+${formatRupiah(c.diff)}` : formatRupiah(c.diff)}
-                                    </span>
-                                  </td>
-                                  <td className="p-2.5">
-                                    <span className={`text-[11px] font-black ${isLoss ? 'text-rose-600' : 'text-zinc-600'}`}>
-                                      {isLoss ? 'RUGI' : `+${formatRupiah(margin)}`}
-                                    </span>
-                                  </td>
-                                  <td className="p-2 text-center" onClick={e => e.stopPropagation()}>
-                                    {editingPrice !== null ? (
-                                      <div className="flex items-center gap-1.5">
-                                        <div className="flex rounded-lg border-2 border-black overflow-hidden shadow-[1.5px_1.5px_0_#000] flex-1">
-                                          <span className="px-1.5 py-1 bg-yellow-300 border-r-2 border-black text-[10px] font-black shrink-0">Rp</span>
-                                          <input
-                                            autoFocus
-                                            type="number"
-                                            min="0"
-                                            value={editingPrice}
-                                            onChange={e => setEditingPrice(e.target.value)}
-                                            onKeyDown={e => {
-                                              if (e.key === 'Enter') handleSaveQuickPrice();
-                                              if (e.key === 'Escape') setEditingPrice(null);
-                                            }}
-                                            className="flex-1 px-1.5 py-1 text-xs font-mono font-bold bg-white outline-none w-20 min-w-0"
-                                          />
-                                        </div>
-                                        <button
-                                          type="button"
-                                          disabled={savingIdx}
-                                          onClick={handleSaveQuickPrice}
-                                          className="px-2 py-1 bg-black text-yellow-300 text-[10px] font-black rounded-lg border-2 border-black shadow-[1.5px_1.5px_0_#555] disabled:opacity-50 shrink-0"
-                                        >
-                                          {savingIdx ? '...' : 'Simpan'}
-                                        </button>
-                                        <button
-                                          type="button"
-                                          onClick={() => setEditingPrice(null)}
-                                          className="px-2 py-1 bg-white text-black text-[10px] font-black rounded-lg border-2 border-black shadow-[1.5px_1.5px_0_#555] shrink-0"
-                                        >
-                                          Batal
-                                        </button>
-                                      </div>
-                                    ) : (
-                                      <div className="flex items-center justify-center gap-1.5">
-                                        <span className={`font-mono font-black text-[11px] ${isLoss ? 'text-rose-600' : 'text-black'}`}>
-                                          {matchedVariant ? formatRupiah(currentSellingPrice) : '-'}
-                                        </span>
-                                        {matchedVariant && (
-                                          <span className="text-[9px] font-bold text-zinc-400 border border-zinc-300 rounded px-1 py-px">
-                                            Edit
-                                          </span>
-                                        )}
-                                      </div>
-                                    )}
-                                  </td>
-                                </tr>
-                              );
-                            })}
+                            {changes.map((c, idx) => (
+                              <PriceChangeRow
+                                key={c.id || idx}
+                                c={c}
+                                variants={variants}
+                                setVariants={setVariants}
+                                showToast={showToast}
+                                formatRupiah={formatRupiah}
+                              />
+                            ))}
                           </tbody>
                         </table>
                       </div>
@@ -7072,5 +6967,120 @@ export default function Dashboard() {
         </div>
       )}
     </div>
+  );
+}
+
+function PriceChangeRow({ c, variants, setVariants, showToast, formatRupiah }) {
+  const matchedVariant = variants.find(v => v.id === c.id);
+  const currentSellingPrice = matchedVariant?.price ?? 0;
+  const [editingPrice, setEditingPrice] = useState(null);
+  const [savingIdx, setSavingIdx] = useState(false);
+
+  const handleSaveQuickPrice = async () => {
+    if (!matchedVariant || editingPrice === null) return;
+    const newPrice = parseInt(String(editingPrice).replace(/\D/g, ''), 10);
+    if (!newPrice || newPrice <= 0) {
+      showToast('Harga jual tidak valid.', 'error');
+      return;
+    }
+    setSavingIdx(true);
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'update_price',
+          variantId: matchedVariant.id,
+          sellingPrice: newPrice
+        })
+      });
+      const data = await res.json();
+      if (data.status === 'ok') {
+        setVariants(prev => prev.map(v => v.id === matchedVariant.id ? { ...v, price: newPrice } : v));
+        setEditingPrice(null);
+        showToast(`Harga jual ${c.variantName} diperbarui ke Rp ${newPrice.toLocaleString('id-ID')}`, 'success');
+      } else {
+        showToast('Gagal simpan: ' + (data.message || 'Error'), 'error');
+      }
+    } catch (err) {
+      showToast('Error: ' + err.message, 'error');
+    } finally {
+      setSavingIdx(false);
+    }
+  };
+
+  const margin = currentSellingPrice - c.newCost;
+  const isLoss = margin <= 0;
+
+  return (
+    <tr
+      className={`transition ${editingPrice !== null ? 'bg-yellow-50' : 'hover:bg-yellow-50/40 cursor-pointer'}`}
+      onClick={() => {
+        if (editingPrice === null && matchedVariant) {
+          setEditingPrice(currentSellingPrice);
+        }
+      }}
+    >
+      <td className="p-2.5 font-black text-black">{c.productName}</td>
+      <td className="p-2.5 font-bold text-zinc-700 text-[11px]">{c.variantName}</td>
+      <td className="p-2.5 font-mono font-black text-black">
+        {formatRupiah(c.newCost)}
+        <span className={`ml-1 text-[10px] font-black ${c.diff > 0 ? 'text-rose-600' : 'text-emerald-600'}`}>
+          {c.diff > 0 ? `+${formatRupiah(c.diff)}` : formatRupiah(c.diff)}
+        </span>
+      </td>
+      <td className="p-2.5">
+        <span className={`text-[11px] font-black ${isLoss ? 'text-rose-600' : 'text-zinc-600'}`}>
+          {isLoss ? 'RUGI' : `+${formatRupiah(margin)}`}
+        </span>
+      </td>
+      <td className="p-2 text-center" onClick={e => e.stopPropagation()}>
+        {editingPrice !== null ? (
+          <div className="flex items-center gap-1.5">
+            <div className="flex rounded-lg border-2 border-black overflow-hidden shadow-[1.5px_1.5px_0_#000] flex-1">
+              <span className="px-1.5 py-1 bg-yellow-300 border-r-2 border-black text-[10px] font-black shrink-0">Rp</span>
+              <input
+                autoFocus
+                type="number"
+                min="0"
+                value={editingPrice}
+                onChange={e => setEditingPrice(e.target.value)}
+                onKeyDown={e => {
+                  if (e.key === 'Enter') handleSaveQuickPrice();
+                  if (e.key === 'Escape') setEditingPrice(null);
+                }}
+                className="flex-1 px-1.5 py-1 text-xs font-mono font-bold bg-white outline-none w-20 min-w-0"
+              />
+            </div>
+            <button
+              type="button"
+              disabled={savingIdx}
+              onClick={handleSaveQuickPrice}
+              className="px-2 py-1 bg-black text-yellow-300 text-[10px] font-black rounded-lg border-2 border-black shadow-[1.5px_1.5px_0_#555] disabled:opacity-50 shrink-0 cursor-pointer"
+            >
+              {savingIdx ? '...' : 'Simpan'}
+            </button>
+            <button
+              type="button"
+              onClick={() => setEditingPrice(null)}
+              className="px-2 py-1 bg-white text-black text-[10px] font-black rounded-lg border-2 border-black shadow-[1.5px_1.5px_0_#555] shrink-0 cursor-pointer"
+            >
+              Batal
+            </button>
+          </div>
+        ) : (
+          <div className="flex items-center justify-center gap-1.5">
+            <span className={`font-mono font-black text-[11px] ${isLoss ? 'text-rose-600' : 'text-black'}`}>
+              {matchedVariant ? formatRupiah(currentSellingPrice) : '-'}
+            </span>
+            {matchedVariant && (
+              <span className="text-[9px] font-bold text-zinc-400 border border-zinc-300 rounded px-1 py-px">
+                Edit
+              </span>
+            )}
+          </div>
+        )}
+      </td>
+    </tr>
   );
 }

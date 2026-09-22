@@ -76,9 +76,19 @@ export default function StoreFront() {
     }).format(Number(val) || 0);
   };
 
-  // Filter kata kunci pencarian
+  // Filter kata kunci pencarian pintar (termasuk konversi otomatis durasi & alias)
   const searchWords = useMemo(() => {
-    return searchQuery.toLowerCase().trim().split(/\s+/).filter(Boolean);
+    if (!searchQuery) return [];
+    let q = searchQuery.toLowerCase().trim();
+    // Konversi durasi umum Indonesia -> kode durasi internasional (1 bulan -> 1m, 7 hari -> 7d, dst)
+    q = q.replace(/(\d+)\s*(?:hari|day|days)\b/gi, '$1d');
+    q = q.replace(/(\d+)\s*(?:bulan|bln|month|months)\b/gi, '$1m');
+    q = q.replace(/(\d+)\s*(?:tahun|thn|year|years)\b/gi, '$1y');
+    q = q.replace(/(\d+)\s*(?:minggu|mgg|week|weeks)\b/gi, '$1w');
+    // Alias singkatan populer
+    q = q.replace(/\byt\b/gi, 'youtube');
+    q = q.replace(/\bgpt\b/gi, 'chatgpt');
+    return q.split(/\s+/).filter(Boolean);
   }, [searchQuery]);
 
   // Hitung jumlah produk per kategori
@@ -98,7 +108,9 @@ export default function StoreFront() {
   const filteredProducts = useMemo(() => {
     return products
       .map(p => {
-        const matchCat = selectedCategory === 'all' || 
+        // Jika pembeli mengetik di kotak pencarian, otomatis cari ke SELURUH kategori
+        const matchCat = searchWords.length > 0 ||
+          selectedCategory === 'all' || 
           p.categoryId === selectedCategory || 
           p.categoryName?.toLowerCase() === selectedCategory.toLowerCase() ||
           categories.some(c => c.id === selectedCategory && (
@@ -109,18 +121,32 @@ export default function StoreFront() {
 
         if (!matchCat) return null;
 
-        // Cocokkan pencarian
+        // Cocokkan pencarian nama produk atau variannya
+        let matchedVars = p.variants;
         if (searchWords.length > 0) {
           const prodMatches = searchWords.every(w => p.name.toLowerCase().includes(w));
-          const varMatches = p.variants.some(v => {
-            const combined = `${p.name} ${v.name} ${v.cleanName || ''}`.toLowerCase();
+          const specificMatchedVars = p.variants.filter(v => {
+            const combined = `${p.name} ${v.name} ${v.cleanName || ''} ${p.categoryName || ''}`.toLowerCase();
             return searchWords.every(w => combined.includes(w));
           });
-          if (!prodMatches && !varMatches) return null;
+
+          if (!prodMatches && specificMatchedVars.length === 0) return null;
+
+          // Jika varian tertentu yang cocok, prioritaskan varian tersebut di urutan teratas
+          if (specificMatchedVars.length > 0 && !prodMatches) {
+            matchedVars = specificMatchedVars;
+          } else if (specificMatchedVars.length > 0 && prodMatches) {
+            // Urutkan varian yang cocok spesifik di awal
+            const specificIds = new Set(specificMatchedVars.map(v => v.id));
+            matchedVars = [
+              ...specificMatchedVars,
+              ...p.variants.filter(v => !specificIds.has(v.id))
+            ];
+          }
         }
 
-        // Filter stok
-        let vars = p.variants;
+        // Filter ketersediaan stok
+        let vars = matchedVars;
         if (stockFilter === 'ready_only') {
           vars = vars.filter(v => v.isAvailable);
         }
@@ -461,14 +487,20 @@ export default function StoreFront() {
           <input
             type="text"
             value={searchQuery}
-            onChange={(e) => setSearchQuery(e.target.value)}
+            onChange={(e) => {
+              setSearchQuery(e.target.value);
+              if (e.target.value) setSelectedCategory('all');
+            }}
             placeholder="Cari aplikasi atau paket (contoh: Canva, Netflix, Spotify, ChatGPT)..."
             className="w-full pl-11 pr-10 py-3 rounded-xl bg-white border-3 border-black shadow-[4px_4px_0_#000] font-black text-sm text-black placeholder:text-zinc-500 placeholder:font-bold outline-none focus:bg-yellow-50/50 transition"
           />
           {searchQuery && (
             <button
               type="button"
-              onClick={() => setSearchQuery('')}
+              onClick={() => {
+                setSearchQuery('');
+                setSelectedCategory('all');
+              }}
               className="absolute inset-y-0 right-0 pr-3.5 flex items-center text-zinc-500 hover:text-black cursor-pointer"
             >
               <X className="w-4 h-4" />

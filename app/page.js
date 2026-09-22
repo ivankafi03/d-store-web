@@ -3525,68 +3525,20 @@ export default function Dashboard() {
                   </div>
 
                   <div className="space-y-3.5">
-                    <div>
+                    <div className="space-y-2">
                       <div className="flex items-center justify-between">
-                        <label className="text-xs text-zinc-700 font-black uppercase tracking-wider">Username Bot Supplier</label>
-                        <div className="flex items-center gap-1.5">
-                          <button
-                            type="button"
-                            onClick={() => setScraperTargetBot('heavenprem_bot')}
-                            className={`px-2 py-0.5 rounded text-[10px] font-black border border-black shadow-[1px_1px_0_#000] transition active:scale-95 ${
-                              scraperTargetBot === 'heavenprem_bot' ? 'bg-[#FFE600] text-black' : 'bg-white text-zinc-700 hover:bg-zinc-100'
-                            }`}
-                          >
-                            @heavenprem_bot
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setScraperTargetBot('Ziem7_bot')}
-                            className={`px-2 py-0.5 rounded text-[10px] font-black border border-black shadow-[1px_1px_0_#000] transition active:scale-95 ${
-                              scraperTargetBot === 'Ziem7_bot' ? 'bg-[#FFE600] text-black' : 'bg-white text-zinc-700 hover:bg-zinc-100'
-                            }`}
-                          >
-                            @Ziem7_bot
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setScraperTargetBot('buatprem_bot')}
-                            className={`px-2 py-0.5 rounded text-[10px] font-black border border-black shadow-[1px_1px_0_#000] transition active:scale-95 ${
-                              scraperTargetBot === 'buatprem_bot' ? 'bg-[#FFE600] text-black' : 'bg-white text-zinc-700 hover:bg-zinc-100'
-                            }`}
-                          >
-                            @buatprem_bot
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setScraperTargetBot('bagahstorebot')}
-                            className={`px-2 py-0.5 rounded text-[10px] font-black border border-black shadow-[1px_1px_0_#000] transition active:scale-95 ${
-                              scraperTargetBot === 'bagahstorebot' ? 'bg-[#FFE600] text-black' : 'bg-white text-zinc-700 hover:bg-zinc-100'
-                            }`}
-                          >
-                            @bagahstorebot
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setScraperTargetBot('prabumailbot')}
-                            className={`px-2 py-0.5 rounded text-[10px] font-black border border-black shadow-[1px_1px_0_#000] transition active:scale-95 ${
-                              scraperTargetBot === 'prabumailbot' ? 'bg-[#FFE600] text-black' : 'bg-white text-zinc-700 hover:bg-zinc-100'
-                            }`}
-                          >
-                            @prabumailbot
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => setScraperTargetBot('YSAutoOrderBot')}
-                            className={`px-2 py-0.5 rounded text-[10px] font-black border border-black shadow-[1px_1px_0_#000] transition active:scale-95 ${
-                              scraperTargetBot === 'YSAutoOrderBot' ? 'bg-[#FFE600] text-black' : 'bg-white text-zinc-700 hover:bg-zinc-100'
-                            }`}
-                          >
-                            @YSAutoOrderBot
-                          </button>
-                        </div>
+                        <label className="text-xs text-zinc-800 font-black uppercase tracking-wider">
+                          Username Bot Supplier
+                        </label>
+                        <span className="text-[10px] font-bold text-zinc-500">
+                          Ketik atau pilih preset
+                        </span>
                       </div>
-                      <div className="relative mt-1.5">
-                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-500 text-xs font-mono font-black">@</span>
+
+                      <div className="relative">
+                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-600 text-xs font-mono font-black">
+                          @
+                        </span>
                         <input
                           type="text"
                           value={scraperTargetBot}
@@ -3594,6 +3546,39 @@ export default function Dashboard() {
                           placeholder="heavenprem_bot / Ziem7_bot"
                           className="w-full pl-8 pr-3 py-2 rounded-xl bg-white border-2 border-black shadow-[2px_2px_0_#000] text-xs text-black font-mono font-bold focus:outline-none focus:bg-yellow-50 transition"
                         />
+                      </div>
+
+                      {/* Preset Bot Supplier Populer */}
+                      <div className="pt-1">
+                        <div className="text-[10px] font-black uppercase text-zinc-600 mb-1.5 flex items-center justify-between">
+                          <span>Pilihan Bot Populer:</span>
+                          <span className="text-[9px] font-bold text-zinc-400">Klik untuk langsung pilih</span>
+                        </div>
+                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                          {[
+                            'heavenprem_bot',
+                            'Ziem7_bot',
+                            'buatprem_bot',
+                            'bagahstorebot',
+                            'prabumailbot',
+                            'YSAutoOrderBot'
+                          ].map((bot) => (
+                            <button
+                              key={bot}
+                              type="button"
+                              onClick={() => setScraperTargetBot(bot)}
+                              className={`px-2.5 py-1.5 rounded-lg text-[10px] font-mono font-black border-2 border-black shadow-[1.5px_1.5px_0_#000] transition active:translate-x-0.5 active:translate-y-0.5 truncate text-left flex items-center gap-1 cursor-pointer ${
+                                scraperTargetBot.toLowerCase() === bot.toLowerCase()
+                                  ? 'bg-[#FFE600] text-black ring-1 ring-black'
+                                  : 'bg-white text-zinc-700 hover:bg-yellow-50'
+                              }`}
+                              title={`@${bot}`}
+                            >
+                              <span className="text-zinc-500 font-bold">@</span>
+                              <span className="truncate">{bot}</span>
+                            </button>
+                          ))}
+                        </div>
                       </div>
                     </div>
 

@@ -34,7 +34,8 @@ import {
   Monitor,
   Smartphone,
   Send,
-  AlertCircle
+  AlertCircle,
+  Layers
 } from 'lucide-react';
 import { toPng, toJpeg } from 'html-to-image';
 
@@ -82,6 +83,7 @@ export default function ResellerStudioPage() {
   const [pickerSearch, setPickerSearch] = useState('');
   const [pickerCategory, setPickerCategory] = useState('all');
   const [pickerStockFilter, setPickerStockFilter] = useState('all'); // 'all' or 'ready'
+  const [includeVariants, setIncludeVariants] = useState(true); // true = lengkap varian, false = hanya nama produk
 
   // Processing & Toast state
   const [generatingPoster, setGeneratingPoster] = useState(false);
@@ -419,6 +421,39 @@ export default function ResellerStudioPage() {
     }
   };
 
+  // Download All Slides sequentially
+  const handleDownloadAllSlides = async (format = 'png') => {
+    if (!posterRef.current || totalPosterPages <= 1) return;
+    setGeneratingPoster(true);
+    const initialPage = posterCurrentPage;
+    const cleanName = storeName.toLowerCase().replace(/[^a-z0-9]/g, '_');
+    try {
+      for (let p = 1; p <= totalPosterPages; p++) {
+        setPosterCurrentPage(p);
+        await new Promise((r) => setTimeout(r, 400));
+        if (!posterRef.current) continue;
+        const options = {
+          quality: 0.98,
+          pixelRatio: 2,
+          cacheBust: true,
+          backgroundColor: posterTheme === 'dark' ? '#09090b' : posterTheme === 'white' ? '#f4f4f5' : '#ffffff'
+        };
+        const dataUrl = format === 'png' ? await toPng(posterRef.current, options) : await toJpeg(posterRef.current, options);
+        const link = document.createElement('a');
+        link.download = `poster_${cleanName}_slide_${p}_dari_${totalPosterPages}_${Date.now()}.${format}`;
+        link.href = dataUrl;
+        link.click();
+        await new Promise((r) => setTimeout(r, 250));
+      }
+      showToast(`Semua ${totalPosterPages} slide poster berhasil diunduh!`, 'success');
+    } catch (err) {
+      showToast('Gagal mengunduh semua slide: ' + err.message, 'error');
+    } finally {
+      setPosterCurrentPage(initialPage);
+      setGeneratingPoster(false);
+    }
+  };
+
   // Copy Poster to Clipboard
   const handleCopyPosterImage = async () => {
     if (!posterRef.current) return;
@@ -461,12 +496,23 @@ export default function ResellerStudioPage() {
     txt += `Pricelist Update & Status Stok:\n\n`;
 
     for (const p of displayedPosterProducts) {
-      txt += `*${p.name.toUpperCase()}*\n`;
-      for (const v of p.filteredVariants) {
-        const finalP = calculateSellingPrice(v.price);
-        const status = v.isAvailable !== false ? 'Ready' : 'Habis';
-        txt += `- ${getCleanVariantName(v.name, p.name)} : ${formatRupiah(finalP)} [${status}]\n`;
+      if (includeVariants) {
+        txt += `*${p.name.toUpperCase()}*\n`;
+        for (const v of p.filteredVariants) {
+          const finalP = calculateSellingPrice(v.price);
+          const status = v.isAvailable !== false ? 'Ready' : 'Habis';
+          txt += `- ${getCleanVariantName(v.name, p.name)} : ${formatRupiah(finalP)} [${status}]\n`;
+        }
+        txt += `\n`;
+      } else {
+        const minPrice = p.filteredVariants.length > 0
+          ? formatRupiah(calculateSellingPrice(Math.min(...p.filteredVariants.map(v => v.price))))
+          : '-';
+        const hasReady = p.filteredVariants.some(v => v.isAvailable !== false);
+        txt += `• *${p.name.toUpperCase()}* : Mulai ${minPrice} [${hasReady ? 'Ready' : 'Habis'}]\n`;
       }
+    }
+    if (!includeVariants) {
       txt += `\n`;
     }
 
@@ -1118,6 +1164,51 @@ export default function ResellerStudioPage() {
                 </div>
               </div>
 
+              {/* Detail Varian di Poster (Dengan Jenis vs Tanpa Jenis) */}
+              <div className="bg-yellow-100/70 p-3 rounded-xl border-2 border-black shadow-[2px_2px_0_#000] space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="text-[11px] font-black uppercase text-zinc-900 tracking-wider">
+                    Format Detail Produk
+                  </label>
+                  <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded border border-black ${
+                    includeVariants ? 'bg-emerald-300 text-black' : 'bg-[#FFE600] text-black'
+                  }`}>
+                    {includeVariants ? 'Sertakan Jenis/Varian' : 'Tanpa Jenis (Nama Saja)'}
+                  </span>
+                </div>
+                <div className="grid grid-cols-2 gap-2">
+                  <button
+                    type="button"
+                    onClick={() => setIncludeVariants(true)}
+                    className={`py-2 px-2 rounded-lg border-2 border-black font-black text-xs uppercase tracking-tight transition cursor-pointer flex items-center justify-center gap-1.5 ${
+                      includeVariants
+                        ? 'bg-black text-[#FFE600] shadow-[2px_2px_0_#FFE600]'
+                        : 'bg-white hover:bg-yellow-100 text-black shadow-[1.5px_1.5px_0_#000]'
+                    }`}
+                  >
+                    <Layers className="w-3.5 h-3.5" />
+                    <span>Sertakan Jenis</span>
+                  </button>
+                  <button
+                    type="button"
+                    onClick={() => setIncludeVariants(false)}
+                    className={`py-2 px-2 rounded-lg border-2 border-black font-black text-xs uppercase tracking-tight transition cursor-pointer flex items-center justify-center gap-1.5 ${
+                      !includeVariants
+                        ? 'bg-black text-[#FFE600] shadow-[2px_2px_0_#FFE600]'
+                        : 'bg-white hover:bg-yellow-100 text-black shadow-[1.5px_1.5px_0_#000]'
+                    }`}
+                  >
+                    <CheckSquare className="w-3.5 h-3.5" />
+                    <span>Tanpa Jenis</span>
+                  </button>
+                </div>
+                <p className="text-[10px] text-zinc-600 font-bold leading-tight">
+                  {includeVariants
+                    ? 'Menampilkan rincian paket/durasi dan harganya masing-masing di dalam kartu.'
+                    : 'Hanya menampilkan nama produk (contoh: Canva, Netflix, Capcut) dengan estimasi harga mulai dari.'}
+                </p>
+              </div>
+
               {/* Tema Latar Poster */}
               <div>
                 <label className="text-[11px] font-black uppercase text-zinc-700 tracking-wider block mb-1.5">
@@ -1504,6 +1595,68 @@ export default function ResellerStudioPage() {
               </div>
             </div>
 
+            {/* Slide Navigation Bar (Slide Sebelumnya, Slide Selanjutnya, Pilihan Halaman & Unduh Semua Slide) */}
+            {totalPosterPages > 1 && (
+              <div className="flex flex-wrap items-center justify-between gap-3 p-3 bg-white border-3 border-black shadow-[4px_4px_0_#000] rounded-2xl">
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    disabled={posterCurrentPage <= 1}
+                    onClick={() => setPosterCurrentPage((p) => Math.max(1, p - 1))}
+                    className="neo-btn px-3 py-1.5 rounded-lg bg-yellow-300 hover:bg-yellow-200 text-black border-2 border-black font-black text-xs disabled:opacity-40 uppercase tracking-tight flex items-center gap-1 cursor-pointer transition"
+                  >
+                    <ChevronLeft className="w-3.5 h-3.5" />
+                    <span>Slide Sebelumnya</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    disabled={posterCurrentPage >= totalPosterPages}
+                    onClick={() => setPosterCurrentPage((p) => Math.min(totalPosterPages, p + 1))}
+                    className="neo-btn px-3 py-1.5 rounded-lg bg-yellow-300 hover:bg-yellow-200 text-black border-2 border-black font-black text-xs disabled:opacity-40 uppercase tracking-tight flex items-center gap-1 cursor-pointer transition"
+                  >
+                    <span>Slide Selanjutnya</span>
+                    <ChevronRight className="w-3.5 h-3.5" />
+                  </button>
+                </div>
+
+                <div className="flex items-center gap-2.5">
+                  <span className="text-xs font-black uppercase text-zinc-800">
+                    Slide {posterCurrentPage} dari {totalPosterPages} ({filteredPosterProducts.length} Total Produk)
+                  </span>
+                  <div className="flex items-center gap-1">
+                    {Array.from({ length: totalPosterPages }).map((_, idx) => (
+                      <button
+                        key={idx}
+                        type="button"
+                        onClick={() => setPosterCurrentPage(idx + 1)}
+                        className={`w-7 h-7 rounded-lg border-2 border-black text-xs font-black transition cursor-pointer ${
+                          posterCurrentPage === idx + 1
+                            ? 'bg-black text-[#FFE600] shadow-[1.5px_1.5px_0_#FFE600]'
+                            : 'bg-zinc-100 text-black hover:bg-yellow-100'
+                        }`}
+                      >
+                        {idx + 1}
+                      </button>
+                    ))}
+                  </div>
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <button
+                    type="button"
+                    disabled={generatingPoster}
+                    onClick={() => handleDownloadAllSlides('png')}
+                    className="neo-btn flex items-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-300 hover:bg-cyan-200 text-black text-xs font-black border-2 border-black shadow-[2px_2px_0_#000] uppercase tracking-wider disabled:opacity-50 cursor-pointer"
+                    title="Otomatis unduh seluruh slide sebagai gambar terpisah"
+                  >
+                    <Layers className="w-3.5 h-3.5" />
+                    <span>Unduh Semua Slide ({totalPosterPages})</span>
+                  </button>
+                </div>
+              </div>
+            )}
+
             {/* Poster Live Canvas */}
             <div className="overflow-x-auto pb-4">
               <div
@@ -1618,74 +1771,104 @@ export default function ResellerStudioPage() {
                             </span>
                           </div>
 
-                          {/* Variants List */}
-                          <div
-                            className={
-                              posterDensity === 'compact' ? 'space-y-1' : 'space-y-1.5'
-                            }
-                          >
-                            {p.filteredVariants.map((v, vIdx) => {
-                              const isReady = v.isAvailable !== false;
-                              const sellingPrice = calculateSellingPrice(v.price);
-                              return (
-                                <div
-                                  key={v.id ? `${v.id}_${vIdx}` : vIdx}
-                                  className={`flex items-center justify-between ${
-                                    cardCorner === 'sharp' ? 'rounded-none' : 'rounded-lg'
-                                  } border-2 border-black transition ${
-                                    posterDensity === 'compact'
-                                      ? 'p-1 text-[10px]'
-                                      : 'p-1.5 text-[11px]'
-                                  } ${
-                                    isReady
-                                      ? 'bg-emerald-50/80 shadow-[1px_1px_0_#000]'
-                                      : 'bg-rose-50/70 border-dashed opacity-75'
-                                  }`}
-                                >
-                                  <div className="min-w-0 flex-1 mr-1.5">
-                                    <div
-                                      className="font-black text-black leading-snug truncate"
-                                      title={v.name}
-                                    >
-                                      {getCleanVariantName(v.name, p.name)}
-                                    </div>
-                                    {showPrice && (
-                                      <div className="font-mono font-black text-zinc-800 text-[10px]">
-                                        {formatRupiah(sellingPrice)}
-                                      </div>
-                                    )}
-                                  </div>
-
-                                  {/* Status Indicator */}
-                                  <div className="shrink-0">
-                                    {posterShape === 'circle' ? (
-                                      <span
-                                        className={`rounded-full border-2 border-black flex items-center justify-center shadow-[1px_1px_0_#000] ${
-                                          posterDensity === 'compact' ? 'w-3 h-3' : 'w-3.5 h-3.5'
-                                        } ${isReady ? 'bg-emerald-400' : 'bg-rose-400'}`}
-                                      ></span>
-                                    ) : (
-                                      <span
-                                        className={`${
-                                          cardCorner === 'sharp' ? 'rounded-none' : 'rounded'
-                                        } font-black uppercase border border-black shadow-[1px_1px_0_#000] ${
-                                          posterDensity === 'compact'
-                                            ? 'px-1 py-0.2 text-[8px]'
-                                            : 'px-1.5 py-0.5 text-[9px]'
-                                        } ${
-                                          isReady
-                                            ? 'bg-emerald-400 text-black'
-                                            : 'bg-rose-400 text-black'
-                                        }`}
+                          {/* Variants List or Product-Only View */}
+                          {includeVariants ? (
+                            <div
+                              className={
+                                posterDensity === 'compact' ? 'space-y-1' : 'space-y-1.5'
+                              }
+                            >
+                              {p.filteredVariants.map((v, vIdx) => {
+                                const isReady = v.isAvailable !== false;
+                                const sellingPrice = calculateSellingPrice(v.price);
+                                return (
+                                  <div
+                                    key={v.id ? `${v.id}_${vIdx}` : vIdx}
+                                    className={`flex items-center justify-between ${
+                                      cardCorner === 'sharp' ? 'rounded-none' : 'rounded-lg'
+                                    } border-2 border-black transition ${
+                                      posterDensity === 'compact'
+                                        ? 'p-1 text-[10px]'
+                                        : 'p-1.5 text-[11px]'
+                                    } ${
+                                      isReady
+                                        ? 'bg-emerald-50/80 shadow-[1px_1px_0_#000]'
+                                        : 'bg-rose-50/70 border-dashed opacity-75'
+                                    }`}
+                                  >
+                                    <div className="min-w-0 flex-1 mr-1.5">
+                                      <div
+                                        className="font-black text-black leading-snug truncate"
+                                        title={v.name}
                                       >
-                                        {isReady ? 'Ready' : 'Habis'}
-                                      </span>
-                                    )}
+                                        {getCleanVariantName(v.name, p.name)}
+                                      </div>
+                                      {showPrice && (
+                                        <div className="font-mono font-black text-zinc-800 text-[10px]">
+                                          {formatRupiah(sellingPrice)}
+                                        </div>
+                                      )}
+                                    </div>
+
+                                    {/* Status Indicator */}
+                                    <div className="shrink-0">
+                                      {posterShape === 'circle' ? (
+                                        <span
+                                          className={`rounded-full border-2 border-black flex items-center justify-center shadow-[1px_1px_0_#000] ${
+                                            posterDensity === 'compact' ? 'w-3 h-3' : 'w-3.5 h-3.5'
+                                          } ${isReady ? 'bg-emerald-400' : 'bg-rose-400'}`}
+                                        ></span>
+                                      ) : (
+                                        <span
+                                          className={`${
+                                            cardCorner === 'sharp' ? 'rounded-none' : 'rounded'
+                                          } font-black uppercase border border-black shadow-[1px_1px_0_#000] ${
+                                            posterDensity === 'compact'
+                                              ? 'px-1 py-0.2 text-[8px]'
+                                              : 'px-1.5 py-0.5 text-[9px]'
+                                          } ${
+                                            isReady
+                                              ? 'bg-emerald-400 text-black'
+                                              : 'bg-rose-400 text-black'
+                                          }`}
+                                        >
+                                          {isReady ? 'Ready' : 'Habis'}
+                                        </span>
+                                      )}
+                                    </div>
                                   </div>
+                                );
+                              })}
+                            </div>
+                          ) : (
+                            <div
+                              className={`p-2.5 ${
+                                cardCorner === 'sharp' ? 'rounded-none' : 'rounded-lg'
+                              } bg-yellow-50/90 border-2 border-black flex items-center justify-between gap-2 shadow-[1.5px_1.5px_0_#000]`}
+                            >
+                              <div className="min-w-0 flex-1">
+                                {showPrice && (
+                                  <div className="font-mono font-black text-black text-xs sm:text-sm">
+                                    {p.filteredVariants.length > 0
+                                      ? `Mulai ${formatRupiah(calculateSellingPrice(Math.min(...p.filteredVariants.map((v) => v.price))))}`
+                                      : 'Hubungi Kami'}
+                                  </div>
+                                )}
+                                <div className="text-[10px] font-bold text-zinc-600 mt-0.5">
+                                  {p.filteredVariants.length} Pilihan Paket / Durasi
                                 </div>
-                              );
-                            })}
-                          </div>
+                              </div>
+                              <span
+                                className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border-2 border-black shadow-[1px_1px_0_#000] ${
+                                  p.filteredVariants.some((v) => v.isAvailable !== false)
+                                    ? 'bg-emerald-400 text-black'
+                                    : 'bg-rose-400 text-black'
+                                }`}
+                              >
+                                {p.filteredVariants.some((v) => v.isAvailable !== false) ? 'Ready' : 'Habis'}
+                              </span>
+                            </div>
+                          )}
                         </div>
                       </div>
                     ))}

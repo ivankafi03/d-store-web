@@ -45,7 +45,9 @@ import {
   Image as ImageIcon,
   Palette,
   Download,
-  Menu
+  Menu,
+  CheckSquare,
+  ListChecks
 } from 'lucide-react';
 import { toPng, toJpeg } from 'html-to-image';
 
@@ -174,6 +176,12 @@ export default function Dashboard() {
   const [posterCategory, setPosterCategory] = useState('all');
   const [posterProductFilter, setPosterProductFilter] = useState('all');
   const [posterStockFilter, setPosterStockFilter] = useState('all'); // 'all', 'ready_only'
+  const [posterIncludeVariants, setPosterIncludeVariants] = useState(true); // true = lengkap varian, false = hanya nama produk
+  const [posterSelectedProductIds, setPosterSelectedProductIds] = useState(null); // null = all products
+  const [showPosterProductPicker, setShowPosterProductPicker] = useState(false);
+  const [posterPickerSearch, setPosterPickerSearch] = useState('');
+  const [posterPickerCategory, setPosterPickerCategory] = useState('all');
+  const [posterPickerStockFilter, setPosterPickerStockFilter] = useState('all'); // 'all' or 'ready'
   const [posterTitle, setPosterTitle] = useState('D STORE - LIVE STOCK STATUS');
   const [posterSubtitle, setPosterSubtitle] = useState('Katalog Akun Premium & Bergaransi Resmi');
   const [posterWa, setPosterWa] = useState('081230112240');
@@ -190,6 +198,43 @@ export default function Dashboard() {
   const [posterMarkupValue, setPosterMarkupValue] = useState(0);
   const [showPosterSettings, setShowPosterSettings] = useState(false);
   const [generatingPoster, setGeneratingPoster] = useState(false);
+
+  const handleTogglePosterProduct = (productId) => {
+    if (posterSelectedProductIds === null) {
+      setPosterSelectedProductIds(products.filter((p) => p.id !== productId).map((p) => p.id));
+    } else {
+      if (posterSelectedProductIds.includes(productId)) {
+        setPosterSelectedProductIds(posterSelectedProductIds.filter((id) => id !== productId));
+      } else {
+        setPosterSelectedProductIds([...posterSelectedProductIds, productId]);
+      }
+    }
+  };
+
+  const handleSelectAllPosterProducts = () => {
+    setPosterSelectedProductIds(null);
+    showToast('Semua produk dipilih untuk poster.', 'info');
+  };
+
+  const handleDeselectAllPosterProducts = () => {
+    setPosterSelectedProductIds([]);
+    showToast('Semua produk dikosongkan dari pilihan poster.', 'info');
+  };
+
+  const handleSelectReadyOnlyPosterProducts = () => {
+    const readyIds = products
+      .filter((p) => (variants || []).some((v) => v.productId === p.id && v.isAvailable !== false))
+      .map((p) => p.id);
+    setPosterSelectedProductIds(readyIds);
+    showToast(`Dipilih ${readyIds.length} produk dengan stok ready.`, 'info');
+  };
+
+  const isAllPosterProductsSelected = posterSelectedProductIds === null || posterSelectedProductIds.length === products.length;
+  const currentPosterSelectedCount = posterSelectedProductIds === null ? products.length : posterSelectedProductIds.length;
+  const isPosterProductSelected = (productId) => {
+    if (posterSelectedProductIds === null) return true;
+    return posterSelectedProductIds.includes(productId);
+  };
 
   const applyPosterContact = (mode, wa = posterWa, tele = posterTele) => {
     setPosterContactMode(mode);
@@ -1253,12 +1298,23 @@ export default function Dashboard() {
   const handleCopyResellerBroadcast = () => {
     let txt = `*${posterTitle}*\n${posterSubtitle}\n\n`;
     for (const p of displayedPosterProducts) {
-      txt += `*${p.name.toUpperCase()}*\n`;
-      for (const v of p.filteredVariants) {
-        const finalP = getPosterVariantPrice(v.price);
-        const status = v.isAvailable !== false ? 'Ready' : 'Habis';
-        txt += `- ${getCleanVariantName(v.name, p.name)} : ${formatRupiah(finalP)} [${status}]\n`;
+      if (posterIncludeVariants === false) {
+        const prices = (p.filteredVariants || []).map(v => v.price).filter(pr => typeof pr === 'number' && !isNaN(pr));
+        const minP = prices.length > 0 ? Math.min(...prices) : 0;
+        const hasReady = (p.filteredVariants || []).some(v => v.isAvailable !== false);
+        const status = hasReady ? 'Ready' : 'Habis';
+        txt += `• *${p.name.toUpperCase()}* : Mulai ${formatRupiah(getPosterVariantPrice(minP))} [${status}]\n`;
+      } else {
+        txt += `*${p.name.toUpperCase()}*\n`;
+        for (const v of p.filteredVariants) {
+          const finalP = getPosterVariantPrice(v.price);
+          const status = v.isAvailable !== false ? 'Ready' : 'Habis';
+          txt += `- ${getCleanVariantName(v.name, p.name)} : ${formatRupiah(finalP)} [${status}]\n`;
+        }
+        txt += `\n`;
       }
+    }
+    if (posterIncludeVariants === false) {
       txt += `\n`;
     }
     txt += `${posterFooter}\n`;
@@ -1489,6 +1545,9 @@ export default function Dashboard() {
       if (posterProductFilter !== 'all') {
         prods = prods.filter(p => p.id === posterProductFilter);
       }
+      if (Array.isArray(posterSelectedProductIds)) {
+        prods = prods.filter(p => posterSelectedProductIds.includes(p.id));
+      }
       for (const p of prods) {
         let vars = variants.filter(v => v.productId === p.id);
         if (posterStockFilter === 'ready_only') {
@@ -1504,7 +1563,28 @@ export default function Dashboard() {
       }
     }
     return result;
-  }, [categories, products, variants, posterCategory, posterStockFilter, posterProductFilter]);
+  }, [categories, products, variants, posterCategory, posterStockFilter, posterProductFilter, posterSelectedProductIds]);
+
+  const posterPickerProducts = useMemo(() => {
+    return products.filter((p) => {
+      if (posterPickerCategory !== 'all' && p.categoryId !== posterPickerCategory) {
+        return false;
+      }
+      const prodVariants = variants.filter((v) => v.productId === p.id);
+      if (posterPickerStockFilter === 'ready') {
+        const hasReady = prodVariants.some((v) => v.isAvailable !== false);
+        if (!hasReady) return false;
+      }
+      if (posterPickerSearch.trim()) {
+        const query = posterPickerSearch.toLowerCase();
+        const matchName = (p.name || '').toLowerCase().includes(query);
+        const matchCat = (categories.find((c) => c.id === p.categoryId)?.name || '').toLowerCase().includes(query);
+        const matchVar = prodVariants.some((v) => (v.name || '').toLowerCase().includes(query));
+        if (!matchName && !matchCat && !matchVar) return false;
+      }
+      return true;
+    });
+  }, [products, variants, categories, posterPickerCategory, posterPickerStockFilter, posterPickerSearch]);
 
   const posterAvailableProducts = useMemo(() => {
     if (posterCategory === 'all') return products;
@@ -4604,6 +4684,77 @@ export default function Dashboard() {
                 </div>
               </div>
 
+              {/* Product Multi-Picker Trigger & Quick Actions */}
+              <div className="bg-yellow-50/80 p-3 rounded-xl border-2 border-black shadow-[2px_2px_0_#000] space-y-2.5">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
+                  <div>
+                    <label className="text-[11px] font-black uppercase text-zinc-900 tracking-wider block">
+                      Pilih Produk Khusus Poster
+                    </label>
+                    <p className="text-[10px] font-bold text-zinc-600">
+                      Bisa pilih produk tertentu saja (contoh: Canva, Netflix, CapCut) atau seluruh katalog.
+                    </p>
+                  </div>
+                  <button
+                    type="button"
+                    onClick={() => setShowPosterProductPicker(true)}
+                    className="neo-btn py-2 px-3.5 rounded-xl bg-yellow-300 hover:bg-yellow-200 text-black font-black text-xs border-2 border-black shadow-[2px_2px_0_#000] uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer transition active:translate-x-0.5 active:translate-y-0.5"
+                  >
+                    <CheckSquare className="w-4 h-4" />
+                    <span>Buka Checklist Produk ({currentPosterSelectedCount} / {products.length})</span>
+                  </button>
+                </div>
+
+                <div className="flex flex-wrap items-center gap-1.5 pt-1 border-t border-black/10">
+                  <button
+                    type="button"
+                    onClick={handleSelectAllPosterProducts}
+                    className={`px-2.5 py-1 rounded-lg border border-black text-[10px] font-black uppercase transition cursor-pointer ${
+                      isAllPosterProductsSelected ? 'bg-black text-[#FFE600]' : 'bg-white hover:bg-yellow-100 text-black'
+                    }`}
+                  >
+                    Pilih Semua ({products.length})
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleSelectReadyOnlyPosterProducts}
+                    className="px-2.5 py-1 rounded-lg border border-black bg-emerald-100 hover:bg-emerald-200 text-emerald-950 text-[10px] font-black uppercase transition cursor-pointer"
+                  >
+                    Hanya Ready Stok
+                  </button>
+                  <button
+                    type="button"
+                    onClick={handleDeselectAllPosterProducts}
+                    className="px-2.5 py-1 rounded-lg border border-black bg-rose-100 hover:bg-rose-200 text-rose-950 text-[10px] font-black uppercase transition cursor-pointer"
+                  >
+                    Kosongkan
+                  </button>
+
+                  {!isAllPosterProductsSelected && currentPosterSelectedCount > 0 && (
+                    <div className="w-full flex items-center gap-1 pt-1.5 overflow-x-auto no-scrollbar">
+                      <span className="text-[9px] font-black uppercase text-zinc-600 shrink-0">Terpilih:</span>
+                      {products
+                        .filter((p) => isPosterProductSelected(p.id))
+                        .map((p) => (
+                          <span
+                            key={`chip_adm_${p.id}`}
+                            className="inline-flex items-center gap-1 bg-white px-2 py-0.5 rounded border border-black text-[9px] font-black text-black shrink-0"
+                          >
+                            <span>{p.name}</span>
+                            <button
+                              type="button"
+                              onClick={() => handleTogglePosterProduct(p.id)}
+                              className="text-zinc-500 hover:text-black font-bold text-[10px]"
+                            >
+                              ×
+                            </button>
+                          </span>
+                        ))}
+                    </div>
+                  )}
+                </div>
+              </div>
+
               {/* Customizer Toolbar */}
               <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-3 pt-1">
                 {/* 1. Kategori Produk */}
@@ -4663,6 +4814,35 @@ export default function Dashboard() {
                     <option value="all">Semua (Ready &amp; Kosong)</option>
                     <option value="ready_only">Hanya Ready Saja</option>
                   </select>
+                </div>
+
+                {/* Format Detail Produk: Sertakan Jenis vs Tanpa Jenis */}
+                <div>
+                  <label className="text-[11px] font-black uppercase text-zinc-700 tracking-wider block mb-1.5">
+                    Format Detail Produk
+                  </label>
+                  <div className="flex rounded-xl border-2 border-black overflow-hidden shadow-[2px_2px_0_#000]">
+                    <button
+                      type="button"
+                      onClick={() => setPosterIncludeVariants(true)}
+                      className={`flex-1 py-1.5 text-xs font-black uppercase transition ${
+                        posterIncludeVariants ? 'bg-[#FFE600] text-black' : 'bg-white text-zinc-700 hover:bg-yellow-50'
+                      }`}
+                      title="Menampilkan rincian paket dan harganya masing-masing"
+                    >
+                      Sertakan Jenis
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setPosterIncludeVariants(false)}
+                      className={`flex-1 py-1.5 text-xs font-black uppercase transition border-l-2 border-black ${
+                        !posterIncludeVariants ? 'bg-[#FFE600] text-black' : 'bg-white text-zinc-700 hover:bg-yellow-50'
+                      }`}
+                      title="Hanya menampilkan nama produk dengan estimasi Mulai Rp XX.XXX"
+                    >
+                      Tanpa Jenis
+                    </button>
+                  </div>
                 </div>
 
                 {/* 4. Atur Bebas Panjang Poster (Slider & Input Langsung) */}
@@ -5362,66 +5542,92 @@ export default function Dashboard() {
                           </span>
                         </div>
 
-                        {/* Variants List */}
-                        <div className={posterDensity === 'compact' ? 'space-y-1' : 'space-y-1.5'}>
-                          {p.filteredVariants.map((v, vIdx) => {
-                            const isReady = v.isAvailable !== false;
-                            return (
-                              <div
-                                key={v.id ? `${v.id}_${vIdx}` : vIdx}
-                                className={`flex items-center justify-between rounded-lg border-2 border-black transition ${
-                                  posterDensity === 'compact' ? 'p-1 text-[11px]' : 'p-1.5 text-xs'
-                                } ${
-                                  isReady ? 'bg-emerald-50/80 shadow-[1.5px_1.5px_0_#000]' : 'bg-rose-50/70 border-dashed opacity-75'
-                                }`}
-                              >
-                                <div className="min-w-0 flex-1 mr-1.5">
-                                  <div
-                                    className={`font-black text-black leading-snug break-words line-clamp-2 ${
-                                      posterDensity === 'compact' ? 'text-[10px]' : 'text-[11px]'
-                                    }`}
-                                    title={v.name}
-                                  >
-                                    {getCleanVariantName(v.name, p.name)}
-                                  </div>
-                                  {posterShowPrice && (
+                        {/* Variants List or Product-Only View */}
+                        {posterIncludeVariants ? (
+                          <div className={posterDensity === 'compact' ? 'space-y-1' : 'space-y-1.5'}>
+                            {p.filteredVariants.map((v, vIdx) => {
+                              const isReady = v.isAvailable !== false;
+                              return (
+                                <div
+                                  key={v.id ? `${v.id}_${vIdx}` : vIdx}
+                                  className={`flex items-center justify-between rounded-lg border-2 border-black transition ${
+                                    posterDensity === 'compact' ? 'p-1 text-[11px]' : 'p-1.5 text-xs'
+                                  } ${
+                                    isReady ? 'bg-emerald-50/80 shadow-[1.5px_1.5px_0_#000]' : 'bg-rose-50/70 border-dashed opacity-75'
+                                  }`}
+                                >
+                                  <div className="min-w-0 flex-1 mr-1.5">
                                     <div
-                                      className={`font-mono font-bold text-zinc-700 ${
-                                        posterDensity === 'compact' ? 'text-[9px]' : 'text-[10px]'
+                                      className={`font-black text-black leading-snug break-words line-clamp-2 ${
+                                        posterDensity === 'compact' ? 'text-[10px]' : 'text-[11px]'
                                       }`}
+                                      title={v.name}
                                     >
-                                      {formatRupiah(getPosterVariantPrice(v.price))}
+                                      {getCleanVariantName(v.name, p.name)}
                                     </div>
-                                  )}
-                                </div>
+                                    {posterShowPrice && (
+                                      <div
+                                        className={`font-mono font-bold text-zinc-700 ${
+                                          posterDensity === 'compact' ? 'text-[9px]' : 'text-[10px]'
+                                        }`}
+                                      >
+                                        {formatRupiah(getPosterVariantPrice(v.price))}
+                                      </div>
+                                    )}
+                                  </div>
 
-                                {/* Indicator (Kotak atau Lingkaran) */}
-                                <div className="shrink-0">
-                                  {posterShape === 'circle' ? (
-                                    <span
-                                      className={`rounded-full border-2 border-black flex items-center justify-center shadow-[1.5px_1.5px_0_#000] ${
-                                        posterDensity === 'compact' ? 'w-3 h-3' : 'w-4 h-4'
-                                      } ${
-                                        isReady ? 'bg-emerald-400' : 'bg-rose-400'
-                                      }`}
-                                      title={isReady ? 'Ready' : 'Habis'}
-                                    ></span>
-                                  ) : (
-                                    <span
-                                      className={`rounded font-black uppercase border-2 border-black shadow-[1.5px_1.5px_0_#000] ${
-                                        posterDensity === 'compact' ? 'px-1 py-0.5 text-[8px]' : 'px-1.5 py-0.5 text-[9px]'
-                                      } ${
-                                        isReady ? 'bg-emerald-400 text-black' : 'bg-rose-400 text-black line-through'
-                                      }`}
-                                    >
-                                      {isReady ? 'Ready' : 'Habis'}
-                                    </span>
-                                  )}
+                                  {/* Indicator (Kotak atau Lingkaran) */}
+                                  <div className="shrink-0">
+                                    {posterShape === 'circle' ? (
+                                      <span
+                                        className={`rounded-full border-2 border-black flex items-center justify-center shadow-[1.5px_1.5px_0_#000] ${
+                                          posterDensity === 'compact' ? 'w-3 h-3' : 'w-4 h-4'
+                                        } ${
+                                          isReady ? 'bg-emerald-400' : 'bg-rose-400'
+                                        }`}
+                                        title={isReady ? 'Ready' : 'Habis'}
+                                      ></span>
+                                    ) : (
+                                      <span
+                                        className={`rounded font-black uppercase border-2 border-black shadow-[1.5px_1.5px_0_#000] ${
+                                          posterDensity === 'compact' ? 'px-1 py-0.5 text-[8px]' : 'px-1.5 py-0.5 text-[9px]'
+                                        } ${
+                                          isReady ? 'bg-emerald-400 text-black' : 'bg-rose-400 text-black line-through'
+                                        }`}
+                                      >
+                                        {isReady ? 'Ready' : 'Habis'}
+                                      </span>
+                                    )}
+                                  </div>
                                 </div>
+                              );
+                            })}
+                          </div>
+                        ) : (
+                          <div className="p-2.5 rounded-lg bg-yellow-50/90 border-2 border-black flex items-center justify-between gap-2 shadow-[1.5px_1.5px_0_#000]">
+                            <div className="min-w-0 flex-1">
+                              {posterShowPrice && (
+                                <div className="font-mono font-black text-black text-xs sm:text-sm">
+                                  {p.filteredVariants.length > 0
+                                    ? `Mulai ${formatRupiah(getPosterVariantPrice(Math.min(...p.filteredVariants.map((v) => Number(v.price) || 0))))}`
+                                    : 'Hubungi Kami'}
+                                </div>
+                              )}
+                              <div className="text-[10px] font-bold text-zinc-600 mt-0.5">
+                                {p.filteredVariants.length} Pilihan Paket / Durasi
                               </div>
-                            );
-                          })}
-                        </div>
+                            </div>
+                            <span
+                              className={`px-2 py-0.5 rounded text-[10px] font-black uppercase border-2 border-black shadow-[1px_1px_0_#000] ${
+                                p.filteredVariants.some((v) => v.isAvailable !== false)
+                                  ? 'bg-emerald-400 text-black'
+                                  : 'bg-rose-400 text-black'
+                              }`}
+                            >
+                              {p.filteredVariants.some((v) => v.isAvailable !== false) ? 'Ready' : 'Habis'}
+                            </span>
+                          </div>
+                        )}
                       </div>
                     </div>
                   ))}
@@ -6468,6 +6674,243 @@ export default function Dashboard() {
               >
                 {confirmState.confirmText || 'Konfirmasi'}
               </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ==================================================================== */}
+      {/* POSTER PRODUCT CHECKLIST PICKER MODAL                               */}
+      {/* ==================================================================== */}
+      {showPosterProductPicker && (
+        <div className="fixed inset-0 z-50 bg-black/60 flex items-center justify-center p-3 sm:p-6 backdrop-blur-xs">
+          <div className="bg-white border-4 border-black shadow-[8px_8px_0_#000] rounded-2xl max-w-4xl w-full max-h-[90vh] flex flex-col overflow-hidden animate-in fade-in duration-150">
+            {/* Modal Header */}
+            <div className="p-4 sm:p-5 bg-[#FFE600] border-b-3 border-black flex items-center justify-between gap-3 shrink-0">
+              <div className="flex items-center gap-2.5 min-w-0">
+                <div className="w-9 h-9 bg-black text-yellow-300 border-2 border-black rounded-xl flex items-center justify-center font-black shadow-[2px_2px_0_#000] shrink-0">
+                  <ListChecks className="w-5 h-5" />
+                </div>
+                <div>
+                  <h3 className="text-base sm:text-lg font-black uppercase tracking-tight text-black">
+                    Pilih Produk Poster Promo
+                  </h3>
+                  <p className="text-[11px] font-bold text-black/80">
+                    Centang produk yang ingin kamu sertakan di poster (misal: Canva, Netflix, CapCut doang).
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowPosterProductPicker(false)}
+                className="w-8 h-8 rounded-xl bg-white hover:bg-rose-200 text-black border-2 border-black shadow-[2px_2px_0_#000] flex items-center justify-center font-black transition cursor-pointer shrink-0"
+              >
+                <X className="w-5 h-5" />
+              </button>
+            </div>
+
+            {/* Modal Toolbar: Search & Category Filter */}
+            <div className="p-3 sm:p-4 bg-zinc-50 border-b-2 border-black space-y-2.5 shrink-0">
+              <div className="flex flex-col sm:flex-row gap-2">
+                <div className="relative flex-1">
+                  <Search className="w-4 h-4 text-black absolute left-3 top-1/2 -translate-y-1/2" />
+                  <input
+                    type="text"
+                    placeholder="Cari nama produk / varian (misal: Canva, Netflix, CapCut)..."
+                    value={posterPickerSearch}
+                    onChange={(e) => setPosterPickerSearch(e.target.value)}
+                    className="w-full pl-9 pr-3 py-2 rounded-xl bg-white border-2 border-black shadow-[2px_2px_0_#000] text-xs font-bold text-black outline-none"
+                  />
+                  {posterPickerSearch && (
+                    <button
+                      type="button"
+                      onClick={() => setPosterPickerSearch('')}
+                      className="absolute right-3 top-1/2 -translate-y-1/2 text-xs font-black text-zinc-500 hover:text-black"
+                    >
+                      ×
+                    </button>
+                  )}
+                </div>
+
+                <div className="flex items-center gap-2">
+                  <select
+                    value={posterPickerCategory}
+                    onChange={(e) => setPosterPickerCategory(e.target.value)}
+                    className="px-3 py-2 rounded-xl bg-white border-2 border-black shadow-[2px_2px_0_#000] text-xs font-black text-black outline-none cursor-pointer"
+                  >
+                    <option value="all">Semua Kategori ({categories.length})</option>
+                    {categories.map((c) => (
+                      <option key={c.id} value={c.id}>
+                        {c.name}
+                      </option>
+                    ))}
+                  </select>
+
+                  <select
+                    value={posterPickerStockFilter}
+                    onChange={(e) => setPosterPickerStockFilter(e.target.value)}
+                    className="px-3 py-2 rounded-xl bg-white border-2 border-black shadow-[2px_2px_0_#000] text-xs font-black text-black outline-none cursor-pointer"
+                  >
+                    <option value="all">Semua Stok</option>
+                    <option value="ready">Hanya Ready</option>
+                  </select>
+                </div>
+              </div>
+
+              {/* Bulk Action Controls */}
+              <div className="flex flex-wrap items-center justify-between gap-2 pt-1 text-xs">
+                <div className="flex flex-wrap items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const currentFilterIds = posterPickerProducts.map((p) => p.id);
+                      if (posterSelectedProductIds === null) {
+                        // Already all selected
+                      } else {
+                        const merged = Array.from(new Set([...posterSelectedProductIds, ...currentFilterIds]));
+                        setPosterSelectedProductIds(merged.length === products.length ? null : merged);
+                      }
+                      showToast(`Memilih produk dari filter ini (${posterPickerProducts.length} produk).`, 'info');
+                    }}
+                    className="px-2.5 py-1 rounded-lg border-2 border-black bg-yellow-200 hover:bg-yellow-300 text-black font-black text-[11px] uppercase shadow-[1.5px_1.5px_0_#000] transition cursor-pointer"
+                  >
+                    Pilih Yang Tampil ({posterPickerProducts.length})
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleSelectAllPosterProducts}
+                    className="px-2.5 py-1 rounded-lg border-2 border-black bg-white hover:bg-yellow-100 text-black font-black text-[11px] uppercase shadow-[1.5px_1.5px_0_#000] transition cursor-pointer"
+                  >
+                    Pilih Semua Katalog ({products.length})
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      const currentFilterIds = posterPickerProducts.map((p) => p.id);
+                      if (posterSelectedProductIds === null) {
+                        const remaining = products.filter((p) => !currentFilterIds.includes(p.id)).map((p) => p.id);
+                        setPosterSelectedProductIds(remaining);
+                      } else {
+                        setPosterSelectedProductIds(posterSelectedProductIds.filter((id) => !currentFilterIds.includes(id)));
+                      }
+                      showToast('Membatalkan pilihan produk dari filter ini.', 'info');
+                    }}
+                    className="px-2.5 py-1 rounded-lg border-2 border-black bg-rose-100 hover:bg-rose-200 text-rose-950 font-black text-[11px] uppercase shadow-[1.5px_1.5px_0_#000] transition cursor-pointer"
+                  >
+                    Lepas Yang Tampil
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={handleDeselectAllPosterProducts}
+                    className="px-2.5 py-1 rounded-lg border-2 border-black bg-zinc-200 hover:bg-zinc-300 text-zinc-900 font-black text-[11px] uppercase shadow-[1.5px_1.5px_0_#000] transition cursor-pointer"
+                  >
+                    Kosongkan Semua
+                  </button>
+                </div>
+
+                <div className="text-[11px] font-black uppercase text-zinc-700 bg-white px-2.5 py-1 rounded-lg border border-black shadow-[1px_1px_0_#000]">
+                  {currentPosterSelectedCount} dari {products.length} Terpilih
+                </div>
+              </div>
+            </div>
+
+            {/* Product Cards List (Scrollable) */}
+            <div className="flex-1 overflow-y-auto p-3 sm:p-4 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-2.5 bg-[#FFFDF0]/50">
+              {posterPickerProducts.length === 0 ? (
+                <div className="col-span-full py-12 text-center">
+                  <div className="text-sm font-black text-zinc-800 uppercase">Tidak ada produk yang cocok</div>
+                  <div className="text-xs font-bold text-zinc-500 mt-1">Coba ganti kata kunci pencarian atau kategori filter</div>
+                </div>
+              ) : (
+                posterPickerProducts.map((p) => {
+                  const isSelected = isPosterProductSelected(p.id);
+                  const prodVars = variants.filter((v) => v.productId === p.id);
+                  const isReady = prodVars.some((v) => v.isAvailable !== false);
+                  const minPrice = prodVars.length > 0
+                    ? Math.min(...prodVars.map((v) => Number(v.price) || 0))
+                    : 0;
+
+                  return (
+                    <div
+                      key={`pick_adm_${p.id}`}
+                      onClick={() => handleTogglePosterProduct(p.id)}
+                      className={`p-3 rounded-xl border-2 transition cursor-pointer select-none flex flex-col justify-between ${
+                        isSelected
+                          ? 'border-black bg-yellow-100/90 shadow-[3px_3px_0_#000]'
+                          : 'border-black/30 bg-white hover:border-black hover:bg-yellow-50/50 shadow-[1px_1px_0_#000] opacity-80 hover:opacity-100'
+                      }`}
+                    >
+                      <div className="space-y-1.5">
+                        <div className="flex items-start justify-between gap-2">
+                          <div className="font-black text-black text-xs uppercase leading-tight line-clamp-2">
+                            {p.name}
+                          </div>
+                          <div className="shrink-0 mt-0.5">
+                            {isSelected ? (
+                              <div className="w-5 h-5 bg-black text-[#FFE600] rounded flex items-center justify-center border border-black shadow-[1px_1px_0_#000]">
+                                <Check className="w-3.5 h-3.5 stroke-[3]" />
+                              </div>
+                            ) : (
+                              <div className="w-5 h-5 bg-white border-2 border-black/50 rounded" />
+                            )}
+                          </div>
+                        </div>
+
+                        <div className="flex items-center gap-1.5 flex-wrap">
+                          <span className="bg-zinc-100 px-1.5 py-0.5 rounded text-[9px] font-bold border border-black/30">
+                            {categories.find((c) => c.id === p.categoryId)?.name || 'Umum'}
+                          </span>
+                          <span
+                            className={`px-1.5 py-0.5 rounded text-[9px] font-black uppercase border border-black ${
+                              isReady ? 'bg-emerald-200 text-emerald-950' : 'bg-rose-200 text-rose-950'
+                            }`}
+                          >
+                            {isReady ? 'Ready' : 'Habis'}
+                          </span>
+                          <span className="text-[9px] font-bold text-zinc-500">
+                            {prodVars.length} Varian
+                          </span>
+                        </div>
+                      </div>
+
+                      <div className="pt-2 mt-2 border-t border-black/10 flex items-baseline justify-between">
+                        <span className="text-[9px] font-bold text-zinc-600 uppercase">Harga Mulai:</span>
+                        <span className="text-xs font-mono font-black text-black">
+                          {formatRupiah(getPosterVariantPrice(minPrice))}
+                        </span>
+                      </div>
+                    </div>
+                  );
+                })
+              )}
+            </div>
+
+            {/* Modal Footer */}
+            <div className="p-3 sm:p-4 bg-white border-t-3 border-black flex flex-col sm:flex-row items-center justify-between gap-3 shrink-0">
+              <div className="text-xs font-bold text-zinc-700 text-center sm:text-left">
+                <span className="font-black text-black text-sm">{currentPosterSelectedCount}</span> produk dipilih. Poster otomatis diperbarui.
+              </div>
+
+              <div className="flex items-center gap-2 w-full sm:w-auto">
+                <button
+                  type="button"
+                  onClick={handleSelectAllPosterProducts}
+                  className="flex-1 sm:flex-none neo-btn px-3 py-2 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-black text-xs font-black border-2 border-black shadow-[2px_2px_0_#000] uppercase tracking-wider cursor-pointer"
+                >
+                  Reset Semua
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowPosterProductPicker(false)}
+                  className="flex-1 sm:flex-none neo-btn px-5 py-2 rounded-xl bg-[#FFE600] hover:bg-[#ffea33] text-black text-xs font-black border-2 border-black shadow-[3px_3px_0_#000] uppercase tracking-wider flex items-center justify-center gap-1.5 cursor-pointer"
+                >
+                  <Check className="w-4 h-4 stroke-[3]" />
+                  <span>Selesai ({currentPosterSelectedCount})</span>
+                </button>
+              </div>
             </div>
           </div>
         </div>

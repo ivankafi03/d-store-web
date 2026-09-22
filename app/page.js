@@ -1325,6 +1325,21 @@ export default function Dashboard() {
   };
 
   // Scraper Handlers
+  const handleResetScraperLock = async () => {
+    try {
+      await fetch('/api/scraper', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'reset_lock' })
+      });
+      setTelegramScraping(false);
+      setTelegramScrapeLogs(prev => [...prev, `[${new Date().toLocaleTimeString('id-ID')}] [INFO] Kunci scraper berhasil direset.`]);
+      showToast('Kunci scraper berhasil direset!', 'success');
+    } catch (err) {
+      showToast('Gagal mereset: ' + err.message, 'error');
+    }
+  };
+
   const handleTelegramBotScrape = async () => {
     if (telegramScraping) return;
     setTelegramScraping(true);
@@ -3535,16 +3550,16 @@ export default function Dashboard() {
                         </span>
                       </div>
 
-                      <div className="relative">
-                        <span className="absolute left-3.5 top-1/2 -translate-y-1/2 text-zinc-600 text-xs font-mono font-black">
+                      <div className="flex rounded-xl border-2 border-black shadow-[2px_2px_0_#000] overflow-hidden bg-white">
+                        <div className="px-3 py-2 bg-yellow-300 border-r-2 border-black text-black font-mono font-black text-xs select-none flex items-center shrink-0">
                           @
-                        </span>
+                        </div>
                         <input
                           type="text"
                           value={scraperTargetBot}
                           onChange={(e) => setScraperTargetBot(e.target.value.replace(/^@/, ''))}
                           placeholder="heavenprem_bot / Ziem7_bot"
-                          className="w-full pl-8 pr-3 py-2 rounded-xl bg-white border-2 border-black shadow-[2px_2px_0_#000] text-xs text-black font-mono font-bold focus:outline-none focus:bg-yellow-50 transition"
+                          className="flex-1 px-3 py-2 text-xs text-black font-mono font-bold bg-transparent outline-none focus:bg-yellow-50 transition"
                         />
                       </div>
 
@@ -3554,7 +3569,7 @@ export default function Dashboard() {
                           <span>Pilihan Bot Populer:</span>
                           <span className="text-[9px] font-bold text-zinc-400">Klik untuk langsung pilih</span>
                         </div>
-                        <div className="grid grid-cols-2 sm:grid-cols-3 gap-1.5">
+                        <div className="flex flex-wrap gap-1.5">
                           {[
                             'heavenprem_bot',
                             'Ziem7_bot',
@@ -3567,15 +3582,14 @@ export default function Dashboard() {
                               key={bot}
                               type="button"
                               onClick={() => setScraperTargetBot(bot)}
-                              className={`px-2.5 py-1.5 rounded-lg text-[10px] font-mono font-black border-2 border-black shadow-[1.5px_1.5px_0_#000] transition active:translate-x-0.5 active:translate-y-0.5 truncate text-left flex items-center gap-1 cursor-pointer ${
+                              className={`px-3 py-1.5 rounded-lg text-xs font-mono font-black border-2 border-black shadow-[1.5px_1.5px_0_#000] transition whitespace-nowrap cursor-pointer active:translate-x-0.5 active:translate-y-0.5 ${
                                 scraperTargetBot.toLowerCase() === bot.toLowerCase()
                                   ? 'bg-[#FFE600] text-black ring-1 ring-black'
-                                  : 'bg-white text-zinc-700 hover:bg-yellow-50'
+                                  : 'bg-white text-zinc-800 hover:bg-yellow-50'
                               }`}
                               title={`@${bot}`}
                             >
-                              <span className="text-zinc-500 font-bold">@</span>
-                              <span className="truncate">{bot}</span>
+                              @{bot}
                             </button>
                           ))}
                         </div>
@@ -3643,12 +3657,23 @@ export default function Dashboard() {
                           <Terminal className="w-3.5 h-3.5 text-black" />
                           Log Real-Time
                         </span>
-                        <button 
-                          onClick={() => setTelegramScrapeLogs([])}
-                          className="neo-btn text-[11px] px-2 py-0.5 rounded bg-white text-black border border-black font-bold"
-                        >
-                          Bersihkan
-                        </button>
+                        <div className="flex items-center gap-1.5">
+                          <button 
+                            type="button"
+                            onClick={handleResetScraperLock}
+                            className="neo-btn text-[11px] px-2 py-0.5 rounded bg-amber-100 hover:bg-amber-200 text-black border border-black font-bold"
+                            title="Reset kunci jika proses scraper tertahan"
+                          >
+                            Reset Kunci
+                          </button>
+                          <button 
+                            type="button"
+                            onClick={() => setTelegramScrapeLogs([])}
+                            className="neo-btn text-[11px] px-2 py-0.5 rounded bg-white hover:bg-zinc-100 text-black border border-black font-bold"
+                          >
+                            Bersihkan
+                          </button>
+                        </div>
                       </div>
                       <div className="p-3.5 bg-black border-2 border-black shadow-[4px_4px_0_#000] rounded-xl max-h-44 overflow-y-auto font-mono text-[11px] text-[#00E599] space-y-1 no-scrollbar leading-relaxed">
                         {telegramScrapeLogs.map((log, idx) => (

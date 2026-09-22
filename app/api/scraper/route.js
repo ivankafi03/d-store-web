@@ -3,10 +3,15 @@ import {
   scrapeTelegramSupplier, 
   parseSupplierTextWithAI, 
   importParsedProducts, 
-  isScraperBusy 
+  isScraperBusy,
+  resetScraperLock
 } from '@/lib/scraper';
 
-export async function GET() {
+export async function GET(request) {
+  const { searchParams } = new URL(request.url);
+  if (searchParams.get('reset') === '1') {
+    resetScraperLock();
+  }
   return NextResponse.json({
     status: 'ok',
     isBusy: isScraperBusy()
@@ -18,8 +23,14 @@ export async function POST(request) {
     const body = await request.json().catch(() => ({}));
     const { action } = body;
 
+    if (action === 'reset_lock') {
+      resetScraperLock();
+      return NextResponse.json({ success: true, message: 'Kunci scraper berhasil direset.' });
+    }
+
     if (action === 'telegram_bot_scrape') {
-      const { limit = 75, targetBot = 'heavenprem_bot' } = body;
+      const { limit = 75, targetBot = 'heavenprem_bot', force = false } = body;
+      if (force) resetScraperLock();
       const result = await scrapeTelegramSupplier({ limit: Number(limit) || 75, targetBot });
       return NextResponse.json(result);
     }

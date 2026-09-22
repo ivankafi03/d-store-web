@@ -179,6 +179,87 @@ export async function POST(request) {
       return NextResponse.json({ status: 'ok', product: prod, variant: newVar });
     }
 
+    if (action === 'bulk_update_prices') {
+      const {
+        mode = 'add_to_cost',
+        amount = 1000,
+        randomMin = 1000,
+        randomMax = 3000,
+        roundTo = 500,
+        categoryFilter = 'all',
+        supplierFilter = 'all',
+        variantIds = null
+      } = body;
+
+      const products = db.products || [];
+      const variants = db.variants || [];
+
+      const targets = variants.filter(v => {
+        if (Array.isArray(variantIds) && variantIds.length > 0) {
+          return variantIds.includes(v.id);
+        }
+        if (supplierFilter !== 'all') {
+          const vSupp = (v.supplier || '').toLowerCase();
+          if (vSupp !== supplierFilter.toLowerCase()) return false;
+        }
+        if (categoryFilter !== 'all') {
+          const p = products.find(prod => prod.id === v.productId);
+          if (!p || p.categoryId !== categoryFilter) return false;
+        }
+        return true;
+      });
+
+      if (targets.length === 0) {
+        return NextResponse.json({ status: 'error', message: 'Tidak ada varian yang sesuai dengan filter' }, { status: 400 });
+      }
+
+      const step = Math.max(100, Number(roundTo) || 500);
+      let updatedCount = 0;
+
+      for (const v of targets) {
+        const cost = Number(v.costPrice) || 0;
+        const currentSell = Number(v.price) || 0;
+        let newSell = currentSell;
+
+        if (mode === 'add_to_cost') {
+          newSell = cost + Number(amount || 0);
+        } else if (mode === 'add_to_selling') {
+          newSell = currentSell + Number(amount || 0);
+        } else if (mode === 'random_margin') {
+          const minVal = Math.min(Number(randomMin) || 1000, Number(randomMax) || 3000);
+          const maxVal = Math.max(Number(randomMin) || 1000, Number(randomMax) || 3000);
+          const minSteps = Math.floor(minVal / step);
+          const maxSteps = Math.floor(maxVal / step);
+          const chosenStep = Math.floor(Math.random() * (maxSteps - minSteps + 1)) + minSteps;
+          newSell = cost + (chosenStep * step);
+        } else if (mode === 'percent_cost') {
+          const pct = Number(amount) || 10;
+          newSell = Math.round((cost * (1 + pct / 100)) / step) * step;
+        }
+
+        newSell = Math.round(newSell / step) * step;
+
+        if (newSell <= cost) {
+          newSell = cost + step;
+        }
+        if (newSell <= 0) {
+          newSell = step;
+        }
+
+        v.price = newSell;
+        updatedCount++;
+      }
+
+      saveDb(db);
+      pushToGoogleSheet().catch(err => console.warn('Background sync failed:', err.message));
+
+      return NextResponse.json({
+        status: 'ok',
+        updatedCount,
+        variants: db.variants
+      });
+    }
+
     if (action === 'delete_variant') {
       const { variantId } = body;
       db.variants = (db.variants || []).filter(v => v.id !== variantId);

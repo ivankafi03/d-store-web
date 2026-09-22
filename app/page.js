@@ -92,6 +92,17 @@ export default function Dashboard() {
   const [copiedInvoice, setCopiedInvoice] = useState(false);
   const [lastRecordedSale, setLastRecordedSale] = useState(null);
 
+  // Bulk Price Update Modal State
+  const [bulkPriceModalOpen, setBulkPriceModalOpen] = useState(false);
+  const [bulkPriceMode, setBulkPriceMode] = useState('add_to_cost'); // 'add_to_cost', 'add_to_selling', 'random_margin'
+  const [bulkPriceAmount, setBulkPriceAmount] = useState(2000);
+  const [bulkRandomMin, setBulkRandomMin] = useState(1000);
+  const [bulkRandomMax, setBulkRandomMax] = useState(3000);
+  const [bulkRoundTo, setBulkRoundTo] = useState(500);
+  const [bulkCategoryFilter, setBulkCategoryFilter] = useState('all');
+  const [bulkSupplierFilter, setBulkSupplierFilter] = useState('all');
+  const [bulkUpdating, setBulkUpdating] = useState(false);
+
   // Glossary & Canva Guide Modal State
   const [glossaryModalOpen, setGlossaryModalOpen] = useState(false);
   const [glossaryTab, setGlossaryTab] = useState('canva'); // 'canva', 'terms', 'categories'
@@ -872,6 +883,45 @@ export default function Dashboard() {
       }
     } catch (err) {
       showToast('Gagal menambah produk: ' + err.message, 'error');
+    }
+  };
+
+  // Bulk Price Update Handler
+  const handleBulkUpdatePrices = async () => {
+    setBulkUpdating(true);
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'bulk_update_prices',
+          mode: bulkPriceMode,
+          amount: Number(bulkPriceAmount) || 0,
+          randomMin: Number(bulkRandomMin) || 1000,
+          randomMax: Number(bulkRandomMax) || 3000,
+          roundTo: Number(bulkRoundTo) || 500,
+          categoryFilter: bulkCategoryFilter,
+          supplierFilter: bulkSupplierFilter
+        })
+      });
+      const data = await res.json();
+      if (data.status === 'ok') {
+        if (Array.isArray(data.variants)) {
+          const cleanVars = data.variants.map(v => ({
+            ...v,
+            name: standardizeDurationStr(v.name)
+          }));
+          setVariants(cleanVars);
+        }
+        setBulkPriceModalOpen(false);
+        showToast(`Sukses! ${data.updatedCount} varian berhasil diupdate dan disinkronkan ke Spreadsheet.`, 'success');
+      } else {
+        showToast('Gagal update harga massal: ' + (data.message || 'Error'), 'error');
+      }
+    } catch (err) {
+      showToast('Error: ' + err.message, 'error');
+    } finally {
+      setBulkUpdating(false);
     }
   };
 
@@ -2043,6 +2093,16 @@ export default function Dashboard() {
                   >
                     <ImageIcon className="w-3.5 h-3.5" />
                     <span>Poster Promo</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setBulkPriceModalOpen(true)}
+                    className="neo-btn flex items-center justify-center gap-1.5 px-3.5 py-2.5 bg-emerald-300 hover:bg-emerald-200 text-black text-xs font-black uppercase tracking-tight border-2 border-black shadow-[3px_3px_0px_0px_#000] transition cursor-pointer"
+                    title="Atur Harga Massal Semua Produk"
+                  >
+                    <BarChart3 className="w-3.5 h-3.5" />
+                    <span>Atur Harga</span>
                   </button>
 
                   <button
@@ -6226,6 +6286,211 @@ export default function Dashboard() {
                 </form>
               )}
             </div>
+          </div>
+        </div>
+      )}
+
+      {/* ==================================================================== */}
+      {/* MODAL: ATUR HARGA MASSAL                                             */}
+      {/* ==================================================================== */}
+      {bulkPriceModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
+          <div className="bg-white border-3 border-black rounded-2xl w-full max-w-lg p-5 sm:p-6 space-y-5 shadow-[8px_8px_0_#000] my-auto max-h-[90vh] overflow-y-auto no-scrollbar">
+
+            {/* Header */}
+            <div className="flex items-start justify-between pb-3 border-b-2 border-black">
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-lg bg-emerald-300 text-black flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
+                  <BarChart3 className="w-4 h-4" />
+                </span>
+                <div>
+                  <h3 className="font-black text-sm sm:text-base text-black uppercase tracking-wide">Atur Harga Massal</h3>
+                  <p className="text-xs text-zinc-600 font-bold mt-0.5">Update harga jual semua / subset varian sekaligus</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setBulkPriceModalOpen(false)}
+                className="text-black bg-zinc-200 hover:bg-black hover:text-white font-black text-xs px-2.5 py-1.5 border-2 border-black shadow-[2px_2px_0_#000] transition cursor-pointer rounded-lg"
+              >
+                ✕
+              </button>
+            </div>
+
+            {/* Mode Selector */}
+            <div>
+              <label className="text-[10px] text-zinc-700 font-black uppercase tracking-wider block mb-2">Mode Penetapan Harga</label>
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-2">
+                {[
+                  { val: 'add_to_cost', label: 'Modal + Nominal Tetap', desc: 'Harga jual = modal + jumlah' },
+                  { val: 'add_to_selling', label: 'Jual + Nominal Tetap', desc: 'Harga jual += jumlah' },
+                  { val: 'random_margin', label: 'Modal + Random Selisih', desc: 'Harga jual = modal + random(min–maks)' },
+                  { val: 'percent_cost', label: 'Modal × Persentase', desc: 'Harga jual = modal × (1 + %)' },
+                ].map(opt => (
+                  <button
+                    key={opt.val}
+                    type="button"
+                    onClick={() => setBulkPriceMode(opt.val)}
+                    className={`text-left p-2.5 border-2 border-black rounded-xl transition cursor-pointer shadow-[2px_2px_0_#000] ${bulkPriceMode === opt.val ? 'bg-emerald-300 font-black' : 'bg-zinc-50 hover:bg-emerald-50 font-bold'}`}
+                  >
+                    <div className="text-xs text-black font-black">{opt.label}</div>
+                    <div className="text-[10px] text-zinc-600 mt-0.5">{opt.desc}</div>
+                  </button>
+                ))}
+              </div>
+            </div>
+
+            {/* Amount Input — shown for all except random */}
+            {bulkPriceMode !== 'random_margin' && (
+              <div>
+                <label className="text-[10px] text-zinc-700 font-black uppercase tracking-wider block mb-1">
+                  {bulkPriceMode === 'percent_cost' ? 'Persentase Margin (%)' : 'Nominal Tambah (Rp)'}
+                </label>
+                <input
+                  type="number"
+                  min="0"
+                  step={bulkPriceMode === 'percent_cost' ? '1' : '500'}
+                  value={bulkPriceAmount}
+                  onChange={e => setBulkPriceAmount(e.target.value)}
+                  className="w-full px-3 py-2.5 bg-white border-2 border-black text-sm font-black text-black outline-none shadow-[2px_2px_0_#000] rounded-xl"
+                  placeholder={bulkPriceMode === 'percent_cost' ? 'Contoh: 20 (artinya +20%)' : 'Contoh: 2000'}
+                />
+                {bulkPriceMode === 'percent_cost' && (
+                  <p className="text-[10px] text-zinc-500 font-bold mt-1">Misal: isi 20 → harga jual = modal × 1.20</p>
+                )}
+              </div>
+            )}
+
+            {/* Min/Max Random — shown only for random mode */}
+            {bulkPriceMode === 'random_margin' && (
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-[10px] text-zinc-700 font-black uppercase tracking-wider block mb-1">Selisih Min (Rp)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="500"
+                    value={bulkRandomMin}
+                    onChange={e => setBulkRandomMin(e.target.value)}
+                    className="w-full px-3 py-2.5 bg-white border-2 border-black text-sm font-black text-black outline-none shadow-[2px_2px_0_#000] rounded-xl"
+                    placeholder="1000"
+                  />
+                </div>
+                <div>
+                  <label className="text-[10px] text-zinc-700 font-black uppercase tracking-wider block mb-1">Selisih Maks (Rp)</label>
+                  <input
+                    type="number"
+                    min="0"
+                    step="500"
+                    value={bulkRandomMax}
+                    onChange={e => setBulkRandomMax(e.target.value)}
+                    className="w-full px-3 py-2.5 bg-white border-2 border-black text-sm font-black text-black outline-none shadow-[2px_2px_0_#000] rounded-xl"
+                    placeholder="3000"
+                  />
+                </div>
+              </div>
+            )}
+
+            {/* Rounding */}
+            <div>
+              <label className="text-[10px] text-zinc-700 font-black uppercase tracking-wider block mb-1">Pembulatan Harga</label>
+              <select
+                value={bulkRoundTo}
+                onChange={e => setBulkRoundTo(Number(e.target.value))}
+                className="w-full px-3 py-2.5 bg-white border-2 border-black text-xs font-black text-black outline-none shadow-[2px_2px_0_#000] rounded-xl cursor-pointer"
+              >
+                <option value={500}>Rp 500</option>
+                <option value={1000}>Rp 1.000</option>
+                <option value={2000}>Rp 2.000</option>
+                <option value={5000}>Rp 5.000</option>
+                <option value={10000}>Rp 10.000</option>
+              </select>
+            </div>
+
+            {/* Filters */}
+            <div className="grid grid-cols-2 gap-3">
+              <div>
+                <label className="text-[10px] text-zinc-700 font-black uppercase tracking-wider block mb-1">Filter Kategori</label>
+                <select
+                  value={bulkCategoryFilter}
+                  onChange={e => setBulkCategoryFilter(e.target.value)}
+                  className="w-full px-3 py-2.5 bg-white border-2 border-black text-xs font-bold text-black outline-none shadow-[2px_2px_0_#000] rounded-xl cursor-pointer"
+                >
+                  <option value="all">Semua Kategori</option>
+                  {categories.filter(c => c !== 'all').map(c => (
+                    <option key={c} value={c}>{c}</option>
+                  ))}
+                </select>
+              </div>
+              <div>
+                <label className="text-[10px] text-zinc-700 font-black uppercase tracking-wider block mb-1">Filter Supplier</label>
+                <select
+                  value={bulkSupplierFilter}
+                  onChange={e => setBulkSupplierFilter(e.target.value)}
+                  className="w-full px-3 py-2.5 bg-white border-2 border-black text-xs font-bold text-black outline-none shadow-[2px_2px_0_#000] rounded-xl cursor-pointer"
+                >
+                  <option value="all">Semua Supplier</option>
+                  {allSuppliers.map(s => (
+                    <option key={s} value={s}>{s}</option>
+                  ))}
+                </select>
+              </div>
+            </div>
+
+            {/* Preview count */}
+            {(() => {
+              const previewCount = variants.filter(v => {
+                const catOk = bulkCategoryFilter === 'all' || v.category === bulkCategoryFilter;
+                const supOk = bulkSupplierFilter === 'all' || (v.supplierOffers || []).some(o => o.supplierName === bulkSupplierFilter);
+                return catOk && supOk;
+              }).length;
+              return (
+                <div className="bg-emerald-50 border-2 border-emerald-400 rounded-xl px-4 py-3 flex items-center gap-2">
+                  <Zap className="w-4 h-4 text-emerald-700 shrink-0" />
+                  <p className="text-xs font-black text-emerald-900">
+                    <span className="text-base">{previewCount}</span> varian akan diupdate
+                    {bulkCategoryFilter !== 'all' && <span className="font-bold text-emerald-700"> · {bulkCategoryFilter}</span>}
+                    {bulkSupplierFilter !== 'all' && <span className="font-bold text-emerald-700"> · {bulkSupplierFilter}</span>}
+                  </p>
+                </div>
+              );
+            })()}
+
+            {/* Warning */}
+            <div className="bg-amber-50 border-2 border-amber-400 rounded-xl px-4 py-3">
+              <p className="text-[11px] font-bold text-amber-900">⚠️ Aksi ini akan langsung mengubah harga jual dan sinkronisasi ke Spreadsheet. Pastikan data sudah benar sebelum konfirmasi.</p>
+            </div>
+
+            {/* Action Buttons */}
+            <div className="flex gap-3 pt-2">
+              <button
+                type="button"
+                onClick={() => setBulkPriceModalOpen(false)}
+                disabled={bulkUpdating}
+                className="flex-1 py-2.5 border-2 border-black bg-zinc-100 hover:bg-zinc-200 text-black text-xs font-black uppercase tracking-tight rounded-xl shadow-[2px_2px_0_#000] transition cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                onClick={handleBulkUpdatePrices}
+                disabled={bulkUpdating}
+                className="flex-[2] py-2.5 border-2 border-black bg-emerald-400 hover:bg-emerald-300 disabled:opacity-60 text-black text-xs font-black uppercase tracking-tight rounded-xl shadow-[2px_2px_0_#000] transition cursor-pointer flex items-center justify-center gap-2"
+              >
+                {bulkUpdating ? (
+                  <>
+                    <span className="animate-spin w-3.5 h-3.5 border-2 border-black border-t-transparent rounded-full inline-block" />
+                    Memproses...
+                  </>
+                ) : (
+                  <>
+                    <BarChart3 className="w-3.5 h-3.5" />
+                    Terapkan Harga Massal
+                  </>
+                )}
+              </button>
+            </div>
+
           </div>
         </div>
       )}

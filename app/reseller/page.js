@@ -1610,104 +1610,85 @@ export default function ResellerStudioPage() {
 
             {/* Slide Navigation Bar (Jika lebih dari 1 slide) */}
             {totalPosterPages > 1 && (
-              <div className="p-3 bg-white border-3 border-black shadow-[4px_4px_0_#000] rounded-2xl space-y-2.5 sm:space-y-0 sm:flex sm:items-center sm:justify-between sm:gap-3">
-                {/* Previous & Next Buttons + Mobile Dropdown */}
-                <div className="flex items-center gap-1.5 justify-between sm:justify-start">
+              <div className="p-3 bg-white border-3 border-black shadow-[4px_4px_0_#000] rounded-2xl flex flex-wrap items-center justify-between gap-3">
+                {/* Left: Previous & Next Buttons */}
+                <div className="flex items-center gap-2">
                   <button
                     type="button"
                     disabled={posterCurrentPage <= 1}
                     onClick={() => setPosterCurrentPage((p) => Math.max(1, p - 1))}
-                    className="neo-btn px-3 py-1.5 rounded-lg bg-yellow-300 hover:bg-yellow-200 text-black border-2 border-black font-black text-xs disabled:opacity-40 uppercase tracking-tight flex items-center gap-1 cursor-pointer transition active:translate-x-0.5"
+                    className="neo-btn px-3 py-1.5 rounded-lg bg-yellow-300 hover:bg-yellow-200 text-black border-2 border-black font-black text-xs disabled:opacity-40 uppercase tracking-tight flex items-center gap-1 cursor-pointer transition active:translate-x-0.5 shadow-[1.5px_1.5px_0_#000]"
                   >
                     <ChevronLeft className="w-3.5 h-3.5" />
                     <span>Sebelumnya</span>
                   </button>
 
-                  {/* Dropdown Khusus Layar Kecil / HP */}
-                  <div className="flex sm:hidden items-center gap-1">
-                    <select
-                      value={posterCurrentPage}
-                      onChange={(e) => setPosterCurrentPage(Number(e.target.value))}
-                      className="px-2 py-1 bg-yellow-100 font-black text-xs border-2 border-black rounded-lg shadow-[1px_1px_0_#000] outline-none"
-                    >
-                      {Array.from({ length: totalPosterPages }).map((_, i) => (
-                        <option key={i + 1} value={i + 1}>
-                          Slide {i + 1} / {totalPosterPages}
-                        </option>
-                      ))}
-                    </select>
-                  </div>
-
                   <button
                     type="button"
                     disabled={posterCurrentPage >= totalPosterPages}
                     onClick={() => setPosterCurrentPage((p) => Math.min(totalPosterPages, p + 1))}
-                    className="neo-btn px-3 py-1.5 rounded-lg bg-yellow-300 hover:bg-yellow-200 text-black border-2 border-black font-black text-xs disabled:opacity-40 uppercase tracking-tight flex items-center gap-1 cursor-pointer transition active:translate-x-0.5"
+                    className="neo-btn px-3 py-1.5 rounded-lg bg-yellow-300 hover:bg-yellow-200 text-black border-2 border-black font-black text-xs disabled:opacity-40 uppercase tracking-tight flex items-center gap-1 cursor-pointer transition active:translate-x-0.5 shadow-[1.5px_1.5px_0_#000]"
                   >
                     <span>Selanjutnya</span>
                     <ChevronRight className="w-3.5 h-3.5" />
                   </button>
                 </div>
 
-                {/* Indikator & Smart Pagination Buttons (Layar Sedang / Desktop) */}
-                <div className="hidden sm:flex items-center gap-2">
-                  <span className="text-xs font-black uppercase text-zinc-800 shrink-0">
-                    Slide {posterCurrentPage} / {totalPosterPages} ({filteredPosterProducts.length} Produk)
-                  </span>
-
-                  <div className="flex items-center gap-1">
-                    {getPaginationPages(posterCurrentPage, totalPosterPages).map((item, idx) => {
-                      if (item === '...') {
-                        return (
-                          <span key={`dots_${idx}`} className="px-1 text-xs font-black text-zinc-400 select-none">
-                            ...
-                          </span>
-                        );
-                      }
-                      return (
-                        <button
-                          key={item}
-                          type="button"
-                          onClick={() => setPosterCurrentPage(item)}
-                          className={`w-7 h-7 rounded-lg border-2 border-black text-xs font-black transition cursor-pointer ${
-                            posterCurrentPage === item
-                              ? 'bg-black text-[#FFE600] shadow-[1.5px_1.5px_0_#FFE600]'
-                              : 'bg-zinc-100 text-black hover:bg-yellow-100'
-                          }`}
-                        >
-                          {item}
-                        </button>
-                      );
-                    })}
-                  </div>
-                </div>
-
-                {/* Dropdown Lompat Cepat & Download Semua Slide */}
-                <div className="flex items-center gap-2 justify-end">
-                  <div className="hidden md:flex items-center gap-1">
-                    <span className="text-[10px] font-black uppercase text-zinc-600">Lompat:</span>
+                {/* Center: Slide Indicator & Selector */}
+                <div className="flex items-center gap-2 flex-wrap">
+                  <div className="flex items-center gap-1.5 bg-zinc-100 px-2.5 py-1 rounded-lg border-2 border-black shadow-[1.5px_1.5px_0_#000]">
+                    <span className="text-xs font-black uppercase text-zinc-700">Slide:</span>
                     <select
                       value={posterCurrentPage}
                       onChange={(e) => setPosterCurrentPage(Number(e.target.value))}
-                      className="px-2 py-1 bg-white font-black text-xs border-2 border-black rounded-lg shadow-[1px_1px_0_#000] outline-none cursor-pointer"
+                      className="px-2 py-0.5 bg-[#FFE600] font-black text-xs border border-black rounded shadow-[1px_1px_0_#000] outline-none cursor-pointer"
                     >
                       {Array.from({ length: totalPosterPages }).map((_, i) => (
                         <option key={i + 1} value={i + 1}>
-                          Slide {i + 1}
+                          {i + 1}
                         </option>
                       ))}
                     </select>
+                    <span className="text-xs font-black uppercase text-zinc-700">
+                      dari {totalPosterPages}
+                    </span>
+                    <span className="text-[10px] font-bold text-zinc-500 hidden sm:inline">
+                      ({filteredPosterProducts.length} Produk)
+                    </span>
                   </div>
 
+                  {/* Number Pills (Hanya jika <= 8 halaman agar tidak desak-desakan) */}
+                  {totalPosterPages <= 8 && (
+                    <div className="hidden lg:flex items-center gap-1">
+                      {Array.from({ length: totalPosterPages }).map((_, idx) => (
+                        <button
+                          key={idx + 1}
+                          type="button"
+                          onClick={() => setPosterCurrentPage(idx + 1)}
+                          className={`w-7 h-7 rounded-lg border-2 border-black text-xs font-black transition cursor-pointer ${
+                            posterCurrentPage === idx + 1
+                              ? 'bg-black text-[#FFE600] shadow-[1.5px_1.5px_0_#FFE600]'
+                              : 'bg-white text-black hover:bg-yellow-100 shadow-[1px_1px_0_#000]'
+                          }`}
+                        >
+                          {idx + 1}
+                        </button>
+                      ))}
+                    </div>
+                  )}
+                </div>
+
+                {/* Right: Download All Slides Button */}
+                <div className="flex items-center">
                   <button
                     type="button"
                     disabled={generatingPoster}
                     onClick={() => handleDownloadAllSlides('png')}
-                    className="w-full sm:w-auto neo-btn flex items-center justify-center gap-1.5 px-3 py-1.5 rounded-lg bg-cyan-300 hover:bg-cyan-200 text-black text-xs font-black border-2 border-black shadow-[2px_2px_0_#000] uppercase tracking-wider disabled:opacity-50 cursor-pointer"
+                    className="neo-btn flex items-center justify-center gap-1.5 px-3.5 py-1.5 rounded-lg bg-cyan-300 hover:bg-cyan-200 text-black text-xs font-black border-2 border-black shadow-[2px_2px_0_#000] uppercase tracking-wider disabled:opacity-50 cursor-pointer transition"
                     title="Otomatis unduh seluruh slide sebagai gambar terpisah"
                   >
                     <Layers className="w-3.5 h-3.5" />
-                    <span>Unduh Semua ({totalPosterPages})</span>
+                    <span>Unduh Semua Slide ({totalPosterPages})</span>
                   </button>
                 </div>
               </div>

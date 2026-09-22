@@ -26,8 +26,9 @@ export async function GET() {
   try {
     let rawItems = null;
 
-    // 1. Coba tarik data live dari Google Spreadsheet Webhook jika tersedia
-    const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK;
+    // 1. Coba tarik data live dari Google Spreadsheet Webhook
+    const DEFAULT_SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwHn2YFwV8udrqwbc8cwZUeBiXCPkZ3NtFRcxTtxMB1CI5knWee9JGl50GyqtAlUxs/exec';
+    const webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK || DEFAULT_SHEET_WEBHOOK;
     if (webhookUrl) {
       try {
         const sheetRes = await fetch(webhookUrl, {

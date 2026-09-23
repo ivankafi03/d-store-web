@@ -625,7 +625,7 @@ export default function Dashboard() {
   };
 
   const VALID_TABS = useMemo(() => [
-    'catalog', 'vault', 'matrix', 'sales', 'expiry', 'scraper', 'sheets_tools', 'promo_poster', 'ai'
+    'catalog', 'vault', 'matrix', 'sales', 'expiry', 'scraper', 'sheets_tools', 'promo_poster', 'tele_promo', 'ai'
   ], []);
 
   // Sync tab with URL hash & localStorage so refresh preserves the current tab

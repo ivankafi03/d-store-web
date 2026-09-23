@@ -735,11 +735,11 @@ export default function StoreFront() {
 
       {/* 6. MODAL ORDER CEPAT PEMBELI (NEO-BRUTALIST MODAL) */}
       {selectedVariantOrder && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4">
-          <div className="w-full max-w-md bg-white border-4 border-black rounded-2xl shadow-[8px_8px_0_#000] overflow-hidden animate-in fade-in zoom-in-95 duration-150">
-            
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-2 sm:p-4">
+          <div className="w-full max-w-md bg-white border-4 border-black rounded-2xl shadow-[8px_8px_0_#000] overflow-hidden animate-in fade-in slide-in-from-bottom-4 sm:zoom-in-95 duration-150 flex flex-col max-h-[92dvh] sm:max-h-[88vh]">
+
             {/* Modal Header */}
-            <div className="p-4 bg-[#FFE600] border-b-3 border-black flex items-center justify-between">
+            <div className="p-4 bg-[#FFE600] border-b-3 border-black flex items-center justify-between shrink-0">
               <div className="flex items-center gap-2">
                 <span className="w-7 h-7 rounded-lg bg-white border-2 border-black flex items-center justify-center font-black">
                   <Zap className="w-4 h-4 fill-black text-black" />
@@ -757,8 +757,8 @@ export default function StoreFront() {
               </button>
             </div>
 
-            {/* Modal Body */}
-            <div className="p-5 space-y-4">
+            {/* Modal Body — scrollable */}
+            <div className="p-4 sm:p-5 space-y-4 overflow-y-auto flex-1 overscroll-contain">
               
               {/* Box Rincian Pesanan */}
               <div className="p-3.5 bg-yellow-50 rounded-xl border-2 border-black shadow-[2px_2px_0_#000] space-y-2">

@@ -50,6 +50,7 @@ import {
   ListChecks
 } from 'lucide-react';
 import { toPng, toJpeg } from 'html-to-image';
+import TelegramPromoStudio from './components/TelegramPromoStudio';
 
 export default function Dashboard() {
   const [activeTab, setActiveTab] = useState('catalog');
@@ -1913,6 +1914,7 @@ export default function Dashboard() {
                   { id: 'scraper', label: 'Sedot Supplier' },
                   { id: 'sheets_tools', label: 'Spreadsheet' },
                   { id: 'promo_poster', label: 'Poster Promo' },
+                  { id: 'tele_promo', label: 'Promo Telegram' },
                   { id: 'ai', label: 'Asisten AI' }
                 ].map(t => (
                   <button
@@ -2008,6 +2010,7 @@ export default function Dashboard() {
             { id: 'scraper', label: 'Sedot Supplier', icon: Zap },
             { id: 'sheets_tools', label: 'Spreadsheet & Tools', icon: FileSpreadsheet },
             { id: 'promo_poster', label: 'Poster Promo', icon: ImageIcon },
+            { id: 'tele_promo', label: 'Promo Telegram', icon: Send },
             { id: 'ai', label: 'Asisten AI', icon: Sparkles }
           ].map(tab => {
             const Icon = tab.icon;
@@ -5769,7 +5772,18 @@ export default function Dashboard() {
         )}
 
         {/* ==================================================================== */}
-        {/* TAB 8: ASISTEN AI GEMINI                                             */}
+        {/* TAB 8: PROMO TELEGRAM & TARGET GRUP                                  */}
+        {/* ==================================================================== */}
+        {activeTab === 'tele_promo' && (
+          <TelegramPromoStudio
+            showToast={showToast}
+            products={products}
+            variants={variants}
+          />
+        )}
+
+        {/* ==================================================================== */}
+        {/* TAB 9: ASISTEN AI GEMINI                                             */}
         {/* ==================================================================== */}
         {activeTab === 'ai' && (
           <div className="neo-card border-3 border-black shadow-[6px_6px_0_#000] flex flex-col h-[580px] overflow-hidden bg-white">

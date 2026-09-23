@@ -36,6 +36,7 @@ export default function StoreFront() {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showQrisModal, setShowQrisModal] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
+  const [expandedProductId, setExpandedProductId] = useState(null);
 
   // Monitor scroll position untuk memunculkan running text reseller di bawah header
   useEffect(() => {
@@ -649,33 +650,49 @@ export default function StoreFront() {
           <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
             {filteredProducts.map((prod) => {
               const readyCount = prod.variants.filter(v => v.isAvailable).length;
+              const minPrice = Math.min(...prod.variants.map(v => v.price));
+              const isExpanded = expandedProductId === prod.id;
               return (
                 <div
                   key={prod.id}
-                  className="bg-white rounded-2xl border-3 border-black shadow-[4px_4px_0_#000] flex flex-col justify-between overflow-hidden hover:translate-x-[-1px] hover:translate-y-[-1px] hover:shadow-[5px_5px_0_#000] transition"
+                  className="bg-white rounded-2xl border-3 border-black shadow-[4px_4px_0_#000] flex flex-col overflow-hidden hover:shadow-[5px_5px_0_#000] transition-shadow"
                 >
-                  <div>
-                    {/* Header Kartu Produk */}
-                    <div className="p-3.5 border-b-2 border-black bg-yellow-50/40">
-                      <div className="flex items-center justify-between gap-1.5 mb-1">
-                        <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 bg-yellow-200 border border-black rounded-md text-black">
-                          {prod.categoryName || 'Umum'}
-                        </span>
-                        <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded border border-black ${
-                          readyCount > 0 ? 'bg-emerald-100 text-emerald-950' : 'bg-rose-100 text-rose-950'
-                        }`}>
-                          {readyCount > 0 ? `${readyCount} Ready` : 'Habis'}
-                        </span>
-                      </div>
-                      <h2 className="font-black text-sm sm:text-base text-black uppercase leading-tight tracking-tight line-clamp-1">
-                        {prod.name}
-                      </h2>
+                  {/* Header — klik untuk buka/tutup varian */}
+                  <button
+                    type="button"
+                    onClick={() => setExpandedProductId(isExpanded ? null : prod.id)}
+                    className="w-full text-left p-3.5 bg-yellow-50/40 hover:bg-yellow-100/50 transition-colors cursor-pointer"
+                  >
+                    <div className="flex items-center justify-between gap-1.5 mb-1.5">
+                      <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 bg-yellow-200 border border-black rounded-md text-black">
+                        {prod.categoryName || 'Umum'}
+                      </span>
+                      <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded border border-black ${
+                        readyCount > 0 ? 'bg-emerald-100 text-emerald-950' : 'bg-rose-100 text-rose-950'
+                      }`}>
+                        {readyCount > 0 ? `${readyCount} Ready` : 'Habis'}
+                      </span>
                     </div>
 
-                    {/* Daftar Varian & Harga */}
-                    <div className="p-3 space-y-2">
-                      {prod.variants.map((v) => {
-                        return (
+                    <h2 className="font-black text-sm sm:text-base text-black uppercase leading-tight tracking-tight line-clamp-1">
+                      {prod.name}
+                    </h2>
+
+                    {/* Info ringkas & toggle icon */}
+                    <div className="flex items-center justify-between mt-2">
+                      <div className="text-[11px] font-bold text-zinc-500">
+                        Mulai <span className="text-black font-black">{formatRupiah(minPrice)}</span>
+                        {' · '}{prod.variants.length} pilihan
+                      </div>
+                      <ChevronRight className={`w-4 h-4 text-zinc-500 shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`} />
+                    </div>
+                  </button>
+
+                  {/* Daftar Varian — hanya muncul saat expanded */}
+                  {isExpanded && (
+                    <div className="border-t-2 border-black">
+                      <div className="p-3 space-y-2">
+                        {prod.variants.map((v) => (
                           <div
                             key={v.id}
                             className={`p-2 rounded-xl border-2 border-black flex items-center justify-between gap-2 transition ${
@@ -693,7 +710,6 @@ export default function StoreFront() {
                               </div>
                             </div>
 
-                            {/* Tombol Aksi Beli */}
                             <div className="shrink-0">
                               {v.isAvailable ? (
                                 <button
@@ -715,17 +731,16 @@ export default function StoreFront() {
                               )}
                             </div>
                           </div>
-                        );
-                      })}
+                        ))}
+                      </div>
+
+                      {/* Footer */}
+                      <div className="px-3 pb-3 pt-1 border-t border-zinc-200 flex items-center justify-between text-[10px] font-bold text-zinc-500">
+                        <span>Garansi Aktif</span>
+                        <span>Proses 1-5 Menit</span>
+                      </div>
                     </div>
-                  </div>
-
-                  {/* Footer Ringkas Kartu */}
-                  <div className="px-3 pb-3 pt-1 border-t border-zinc-200 flex items-center justify-between text-[10px] font-bold text-zinc-600">
-                    <span>Garansi Aktif</span>
-                    <span>Proses 1-5 Menit</span>
-                  </div>
-
+                  )}
                 </div>
               );
             })}

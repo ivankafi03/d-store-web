@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-22T16:01:16.141Z",
+  "updatedAt": "2026-09-23T07:35:38.748Z",
   "categories": [
     {
       "id": "cat_1",
@@ -116,18 +116,6 @@
           "isAvailable": true
         },
         {
-          "id": "var_8_2",
-          "name": "Chatgpt Plus 1m [ 24h Warranty ]",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_8_3",
-          "name": "ChatGpt GO 3m [ full warranty ]",
-          "price": 75000,
-          "isAvailable": false
-        },
-        {
           "id": "var_10_1",
           "name": "Clico AI Pro Plan 1m",
           "price": 38000,
@@ -228,21 +216,15 @@
       "categoryId": "cat_1",
       "variants": [
         {
-          "id": "var_68_8",
-          "name": "Viu lifetime",
-          "price": 4000,
-          "isAvailable": true
-        },
-        {
           "id": "var_68_1",
           "name": "Videoinu AI Plus 1m [ 5500 ] kredit",
           "price": 55000,
           "isAvailable": false
         },
         {
-          "id": "var_68_2",
-          "name": "1m Private Anti Limit",
-          "price": 3500,
+          "id": "var_71_1",
+          "name": "Viu lifetime",
+          "price": 2500,
           "isAvailable": true
         },
         {
@@ -668,12 +650,6 @@
           "isAvailable": false
         },
         {
-          "id": "var_6_4",
-          "name": "Capcut Basic",
-          "price": 2500,
-          "isAvailable": false
-        },
-        {
           "id": "var_8_4",
           "name": "Capcut Basic",
           "price": 2500,
@@ -793,12 +769,6 @@
       "name": "Duolingo",
       "categoryId": "cat_5",
       "variants": [
-        {
-          "id": "var_13_1",
-          "name": "Duolingo premium 1m",
-          "price": 58000,
-          "isAvailable": false
-        },
         {
           "id": "var_15_1",
           "name": "Emergent AI Standard 1m",
@@ -992,24 +962,6 @@
           "name": "Gamma AI Plus 1m",
           "price": 38000,
           "isAvailable": false
-        },
-        {
-          "id": "var_22_1",
-          "name": "Gemini Pro 12m [ invit ]",
-          "price": 28000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_22_2",
-          "name": "Link Gemini Pro 18M",
-          "price": 28000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_22_3",
-          "name": "Gemini Pro 12m [ head ]",
-          "price": 80000,
-          "isAvailable": true
         }
       ]
     },
@@ -1407,12 +1359,6 @@
           "isAvailable": false
         },
         {
-          "id": "var_34_6",
-          "name": "Kalodata Professional Plan 1m [ malaysia ]",
-          "price": 130000,
-          "isAvailable": false
-        },
-        {
           "id": "var_34_7",
           "name": "Kalodata Stater Plan 1m [ Philippines ]",
           "price": 53000,
@@ -1423,12 +1369,6 @@
           "name": "Kalodata Stater Plan 1m [ Singapore ]",
           "price": 53000,
           "isAvailable": true
-        },
-        {
-          "id": "var_34_9",
-          "name": "Kalodata Professional Plan 1m [ indo ]",
-          "price": 130000,
-          "isAvailable": false
         },
         {
           "id": "var_34_10",
@@ -1443,34 +1383,22 @@
           "isAvailable": false
         },
         {
-          "id": "var_34_12",
+          "id": "var_39_2",
+          "name": "Kalodata Professional Plan 1m [ malaysia ]",
+          "price": 130000,
+          "isAvailable": false
+        },
+        {
+          "id": "var_39_5",
+          "name": "Kalodata Professional Plan 1m [ indo ]",
+          "price": 130000,
+          "isAvailable": false
+        },
+        {
+          "id": "var_39_8",
           "name": "Kalodata Stater Plan 1m [ malaysia ]",
           "price": 80000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_34_1",
-          "name": "Leonardo AI 1m [ 8500 Credit ]",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_34_2",
-          "name": "Leonardo AI 1m [ 17k Credit ]",
-          "price": 38000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_34_3",
-          "name": "Heygen AI Pro 3m [ 2k Credit ]",
-          "price": 80000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_34_4",
-          "name": "Heygen AI Pro 3m [ 1k Credit ]",
-          "price": 52000,
-          "isAvailable": false
+          "isAvailable": true
         }
       ]
     },
@@ -1579,18 +1507,6 @@
       "name": "Meitu",
       "categoryId": "cat_3",
       "variants": [
-        {
-          "id": "var_37_1",
-          "name": "Meitu VIP 14d AllDev",
-          "price": 52000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_37_2",
-          "name": "Meitu VIP 7d AllDev",
-          "price": 55000,
-          "isAvailable": false
-        },
         {
           "id": "var_42_2",
           "name": "MEITU 7D VIP+",
@@ -1716,16 +1632,10 @@
           "isAvailable": false
         },
         {
-          "id": "var_47_3",
+          "id": "var_50_2",
           "name": "Ninjachat AI Stater 1m",
           "price": 38000,
           "isAvailable": false
-        },
-        {
-          "id": "var_47_1",
-          "name": "Reve AI Pro 1m",
-          "price": 55000,
-          "isAvailable": true
         }
       ]
     },
@@ -1745,12 +1655,6 @@
           "name": "Rork AI Pro 1m",
           "price": 55000,
           "isAvailable": false
-        },
-        {
-          "id": "var_48_2",
-          "name": "Oneover AI Studio 1m",
-          "price": 55000,
-          "isAvailable": true
         }
       ]
     },
@@ -1826,12 +1730,6 @@
           "id": "var_55_3",
           "name": "Reelshort VIP 7d",
           "price": 19000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_46_2",
-          "name": "Reelshort 3000 Coin",
-          "price": 38000,
           "isAvailable": false
         },
         {
@@ -2111,21 +2009,9 @@
       "categoryId": "cat_1",
       "variants": [
         {
-          "id": "var_70_3",
+          "id": "var_73_1",
           "name": "Wayin AI Standar Plan 1m",
-          "price": 38000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_70_1",
-          "name": "Viggle AI Live",
-          "price": 80000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_70_2",
-          "name": "Viggle AI Pro",
-          "price": 38000,
+          "price": 23000,
           "isAvailable": true
         }
       ]
@@ -2136,7 +2022,7 @@
       "categoryId": "cat_7",
       "variants": [
         {
-          "id": "var_hp_60_1",
+          "id": "var_74_1",
           "name": "Weshop AI Pro 1m",
           "price": 55000,
           "isAvailable": false
@@ -2148,18 +2034,6 @@
       "name": "Wink",
       "categoryId": "cat_3",
       "variants": [
-        {
-          "id": "var_61_1",
-          "name": "Wink VIP+ 30d Alldev",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_61_2",
-          "name": "Wink VIP+ 7d Alldev",
-          "price": 108000,
-          "isAvailable": false
-        },
         {
           "id": "var_72_1",
           "name": "HMA 1m",
@@ -2182,18 +2056,6 @@
           "id": "var_72_4",
           "name": "Surfshark 2m",
           "price": 28000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_75_1",
-          "name": "Wink VIP+ 30d Alldev",
-          "price": 33000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_75_2",
-          "name": "Wink VIP+ 7d Alldev",
-          "price": 10000,
           "isAvailable": false
         },
         {
@@ -2256,31 +2118,6 @@
           "name": "Youmind AI Pro Plan 1m",
           "price": 83000,
           "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_hp_63_1",
-      "name": "Youtube",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_hp_63_1",
-          "name": "Youtube Premium 1m Family Head",
-          "price": 21000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_hp_63_2",
-          "name": "Youtube Premium 1m Individual",
-          "price": 20500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_hp_63_3",
-          "name": "Youtube Premium 1m Invit",
-          "price": 10000,
-          "isAvailable": true
         }
       ]
     },
@@ -2353,12 +2190,6 @@
       "categoryId": "cat_1",
       "variants": [
         {
-          "id": "var_1_1",
-          "name": "Adobe Creative Cloud 14d invit",
-          "price": 18000,
-          "isAvailable": false
-        },
-        {
           "id": "var_1_2",
           "name": "Adobe Creative Cloud 14d Head",
           "price": 63000,
@@ -2392,7 +2223,7 @@
     },
     {
       "id": "prod_25",
-      "name": "Gamma AI",
+      "name": "Google Colab Pro+",
       "categoryId": "cat_1",
       "variants": [
         {
@@ -2488,6 +2319,18 @@
           "isAvailable": false
         },
         {
+          "id": "var_34_3",
+          "name": "Heygen AI Pro 3m [ 2k Credit ]",
+          "price": 80000,
+          "isAvailable": false
+        },
+        {
+          "id": "var_34_4",
+          "name": "Heygen AI Pro 3m [ 1k Credit ]",
+          "price": 52000,
+          "isAvailable": false
+        },
+        {
           "id": "var_31_2",
           "name": "Code Reedem Heygen 3m",
           "price": 37000,
@@ -2496,18 +2339,6 @@
         {
           "id": "var_31_3",
           "name": "Heygen AI Creator",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_31_4",
-          "name": "Heygen AI Pro 3m [ 2k Credit ]",
-          "price": 83000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_31_5",
-          "name": "Heygen AI Pro 3m [ 1k Credit ]",
           "price": 55000,
           "isAvailable": false
         }
@@ -2569,61 +2400,6 @@
       ]
     },
     {
-      "id": "prod_39",
-      "name": "Kalodata",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_39_1",
-          "name": "Morphic AI Basic Plan 1m",
-          "price": 80000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_39_2",
-          "name": "Kalodata Professional Plan 1m [ malaysia ]",
-          "price": 130000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_39_3",
-          "name": "Kalodata Stater Plan 1m [ Philippines ]",
-          "price": 55000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_39_4",
-          "name": "Kalodata Stater Plan 1m [ Singapore ]",
-          "price": 55000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_39_5",
-          "name": "Kalodata Professional Plan 1m [ indo ]",
-          "price": 130000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_39_6",
-          "name": "Kalodata Stater Plan 1m [ vietnam ]",
-          "price": 55000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_39_7",
-          "name": "Kalodata Stater Plan 1m [ Thailand ]",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_39_8",
-          "name": "Kalodata Stater Plan 1m [ malaysia ]",
-          "price": 80000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
       "id": "prod_41",
       "name": "Manus AI",
       "categoryId": "cat_1",
@@ -2644,25 +2420,6 @@
           "id": "var_41_3",
           "name": "Manus AI Pro 1m",
           "price": 83000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_45",
-      "name": "Meitu",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_45_1",
-          "name": "Recraft AI Pro Plan [ 2k Kredit ]",
-          "price": 55000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_45_2",
-          "name": "Meitu VIP 7d AllDev",
-          "price": 9500,
           "isAvailable": false
         }
       ]
@@ -2766,25 +2523,6 @@
           "id": "var_46_17",
           "name": "Openart AI Advance 1m [ 12k Credit ]",
           "price": 133000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_50",
-      "name": "Ninjachat AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_50_1",
-          "name": "Seedance2Prompt AI Stater 1m",
-          "price": 80000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_50_2",
-          "name": "Ninjachat AI Stater 1m",
-          "price": 38000,
           "isAvailable": false
         }
       ]
@@ -2998,18 +2736,6 @@
       "categoryId": "cat_1",
       "variants": [
         {
-          "id": "var_63_1",
-          "name": "Youtube Premium 1m Family Head",
-          "price": 31000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_63_2",
-          "name": "Youtube Premium 1m Individual",
-          "price": 20500,
-          "isAvailable": false
-        },
-        {
           "id": "var_63_3",
           "name": "Youtube Premium 1m Invit",
           "price": 55000,
@@ -3025,12 +2751,6 @@
           "id": "var_74_3",
           "name": "YT JASPAY INDP 1M",
           "price": 4000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_74_1",
-          "name": "Weshop AI Pro 1m",
-          "price": 55000,
           "isAvailable": false
         },
         {
@@ -3097,32 +2817,6 @@
           "id": "var_74_13",
           "name": "1m Indplan",
           "price": 10500,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_71",
-      "name": "Viu",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_71_1",
-          "name": "Viu lifetime",
-          "price": 2500,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_73",
-      "name": "Wayin AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_73_1",
-          "name": "Wayin AI Standar Plan 1m",
-          "price": 23000,
           "isAvailable": true
         }
       ]
@@ -4164,6 +3858,44 @@
           "id": "var_prod_gmail_gmail_fresh_1d",
           "name": "Gmail Fresh 1d",
           "price": 7000,
+          "isAvailable": true
+        }
+      ]
+    },
+    {
+      "id": "prod_gemini_pro_38789",
+      "name": "Gemini Pro",
+      "categoryId": "cat_1",
+      "variants": [
+        {
+          "id": "var_22_1",
+          "name": "Gemini Pro 12m [ invit ]",
+          "price": 28000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_22_2",
+          "name": "Link Gemini Pro 18M",
+          "price": 28000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_22_3",
+          "name": "Gemini Pro 12m [ head ]",
+          "price": 80000,
+          "isAvailable": true
+        }
+      ]
+    },
+    {
+      "id": "prod_seedance_ai_38790",
+      "name": "Seedance AI",
+      "categoryId": "cat_1",
+      "variants": [
+        {
+          "id": "var_50_1",
+          "name": "Seedance2Prompt AI Stater 1m",
+          "price": 80000,
           "isAvailable": true
         }
       ]

@@ -15,6 +15,9 @@ export const metadata = {
   authors: [{ name: "D Store Official" }],
   creator: "D Store",
   publisher: "D Store",
+  alternates: {
+    canonical: "https://dstore.sbs/store",
+  },
   robots: {
     index: true,
     follow: true,

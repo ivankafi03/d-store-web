@@ -453,15 +453,29 @@ export default function TelegramPromoStudio({ showToast, products = [], variants
                   <ImageIcon className="w-3.5 h-3.5 text-blue-600" />
                   <span>Pilih Gambar Promo:</span>
                 </label>
-                {promoImage && (
+                <div className="flex items-center gap-2">
                   <button
-                    onClick={() => setPromoImage('')}
-                    className="text-[10px] font-black text-rose-600 hover:underline flex items-center gap-1 uppercase"
+                    type="button"
+                    onClick={() => {
+                      setPromoImage('/qris.png');
+                      showToast?.('Gambar QRIS Toko berhasil dipasang!', 'success');
+                    }}
+                    className="text-[10px] font-black text-black bg-[#FFE600] hover:bg-yellow-300 border border-black rounded px-2 py-0.5 flex items-center gap-1 uppercase shadow-[1px_1px_0_#000] cursor-pointer"
+                    title="Gunakan gambar barcode QRIS resmi toko"
                   >
-                    <Trash2 className="w-3 h-3" />
-                    <span>Hapus Gambar</span>
+                    <span>💳 Gunakan QRIS Toko</span>
                   </button>
-                )}
+                  {promoImage && (
+                    <button
+                      type="button"
+                      onClick={() => setPromoImage('')}
+                      className="text-[10px] font-black text-rose-600 hover:underline flex items-center gap-1 uppercase"
+                    >
+                      <Trash2 className="w-3 h-3" />
+                      <span>Hapus Gambar</span>
+                    </button>
+                  )}
+                </div>
               </div>
 
               {promoImage ? (

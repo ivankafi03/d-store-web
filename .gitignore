@@ -43,7 +43,10 @@ next-env.d.ts
 # D Store - sensitive runtime files
 session.txt
 data/db.json
+data/*.bak
 .lynk_profile/
+# Tapi public-catalog.json BOLEH di-commit (snapshot statis untuk fallback di Vercel)
+!data/public-catalog.json
 
 # D Store - internal scripts (berisi credential/session logic)
 scripts/

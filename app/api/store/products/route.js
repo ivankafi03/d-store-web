@@ -26,34 +26,78 @@ export async function GET() {
   try {
     let rawItems = null;
 
-    // 1. Coba tarik data live dari Google Spreadsheet Webhook
+    // 1. Coba tarik data live dari Google Spreadsheet Webhook (timeout 8 detik)
     const DEFAULT_SHEET_WEBHOOK = 'https://script.google.com/macros/s/AKfycbwHn2YFwV8udrqwbc8cwZUeBiXCPkZ3NtFRcxTtxMB1CI5knWee9JGl50GyqtAlUxs/exec';
     let webhookUrl = process.env.GOOGLE_SHEET_WEBHOOK;
     if (!webhookUrl || typeof webhookUrl !== 'string' || !webhookUrl.startsWith('http') || webhookUrl.includes('undefined')) {
       webhookUrl = DEFAULT_SHEET_WEBHOOK;
     }
 
-    let fetchDebug = { url: webhookUrl.slice(0, 50) + '...', error: null, itemsCount: 0 };
+    let fetchDebug = { source: 'none', url: webhookUrl.slice(0, 50) + '...', error: null, itemsCount: 0 };
 
     if (webhookUrl) {
       try {
+        const controller = new AbortController();
+        const timeoutId = setTimeout(() => controller.abort(), 8000); // 8 detik timeout
         const sheetRes = await fetch(webhookUrl, {
           method: 'POST',
           headers: { 'Content-Type': 'application/json' },
           body: JSON.stringify({ action: 'read_all' }),
           redirect: 'follow',
-          cache: 'no-store'
+          cache: 'no-store',
+          signal: controller.signal
         });
+        clearTimeout(timeoutId);
         const sheetData = await sheetRes.json();
         if (sheetData && sheetData.status === 'ok' && Array.isArray(sheetData.items) && sheetData.items.length > 0) {
           rawItems = sheetData.items;
+          fetchDebug.source = 'google-sheets';
           fetchDebug.itemsCount = rawItems.length;
         } else {
           fetchDebug.error = 'sheetData status: ' + (sheetData ? sheetData.status : 'null');
         }
       } catch (err) {
-        console.warn('[Store API] Live Google Sheets fetch failed, falling back to local DB:', err.message);
-        fetchDebug.error = err.message;
+        const reason = err.name === 'AbortError' ? 'timeout (8s)' : err.message;
+        console.warn('[Store API] Google Sheets fetch failed (' + reason + '), trying static snapshot...');
+        fetchDebug.error = reason;
+      }
+    }
+
+    // 2. Fallback ke public-catalog.json (snapshot statis yang di-commit ke git)
+    if (!rawItems || rawItems.length === 0) {
+      try {
+        const { readFileSync } = await import('fs');
+        const { join } = await import('path');
+        const snapshotPath = join(process.cwd(), 'data', 'public-catalog.json');
+        const snapshot = JSON.parse(readFileSync(snapshotPath, 'utf8'));
+        if (snapshot && Array.isArray(snapshot.products) && snapshot.products.length > 0) {
+          // Ubah format snapshot ke format rawItems agar proses selanjutnya seragam
+          const snapshotItems = [];
+          for (const p of snapshot.products) {
+            for (const v of (p.variants || [])) {
+              snapshotItems.push({
+                productId: p.id,
+                category: snapshot.categories?.find(c => c.id === p.categoryId)?.name || 'Umum',
+                productName: p.name,
+                variantId: v.id,
+                variantName: v.name,
+                supplier: 'static',
+                costPrice: 0,
+                sellingPrice: v.price,
+                isAvailable: v.isAvailable !== false
+              });
+            }
+          }
+          if (snapshotItems.length > 0) {
+            rawItems = snapshotItems;
+            fetchDebug.source = 'static-snapshot';
+            fetchDebug.itemsCount = snapshotItems.length;
+            fetchDebug.snapshotAge = snapshot.updatedAt;
+          }
+        }
+      } catch (snapshotErr) {
+        console.warn('[Store API] Static snapshot not found:', snapshotErr.message);
+        fetchDebug.snapshotError = snapshotErr.message;
       }
     }
 

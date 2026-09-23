@@ -49,7 +49,7 @@ export const metadata = {
     images: ["/icon-192.png"],
   },
   verification: {
-    google: process.env.GOOGLE_SITE_VERIFICATION || "",
+    google: "lml9mtD7Y_Yue-ku3083zJynhHvlSDOySxYmEk8eL_k",
   },
   manifest: "/manifest.json",
   icons: {

@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T08:44:22.934Z",
+  "updatedAt": "2026-09-23T12:16:28.101Z",
   "categories": [
     {
       "id": "cat_1",
@@ -31,6 +31,353 @@
     }
   ],
   "products": [
+    {
+      "id": "prod_prabu_1",
+      "name": "Gmail Fresh",
+      "categoryId": "cat_7",
+      "variants": [
+        {
+          "id": "var_prabu_1",
+          "name": "Gmail Fresh 1 Akun",
+          "price": 6500,
+          "isAvailable": true
+        }
+      ]
+    },
+    {
+      "id": "prod_outlook",
+      "name": "Outlook",
+      "categoryId": "cat_7",
+      "variants": [
+        {
+          "id": "var_bagah_1",
+          "name": "OUTLOOK",
+          "price": 2100,
+          "isAvailable": true
+        },
+        {
+          "id": "var_prod_outlook_outlook_akun_fresh",
+          "name": "Outlook Akun Fresh",
+          "price": 2500,
+          "isAvailable": false
+        }
+      ]
+    },
+    {
+      "id": "prod_7",
+      "name": "Canva Pro",
+      "categoryId": "cat_3",
+      "variants": [
+        {
+          "id": "var_7_2",
+          "name": "canva pro 1m",
+          "price": 4500,
+          "isAvailable": true
+        },
+        {
+          "id": "var_7_1",
+          "name": "canva pro head 1m [ 100 user ]",
+          "price": 9000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_7_3",
+          "name": "canva basic",
+          "price": 2500,
+          "isAvailable": false
+        },
+        {
+          "id": "var_7_4",
+          "name": "1m (Invite Member)",
+          "price": 3500,
+          "isAvailable": true
+        },
+        {
+          "id": "var_7_5",
+          "name": "3m (Invite Member)",
+          "price": 5500,
+          "isAvailable": true
+        },
+        {
+          "id": "var_7_6",
+          "name": "6m (Invite Member)",
+          "price": 8000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_7_7",
+          "name": "1y (Invite Member)",
+          "price": 10000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_7_8",
+          "name": "Head Owner 1m (Bisa 100 User)",
+          "price": 3000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_7_9",
+          "name": "Head Owner 3m (Bisa 100 User)",
+          "price": 15000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_7_10",
+          "name": "Lifetime (Garansi 1y)",
+          "price": 11000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_7_11",
+          "name": "Lifetime (No Garansi)",
+          "price": 10000,
+          "isAvailable": true
+        }
+      ]
+    },
+    {
+      "id": "prod_3",
+      "name": "Alight Motion",
+      "categoryId": "cat_3",
+      "variants": [
+        {
+          "id": "var_prod_3_alight_motion_1y",
+          "name": "Alight Motion 1y",
+          "price": 5000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_2_1",
+          "name": "Alight Motion Prem 1y",
+          "price": 5000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_3_1",
+          "name": "Anijam AI Creator 1m",
+          "price": 55000,
+          "isAvailable": false
+        },
+        {
+          "id": "var_3_2",
+          "name": "1m Private",
+          "price": 2500,
+          "isAvailable": true
+        },
+        {
+          "id": "var_3_3",
+          "name": "1y Private",
+          "price": 4000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_3_4",
+          "name": "1y Via Link",
+          "price": 2100,
+          "isAvailable": true
+        },
+        {
+          "id": "var_3_5",
+          "name": "1y Gene",
+          "price": 1800,
+          "isAvailable": true
+        }
+      ]
+    },
+    {
+      "id": "prod_bagah_4",
+      "name": "CANVA BISNIS HEAD 1 BULAN",
+      "categoryId": "cat_3",
+      "variants": [
+        {
+          "id": "var_bagah_4",
+          "name": "CANVA BISNIS HEAD 1m",
+          "price": 3500,
+          "isAvailable": true
+        }
+      ]
+    },
+    {
+      "id": "prod_bagah_5",
+      "name": "MEITU 7D VIP",
+      "categoryId": "cat_3",
+      "variants": [
+        {
+          "id": "var_bagah_5",
+          "name": "MEITU 7D VIP",
+          "price": 4500,
+          "isAvailable": true
+        }
+      ]
+    },
+    {
+      "id": "prod_bagah_6",
+      "name": "WINK  7D VIP+",
+      "categoryId": "cat_3",
+      "variants": [
+        {
+          "id": "var_bagah_6",
+          "name": "WINK  7D VIP+",
+          "price": 4500,
+          "isAvailable": true
+        }
+      ]
+    },
+    {
+      "id": "prod_looviie_1789898664903_385",
+      "name": "Surfshark VPN",
+      "categoryId": "cat_6",
+      "variants": [
+        {
+          "id": "var_bagah_7",
+          "name": "SURFSHARK VPN 7D",
+          "price": 4500,
+          "isAvailable": false
+        },
+        {
+          "id": "var_looviie_1789898664903_385_1",
+          "name": "2m Sharing",
+          "price": 11000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_looviie_1789898664903_385_2",
+          "name": "2m Private",
+          "price": 26000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_looviie_1789898664903_385_3",
+          "name": "Code Surfshark 2m",
+          "price": 14000,
+          "isAvailable": true
+        }
+      ]
+    },
+    {
+      "id": "prod_buatprem_1",
+      "name": "PROMO APIKEY",
+      "categoryId": "cat_1",
+      "variants": [
+        {
+          "id": "var_buatprem_1_1",
+          "name": "PROMO 10JT TOKEN 14D",
+          "price": 5500,
+          "isAvailable": true
+        },
+        {
+          "id": "var_buatprem_1_2",
+          "name": "PROMO 20JT TOKEN 14D",
+          "price": 9500,
+          "isAvailable": true
+        },
+        {
+          "id": "var_buatprem_1_3",
+          "name": "SUPER PROMO 50JT TOKEN 14D",
+          "price": 17500,
+          "isAvailable": true
+        },
+        {
+          "id": "var_buatprem_1_4",
+          "name": "SUPER PROMO 100JT TOKEN 21D",
+          "price": 23000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_buatprem_1_5",
+          "name": "SUPER PROMO 200JT TOKEN 21D",
+          "price": 38000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_buatprem_1_6",
+          "name": "SUPER PROMO 500JT TOKEN 28D",
+          "price": 90000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_buatprem_1_7",
+          "name": "SUPER PROMO 1B TOKEN 28D",
+          "price": 150000,
+          "isAvailable": true
+        }
+      ]
+    },
+    {
+      "id": "prod_ziem_5",
+      "name": "GSUITE",
+      "categoryId": "cat_7",
+      "variants": [
+        {
+          "id": "var_ziem_5_3",
+          "name": "AKUN GSUITE 1d 50PCS + BONUS 5PCS ( HARGA PROMO )",
+          "price": 13000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_buatprem_8",
+          "name": "AKUN GSUITE 1d 100PCS + BONUS 10PCS ( HARGA PROMO )",
+          "price": 23000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_buatprem_9",
+          "name": "AKUN GSUITE 2d 50PCS + BONUS 5PCS ( HARGA PROMO )",
+          "price": 18000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_buatprem_10",
+          "name": "AKUN GSUITE 2d 100PCS + BONUS 10PCS ( HARGA PROMO )",
+          "price": 33000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_ziem_5_1",
+          "name": "GSUITE×PSC 3D",
+          "price": 4500,
+          "isAvailable": false
+        },
+        {
+          "id": "var_ziem_5_2",
+          "name": "1m Individual Plan Gsuite",
+          "price": 19000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_ziem_5_4",
+          "name": "AKUN GSUITE 1d 100PCS + BONUS 10PCS",
+          "price": 23000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_ziem_5_5",
+          "name": "AKUN GSUITE 2d 50PCS + BONUS 5PCS",
+          "price": 18000,
+          "isAvailable": true
+        },
+        {
+          "id": "var_ziem_5_6",
+          "name": "AKUN GSUITE 2d 100PCS + BONUS 10PCS",
+          "price": 33000,
+          "isAvailable": true
+        }
+      ]
+    },
+    {
+      "id": "prod_buatprem_sourcecode",
+      "name": "SOURCE CODE",
+      "categoryId": "cat_7",
+      "variants": [
+        {
+          "id": "var_buatprem_sourcecode_1",
+          "name": "SOURCE CODE UNLIMITED CREATE ACCOUNT GROK + AUTO PUSH KE 9ROUTER",
+          "price": 110000,
+          "isAvailable": true
+        }
+      ]
+    },
     {
       "id": "prod_42",
       "name": "Meitu",
@@ -131,67 +478,6 @@
       ]
     },
     {
-      "id": "prod_ziem_5",
-      "name": "GSUITE",
-      "categoryId": "cat_7",
-      "variants": [
-        {
-          "id": "var_ziem_5_1",
-          "name": "GSUITE×PSC 3D",
-          "price": 4500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_ziem_5_3",
-          "name": "AKUN GSUITE 1d 50PCS + BONUS 5PCS ( HARGA PROMO )",
-          "price": 13000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_buatprem_8",
-          "name": "AKUN GSUITE 1d 100PCS + BONUS 10PCS ( HARGA PROMO )",
-          "price": 23000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_buatprem_9",
-          "name": "AKUN GSUITE 2d 50PCS + BONUS 5PCS ( HARGA PROMO )",
-          "price": 18000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_buatprem_10",
-          "name": "AKUN GSUITE 2d 100PCS + BONUS 10PCS ( HARGA PROMO )",
-          "price": 33000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_ziem_5_2",
-          "name": "1m Individual Plan Gsuite",
-          "price": 19000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_ziem_5_4",
-          "name": "AKUN GSUITE 1d 100PCS + BONUS 10PCS",
-          "price": 23000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_ziem_5_5",
-          "name": "AKUN GSUITE 2d 50PCS + BONUS 5PCS",
-          "price": 18000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_ziem_5_6",
-          "name": "AKUN GSUITE 2d 100PCS + BONUS 10PCS",
-          "price": 33000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
       "id": "prod_72",
       "name": "Wink",
       "categoryId": "cat_3",
@@ -204,7 +490,7 @@
         },
         {
           "id": "var_72_10",
-          "name": "Wink VIP+ 30d Alldev",
+          "name": "Wink VIP+ 1m Alldev",
           "price": 34000,
           "isAvailable": false
         },
@@ -320,7 +606,7 @@
         },
         {
           "id": "var_23_12",
-          "name": "Gemini Pro 12m [ invit ]",
+          "name": "Gemini Pro 1y [ invit ]",
           "price": 29000,
           "isAvailable": true
         },
@@ -332,7 +618,7 @@
         },
         {
           "id": "var_23_14",
-          "name": "Gemini Pro 12m [ head ]",
+          "name": "Gemini Pro 1y [ head ]",
           "price": 78000,
           "isAvailable": true
         },
@@ -356,13 +642,13 @@
         },
         {
           "id": "var_23_5",
-          "name": "12m Famhead (Invite Team/Create Link)",
+          "name": "1y Famhead (Invite Team/Create Link)",
           "price": 43000,
           "isAvailable": true
         },
         {
           "id": "var_23_6",
-          "name": "12m Famplan",
+          "name": "1y Famplan",
           "price": 25000,
           "isAvailable": true
         },
@@ -407,55 +693,6 @@
           "id": "var_hp_1_1",
           "name": "Aifiesta AI Basic Plan",
           "price": 38000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_3",
-      "name": "Alight Motion",
-      "categoryId": "cat_3",
-      "variants": [
-        {
-          "id": "var_2_1",
-          "name": "Alight Motion Prem 1y",
-          "price": 52000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_prod_3_alight_motion_1y",
-          "name": "Alight Motion 1y",
-          "price": 5000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_3_1",
-          "name": "Anijam AI Creator 1m",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_3_2",
-          "name": "1m Private",
-          "price": 2500,
-          "isAvailable": true
-        },
-        {
-          "id": "var_3_3",
-          "name": "1y Private",
-          "price": 4000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_3_4",
-          "name": "1y Via Link",
-          "price": 2100,
-          "isAvailable": true
-        },
-        {
-          "id": "var_3_5",
-          "name": "1y Gene",
-          "price": 1800,
           "isAvailable": true
         }
       ]
@@ -608,13 +845,13 @@
         },
         {
           "id": "var_8_6",
-          "name": "30d Private Full Garansi",
+          "name": "1m Private Full Garansi",
           "price": 29000,
           "isAvailable": true
         },
         {
           "id": "var_8_7",
-          "name": "30d Private No Renew",
+          "name": "1m Private No Renew",
           "price": 28000,
           "isAvailable": true
         }
@@ -1040,7 +1277,7 @@
         },
         {
           "id": "var_26_6",
-          "name": "Supergrok 12M Privat ( gift x )",
+          "name": "Supergrok 1y Privat ( gift x )",
           "price": 225000,
           "isAvailable": false
         }
@@ -1083,7 +1320,7 @@
         },
         {
           "id": "var_27_5",
-          "name": "Supergrok 12M Privat ( gift x )",
+          "name": "Supergrok 1y Privat ( gift x )",
           "price": 225000,
           "isAvailable": false
         },
@@ -1157,7 +1394,7 @@
         },
         {
           "id": "var_30_6",
-          "name": "Supergrok 12M Privat ( gift x )",
+          "name": "Supergrok 1y Privat ( gift x )",
           "price": 225000,
           "isAvailable": false
         }
@@ -1444,13 +1681,13 @@
         {
           "id": "var_44_1",
           "name": "Hotmail",
-          "price": 80000,
+          "price": 5000,
           "isAvailable": false
         },
         {
           "id": "var_44_2",
           "name": "Outlook",
-          "price": 55000,
+          "price": 5000,
           "isAvailable": false
         }
       ]
@@ -1608,7 +1845,7 @@
         {
           "id": "var_56_3",
           "name": "Reve AI Pro 1m",
-          "price": 40000,
+          "price": 23000,
           "isAvailable": true
         },
         {
@@ -1639,7 +1876,7 @@
         {
           "id": "var_57_1",
           "name": "Viu lifetime",
-          "price": 52000,
+          "price": 3000,
           "isAvailable": true
         }
       ]
@@ -1658,7 +1895,7 @@
         {
           "id": "var_58_1",
           "name": "HMA 1m",
-          "price": 18000,
+          "price": 9000,
           "isAvailable": false
         },
         {
@@ -1670,7 +1907,7 @@
         {
           "id": "var_58_3",
           "name": "Express 1m",
-          "price": 55000,
+          "price": 9000,
           "isAvailable": false
         },
         {
@@ -1695,7 +1932,7 @@
         {
           "id": "var_59_1",
           "name": "Wayin AI Standar Plan 1m",
-          "price": 38000,
+          "price": 25000,
           "isAvailable": true
         }
       ]
@@ -1746,7 +1983,7 @@
         {
           "id": "var_64_1",
           "name": "Zoom Pro 14d",
-          "price": 103000,
+          "price": 9000,
           "isAvailable": false
         }
       ]
@@ -1797,7 +2034,7 @@
         {
           "id": "var_67_2",
           "name": "Viggle AI Live",
-          "price": 83000,
+          "price": 78000,
           "isAvailable": true
         },
         {
@@ -1809,7 +2046,7 @@
         {
           "id": "var_67_1",
           "name": "Cuty AI Pro Plan 1m",
-          "price": 105000,
+          "price": 55000,
           "isAvailable": true
         }
       ]
@@ -1845,7 +2082,7 @@
         },
         {
           "id": "var_68_5",
-          "name": "12m Private Anti Limit",
+          "name": "1y Private Anti Limit",
           "price": 5000,
           "isAvailable": true
         },
@@ -1934,7 +2171,7 @@
         {
           "id": "var_76_1",
           "name": "Youmind AI Pro Plan 1m",
-          "price": 83000,
+          "price": 79000,
           "isAvailable": false
         }
       ]
@@ -1947,7 +2184,7 @@
         {
           "id": "var_79_1",
           "name": "Dropshot AI Plus Plan 1m",
-          "price": 83000,
+          "price": 79000,
           "isAvailable": false
         }
       ]
@@ -1961,79 +2198,6 @@
           "id": "var_80_1",
           "name": "Cuty AI Pro Plan 1m",
           "price": 55000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_7",
-      "name": "Canva Pro",
-      "categoryId": "cat_3",
-      "variants": [
-        {
-          "id": "var_7_2",
-          "name": "canva pro 1m",
-          "price": 4500,
-          "isAvailable": true
-        },
-        {
-          "id": "var_7_1",
-          "name": "canva pro head 1m [ 100 user ]",
-          "price": 9000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_7_3",
-          "name": "canva basic",
-          "price": 2500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_7_4",
-          "name": "1m (Invite Member)",
-          "price": 3500,
-          "isAvailable": true
-        },
-        {
-          "id": "var_7_5",
-          "name": "3m (Invite Member)",
-          "price": 5500,
-          "isAvailable": true
-        },
-        {
-          "id": "var_7_6",
-          "name": "6m (Invite Member)",
-          "price": 8000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_7_7",
-          "name": "1y (Invite Member)",
-          "price": 10000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_7_8",
-          "name": "Head Owner 1m (Bisa 100 User)",
-          "price": 3000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_7_9",
-          "name": "Head Owner 3m (Bisa 100 User)",
-          "price": 15000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_7_10",
-          "name": "Lifetime (Garansi 1y)",
-          "price": 11000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_7_11",
-          "name": "Lifetime (No Garansi)",
-          "price": 10000,
           "isAvailable": true
         }
       ]
@@ -2071,170 +2235,6 @@
       ]
     },
     {
-      "id": "prod_looviie_1789898664903_385",
-      "name": "Surfshark VPN",
-      "categoryId": "cat_6",
-      "variants": [
-        {
-          "id": "var_bagah_7",
-          "name": "SURFSHARK VPN 7D",
-          "price": 4500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_looviie_1789898664903_385_1",
-          "name": "2m Sharing",
-          "price": 11000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_looviie_1789898664903_385_2",
-          "name": "2m Private",
-          "price": 26000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_looviie_1789898664903_385_3",
-          "name": "Code Surfshark 2m",
-          "price": 14000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_prabu_1",
-      "name": "Gmail Fresh",
-      "categoryId": "cat_7",
-      "variants": [
-        {
-          "id": "var_prabu_1",
-          "name": "Gmail Fresh 1 Akun",
-          "price": 6500,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_outlook",
-      "name": "Outlook",
-      "categoryId": "cat_7",
-      "variants": [
-        {
-          "id": "var_bagah_1",
-          "name": "OUTLOOK",
-          "price": 2100,
-          "isAvailable": false
-        },
-        {
-          "id": "var_prod_outlook_outlook_akun_fresh",
-          "name": "Outlook Akun Fresh",
-          "price": 2500,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_bagah_4",
-      "name": "CANVA BISNIS HEAD 1 BULAN",
-      "categoryId": "cat_3",
-      "variants": [
-        {
-          "id": "var_bagah_4",
-          "name": "CANVA BISNIS HEAD 1m",
-          "price": 3500,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_bagah_5",
-      "name": "MEITU 7D VIP",
-      "categoryId": "cat_3",
-      "variants": [
-        {
-          "id": "var_bagah_5",
-          "name": "MEITU 7D VIP",
-          "price": 4500,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_bagah_6",
-      "name": "WINK  7D VIP+",
-      "categoryId": "cat_3",
-      "variants": [
-        {
-          "id": "var_bagah_6",
-          "name": "WINK  7D VIP+",
-          "price": 4500,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_buatprem_1",
-      "name": "PROMO APIKEY",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_buatprem_1_1",
-          "name": "PROMO 10JT TOKEN 14D",
-          "price": 5500,
-          "isAvailable": true
-        },
-        {
-          "id": "var_buatprem_1_2",
-          "name": "PROMO 20JT TOKEN 14D",
-          "price": 9500,
-          "isAvailable": true
-        },
-        {
-          "id": "var_buatprem_1_3",
-          "name": "SUPER PROMO 50JT TOKEN 14D",
-          "price": 13000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_buatprem_1_4",
-          "name": "SUPER PROMO 100JT TOKEN 21D",
-          "price": 20500,
-          "isAvailable": true
-        },
-        {
-          "id": "var_buatprem_1_5",
-          "name": "SUPER PROMO 200JT TOKEN 21D",
-          "price": 33000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_buatprem_1_6",
-          "name": "SUPER PROMO 500JT TOKEN 28D",
-          "price": 80000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_buatprem_1_7",
-          "name": "SUPER PROMO 1B TOKEN 28D",
-          "price": 150000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_buatprem_sourcecode",
-      "name": "SOURCE CODE",
-      "categoryId": "cat_7",
-      "variants": [
-        {
-          "id": "var_buatprem_sourcecode_1",
-          "name": "SOURCE CODE UNLIMITED CREATE ACCOUNT GROK + AUTO PUSH KE 9ROUTER",
-          "price": 110000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
       "id": "prod_1",
       "name": "Adobe",
       "categoryId": "cat_1",
@@ -2248,13 +2248,13 @@
         {
           "id": "var_1_3",
           "name": "Adobe Creative Cloud 14d invit",
-          "price": 22000,
+          "price": 20000,
           "isAvailable": false
         },
         {
           "id": "var_1_4",
           "name": "Adobe Firefly Pro Plus 7d [ 10k credit ]",
-          "price": 37000,
+          "price": 25000,
           "isAvailable": false
         },
         {
@@ -2304,7 +2304,7 @@
         {
           "id": "var_29_1",
           "name": "HyperWrite AI Ultra 1m",
-          "price": 205000,
+          "price": 25000,
           "isAvailable": true
         },
         {
@@ -2420,19 +2420,19 @@
         {
           "id": "var_32_4",
           "name": "Kalodata Stater Plan 1m [ Singapore ]",
-          "price": 83000,
+          "price": 55000,
           "isAvailable": true
         },
         {
           "id": "var_32_5",
           "name": "Kalodata Professional Plan 1m [ indo ]",
-          "price": 258000,
+          "price": 128000,
           "isAvailable": false
         },
         {
           "id": "var_32_6",
           "name": "Kalodata Stater Plan 1m [ vietnam ]",
-          "price": 508000,
+          "price": 58000,
           "isAvailable": true
         },
         {
@@ -2481,7 +2481,7 @@
       "variants": [
         {
           "id": "var_46_1",
-          "name": "Netflix Privat 30d [ no warranty ]",
+          "name": "Netflix Privat 1m [ no warranty ]",
           "price": 37000,
           "isAvailable": false
         },
@@ -2512,13 +2512,13 @@
         {
           "id": "var_46_7",
           "name": "1d 1p1u - Login By Code/Password",
-          "price": 5000,
+          "price": 6000,
           "isAvailable": true
         },
         {
           "id": "var_46_8",
           "name": "3d 1p1u - Login By Code/Password",
-          "price": 8000,
+          "price": 10000,
           "isAvailable": true
         },
         {
@@ -2530,7 +2530,7 @@
         {
           "id": "var_46_10",
           "name": "1m 1p1u - Login By Code/Password",
-          "price": 30000,
+          "price": 33000,
           "isAvailable": true
         },
         {
@@ -2542,7 +2542,7 @@
         {
           "id": "var_46_12",
           "name": "1m Semi (Bisa Login 2 Device) - Login By Code/Password",
-          "price": 40000,
+          "price": 38000,
           "isAvailable": true
         },
         {
@@ -2775,7 +2775,7 @@
         {
           "id": "var_63_3",
           "name": "Youtube Premium 1m Invit",
-          "price": 55000,
+          "price": 9000,
           "isAvailable": true
         },
         {
@@ -2956,7 +2956,7 @@
         },
         {
           "id": "var_looviie_1789898664901_23_4",
-          "name": "12m Sharing - Premium Plan",
+          "name": "1y Sharing - Premium Plan",
           "price": 21000,
           "isAvailable": true
         },
@@ -2999,7 +2999,7 @@
         },
         {
           "id": "var_looviie_1789898664901_973_3",
-          "name": "12m Sharing",
+          "name": "1y Sharing",
           "price": 20000,
           "isAvailable": true
         },
@@ -3042,7 +3042,7 @@
         },
         {
           "id": "var_looviie_1789898664901_124_3",
-          "name": "12m Sharing",
+          "name": "1y Sharing",
           "price": 20000,
           "isAvailable": true
         },
@@ -3098,7 +3098,7 @@
         },
         {
           "id": "var_looviie_1789898664901_74_3",
-          "name": "12m Android Only Sharing",
+          "name": "1y Android Only Sharing",
           "price": 19000,
           "isAvailable": true
         }
@@ -3178,7 +3178,7 @@
         },
         {
           "id": "var_looviie_1789898664901_380_4",
-          "name": "12m Sharing",
+          "name": "1y Sharing",
           "price": 18000,
           "isAvailable": true
         }
@@ -3204,7 +3204,7 @@
       "variants": [
         {
           "id": "var_looviie_1789898664902_594_1",
-          "name": "12m Sharing",
+          "name": "1y Sharing",
           "price": 18000,
           "isAvailable": true
         }
@@ -3492,13 +3492,13 @@
         },
         {
           "id": "var_looviie_1789898664902_17_3",
-          "name": "30d Private",
+          "name": "1m Private",
           "price": 90000,
           "isAvailable": true
         },
         {
           "id": "var_looviie_1789898664902_17_4",
-          "name": "30d Sharing 3u",
+          "name": "1m Sharing 3u",
           "price": 38000,
           "isAvailable": true
         }
@@ -3900,7 +3900,7 @@
       "variants": [
         {
           "id": "var_22_1",
-          "name": "Gemini Pro 12m [ invit ]",
+          "name": "Gemini Pro 1y [ invit ]",
           "price": 28000,
           "isAvailable": true
         },
@@ -3912,7 +3912,7 @@
         },
         {
           "id": "var_22_3",
-          "name": "Gemini Pro 12m [ head ]",
+          "name": "Gemini Pro 1y [ head ]",
           "price": 80000,
           "isAvailable": true
         }
@@ -3926,7 +3926,7 @@
         {
           "id": "var_50_1",
           "name": "Seedance2Prompt AI Stater 1m",
-          "price": 80000,
+          "price": 28000,
           "isAvailable": true
         }
       ]

@@ -195,7 +195,9 @@ export async function POST(request) {
 
       const savedSession = fs.readFileSync(sessionFilePath, 'utf8').trim();
       const client = new TelegramClient(new StringSession(savedSession), TELEGRAM_API_ID, TELEGRAM_API_HASH, {
-        connectionRetries: 3
+        connectionRetries: 2,
+        autoReconnect: false,
+        timeout: 10
       });
 
       try {
@@ -228,7 +230,7 @@ export async function POST(request) {
           }
         }
 
-        await client.disconnect();
+        try { await client.destroy(); } catch (_) {}
 
         // Merge: pertahankan grup yang sudah ada dan jangan duplikat
         const existingMap = new Map();
@@ -255,7 +257,7 @@ export async function POST(request) {
           targetGroups: db.targetGroups
         });
       } catch (teleErr) {
-        try { await client.disconnect(); } catch (_) {}
+        try { await client.destroy(); } catch (_) {}
         console.error('[Promo API Telegram Sync Error]', teleErr);
         return NextResponse.json({
           status: 'error',

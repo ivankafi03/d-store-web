@@ -1,5 +1,5 @@
 import { NextResponse } from 'next/server';
-import { getDb, saveDb, pushToGoogleSheet } from '@/lib/db';
+import { getDb, saveDb, pushToGoogleSheet, standardizeDuration } from '@/lib/db';
 
 export async function GET() {
   const db = getDb();
@@ -7,7 +7,9 @@ export async function GET() {
     status: 'ok',
     categories: db.categories || [],
     products: db.products || [],
-    variants: db.variants || []
+    variants: db.variants || [],
+    blacklistedProducts: db.blacklistedProducts || [],
+    blacklistedVariants: db.blacklistedVariants || []
   });
 }
 
@@ -265,10 +267,121 @@ export async function POST(request) {
     }
 
     if (action === 'delete_variant') {
-      const { variantId } = body;
-      db.variants = (db.variants || []).filter(v => v.id !== variantId);
+      const { variantId, blacklist = true } = body;
+      const v = (db.variants || []).find(item => item.id === variantId);
+      if (!v) return NextResponse.json({ status: 'error', message: 'Varian tidak ditemukan' }, { status: 404 });
+
+      const prod = (db.products || []).find(p => p.id === v.productId);
+      const prodName = prod ? prod.name : '';
+
+      if (blacklist) {
+        if (!Array.isArray(db.blacklistedVariants)) db.blacklistedVariants = [];
+        const already = db.blacklistedVariants.some(
+          bv => bv.productName?.toLowerCase().trim() === prodName.toLowerCase().trim() &&
+                standardizeDuration(bv.variantName?.toLowerCase().trim()) === standardizeDuration(v.name.toLowerCase().trim())
+        );
+        if (!already) {
+          db.blacklistedVariants.push({
+            id: `bl_v_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+            variantId: v.id,
+            productId: v.productId,
+            productName: prodName,
+            variantName: v.name,
+            deletedAt: new Date().toISOString()
+          });
+        }
+      }
+
+      db.variants = (db.variants || []).filter(item => item.id !== variantId);
+
+      // Jika produk tidak punya varian lagi, hapus juga produknya agar tidak jadi produk kosong phantom
+      const remaining = db.variants.filter(item => item.productId === v.productId);
+      if (remaining.length === 0 && prod) {
+        db.products = (db.products || []).filter(p => p.id !== prod.id);
+      }
+
       saveDb(db);
       pushToGoogleSheet().catch(err => console.warn('Background sync failed:', err.message));
+      return NextResponse.json({
+        status: 'ok',
+        deletedVariantId: variantId,
+        blacklistedVariants: db.blacklistedVariants || [],
+        products: db.products || [],
+        variants: db.variants || []
+      });
+    }
+
+    if (action === 'delete_product') {
+      const { productId, blacklist = true } = body;
+      const prod = (db.products || []).find(p => p.id === productId);
+      if (!prod) return NextResponse.json({ status: 'error', message: 'Produk tidak ditemukan' }, { status: 404 });
+
+      if (blacklist) {
+        if (!Array.isArray(db.blacklistedProducts)) db.blacklistedProducts = [];
+        if (!db.blacklistedProducts.some(bp => (bp.name || bp).toLowerCase().trim() === prod.name.toLowerCase().trim())) {
+          db.blacklistedProducts.push({
+            id: `bl_p_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+            productId: prod.id,
+            name: prod.name,
+            deletedAt: new Date().toISOString()
+          });
+        }
+
+        // Blacklist juga seluruh varian miliknya
+        const prodVariants = (db.variants || []).filter(v => v.productId === prod.id);
+        if (!Array.isArray(db.blacklistedVariants)) db.blacklistedVariants = [];
+        for (const v of prodVariants) {
+          const already = db.blacklistedVariants.some(
+            bv => bv.productName?.toLowerCase().trim() === prod.name.toLowerCase().trim() &&
+                  standardizeDuration(bv.variantName?.toLowerCase().trim()) === standardizeDuration(v.name.toLowerCase().trim())
+          );
+          if (!already) {
+            db.blacklistedVariants.push({
+              id: `bl_v_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+              variantId: v.id,
+              productId: prod.id,
+              productName: prod.name,
+              variantName: v.name,
+              deletedAt: new Date().toISOString()
+            });
+          }
+        }
+      }
+
+      db.products = (db.products || []).filter(p => p.id !== productId);
+      db.variants = (db.variants || []).filter(v => v.productId !== productId);
+
+      saveDb(db);
+      pushToGoogleSheet().catch(err => console.warn('Background sync failed:', err.message));
+      return NextResponse.json({
+        status: 'ok',
+        deletedProductId: productId,
+        blacklistedProducts: db.blacklistedProducts || [],
+        blacklistedVariants: db.blacklistedVariants || [],
+        products: db.products || [],
+        variants: db.variants || []
+      });
+    }
+
+    if (action === 'restore_blacklist') {
+      const { id, type } = body; // type: 'product' atau 'variant'
+      if (type === 'product') {
+        db.blacklistedProducts = (db.blacklistedProducts || []).filter(bp => (bp.id || bp) !== id && (bp.name || bp) !== id);
+      } else {
+        db.blacklistedVariants = (db.blacklistedVariants || []).filter(bv => bv.id !== id && bv.variantId !== id);
+      }
+      saveDb(db);
+      return NextResponse.json({
+        status: 'ok',
+        blacklistedProducts: db.blacklistedProducts || [],
+        blacklistedVariants: db.blacklistedVariants || []
+      });
+    }
+
+    if (action === 'clear_blacklist') {
+      db.blacklistedProducts = [];
+      db.blacklistedVariants = [];
+      saveDb(db);
       return NextResponse.json({ status: 'ok' });
     }
 

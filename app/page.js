@@ -93,6 +93,13 @@ export default function Dashboard() {
   const [copiedInvoice, setCopiedInvoice] = useState(false);
   const [lastRecordedSale, setLastRecordedSale] = useState(null);
 
+  // Blacklist / Anti-sedot Modal State
+  const [blacklistedProducts, setBlacklistedProducts] = useState([]);
+  const [blacklistedVariants, setBlacklistedVariants] = useState([]);
+  const [blacklistModalOpen, setBlacklistModalOpen] = useState(false);
+  const [deleteConfirmTarget, setDeleteConfirmTarget] = useState(null); // { type: 'product'|'variant', item, productName }
+  const [deletingLoading, setDeletingLoading] = useState(false);
+
   // Bulk Price Update Modal State
   const [bulkPriceModalOpen, setBulkPriceModalOpen] = useState(false);
   const [bulkPriceMode, setBulkPriceMode] = useState('add_to_cost'); // 'add_to_cost', 'add_to_selling', 'random_margin'
@@ -559,6 +566,8 @@ export default function Dashboard() {
           name: standardizeDurationStr(v.name)
         }));
         setVariants(cleanVars);
+        setBlacklistedProducts(data.blacklistedProducts || []);
+        setBlacklistedVariants(data.blacklistedVariants || []);
       }
       await loadSales();
       await loadVaultData();
@@ -923,6 +932,106 @@ export default function Dashboard() {
       showToast('Error: ' + err.message, 'error');
     } finally {
       setBulkUpdating(false);
+    }
+  };
+
+  // ====================================================================
+  // HAPUS & BLACKLIST (ANTI-SEDOT) HANDLERS
+  // ====================================================================
+  const handleConfirmDelete = async () => {
+    if (!deleteConfirmTarget) return;
+    const { type, item, productName } = deleteConfirmTarget;
+    setDeletingLoading(true);
+
+    try {
+      if (type === 'variant') {
+        const res = await fetch('/api/products', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'delete_variant',
+            variantId: item.id,
+            blacklist: true
+          })
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          setVariants(prev => prev.filter(v => v.id !== item.id));
+          if (data.products) setProducts(data.products);
+          if (data.blacklistedVariants) setBlacklistedVariants(data.blacklistedVariants);
+          showToast(`Varian "${item.name}" berhasil dihapus & diblacklist!`, 'success');
+        } else {
+          showToast('Gagal menghapus varian: ' + (data.message || 'Error'), 'error');
+        }
+      } else if (type === 'product') {
+        const res = await fetch('/api/products', {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({
+            action: 'delete_product',
+            productId: item.id,
+            blacklist: true
+          })
+        });
+        const data = await res.json();
+        if (data.status === 'ok') {
+          setProducts(prev => prev.filter(p => p.id !== item.id));
+          setVariants(prev => prev.filter(v => v.productId !== item.id));
+          if (data.blacklistedProducts) setBlacklistedProducts(data.blacklistedProducts);
+          if (data.blacklistedVariants) setBlacklistedVariants(data.blacklistedVariants);
+          showToast(`Produk "${item.name}" beserta variannya berhasil dihapus & diblacklist!`, 'success');
+        } else {
+          showToast('Gagal menghapus produk: ' + (data.message || 'Error'), 'error');
+        }
+      }
+    } catch (err) {
+      showToast('Terjadi kesalahan: ' + err.message, 'error');
+    } finally {
+      setDeletingLoading(false);
+      setDeleteConfirmTarget(null);
+    }
+  };
+
+  const handleRestoreBlacklist = async (id, type) => {
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'restore_blacklist',
+          id,
+          type
+        })
+      });
+      const data = await res.json();
+      if (data.status === 'ok') {
+        if (data.blacklistedProducts) setBlacklistedProducts(data.blacklistedProducts);
+        if (data.blacklistedVariants) setBlacklistedVariants(data.blacklistedVariants);
+        showToast('Item berhasil dipulihkan dari blacklist! Item dapat disedot kembali pada penyedotan berikutnya.', 'success');
+      } else {
+        showToast('Gagal memulihkan: ' + (data.message || 'Error'), 'error');
+      }
+    } catch (err) {
+      showToast('Gagal memulihkan item: ' + err.message, 'error');
+    }
+  };
+
+  const handleClearBlacklist = async () => {
+    if (!confirm('Apakah Anda yakin ingin mengosongkan semua daftar blacklist? Item yang pernah dihapus bisa masuk lagi jika disedot.')) return;
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'clear_blacklist' })
+      });
+      const data = await res.json();
+      if (data.status === 'ok') {
+        setBlacklistedProducts([]);
+        setBlacklistedVariants([]);
+        showToast('Semua daftar blacklist berhasil dikosongkan.', 'success');
+      }
+    } catch (err) {
+      showToast('Gagal mengosongkan blacklist: ' + err.message, 'error');
     }
   };
 
@@ -2116,6 +2225,16 @@ export default function Dashboard() {
                     <Plus className="w-4 h-4" />
                     <span>Tambah Produk</span>
                   </button>
+
+                  <button
+                    type="button"
+                    onClick={() => setBlacklistModalOpen(true)}
+                    className="neo-btn flex items-center justify-center gap-1.5 px-3.5 py-2.5 bg-rose-100 hover:bg-rose-200 text-rose-950 text-xs font-black uppercase tracking-tight border-2 border-black shadow-[3px_3px_0px_0px_#000] transition cursor-pointer"
+                    title="Lihat & Kelola Daftar Item yang Dihapus / Di-Blacklist agar tidak masuk lagi saat sedot supplier"
+                  >
+                    <ShieldAlert className="w-3.5 h-3.5 text-rose-600" />
+                    <span>Diblacklist ({blacklistedProducts.length + blacklistedVariants.length})</span>
+                  </button>
                 </div>
               </div>
 
@@ -2311,6 +2430,14 @@ export default function Dashboard() {
                           <span className="text-xs font-black px-2.5 py-1 bg-yellow-200 text-black border-2 border-black shadow-[2px_2px_0px_0px_#000] whitespace-nowrap uppercase">
                             {prod.variants.length} Paket
                           </span>
+                          <button
+                            type="button"
+                            onClick={() => setDeleteConfirmTarget({ type: 'product', item: prod, productName: prod.name })}
+                            className="neo-btn p-1 bg-white hover:bg-rose-500 hover:text-white text-zinc-400 border-2 border-black shadow-[1.5px_1.5px_0_#000] transition cursor-pointer"
+                            title={`Hapus seluruh produk ${prod.name} & blacklist agar tidak muncul saat sedot`}
+                          >
+                            <Trash2 className="w-3.5 h-3.5" />
+                          </button>
                         </div>
                       </div>
 
@@ -2421,6 +2548,15 @@ export default function Dashboard() {
 
                               {/* Action Buttons & Switch Toggle */}
                               <div className="flex items-center gap-2 shrink-0">
+                                <button
+                                  type="button"
+                                  onClick={() => setDeleteConfirmTarget({ type: 'variant', item: v, productName: prod.name })}
+                                  className="p-2 bg-white hover:bg-rose-500 hover:text-white text-zinc-400 border-2 border-black shadow-[2px_2px_0px_0px_#000] neo-btn transition cursor-pointer"
+                                  title={`Hapus & blacklist varian ${v.name} agar tidak muncul saat sedot`}
+                                >
+                                  <Trash2 className="w-3.5 h-3.5" />
+                                </button>
+
                                 <button
                                   onClick={() => {
                                     setEditingVariant({ ...v, productName: prod.name });
@@ -7244,6 +7380,241 @@ export default function Dashboard() {
                   <span>Selesai ({currentPosterSelectedCount})</span>
                 </button>
               </div>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ==================================================================== */}
+      {/* MODAL: KONFIRMASI HAPUS & BLACKLIST (ANTI-SEDOT)                     */}
+      {/* ==================================================================== */}
+      {deleteConfirmTarget && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
+          <div className="bg-white border-4 border-black rounded-2xl w-full max-w-md p-5 sm:p-6 space-y-4 shadow-[8px_8px_0_#000] my-auto animate-in zoom-in-95 duration-150">
+            <div className="flex items-start justify-between pb-3 border-b-2 border-black">
+              <div className="flex items-center gap-2.5">
+                <span className="w-9 h-9 rounded-xl bg-rose-200 text-rose-800 flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000] shrink-0">
+                  <Trash2 className="w-5 h-5" />
+                </span>
+                <div>
+                  <h3 className="font-black text-sm sm:text-base text-black uppercase tracking-wide">
+                    {deleteConfirmTarget.type === 'product' ? 'Hapus & Blacklist Produk' : 'Hapus & Blacklist Varian'}
+                  </h3>
+                  <p className="text-[11px] text-zinc-600 font-bold">Item tidak akan muncul lagi saat sedot supplier</p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setDeleteConfirmTarget(null)}
+                className="w-7 h-7 rounded-lg bg-zinc-100 hover:bg-zinc-200 border-2 border-black flex items-center justify-center text-black cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="p-3.5 bg-rose-50 rounded-xl border-2 border-black space-y-2">
+              {deleteConfirmTarget.type === 'product' ? (
+                <>
+                  <div className="text-[10px] font-black uppercase tracking-wider text-rose-700">Produk yang akan dihapus:</div>
+                  <div className="font-black text-base text-black uppercase">{deleteConfirmTarget.item.name}</div>
+                  <div className="text-xs text-zinc-600 font-bold">
+                    Termasuk {variants.filter(v => v.productId === deleteConfirmTarget.item.id).length} varian di dalamnya.
+                  </div>
+                </>
+              ) : (
+                <>
+                  <div className="text-[10px] font-black uppercase tracking-wider text-rose-700">Varian yang akan dihapus:</div>
+                  <div className="font-black text-sm sm:text-base text-black">{deleteConfirmTarget.item.name}</div>
+                  <div className="text-xs text-zinc-600 font-bold">Dari Produk: <span className="text-black font-black uppercase">{deleteConfirmTarget.productName}</span></div>
+                </>
+              )}
+            </div>
+
+            <div className="p-3 bg-amber-50 rounded-xl border-2 border-dashed border-amber-600/60 text-xs text-amber-950 font-bold space-y-1">
+              <div className="flex items-center gap-1.5 font-black text-amber-900 uppercase text-[11px]">
+                <ShieldAlert className="w-3.5 h-3.5 text-amber-600" />
+                <span>Anti-Sedot Ulang Otomatis</span>
+              </div>
+              <p className="text-[11px] text-zinc-700 leading-relaxed">
+                Item ini akan dicatat ke <b>Blacklist</b>. Saat Anda menyedot supplier Telegram atau sync spreadsheet lagi, item ini <b>TIDAK AKAN</b> muncul kembali. Anda tetap bisa memulihkannya kapan saja melalui tombol <b>Diblacklist</b> di atas katalog.
+              </p>
+            </div>
+
+            <div className="flex items-center justify-end gap-2.5 pt-2">
+              <button
+                type="button"
+                disabled={deletingLoading}
+                onClick={() => setDeleteConfirmTarget(null)}
+                className="neo-btn px-4 py-2 rounded-xl text-xs font-black text-black bg-zinc-100 hover:bg-zinc-200 border-2 border-black shadow-[2px_2px_0_#000] uppercase cursor-pointer"
+              >
+                Batal
+              </button>
+              <button
+                type="button"
+                disabled={deletingLoading}
+                onClick={handleConfirmDelete}
+                className="neo-btn px-4 py-2 rounded-xl bg-rose-500 hover:bg-rose-600 text-white text-xs font-black border-2 border-black shadow-[3px_3px_0_#000] uppercase tracking-wide flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+              >
+                {deletingLoading ? (
+                  <>
+                    <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                    <span>Menghapus...</span>
+                  </>
+                ) : (
+                  <>
+                    <Trash2 className="w-3.5 h-3.5" />
+                    <span>Ya, Hapus & Blacklist</span>
+                  </>
+                )}
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* ==================================================================== */}
+      {/* MODAL: KELOLA BLACKLIST ANTI-SEDOT                                   */}
+      {/* ==================================================================== */}
+      {blacklistModalOpen && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
+          <div className="bg-white border-4 border-black rounded-2xl w-full max-w-xl p-5 sm:p-6 space-y-4 shadow-[8px_8px_0_#000] my-auto max-h-[90vh] flex flex-col animate-in zoom-in-95 duration-150">
+            <div className="flex items-start justify-between pb-3 border-b-2 border-black shrink-0">
+              <div className="flex items-center gap-2.5">
+                <span className="w-9 h-9 rounded-xl bg-[#FFE600] text-black flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000] shrink-0">
+                  <ShieldAlert className="w-5 h-5 text-black" />
+                </span>
+                <div>
+                  <h3 className="font-black text-sm sm:text-base text-black uppercase tracking-wide">
+                    Daftar Item Di-Blacklist (Anti-Sedot)
+                  </h3>
+                  <p className="text-[11px] text-zinc-600 font-bold">
+                    Item di bawah ini tidak akan pernah dimunculkan lagi saat sedot supplier
+                  </p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setBlacklistModalOpen(false)}
+                className="w-7 h-7 rounded-lg bg-zinc-100 hover:bg-zinc-200 border-2 border-black flex items-center justify-center text-black cursor-pointer"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="flex-1 overflow-y-auto space-y-4 pr-1">
+              {/* Seksi Varian Di-Blacklist */}
+              <div>
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-xs font-black uppercase tracking-wider text-black flex items-center gap-1.5">
+                    <span>Varian Di-Blacklist</span>
+                    <span className="px-1.5 py-0.5 bg-rose-200 border border-black rounded text-[10px] font-black">
+                      {blacklistedVariants.length}
+                    </span>
+                  </div>
+                </div>
+
+                {blacklistedVariants.length === 0 ? (
+                  <div className="p-3 bg-zinc-50 border-2 border-dashed border-zinc-300 rounded-xl text-center text-xs text-zinc-500 font-bold">
+                    Tidak ada varian yang diblacklist.
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {blacklistedVariants.map((bv, idx) => (
+                      <div
+                        key={bv.id || idx}
+                        className="p-3 bg-white border-2 border-black rounded-xl shadow-[2px_2px_0_#000] flex items-center justify-between gap-3"
+                      >
+                        <div className="min-w-0 flex-1">
+                          <div className="font-black text-xs text-black truncate">{bv.variantName}</div>
+                          <div className="text-[11px] text-zinc-600 font-bold mt-0.5">
+                            Produk: <span className="text-black font-black uppercase">{bv.productName || 'Umum'}</span>
+                            {bv.deletedAt && (
+                              <span className="text-zinc-400 text-[10px] ml-2">
+                                · {new Date(bv.deletedAt).toLocaleDateString('id-ID', { day: 'numeric', month: 'short', hour: '2-digit', minute: '2-digit' })}
+                              </span>
+                            )}
+                          </div>
+                        </div>
+                        <button
+                          type="button"
+                          onClick={() => handleRestoreBlacklist(bv.id || bv.variantId, 'variant')}
+                          className="neo-btn px-2.5 py-1.5 bg-emerald-300 hover:bg-emerald-400 text-black border-2 border-black text-[10px] font-black uppercase shadow-[1.5px_1.5px_0_#000] shrink-0 flex items-center gap-1 cursor-pointer"
+                          title="Pulihkan agar varian ini bisa disedot kembali dari supplier"
+                        >
+                          <RotateCcw className="w-3 h-3" />
+                          <span>Pulihkan</span>
+                        </button>
+                      </div>
+                    ))}
+                  </div>
+                )}
+              </div>
+
+              {/* Seksi Produk Di-Blacklist */}
+              <div className="pt-2 border-t-2 border-zinc-200">
+                <div className="flex items-center justify-between mb-2">
+                  <div className="text-xs font-black uppercase tracking-wider text-black flex items-center gap-1.5">
+                    <span>Seluruh Produk Di-Blacklist</span>
+                    <span className="px-1.5 py-0.5 bg-rose-200 border border-black rounded text-[10px] font-black">
+                      {blacklistedProducts.length}
+                    </span>
+                  </div>
+                </div>
+
+                {blacklistedProducts.length === 0 ? (
+                  <div className="p-3 bg-zinc-50 border-2 border-dashed border-zinc-300 rounded-xl text-center text-xs text-zinc-500 font-bold">
+                    Tidak ada produk yang diblacklist secara utuh.
+                  </div>
+                ) : (
+                  <div className="space-y-2">
+                    {blacklistedProducts.map((bp, idx) => {
+                      const pName = typeof bp === 'string' ? bp : bp.name;
+                      const bpId = typeof bp === 'string' ? bp : bp.id;
+                      return (
+                        <div
+                          key={bpId || idx}
+                          className="p-3 bg-white border-2 border-black rounded-xl shadow-[2px_2px_0_#000] flex items-center justify-between gap-3"
+                        >
+                          <div className="min-w-0 flex-1">
+                            <div className="font-black text-xs text-black uppercase truncate">{pName}</div>
+                            <div className="text-[11px] text-zinc-500 font-bold mt-0.5">
+                              Seluruh varian produk ini diblokir dari sedot supplier
+                            </div>
+                          </div>
+                          <button
+                            type="button"
+                            onClick={() => handleRestoreBlacklist(bpId || pName, 'product')}
+                            className="neo-btn px-2.5 py-1.5 bg-emerald-300 hover:bg-emerald-400 text-black border-2 border-black text-[10px] font-black uppercase shadow-[1.5px_1.5px_0_#000] shrink-0 flex items-center gap-1 cursor-pointer"
+                            title="Pulihkan produk agar bisa disedot kembali"
+                          >
+                            <RotateCcw className="w-3 h-3" />
+                            <span>Pulihkan</span>
+                          </button>
+                        </div>
+                      );
+                    })}
+                  </div>
+                )}
+              </div>
+            </div>
+
+            <div className="flex items-center justify-between gap-2 pt-3 border-t-2 border-black shrink-0">
+              {(blacklistedVariants.length > 0 || blacklistedProducts.length > 0) ? (
+                <button
+                  type="button"
+                  onClick={handleClearBlacklist}
+                  className="neo-btn px-3 py-1.5 rounded-xl bg-zinc-100 hover:bg-rose-100 text-rose-700 text-xs font-black border-2 border-black shadow-[2px_2px_0_#000] uppercase cursor-pointer"
+                >
+                  Kosongkan Semua
+                </button>
+              ) : <div />}
+              <button
+                type="button"
+                onClick={() => setBlacklistModalOpen(false)}
+                className="neo-btn px-5 py-2 rounded-xl bg-[#FFE600] hover:bg-yellow-300 text-black text-xs font-black border-2 border-black shadow-[2.5px_2.5px_0_#000] uppercase cursor-pointer"
+              >
+                Tutup
+              </button>
             </div>
           </div>
         </div>

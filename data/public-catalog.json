@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-23T13:22:16.818Z",
+  "updatedAt": "2026-09-24T11:32:39.791Z",
   "categories": [
     {
       "id": "cat_1",
@@ -39,7 +39,7 @@
         {
           "id": "var_prabu_1",
           "name": "Gmail Fresh 1 Akun",
-          "price": 6500,
+          "price": 7000,
           "isAvailable": true
         }
       ]
@@ -52,7 +52,7 @@
         {
           "id": "var_bagah_1",
           "name": "OUTLOOK",
-          "price": 2100,
+          "price": 2000,
           "isAvailable": true
         },
         {
@@ -105,27 +105,9 @@
           "isAvailable": true
         },
         {
-          "id": "var_7_7",
-          "name": "1y (Invite Member)",
-          "price": 10000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_7_8",
-          "name": "Head Owner 1m (Bisa 100 User)",
-          "price": 3000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_7_9",
-          "name": "Head Owner 3m (Bisa 100 User)",
-          "price": 15000,
-          "isAvailable": true
-        },
-        {
           "id": "var_7_10",
           "name": "Lifetime (Garansi 1y)",
-          "price": 11000,
+          "price": 12000,
           "isAvailable": true
         },
         {
@@ -144,13 +126,7 @@
         {
           "id": "var_prod_3_alight_motion_1y",
           "name": "Alight Motion 1y",
-          "price": 5000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_2_1",
-          "name": "Alight Motion Prem 1y",
-          "price": 5000,
+          "price": 3000,
           "isAvailable": true
         },
         {
@@ -163,24 +139,6 @@
           "id": "var_3_2",
           "name": "1m Private",
           "price": 2500,
-          "isAvailable": true
-        },
-        {
-          "id": "var_3_3",
-          "name": "1y Private",
-          "price": 4000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_3_4",
-          "name": "1y Via Link",
-          "price": 2100,
-          "isAvailable": true
-        },
-        {
-          "id": "var_3_5",
-          "name": "1y Gene",
-          "price": 1800,
           "isAvailable": true
         }
       ]
@@ -206,7 +164,7 @@
         {
           "id": "var_bagah_5",
           "name": "MEITU 7D VIP",
-          "price": 4500,
+          "price": 5000,
           "isAvailable": true
         }
       ]
@@ -219,7 +177,7 @@
         {
           "id": "var_bagah_6",
           "name": "WINK  7D VIP+",
-          "price": 4500,
+          "price": 5000,
           "isAvailable": true
         }
       ]
@@ -263,13 +221,13 @@
         {
           "id": "var_buatprem_1_1",
           "name": "PROMO 10JT TOKEN 14D",
-          "price": 5500,
+          "price": 6000,
           "isAvailable": true
         },
         {
           "id": "var_buatprem_1_2",
           "name": "PROMO 20JT TOKEN 14D",
-          "price": 9500,
+          "price": 10000,
           "isAvailable": true
         },
         {
@@ -384,28 +342,10 @@
       "categoryId": "cat_3",
       "variants": [
         {
-          "id": "var_42_2",
-          "name": "MEITU 7D VIP+",
-          "price": 5500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_42_6",
-          "name": "Meitu VIP 14d AllDev",
-          "price": 20000,
-          "isAvailable": false
-        },
-        {
           "id": "var_42_7",
           "name": "Meitu VIP 7d AllDev",
           "price": 9500,
           "isAvailable": false
-        },
-        {
-          "id": "var_42_3",
-          "name": "7d Private VIP+ Bisa Andro & IOS",
-          "price": 7000,
-          "isAvailable": true
         },
         {
           "id": "var_42_4",
@@ -422,7 +362,7 @@
         {
           "id": "var_prod_42_meitu_vip_7d",
           "name": "Meitu VIP 7d",
-          "price": 9500,
+          "price": 6000,
           "isAvailable": true
         }
       ]
@@ -443,7 +383,7 @@
     {
       "id": "prod_hp_63_1",
       "name": "Youtube",
-      "categoryId": "cat_2",
+      "categoryId": "cat_1",
       "variants": [
         {
           "id": "var_ziem_3",
@@ -455,18 +395,6 @@
           "id": "var_ziem_4",
           "name": "YT JASPAY INDP 1M",
           "price": 4000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_hp_63_1",
-          "name": "Youtube Premium 1m Family Head",
-          "price": 21000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_hp_63_2",
-          "name": "Youtube Premium 1m Individual",
-          "price": 20500,
           "isAvailable": false
         },
         {
@@ -482,12 +410,6 @@
       "name": "Wink",
       "categoryId": "cat_3",
       "variants": [
-        {
-          "id": "var_prod_72_wink_vip_7d",
-          "name": "Wink VIP+ 7d",
-          "price": 9500,
-          "isAvailable": false
-        },
         {
           "id": "var_72_10",
           "name": "Wink VIP+ 1m Alldev",
@@ -543,12 +465,6 @@
           "isAvailable": true
         },
         {
-          "id": "var_72_8",
-          "name": "1m Private For Android",
-          "price": 13000,
-          "isAvailable": true
-        },
-        {
           "id": "var_72_9",
           "name": "7d Private For IOS",
           "price": 8000,
@@ -564,7 +480,7 @@
         {
           "id": "var_75_3",
           "name": "ZOOM 14D",
-          "price": 5500,
+          "price": 6000,
           "isAvailable": true
         },
         {
@@ -577,12 +493,6 @@
           "id": "var_75_4",
           "name": "1w 100p",
           "price": 8000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_75_5",
-          "name": "14d 100p Private",
-          "price": 9000,
           "isAvailable": true
         },
         {
@@ -599,12 +509,6 @@
       "categoryId": "cat_1",
       "variants": [
         {
-          "id": "var_23_2",
-          "name": "GEMINI 1M",
-          "price": 4000,
-          "isAvailable": true
-        },
-        {
           "id": "var_23_12",
           "name": "Gemini Pro 1y [ invit ]",
           "price": 29000,
@@ -617,27 +521,9 @@
           "isAvailable": true
         },
         {
-          "id": "var_23_14",
-          "name": "Gemini Pro 1y [ head ]",
-          "price": 78000,
-          "isAvailable": true
-        },
-        {
           "id": "var_23_1",
           "name": "Genmotions AI Stater",
           "price": 38000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_23_3",
-          "name": "1m Via Link - Gemini AI Pro 5 TB",
-          "price": 13000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_23_4",
-          "name": "3m Via Link - Gemini AI Pro 5 TB",
-          "price": 23000,
           "isAvailable": true
         },
         {
@@ -659,21 +545,9 @@
           "isAvailable": true
         },
         {
-          "id": "var_23_8",
-          "name": "18m Famplan",
-          "price": 26000,
-          "isAvailable": true
-        },
-        {
           "id": "var_23_9",
           "name": "Link Redeem 7d",
           "price": 7000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_23_10",
-          "name": "1m Private Via Invite",
-          "price": 8500,
           "isAvailable": true
         },
         {
@@ -711,13 +585,13 @@
         {
           "id": "var_4_1",
           "name": "Appmus Basic",
-          "price": 52000,
+          "price": 3000,
           "isAvailable": false
         },
         {
           "id": "var_4_2",
           "name": "Appmus Head",
-          "price": 6500,
+          "price": 7000,
           "isAvailable": false
         }
       ]
@@ -730,7 +604,7 @@
         {
           "id": "var_hp_4_1",
           "name": "Appmus Basic",
-          "price": 2000,
+          "price": 3000,
           "isAvailable": false
         },
         {
@@ -816,7 +690,7 @@
         {
           "id": "var_6_1",
           "name": "Capcut Pro 1m",
-          "price": 55000,
+          "price": 28000,
           "isAvailable": true
         },
         {
@@ -824,12 +698,6 @@
           "name": "Capcut Ultra 1m",
           "price": 760000,
           "isAvailable": true
-        },
-        {
-          "id": "var_6_3",
-          "name": "Capcut Pro 7d",
-          "price": 10500,
-          "isAvailable": false
         },
         {
           "id": "var_8_4",
@@ -841,18 +709,6 @@
           "id": "var_8_5",
           "name": "7d Private Full Garansi",
           "price": 9000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_8_6",
-          "name": "1m Private Full Garansi",
-          "price": 29000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_8_7",
-          "name": "1m Private No Renew",
-          "price": 28000,
           "isAvailable": true
         }
       ]
@@ -891,12 +747,6 @@
           "id": "var_10_2",
           "name": "Chatgpt Plus 1m [ 24h Warranty ]",
           "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_10_3",
-          "name": "ChatGpt GO 3m [ full warranty ]",
-          "price": 71000,
           "isAvailable": false
         },
         {
@@ -1809,7 +1659,7 @@
     {
       "id": "prod_55",
       "name": "Reelshort",
-      "categoryId": "cat_2",
+      "categoryId": "cat_1",
       "variants": [
         {
           "id": "var_55_3",
@@ -2054,7 +1904,7 @@
     {
       "id": "prod_68",
       "name": "Viu",
-      "categoryId": "cat_2",
+      "categoryId": "cat_1",
       "variants": [
         {
           "id": "var_71_1",
@@ -2344,12 +2194,6 @@
           "isAvailable": false
         },
         {
-          "id": "var_29_8",
-          "name": "Sharing Ultimate 1m",
-          "price": 19000,
-          "isAvailable": false
-        },
-        {
           "id": "var_29_9",
           "name": "Sharing Standard 1m",
           "price": 19000,
@@ -2480,12 +2324,6 @@
       "categoryId": "cat_1",
       "variants": [
         {
-          "id": "var_46_1",
-          "name": "Netflix Privat 1m [ no warranty ]",
-          "price": 37000,
-          "isAvailable": false
-        },
-        {
           "id": "var_46_3",
           "name": "1d - Login By Link/Tv By Code",
           "price": 3800,
@@ -2562,18 +2400,6 @@
           "name": "7d 1P2U",
           "price": 13000,
           "isAvailable": true
-        },
-        {
-          "id": "var_46_16",
-          "name": "Openart AI Essential 1m [ 4k Credit ]",
-          "price": 75000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_46_17",
-          "name": "Openart AI Advance 1m [ 12k Credit ]",
-          "price": 133000,
-          "isAvailable": false
         }
       ]
     },
@@ -2589,12 +2415,6 @@
           "isAvailable": false
         },
         {
-          "id": "var_52_2",
-          "name": "Openart AI Advance 1m [ 12k Credit ]",
-          "price": 130000,
-          "isAvailable": false
-        },
-        {
           "id": "var_52_3",
           "name": "1m Pro Private",
           "price": 13000,
@@ -2605,12 +2425,6 @@
           "name": "1m Sharing",
           "price": 13000,
           "isAvailable": true
-        },
-        {
-          "id": "var_52_5",
-          "name": "Picsart Pro 1m",
-          "price": 16000,
-          "isAvailable": false
         },
         {
           "id": "var_52_6",
@@ -2626,27 +2440,9 @@
       "categoryId": "cat_1",
       "variants": [
         {
-          "id": "var_53_1",
-          "name": "Venice AI Pro 1m",
-          "price": 105000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_53_2",
-          "name": "Outlook",
-          "price": 5000,
-          "isAvailable": false
-        },
-        {
           "id": "var_53_3",
           "name": "1m Sharing 4u",
           "price": 11000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_53_4",
-          "name": "1m Sharing 4u (PO)",
-          "price": 8000,
           "isAvailable": true
         },
         {
@@ -2666,18 +2462,6 @@
           "name": "1m Private No Garansi",
           "price": 13000,
           "isAvailable": true
-        },
-        {
-          "id": "var_53_8",
-          "name": "Privat 1m",
-          "price": 21000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_53_9",
-          "name": "Sharing 1m",
-          "price": 8000,
-          "isAvailable": false
         }
       ]
     },
@@ -2686,18 +2470,6 @@
       "name": "Spotify",
       "categoryId": "cat_7",
       "variants": [
-        {
-          "id": "var_60_1",
-          "name": "Weshop AI Pro 1m",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_60_2",
-          "name": "1m Famplan",
-          "price": 23000,
-          "isAvailable": true
-        },
         {
           "id": "var_60_3",
           "name": "2m Famplan",
@@ -2727,18 +2499,6 @@
           "name": "1m Famplan FG (Full Garansi)",
           "price": 18500,
           "isAvailable": true
-        },
-        {
-          "id": "var_60_8",
-          "name": "1m Indplan FG (Full Garansi)",
-          "price": 25000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_60_9",
-          "name": "Spotify Premium 1m [ 25d warranty ]",
-          "price": 32000,
-          "isAvailable": false
         },
         {
           "id": "var_60_10",
@@ -2779,39 +2539,9 @@
           "isAvailable": true
         },
         {
-          "id": "var_74_3",
-          "name": "YT JASPAY INDP 1M",
-          "price": 4000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_74_2",
-          "name": "1m Famplan (Via Invite)",
-          "price": 8000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_74_4",
-          "name": "Youtube Premium 1m Family Head",
-          "price": 19000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_74_5",
-          "name": "Youtube Premium 1m Individual",
-          "price": 18500,
-          "isAvailable": false
-        },
-        {
           "id": "var_74_6",
           "name": "Famplan - 2m - Invite Member",
           "price": 11000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_74_7",
-          "name": "Famhed - 1m",
-          "price": 17000,
           "isAvailable": true
         },
         {
@@ -2829,7 +2559,7 @@
         {
           "id": "var_74_10",
           "name": "Jaspay Famhead - 1m",
-          "price": 9000,
+          "price": 4000,
           "isAvailable": true
         },
         {
@@ -2842,12 +2572,6 @@
           "id": "var_74_12",
           "name": "Jaspay Mixpland - 3m",
           "price": 13000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_74_13",
-          "name": "1m Indplan",
-          "price": 10500,
           "isAvailable": true
         }
       ]
@@ -2998,18 +2722,6 @@
           "isAvailable": true
         },
         {
-          "id": "var_looviie_1789898664901_973_3",
-          "name": "1y Sharing",
-          "price": 20000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_looviie_1789898664901_973_4",
-          "name": "1m Sharing",
-          "price": 7500,
-          "isAvailable": true
-        },
-        {
           "id": "var_looviie_1789898664901_973_5",
           "name": "1m Private",
           "price": 33000,
@@ -3113,12 +2825,6 @@
           "id": "var_looviie_1789898664901_465_1",
           "name": "1m Basic Sharing 4u",
           "price": 19000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_looviie_1789898664901_465_2",
-          "name": "1m Basic Sharing 3u",
-          "price": 21000,
           "isAvailable": true
         },
         {
@@ -3331,18 +3037,6 @@
           "id": "var_looviie_1789898664902_965_7",
           "name": "1m 2U Mobile Only",
           "price": 20000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_looviie_1789898664902_965_8",
-          "name": "1m Private Mobile Only",
-          "price": 33000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_looviie_1789898664902_965_9",
-          "name": "1y TV (Garansi 3m)",
-          "price": 10500,
           "isAvailable": true
         }
       ]

@@ -100,6 +100,17 @@ export default function Dashboard() {
   const [deleteConfirmTarget, setDeleteConfirmTarget] = useState(null); // { type: 'product'|'variant', item, productName }
   const [deletingLoading, setDeletingLoading] = useState(false);
 
+  // Tambah Varian ke Produk Tertentu Modal State
+  const [addVariantModalOpen, setAddVariantModalOpen] = useState(false);
+  const [addVariantTargetProd, setAddVariantTargetProd] = useState(null);
+  const [addVariantForm, setAddVariantForm] = useState({
+    variantName: '',
+    sellingPrice: '',
+    costPrice: '',
+    supplier: 'heavenprem'
+  });
+  const [addVariantLoading, setAddVariantLoading] = useState(false);
+
   // Bulk Price Update Modal State
   const [bulkPriceModalOpen, setBulkPriceModalOpen] = useState(false);
   const [bulkPriceMode, setBulkPriceMode] = useState('add_to_cost'); // 'add_to_cost', 'add_to_selling', 'random_margin'
@@ -780,7 +791,7 @@ export default function Dashboard() {
     }
   };
 
-  // Simpan Edit Harga & Toko
+  // Simpan Edit Harga & Toko & Nama Paket
   const handleSaveEditVariant = async (e) => {
     e.preventDefault();
     if (!editingVariant) return;
@@ -792,6 +803,7 @@ export default function Dashboard() {
         body: JSON.stringify({
           action: 'update_price',
           variantId: editingVariant.id,
+          variantName: editingVariant.name,
           sellingPrice: editingVariant.price,
           costPrice: editingVariant.costPrice,
           supplier: editingVariant.supplier
@@ -799,12 +811,57 @@ export default function Dashboard() {
       });
       const data = await res.json();
       if (data.status === 'ok') {
-        setVariants(prev => prev.map(v => v.id === editingVariant.id ? data.variant : v));
+        const cleanVar = {
+          ...data.variant,
+          name: standardizeDurationStr(data.variant.name)
+        };
+        setVariants(prev => prev.map(v => v.id === editingVariant.id ? cleanVar : v));
         setEditModalOpen(false);
-        showToast('Harga dan supplier berhasil diperbarui!', 'success');
+        showToast('Paket dan harga berhasil diperbarui!', 'success');
+      } else {
+        showToast('Gagal update: ' + (data.message || 'Error'), 'error');
       }
     } catch (err) {
       showToast('Gagal menyimpan perubahan: ' + err.message, 'error');
+    }
+  };
+
+  // Simpan Varian Baru ke Produk Tertentu
+  const handleSaveAddVariant = async (e) => {
+    e.preventDefault();
+    if (!addVariantTargetProd) return;
+    setAddVariantLoading(true);
+
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'add_variant',
+          productId: addVariantTargetProd.id,
+          variantName: addVariantForm.variantName,
+          sellingPrice: addVariantForm.sellingPrice,
+          costPrice: addVariantForm.costPrice,
+          supplier: addVariantForm.supplier
+        })
+      });
+      const data = await res.json();
+      if (data.status === 'ok') {
+        const cleanVar = {
+          ...data.variant,
+          name: standardizeDurationStr(data.variant.name)
+        };
+        setVariants(prev => [...prev, cleanVar]);
+        setAddVariantModalOpen(false);
+        setAddVariantForm({ variantName: '', sellingPrice: '', costPrice: '', supplier: 'heavenprem' });
+        showToast(`Varian "${cleanVar.name}" berhasil ditambahkan ke ${addVariantTargetProd.name}!`, 'success');
+      } else {
+        showToast('Gagal menambah varian: ' + (data.message || 'Error'), 'error');
+      }
+    } catch (err) {
+      showToast('Gagal menambah varian: ' + err.message, 'error');
+    } finally {
+      setAddVariantLoading(false);
     }
   };
 
@@ -2427,6 +2484,24 @@ export default function Dashboard() {
                               <span>Arti Paket</span>
                             </button>
                           )}
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setAddVariantTargetProd(prod);
+                              setAddVariantForm({
+                                variantName: '',
+                                sellingPrice: '',
+                                costPrice: '',
+                                supplier: prod.variants[0]?.supplier || 'heavenprem'
+                              });
+                              setAddVariantModalOpen(true);
+                            }}
+                            className="neo-btn text-[10px] font-black px-2 py-1 bg-emerald-300 hover:bg-emerald-400 text-black border-2 border-black shadow-[1.5px_1.5px_0_#000] uppercase tracking-tight flex items-center gap-1 cursor-pointer"
+                            title={`Tambah paket/varian baru ke ${prod.name}`}
+                          >
+                            <Plus className="w-3 h-3 stroke-[3]" />
+                            <span>+ Varian</span>
+                          </button>
                           <span className="text-xs font-black px-2.5 py-1 bg-yellow-200 text-black border-2 border-black shadow-[2px_2px_0px_0px_#000] whitespace-nowrap uppercase">
                             {prod.variants.length} Paket
                           </span>
@@ -2586,6 +2661,25 @@ export default function Dashboard() {
                             </div>
                           );
                         })}
+
+                        {/* Tombol Tambah Varian Baru ke Produk Ini */}
+                        <button
+                          type="button"
+                          onClick={() => {
+                            setAddVariantTargetProd(prod);
+                            setAddVariantForm({
+                              variantName: '',
+                              sellingPrice: '',
+                              costPrice: '',
+                              supplier: prod.variants[0]?.supplier || 'heavenprem'
+                            });
+                            setAddVariantModalOpen(true);
+                          }}
+                          className="w-full py-2 bg-yellow-50/70 hover:bg-yellow-100 border-2 border-dashed border-black/50 hover:border-black rounded-lg text-xs font-black text-black uppercase tracking-wide flex items-center justify-center gap-1.5 transition cursor-pointer shadow-[1px_1px_0_#000]"
+                        >
+                          <Plus className="w-3.5 h-3.5 stroke-[3]" />
+                          <span>+ Tambah Varian ke {prod.name}</span>
+                        </button>
                       </div>
                     </div>
                   </div>
@@ -6124,14 +6218,14 @@ export default function Dashboard() {
                   <Edit3 className="w-4 h-4" />
                 </span>
                 <div>
-                  <h3 className="font-black text-sm sm:text-base text-black uppercase tracking-wide">Edit Harga &amp; Supplier</h3>
-                  <p className="text-xs text-zinc-600 font-bold mt-0.5">{editingVariant.productName} ({editingVariant.name})</p>
+                  <h3 className="font-black text-sm sm:text-base text-black uppercase tracking-wide">Edit Paket &amp; Harga</h3>
+                  <p className="text-xs text-zinc-600 font-bold mt-0.5">{editingVariant.productName}</p>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setEditModalOpen(false)}
-                className="neo-btn w-8 h-8 rounded-lg bg-white hover:bg-rose-300 border-2 border-black shadow-[2px_2px_0_#000] flex items-center justify-center font-black transition"
+                className="neo-btn w-8 h-8 rounded-lg bg-white hover:bg-rose-300 border-2 border-black shadow-[2px_2px_0_#000] flex items-center justify-center font-black transition cursor-pointer"
                 title="Tutup"
               >
                 <X className="w-4 h-4" />
@@ -6139,6 +6233,18 @@ export default function Dashboard() {
             </div>
 
             <form onSubmit={handleSaveEditVariant} className="space-y-3.5">
+              <div>
+                <label className="text-xs text-zinc-700 font-black uppercase tracking-wider">Nama Paket / Varian</label>
+                <input
+                  type="text"
+                  value={editingVariant.name || ''}
+                  onChange={(e) => setEditingVariant({ ...editingVariant, name: e.target.value })}
+                  required
+                  placeholder="Misal: 1m Private, 1m Famplan"
+                  className="w-full mt-1.5 px-3.5 py-2.5 rounded-xl bg-white border-2 border-black shadow-[2px_2px_0_#000] text-xs text-black font-bold focus:outline-none focus:bg-yellow-50 transition"
+                />
+              </div>
+
               <div>
                 <label className="text-xs text-zinc-700 font-black uppercase tracking-wider">Harga Jual (Rp)</label>
                 <input
@@ -6206,6 +6312,114 @@ export default function Dashboard() {
                   className="neo-btn px-4 py-2 rounded-xl bg-[#FFE600] hover:bg-[#ffea33] text-black text-xs font-black border-2 border-black shadow-[3px_3px_0_#000] uppercase tracking-wide"
                 >
                   Simpan Perubahan
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      )}
+
+      {/* ==================================================================== */}
+      {/* MODAL: TAMBAH VARIAN / PAKET KE PRODUK                               */}
+      {/* ==================================================================== */}
+      {addVariantModalOpen && addVariantTargetProd && (
+        <div className="fixed inset-0 z-50 flex items-center justify-center p-3 sm:p-4 bg-black/60 backdrop-blur-xs overflow-y-auto">
+          <div className="bg-white border-3 border-black rounded-2xl w-full max-w-md p-5 sm:p-6 space-y-4 shadow-[8px_8px_0_#000] my-auto max-h-[90vh] overflow-y-auto no-scrollbar animate-in zoom-in-95 duration-150">
+            <div className="flex items-start justify-between pb-3 border-b-2 border-black">
+              <div className="flex items-center gap-2.5">
+                <span className="w-8 h-8 rounded-lg bg-emerald-300 text-black flex items-center justify-center border-2 border-black shadow-[2px_2px_0_#000]">
+                  <Plus className="w-4 h-4 stroke-[3]" />
+                </span>
+                <div>
+                  <h3 className="font-black text-sm sm:text-base text-black uppercase tracking-wide">Tambah Varian Baru</h3>
+                  <p className="text-xs text-zinc-600 font-bold mt-0.5">Produk: <span className="text-black uppercase font-black">{addVariantTargetProd.name}</span></p>
+                </div>
+              </div>
+              <button
+                type="button"
+                onClick={() => setAddVariantModalOpen(false)}
+                className="neo-btn w-8 h-8 rounded-lg bg-white hover:bg-rose-300 border-2 border-black shadow-[2px_2px_0_#000] flex items-center justify-center font-black transition cursor-pointer"
+                title="Tutup"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <form onSubmit={handleSaveAddVariant} className="space-y-3.5">
+              <div>
+                <label className="text-xs text-zinc-700 font-black uppercase tracking-wider">Nama Paket / Varian</label>
+                <input
+                  type="text"
+                  placeholder="Misal: 1m Famplan, 3m Individual, 7d Sharing"
+                  value={addVariantForm.variantName}
+                  onChange={(e) => setAddVariantForm({ ...addVariantForm, variantName: e.target.value })}
+                  required
+                  autoFocus
+                  className="w-full mt-1.5 px-3.5 py-2.5 rounded-xl bg-white border-2 border-black shadow-[2px_2px_0_#000] text-xs text-black font-bold focus:outline-none focus:bg-yellow-50 transition"
+                />
+              </div>
+
+              <div className="grid grid-cols-2 gap-3">
+                <div>
+                  <label className="text-xs text-zinc-700 font-black uppercase tracking-wider">Harga Jual (Rp)</label>
+                  <input
+                    type="number"
+                    placeholder="25000"
+                    value={addVariantForm.sellingPrice}
+                    onChange={(e) => setAddVariantForm({ ...addVariantForm, sellingPrice: e.target.value })}
+                    required
+                    className="w-full mt-1.5 px-3.5 py-2.5 rounded-xl bg-white border-2 border-black shadow-[2px_2px_0_#000] text-xs text-black font-mono font-bold focus:outline-none focus:bg-yellow-50 transition"
+                  />
+                </div>
+                <div>
+                  <label className="text-xs text-zinc-700 font-black uppercase tracking-wider">Harga Modal (Rp)</label>
+                  <input
+                    type="number"
+                    placeholder="20000"
+                    value={addVariantForm.costPrice}
+                    onChange={(e) => setAddVariantForm({ ...addVariantForm, costPrice: e.target.value })}
+                    required
+                    className="w-full mt-1.5 px-3.5 py-2.5 rounded-xl bg-white border-2 border-black shadow-[2px_2px_0_#000] text-xs text-black font-mono font-bold focus:outline-none focus:bg-yellow-50 transition"
+                  />
+                </div>
+              </div>
+
+              <div>
+                <label className="text-xs text-zinc-700 font-black uppercase tracking-wider">Toko / Supplier</label>
+                <input
+                  type="text"
+                  placeholder="heavenprem / Toko A"
+                  value={addVariantForm.supplier}
+                  onChange={(e) => setAddVariantForm({ ...addVariantForm, supplier: e.target.value })}
+                  required
+                  className="w-full mt-1.5 px-3.5 py-2.5 rounded-xl bg-white border-2 border-black shadow-[2px_2px_0_#000] text-xs text-black font-bold focus:outline-none focus:bg-yellow-50 transition"
+                />
+              </div>
+
+              <div className="flex items-center justify-end gap-2.5 pt-3">
+                <button
+                  type="button"
+                  onClick={() => setAddVariantModalOpen(false)}
+                  className="neo-btn px-4 py-2 rounded-xl text-xs font-black text-black bg-zinc-100 hover:bg-zinc-200 border-2 border-black shadow-[2px_2px_0_#000] uppercase cursor-pointer"
+                >
+                  Batal
+                </button>
+                <button
+                  type="submit"
+                  disabled={addVariantLoading}
+                  className="neo-btn px-5 py-2 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-black text-xs font-black border-2 border-black shadow-[3px_3px_0_#000] uppercase tracking-wide flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                >
+                  {addVariantLoading ? (
+                    <>
+                      <RefreshCw className="w-3.5 h-3.5 animate-spin" />
+                      <span>Menyimpan...</span>
+                    </>
+                  ) : (
+                    <>
+                      <Plus className="w-3.5 h-3.5 stroke-[3]" />
+                      <span>Simpan Varian</span>
+                    </>
+                  )}
                 </button>
               </div>
             </form>

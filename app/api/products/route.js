@@ -39,10 +39,14 @@ export async function POST(request) {
     }
 
     if (action === 'update_price') {
-      const { variantId, sellingPrice, costPrice, supplier } = body;
+      const { variantId, sellingPrice, costPrice, supplier, variantName, name } = body;
       const v = (db.variants || []).find(item => item.id === variantId);
       if (!v) return NextResponse.json({ status: 'error', message: 'Varian tidak ditemukan' }, { status: 404 });
 
+      const newName = (variantName || name || '').trim();
+      if (newName) {
+        v.name = standardizeDuration(newName);
+      }
       if (sellingPrice !== undefined) v.price = Number(sellingPrice);
       if (costPrice !== undefined) v.costPrice = Number(costPrice);
       if (supplier) v.supplier = String(supplier).trim();
@@ -66,6 +70,43 @@ export async function POST(request) {
       pushToGoogleSheet().catch(err => console.warn('Background sync failed:', err.message));
 
       return NextResponse.json({ status: 'ok', variant: v });
+    }
+
+    if (action === 'add_variant') {
+      const { productId, variantName, sellingPrice, costPrice, supplier } = body;
+      if (!productId || !variantName) {
+        return NextResponse.json({ status: 'error', message: 'Produk dan nama varian wajib diisi' }, { status: 400 });
+      }
+
+      const prod = (db.products || []).find(p => p.id === productId);
+      if (!prod) {
+        return NextResponse.json({ status: 'error', message: 'Produk tidak ditemukan' }, { status: 404 });
+      }
+
+      const cost = Number(costPrice) || 0;
+      const sell = Number(sellingPrice) || 0;
+      const supp = (supplier || 'heavenprem').trim();
+      const cleanVarName = standardizeDuration(variantName.trim());
+
+      const newVar = {
+        id: `var_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+        productId: prod.id,
+        name: cleanVarName,
+        price: sell,
+        costPrice: cost,
+        supplier: supp,
+        isAvailable: true,
+        supplierOffers: [
+          { supplier: supp, costPrice: cost, isAvailable: true, updatedAt: new Date().toISOString() }
+        ]
+      };
+      if (!Array.isArray(db.variants)) db.variants = [];
+      db.variants.push(newVar);
+
+      saveDb(db);
+      pushToGoogleSheet().catch(err => console.warn('Background sync failed:', err.message));
+
+      return NextResponse.json({ status: 'ok', variant: newVar, variants: db.variants });
     }
 
     if (action === 'select_supplier') {

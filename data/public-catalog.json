@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T15:39:52.616Z",
+  "updatedAt": "2026-09-24T16:58:33.333Z",
   "categories": [
     {
       "id": "cat_1",
@@ -118,12 +118,6 @@
           "isAvailable": true
         },
         {
-          "id": "var_3_1",
-          "name": "Anijam AI Creator 1m",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
           "id": "var_3_2",
           "name": "1m Private",
           "price": 2500,
@@ -139,7 +133,7 @@
         {
           "id": "var_bagah_4",
           "name": "CANVA BISNIS HEAD 1m",
-          "price": 3500,
+          "price": 10000,
           "isAvailable": true
         }
       ]
@@ -330,12 +324,6 @@
       "categoryId": "cat_3",
       "variants": [
         {
-          "id": "var_42_7",
-          "name": "Meitu VIP 7d AllDev",
-          "price": 9500,
-          "isAvailable": false
-        },
-        {
           "id": "var_42_4",
           "name": "14d Private VIP+ Bisa Andro & IOS",
           "price": 20000,
@@ -361,45 +349,9 @@
       "categoryId": "cat_3",
       "variants": [
         {
-          "id": "var_72_10",
-          "name": "Wink VIP+ 1m Alldev",
-          "price": 34000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_72_11",
-          "name": "Wink VIP+ 7d Alldev",
-          "price": 11500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_72_1",
-          "name": "HMA 1m",
-          "price": 10500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_72_2",
-          "name": "Surfshark 3m",
-          "price": 38000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_72_3",
-          "name": "Express 1m",
-          "price": 9000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_72_4",
-          "name": "Surfshark 2m",
-          "price": 28000,
-          "isAvailable": false
-        },
-        {
           "id": "var_72_5",
           "name": "7d Private Vip+ IOS & Andro",
-          "price": 13000,
+          "price": 12000,
           "isAvailable": true
         },
         {
@@ -427,12 +379,6 @@
       "name": "Zoom",
       "categoryId": "cat_7",
       "variants": [
-        {
-          "id": "var_75_3",
-          "name": "ZOOM 14D",
-          "price": 6000,
-          "isAvailable": true
-        },
         {
           "id": "var_75_7",
           "name": "Zoom Pro 14d",
@@ -466,7 +412,7 @@
         },
         {
           "id": "var_23_5",
-          "name": "1y Famhead (Invite Team/Create Link)",
+          "name": "1y Famhead",
           "price": 43000,
           "isAvailable": true
         },
@@ -487,6 +433,12 @@
           "name": "3m Private Via Invite",
           "price": 18000,
           "isAvailable": true
+        },
+        {
+          "id": "var_1790265605493_796",
+          "name": "1m Privat v Invite",
+          "price": 10000,
+          "isAvailable": true
         }
       ]
     },
@@ -504,46 +456,15 @@
       ]
     },
     {
-      "id": "prod_4",
-      "name": "Anijam AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_hp_3_1",
-          "name": "Anijam AI Creator 1m",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_4_1",
-          "name": "Appmus Basic",
-          "price": 3000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_4_2",
-          "name": "Appmus Head",
-          "price": 7000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
       "id": "prod_5",
       "name": "Apple Music",
       "categoryId": "cat_4",
       "variants": [
         {
-          "id": "var_hp_4_1",
-          "name": "Appmus Basic",
-          "price": 3000,
-          "isAvailable": false
-        },
-        {
           "id": "var_hp_4_2",
           "name": "Appmus Head",
           "price": 6500,
-          "isAvailable": false
+          "isAvailable": true
         },
         {
           "id": "var_5_3",
@@ -607,15 +528,9 @@
           "isAvailable": true
         },
         {
-          "id": "var_8_4",
-          "name": "Capcut Basic",
-          "price": 2500,
-          "isAvailable": false
-        },
-        {
           "id": "var_8_5",
           "name": "7d Pro Private",
-          "price": 9000,
+          "price": 8000,
           "isAvailable": true
         }
       ]
@@ -630,12 +545,6 @@
           "name": "Captions AI Scale X4 1m",
           "price": 255000,
           "isAvailable": true
-        },
-        {
-          "id": "var_9_1",
-          "name": "Chatly AI Standard 1m",
-          "price": 55000,
-          "isAvailable": false
         }
       ]
     },
@@ -653,32 +562,13 @@
         {
           "id": "var_10_4",
           "name": "1m 6U Plan Go",
-          "price": 27000,
+          "price": 13000,
           "isAvailable": true
         },
         {
           "id": "var_10_5",
           "name": "1m Plan Plus",
           "price": 18000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_11",
-      "name": "Chatly AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_hp_9_1",
-          "name": "Chatly AI Standard 1m",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_11_1",
-          "name": "Creaa AI Basic Plan 1m",
-          "price": 38000,
           "isAvailable": true
         }
       ]
@@ -691,12 +581,6 @@
         {
           "id": "var_12_2",
           "name": "Clico AI Pro Plan 1m",
-          "price": 38000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_12_1",
-          "name": "Domo AI Basic Plan",
           "price": 38000,
           "isAvailable": true
         }
@@ -725,12 +609,6 @@
           "name": "Domo AI Basic Plan",
           "price": 40000,
           "isAvailable": true
-        },
-        {
-          "id": "var_14_1",
-          "name": "Ecombos AI Stater Plan",
-          "price": 25000,
-          "isAvailable": false
         }
       ]
     },
@@ -739,18 +617,6 @@
       "name": "Duolingo",
       "categoryId": "cat_5",
       "variants": [
-        {
-          "id": "var_15_4",
-          "name": "Duolingo premium 1m",
-          "price": 4500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_15_1",
-          "name": "Emergent AI Standard 1m",
-          "price": 55000,
-          "isAvailable": false
-        },
         {
           "id": "var_15_2",
           "name": "1m Super Individual",
@@ -761,50 +627,6 @@
           "id": "var_15_3",
           "name": "1m Super Family Head (Invite Member)",
           "price": 11000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_16",
-      "name": "Ecombos AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_hp_14_1",
-          "name": "Ecombos AI Stater Plan",
-          "price": 23000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_16_1",
-          "name": "Flux AI Basic 1m 1250 Kredit",
-          "price": 28000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_16_2",
-          "name": "Flux AI Pro 1m 5250 Kredit",
-          "price": 55000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_17",
-      "name": "Emergent AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_17_2",
-          "name": "Emergent AI Standard 1m",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_17_1",
-          "name": "Flora AI Stater Plan 1m",
-          "price": 55000,
           "isAvailable": true
         }
       ]
@@ -838,12 +660,6 @@
           "name": "Flora AI Stater Plan 1m",
           "price": 55000,
           "isAvailable": false
-        },
-        {
-          "id": "var_18_1",
-          "name": "Framer AI Basic 1m",
-          "price": 40000,
-          "isAvailable": true
         }
       ]
     },
@@ -857,37 +673,6 @@
           "name": "Framer AI Basic 1m",
           "price": 40000,
           "isAvailable": true
-        },
-        {
-          "id": "var_19_1",
-          "name": "Freebeat AI Pro 1m",
-          "price": 70000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_20",
-      "name": "Freebeat AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_20_3",
-          "name": "Freebeat AI Pro 1m",
-          "price": 70000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_20_1",
-          "name": "FreedomGPT AI Pro 1m",
-          "price": 25000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_20_2",
-          "name": "Flux AI Pro 1m 5250 Kredit",
-          "price": 55000,
-          "isAvailable": false
         }
       ]
     },
@@ -901,37 +686,6 @@
           "name": "FreedomGPT AI Pro 1m",
           "price": 23000,
           "isAvailable": true
-        },
-        {
-          "id": "var_21_1",
-          "name": "Gamma AI Pro 1m",
-          "price": 70000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_21_2",
-          "name": "Gamma AI Plus 1m",
-          "price": 38000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_22",
-      "name": "Gamma AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_hp_21_1",
-          "name": "Gamma AI Pro 1m",
-          "price": 70000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_hp_21_2",
-          "name": "Gamma AI Plus 1m",
-          "price": 38000,
-          "isAvailable": false
         }
       ]
     },
@@ -945,12 +699,6 @@
           "name": "Genmotions AI Stater",
           "price": 38000,
           "isAvailable": true
-        },
-        {
-          "id": "var_24_1",
-          "name": "Getcontact premium 1m [ garansi 20d ]",
-          "price": 15000,
-          "isAvailable": false
         }
       ]
     },
@@ -963,7 +711,7 @@
           "id": "var_hp_24_1",
           "name": "Getcontact premium 1m [ garansi 20d ]",
           "price": 13000,
-          "isAvailable": false
+          "isAvailable": true
         }
       ]
     },
@@ -1002,12 +750,6 @@
           "name": "Hailuo AI Standard Plan 1m",
           "price": 55000,
           "isAvailable": true
-        },
-        {
-          "id": "var_28_1",
-          "name": "Hedra AI Basic 1m",
-          "price": 55000,
-          "isAvailable": false
         }
       ]
     },
@@ -1021,24 +763,6 @@
           "name": "HyperWrite AI Ultra 1m",
           "price": 23000,
           "isAvailable": true
-        },
-        {
-          "id": "var_33_1",
-          "name": "Krea AI Basic 1m [ 5k credit ]",
-          "price": 55000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_33_2",
-          "name": "Krea AI Basic 1m [ 8k credit ]",
-          "price": 80000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_33_3",
-          "name": "Krea AI Basic 1m [ 26k credit ]",
-          "price": 180000,
-          "isAvailable": false
         }
       ]
     },
@@ -1050,43 +774,6 @@
         {
           "id": "var_35_4",
           "name": "Kapwing AI Pro Plan 1m",
-          "price": 38000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_35_1",
-          "name": "Magic Patterns Standard Plan 1m",
-          "price": 38000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_35_2",
-          "name": "Higgsfield AI Plus 1m",
-          "price": 255000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_35_3",
-          "name": "Higgsfield AI Max 1m",
-          "price": 505000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_36",
-      "name": "Kling AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_36_2",
-          "name": "Kling AI 1m (660 credit)",
-          "price": 70000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_36_1",
-          "name": "Magichlight AI Standard Plan 1m",
           "price": 38000,
           "isAvailable": true
         }
@@ -1101,7 +788,7 @@
           "id": "var_34_5",
           "name": "Kalodata Stater Plan 1m [ indonesia ]",
           "price": 78000,
-          "isAvailable": false
+          "isAvailable": true
         },
         {
           "id": "var_39_2",
@@ -1148,62 +835,6 @@
       ]
     },
     {
-      "id": "prod_37",
-      "name": "Krea AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_hp_33_1",
-          "name": "Krea AI Basic 1m [ 5k credit ]",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_37_3",
-          "name": "Krea AI Basic 1m [ 8k credit ]",
-          "price": 78000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_37_4",
-          "name": "Krea AI Basic 1m [ 26k credit ]",
-          "price": 180000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_38",
-      "name": "Leonardo AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_hp_34_1",
-          "name": "Leonardo AI 1m [ 8500 Credit ]",
-          "price": 17000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_38_3",
-          "name": "Leonardo AI 1m [ 17k Credit ]",
-          "price": 29000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_38_1",
-          "name": "Mootion AI Plus Plan",
-          "price": 70000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_38_2",
-          "name": "Mootion AI Standard Plan",
-          "price": 28000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
       "id": "prod_hp_35_1",
       "name": "Magic Patterns AI",
       "categoryId": "cat_7",
@@ -1226,24 +857,6 @@
           "name": "Magichlight AI Standard Plan 1m",
           "price": 38000,
           "isAvailable": true
-        },
-        {
-          "id": "var_40_1",
-          "name": "MyClam AI Lite Plan 1m",
-          "price": 38000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_40_2",
-          "name": "Krea AI Basic 1m [ 8k credit ]",
-          "price": 80000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_40_3",
-          "name": "Krea AI Basic 1m [ 26k credit ]",
-          "price": 180000,
-          "isAvailable": false
         }
       ]
     },
@@ -1263,18 +876,6 @@
           "name": "Mootion AI Standard Plan",
           "price": 28000,
           "isAvailable": true
-        },
-        {
-          "id": "var_43_1",
-          "name": "Openart AI Essential 1m [ 4k Credit ]",
-          "price": 75000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_43_2",
-          "name": "Openart AI Advance 1m [ 12k Credit ]",
-          "price": 130000,
-          "isAvailable": false
         }
       ]
     },
@@ -1288,18 +889,6 @@
           "name": "Morphic AI Basic Plan 1m",
           "price": 55000,
           "isAvailable": true
-        },
-        {
-          "id": "var_44_1",
-          "name": "Hotmail",
-          "price": 5000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_44_2",
-          "name": "Outlook",
-          "price": 5000,
-          "isAvailable": false
         }
       ]
     },
@@ -1317,25 +906,6 @@
       ]
     },
     {
-      "id": "prod_47",
-      "name": "Ninjachat AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_47_2",
-          "name": "Ninjachat AI Pro 1m",
-          "price": 80000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_50_2",
-          "name": "Ninjachat AI Stater 1m",
-          "price": 38000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
       "id": "prod_48",
       "name": "Oneover AI",
       "categoryId": "cat_1",
@@ -1344,37 +914,6 @@
           "id": "var_42_1",
           "name": "Oneover AI Studio 1m",
           "price": 58000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_48_1",
-          "name": "Rork AI Pro 1m",
-          "price": 55000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_49",
-      "name": "Openart AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_hp_43_1",
-          "name": "Openart AI Essential 1m [ 4k Credit ]",
-          "price": 75000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_hp_43_2",
-          "name": "Openart AI Advance 1m [ 12k Credit ]",
-          "price": 130000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_49_1",
-          "name": "SciSpace AI Premium 1m",
-          "price": 55000,
           "isAvailable": true
         }
       ]
@@ -1388,13 +927,13 @@
           "id": "var_hp_44_1",
           "name": "Hotmail",
           "price": 3500,
-          "isAvailable": false
+          "isAvailable": true
         },
         {
           "id": "var_hp_44_2",
           "name": "Outlook",
           "price": 3500,
-          "isAvailable": false
+          "isAvailable": true
         }
       ]
     },
@@ -1408,43 +947,6 @@
           "name": "Recraft AI Pro Plan [ 2k Kredit ]",
           "price": 55000,
           "isAvailable": true
-        },
-        {
-          "id": "var_54_1",
-          "name": "Videoinu AI Plus 1m [ 5500 ] kredit",
-          "price": 55000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_55",
-      "name": "Reelshort",
-      "categoryId": "cat_2",
-      "variants": [
-        {
-          "id": "var_55_3",
-          "name": "Reelshort VIP 7d",
-          "price": 19000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_55_4",
-          "name": "Reelshort 3000 Coin",
-          "price": 40000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_55_1",
-          "name": "Viewmax AI Basic 1m",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_55_2",
-          "name": "Picsart Pro Head 1m",
-          "price": 105000,
-          "isAvailable": false
         }
       ]
     },
@@ -1457,37 +959,6 @@
           "id": "var_56_3",
           "name": "Reve AI Pro 1m",
           "price": 23000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_56_1",
-          "name": "Viggle AI Live",
-          "price": 80000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_56_2",
-          "name": "Viggle AI Pro",
-          "price": 38000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_57",
-      "name": "Rork AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_57_2",
-          "name": "Rork AI Pro 1m",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_57_1",
-          "name": "Viu lifetime",
-          "price": 3000,
           "isAvailable": true
         }
       ]
@@ -1502,49 +973,6 @@
           "name": "SciSpace AI Premium 1m",
           "price": 55000,
           "isAvailable": true
-        },
-        {
-          "id": "var_58_1",
-          "name": "HMA 1m",
-          "price": 9000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_58_2",
-          "name": "Surfshark 3m",
-          "price": 38000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_58_3",
-          "name": "Express 1m",
-          "price": 9000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_58_4",
-          "name": "Surfshark 2m",
-          "price": 28000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_59",
-      "name": "Seedance2prompt AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_59_2",
-          "name": "Seedance2Prompt AI Stater 1m",
-          "price": 29000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_59_1",
-          "name": "Wayin AI Standar Plan 1m",
-          "price": 25000,
-          "isAvailable": true
         }
       ]
     },
@@ -1557,82 +985,6 @@
           "id": "var_62_2",
           "name": "Supercool AI Mini 1m",
           "price": 55000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_62_1",
-          "name": "Youmind AI Pro Plan 1m",
-          "price": 80000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_63",
-      "name": "Uncensored AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_hp_52_1",
-          "name": "Uncensored AI Pro Plan 1m",
-          "price": 38000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_64",
-      "name": "Venice AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_64_2",
-          "name": "Venice AI Pro 1m",
-          "price": 108000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_64_1",
-          "name": "Zoom Pro 14d",
-          "price": 9000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_65",
-      "name": "Videoinu AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_65_2",
-          "name": "Videoinu AI Plus 1m [ 5500 ] kredit",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_65_1",
-          "name": "Dropshot AI Plus Plan 1m",
-          "price": 80000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_66",
-      "name": "Viewmax AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_66_2",
-          "name": "Viewmax AI Basic 1m",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_66_1",
-          "name": "Cuty AI Pro Plan 1m",
-          "price": 52000,
           "isAvailable": true
         }
       ]
@@ -1653,12 +1005,6 @@
           "name": "Viggle AI Pro",
           "price": 40000,
           "isAvailable": true
-        },
-        {
-          "id": "var_67_1",
-          "name": "Cuty AI Pro Plan 1m",
-          "price": 55000,
-          "isAvailable": true
         }
       ]
     },
@@ -1672,12 +1018,6 @@
           "name": "Viu lifetime",
           "price": 2500,
           "isAvailable": true
-        },
-        {
-          "id": "var_68_1",
-          "name": "Videoinu AI Plus 1m [ 5500 ] kredit",
-          "price": 55000,
-          "isAvailable": false
         },
         {
           "id": "var_68_3",
@@ -1719,31 +1059,13 @@
         {
           "id": "var_69_2",
           "name": "HMA 1m",
-          "price": 9500,
+          "price": 1000,
           "isAvailable": true
-        },
-        {
-          "id": "var_69_5",
-          "name": "Surfshark 3m",
-          "price": 40000,
-          "isAvailable": false
         },
         {
           "id": "var_69_3",
           "name": "Express 1m",
           "price": 9500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_69_4",
-          "name": "Surfshark 2m",
-          "price": 27000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_69_1",
-          "name": "Viewmax AI Basic 1m",
-          "price": 55000,
           "isAvailable": false
         }
       ]
@@ -1783,20 +1105,7 @@
           "id": "var_76_1",
           "name": "Youmind AI Pro Plan 1m",
           "price": 79000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_79",
-      "name": "Dropshot AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_79_1",
-          "name": "Dropshot AI Plus Plan 1m",
-          "price": 79000,
-          "isAvailable": false
+          "isAvailable": true
         }
       ]
     },
@@ -1827,82 +1136,14 @@
       ]
     },
     {
-      "id": "prod_51",
-      "name": "Perplexity AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_51_1",
-          "name": "Supercool AI Mini 1m",
-          "price": 55000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_51_2",
-          "name": "Perplexity Pro 7d",
-          "price": 13000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
       "id": "prod_1",
       "name": "Adobe",
       "categoryId": "cat_3",
       "variants": [
         {
-          "id": "var_1_2",
-          "name": "Adobe Creative Cloud 14d Head",
-          "price": 63000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_1_3",
-          "name": "Adobe Creative Cloud 14d invit",
-          "price": 20000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_1_4",
-          "name": "Adobe Firefly Pro Plus 7d [ 10k credit ]",
-          "price": 25000,
-          "isAvailable": false
-        },
-        {
           "id": "var_1_5",
           "name": "6m Sharing",
           "price": 18000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_1_6",
-          "name": "Adobe Creative Cloud 4m",
-          "price": 55000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_25",
-      "name": "Google Colab Pro+",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_25_1",
-          "name": "Colab Pro+ 1m",
-          "price": 205000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_25_2",
-          "name": "Colab Pro+ 7d",
-          "price": 105000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_25_3",
-          "name": "Colab Pro+ 14d",
-          "price": 155010,
           "isAvailable": true
         }
       ]
@@ -1912,24 +1153,6 @@
       "name": "Hbo Max",
       "categoryId": "cat_2",
       "variants": [
-        {
-          "id": "var_29_1",
-          "name": "HyperWrite AI Ultra 1m",
-          "price": 25000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_29_2",
-          "name": "Colab Pro+ 7d",
-          "price": 105000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_29_3",
-          "name": "Colab Pro+ 14d",
-          "price": 155010,
-          "isAvailable": true
-        },
         {
           "id": "var_29_4",
           "name": "1m Private Standar",
@@ -1947,135 +1170,6 @@
           "name": "1m Private Ultimate",
           "price": 43000,
           "isAvailable": true
-        },
-        {
-          "id": "var_29_7",
-          "name": "Pivat Ultimate 1m",
-          "price": 86000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_29_9",
-          "name": "Sharing Standard 1m",
-          "price": 19000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_31",
-      "name": "Heygen AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_31_1",
-          "name": "Kling AI 1m (660 credit)",
-          "price": 70000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_34_3",
-          "name": "Heygen AI Pro 3m [ 2k Credit ]",
-          "price": 80000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_34_4",
-          "name": "Heygen AI Pro 3m [ 1k Credit ]",
-          "price": 52000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_31_2",
-          "name": "Code Reedem Heygen 3m",
-          "price": 37000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_31_3",
-          "name": "Heygen AI Creator",
-          "price": 55000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_32",
-      "name": "Higgsfield AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_32_1",
-          "name": "Kalodata Stater Plan 1m [ indonesia ]",
-          "price": 83000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_32_2",
-          "name": "Kalodata Professional Plan 1m [ malaysia ]",
-          "price": 130000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_32_3",
-          "name": "Kalodata Stater Plan 1m [ Philippines ]",
-          "price": 55000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_32_4",
-          "name": "Kalodata Stater Plan 1m [ Singapore ]",
-          "price": 55000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_32_5",
-          "name": "Kalodata Professional Plan 1m [ indo ]",
-          "price": 128000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_32_6",
-          "name": "Kalodata Stater Plan 1m [ vietnam ]",
-          "price": 58000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_32_7",
-          "name": "Kalodata Stater Plan 1m [ Thailand ]",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_32_8",
-          "name": "Kalodata Stater Plan 1m [ malaysia ]",
-          "price": 80000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_41",
-      "name": "Manus AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_41_1",
-          "name": "Ninjachat AI Pro 1m",
-          "price": 80000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_41_2",
-          "name": "Ninjachat AI Stater 1m",
-          "price": 38000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_41_3",
-          "name": "Manus AI Pro 1m",
-          "price": 83000,
-          "isAvailable": false
         }
       ]
     },
@@ -2121,15 +1215,9 @@
           "isAvailable": true
         },
         {
-          "id": "var_46_9",
-          "name": "7d 1p1u - Login By Code/Password",
-          "price": 13000,
-          "isAvailable": true
-        },
-        {
           "id": "var_46_10",
           "name": "1m 1p1u - Login By Code/Password",
-          "price": 33000,
+          "price": 30000,
           "isAvailable": true
         },
         {
@@ -2141,7 +1229,7 @@
         {
           "id": "var_46_12",
           "name": "1m Semi (Bisa Login 2 Device) - Login By Code/Password",
-          "price": 38000,
+          "price": 35000,
           "isAvailable": true
         },
         {
@@ -2170,12 +1258,6 @@
       "categoryId": "cat_3",
       "variants": [
         {
-          "id": "var_52_1",
-          "name": "Uncensored AI Pro Plan 1m",
-          "price": 75000,
-          "isAvailable": false
-        },
-        {
           "id": "var_52_3",
           "name": "1m Pro Private",
           "price": 13000,
@@ -2186,12 +1268,6 @@
           "name": "1m Sharing",
           "price": 13000,
           "isAvailable": true
-        },
-        {
-          "id": "var_52_6",
-          "name": "Picsart Pro Head 1m",
-          "price": 108000,
-          "isAvailable": false
         }
       ]
     },
@@ -2260,12 +1336,6 @@
           "name": "1m Famplan FG (Full Garansi)",
           "price": 18500,
           "isAvailable": true
-        },
-        {
-          "id": "var_60_10",
-          "name": "Link Kode Spo 3B",
-          "price": 2500,
-          "isAvailable": false
         }
       ]
     },
@@ -2629,19 +1699,6 @@
           "id": "var_looviie_1789898664901_380_4",
           "name": "1y Sharing",
           "price": 18000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_looviie_1789898664902_502",
-      "name": "Gagaooolala",
-      "categoryId": "cat_2",
-      "variants": [
-        {
-          "id": "var_looviie_1789898664902_502_1",
-          "name": "1m Sharing",
-          "price": 11000,
           "isAvailable": true
         }
       ]
@@ -3326,31 +2383,6 @@
           "id": "var_prod_gmail_gmail_fresh_1d",
           "name": "Gmail Fresh 1d",
           "price": 7000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_gemini_pro_38789",
-      "name": "Gemini Pro",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_22_1",
-          "name": "Gemini Pro 1y [ invit ]",
-          "price": 28000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_22_2",
-          "name": "Link Gemini Pro 18M",
-          "price": 28000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_22_3",
-          "name": "Gemini Pro 1y [ head ]",
-          "price": 80000,
           "isAvailable": true
         }
       ]

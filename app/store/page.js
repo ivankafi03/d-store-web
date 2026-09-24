@@ -2,6 +2,7 @@
 
 import { useState, useEffect, useMemo } from 'react';
 import Link from 'next/link';
+import { useRouter, usePathname } from 'next/navigation';
 import { 
   Search, 
   Zap, 
@@ -31,74 +32,24 @@ import {
   ArrowLeft
 } from 'lucide-react';
 
-const DEFAULT_CATEGORIES = [
-  { id: 'cat_1', name: 'AI Tools & Productivity' },
-  { id: 'cat_2', name: 'Streaming & Entertainment' },
-  { id: 'cat_3', name: 'Graphic, Design & Video' },
-  { id: 'cat_4', name: 'Music & Audio' },
-  { id: 'cat_5', name: 'Edukasi & Bahasa' },
-  { id: 'cat_6', name: 'VPN & Security' },
-  { id: 'cat_7', name: 'Office, Akun & Tools' }
-];
+import { DEFAULT_CATEGORIES, CATEGORY_META, resolveCategorySlug } from '@/lib/categories';
 
-const CATEGORY_META = {
-  cat_1: {
-    icon: Bot,
-    bgIcon: 'bg-amber-300',
-    hoverBorder: 'hover:border-amber-500',
-    popular: ['ChatGPT', 'Claude AI', 'Gemini AI', 'Perplexity', 'Quillbot'],
-    desc: 'ChatGPT, Claude, Gemini, Perplexity, Midjourney, Cursor & AI Canggih'
-  },
-  cat_2: {
-    icon: Tv,
-    bgIcon: 'bg-rose-300',
-    hoverBorder: 'hover:border-rose-500',
-    popular: ['Netflix', 'YouTube Premium', 'Disney+', 'Vidio', 'Viu'],
-    desc: 'Netflix, YouTube Premium, Disney+, Vidio, Apple TV & Bioskop'
-  },
-  cat_3: {
-    icon: Palette,
-    bgIcon: 'bg-fuchsia-300',
-    hoverBorder: 'hover:border-fuchsia-500',
-    popular: ['Canva Pro', 'CapCut', 'Picsart', 'Alight Motion', 'Freepik'],
-    desc: 'Canva Pro, CapCut, Picsart, Freepik, VSCO & Desain Grafis'
-  },
-  cat_4: {
-    icon: Music,
-    bgIcon: 'bg-emerald-300',
-    hoverBorder: 'hover:border-emerald-500',
-    popular: ['Spotify', 'Apple Music', 'Deezer'],
-    desc: 'Spotify Premium, Apple Music, Deezer Bebas Iklan'
-  },
-  cat_5: {
-    icon: GraduationCap,
-    bgIcon: 'bg-sky-300',
-    hoverBorder: 'hover:border-sky-500',
-    popular: ['Duolingo', 'Grammarly', 'Scribd', 'Quizlet'],
-    desc: 'Duolingo Super, Grammarly, Scribd, Quizlet & Belajar Bahasa'
-  },
-  cat_6: {
-    icon: ShieldCheck,
-    bgIcon: 'bg-teal-300',
-    hoverBorder: 'hover:border-teal-500',
-    popular: ['Express VPN', 'Surfshark VPN', 'WARP+', 'HMA VPN'],
-    desc: 'WARP+ 1.1.1.1, ExpressVPN, Surfshark, NordVPN & Privasi Aman'
-  },
-  cat_7: {
-    icon: Briefcase,
-    bgIcon: 'bg-orange-300',
-    hoverBorder: 'hover:border-orange-500',
-    popular: ['Gmail Fresh', 'Google Workspace', 'Microsoft 365', 'Outlook'],
-    desc: 'Gmail Fresh, Google Workspace, Microsoft 365, Notion & Akun Kerja'
-  }
-};
+export default function StoreFront({ initialCategorySlug = null }) {
+  const router = useRouter();
+  const pathname = usePathname();
 
-export default function StoreFront() {
+  const initialCatId = useMemo(() => {
+    if (initialCategorySlug) {
+      return resolveCategorySlug(initialCategorySlug);
+    }
+    return 'all';
+  }, [initialCategorySlug]);
+
   const [products, setProducts] = useState([]);
   const [categories, setCategories] = useState(DEFAULT_CATEGORIES);
   const [loading, setLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState('');
-  const [selectedCategory, setSelectedCategory] = useState('all');
+  const [selectedCategory, setSelectedCategory] = useState(initialCatId);
   const [stockFilter, setStockFilter] = useState('all'); // 'all', 'ready_only'
   const [selectedVariantOrder, setSelectedVariantOrder] = useState(null); // Modal Order State
   const [copiedLink, setCopiedLink] = useState(false);
@@ -118,6 +69,37 @@ export default function StoreFront() {
     handleScroll();
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
+
+  // Sinkronisasi kategori ketika slug URL berubah
+  useEffect(() => {
+    if (initialCategorySlug) {
+      const catId = resolveCategorySlug(initialCategorySlug);
+      setSelectedCategory(catId);
+    } else if (pathname === '/store') {
+      setSelectedCategory('all');
+    }
+  }, [initialCategorySlug, pathname]);
+
+  // Saat memilih kategori (dari card atau pill)
+  const handleSelectCategory = (catId) => {
+    if (catId === 'all') {
+      handleBackToOverview();
+      return;
+    }
+    const meta = CATEGORY_META[catId];
+    const targetSlug = meta?.slug || catId;
+    setSelectedCategory(catId);
+    router.push(`/store/${targetSlug}`);
+    window.scrollTo({ top: 320, behavior: 'smooth' });
+  };
+
+  // Saat kembali ke tampilan semua kategori
+  const handleBackToOverview = () => {
+    setSelectedCategory('all');
+    setSearchQuery('');
+    router.push('/store');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  };
 
   // Load katalog aman dari API publik
   const loadKatalog = async () => {
@@ -645,10 +627,7 @@ export default function StoreFront() {
               <div className="flex items-center gap-2">
                 <button
                   type="button"
-                  onClick={() => {
-                    setSelectedCategory('all');
-                    setSearchQuery('');
-                  }}
+                  onClick={handleBackToOverview}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-yellow-300 hover:bg-yellow-400 border-2 border-black rounded-xl font-black text-xs uppercase shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition cursor-pointer shrink-0"
                 >
                   <ArrowLeft className="w-4 h-4" />
@@ -689,10 +668,7 @@ export default function StoreFront() {
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
               <button
                 type="button"
-                onClick={() => {
-                  setSelectedCategory('all');
-                  setSearchQuery('');
-                }}
+                onClick={handleBackToOverview}
                 className={`px-3 py-1.5 rounded-lg border-2 border-black text-xs font-black uppercase tracking-tight whitespace-nowrap cursor-pointer transition shrink-0 ${
                   selectedCategory === 'all'
                     ? 'bg-black text-[#FFE600] shadow-[2px_2px_0_#FFE600]'
@@ -711,10 +687,7 @@ export default function StoreFront() {
                   <button
                     key={c.id}
                     type="button"
-                    onClick={() => {
-                      setSelectedCategory(c.id);
-                      setSearchQuery('');
-                    }}
+                    onClick={() => handleSelectCategory(c.id)}
                     className={`px-3 py-1.5 rounded-lg border-2 border-black text-xs font-black uppercase tracking-tight whitespace-nowrap cursor-pointer transition shrink-0 ${
                       isActive
                         ? 'bg-black text-[#FFE600] shadow-[2px_2px_0_#FFE600]'
@@ -783,10 +756,7 @@ export default function StoreFront() {
                 return (
                   <div
                     key={c.id}
-                    onClick={() => {
-                      setSelectedCategory(c.id);
-                      window.scrollTo({ top: 320, behavior: 'smooth' });
-                    }}
+                    onClick={() => handleSelectCategory(c.id)}
                     className={`group bg-white rounded-2xl border-3 border-black p-5 shadow-[4px_4px_0_#000] hover:shadow-[7px_7px_0_#000] hover:-translate-y-1 transition-all duration-150 cursor-pointer flex flex-col justify-between ${meta.hoverBorder || ''}`}
                   >
                     <div>
@@ -874,7 +844,7 @@ export default function StoreFront() {
                 </div>
                 <button
                   type="button"
-                  onClick={() => setSelectedCategory('all')}
+                  onClick={handleBackToOverview}
                   className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#FFE600] hover:bg-yellow-400 border-2 border-black rounded-xl font-black text-xs uppercase shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition cursor-pointer shrink-0"
                 >
                   <ArrowLeft className="w-3.5 h-3.5" />

@@ -641,10 +641,10 @@ export default function StoreFront({ initialCategorySlug = null }) {
           </div>
         )}
 
-        {/* Search Input Bar */}
+        {/* Search Input Bar — High Contrast & Elegant */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
-            <Search className="w-5 h-5 text-zinc-700" />
+            <Search className="w-5 h-5 text-black" />
           </div>
           <input
             type="text"
@@ -653,8 +653,8 @@ export default function StoreFront({ initialCategorySlug = null }) {
               setSearchQuery(e.target.value);
               if (e.target.value) setSelectedCategory('all');
             }}
-            placeholder="Cari aplikasi atau paket (contoh: Canva, Netflix, Spotify, ChatGPT)..."
-            className="w-full pl-11 pr-10 py-3 rounded-xl bg-white border-3 border-black shadow-[4px_4px_0_#000] font-black text-sm text-black placeholder:text-zinc-500 placeholder:font-bold outline-none focus:bg-yellow-50/50 transition"
+            placeholder="Cari aplikasi atau paket... (Canva, Netflix, ChatGPT, Spotify)"
+            className="w-full pl-11 pr-10 py-3 rounded-2xl bg-white border-2 border-black shadow-[3px_3px_0_#000] font-extrabold text-sm sm:text-base text-black placeholder:text-zinc-700 placeholder:font-semibold outline-none focus:shadow-[4px_4px_0_#000] focus:bg-yellow-50/40 transition"
           />
           {searchQuery && (
             <button
@@ -670,16 +670,21 @@ export default function StoreFront({ initialCategorySlug = null }) {
           )}
         </div>
 
-        {/* Quick Hint on Category Overview */}
+        {/* Simple & Elegant Sub-bar on Category Overview */}
         {isCategoryOverview ? (
-          <div className="flex items-center justify-between gap-2 pt-1 text-xs font-bold text-zinc-600">
-            <div className="flex items-center gap-1.5">
-              <Sparkles className="w-4 h-4 text-amber-500" />
-              <span>7 Kategori Aplikasi Resmi &amp; Bergaransi</span>
+          <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5 px-1 text-xs text-zinc-600">
+            <div className="flex items-center gap-2">
+              <span className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-full bg-yellow-300 text-black border border-black font-black text-[11px] shadow-[1px_1px_0_#000]">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                <span>7 Kategori Pilihan</span>
+              </span>
+              <span className="text-zinc-400 hidden sm:inline">•</span>
+              <span className="font-semibold text-zinc-700 hidden sm:inline">100% Legal &amp; Bergaransi Resmi</span>
             </div>
-            <span className="font-mono text-[11px] font-black bg-white border border-black px-2 py-0.5 rounded shadow-[1px_1px_0_#000]">
-              {products.length} Total Aplikasi
-            </span>
+
+            <div className="text-xs font-semibold text-zinc-700">
+              Total <span className="font-black text-black">{products.length} Aplikasi</span>
+            </div>
           </div>
         ) : (
           /* Controls Toolbar: Category Switcher Pills & Action Buttons */
@@ -787,25 +792,14 @@ export default function StoreFront({ initialCategorySlug = null }) {
         ) : isCategoryOverview ? (
           /* ==================== 7 CATEGORY CARDS OVERVIEW (SYMMETRICAL 12-COL GRID) ==================== */
           <div className="space-y-4">
-            {/* Header Kategori */}
-            <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-1">
-              <div>
-                <div className="inline-flex items-center gap-1.5 px-2.5 py-0.5 rounded-md bg-black text-[#FFE600] font-black text-[11px] uppercase tracking-wider mb-1.5 shadow-[2px_2px_0_#FFE600]">
-                  <Sparkles className="w-3.5 h-3.5" />
-                  <span>Katalog Resmi D Store</span>
-                </div>
-                <h2 className="font-black text-xl sm:text-2xl text-black uppercase tracking-tight">
-                  Pilih Kategori Aplikasi
-                </h2>
-                <p className="text-xs sm:text-sm font-bold text-zinc-600">
-                  Klik kategori untuk melihat aplikasi dan paket yang tersedia, atau cari langsung pada kolom pencarian di atas.
-                </p>
-              </div>
-              <div className="text-right shrink-0">
-                <span className="text-xs font-black uppercase px-3 py-1.5 bg-yellow-300 border-2 border-black rounded-xl shadow-[2px_2px_0_#000] inline-block">
-                  {products.length} Total Aplikasi
-                </span>
-              </div>
+            {/* Header Kategori — Simple & Elegant */}
+            <div className="pt-1 pb-1">
+              <h2 className="font-black text-xl sm:text-2xl text-black uppercase tracking-tight">
+                Pilih Kategori Aplikasi
+              </h2>
+              <p className="text-xs sm:text-sm font-medium text-zinc-600 mt-0.5">
+                Pilih kategori di bawah untuk melihat pilihan paket harga &amp; masa aktif, atau cari langsung di kolom pencarian.
+              </p>
             </div>
 
             {/* 7 Category Cards Grid:

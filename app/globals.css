@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #f4f4f0;
+  --background: #ffffff;
   --foreground: #111111;
 }
 
@@ -11,16 +11,16 @@
 }
 
 html {
-  background-color: #f4f4f0;
+  background-color: #ffffff;
   min-height: 100%;
   overscroll-behavior-y: none;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: #f4f4f0;
+  background-color: #ffffff;
   color: #111111;
-  background-image: radial-gradient(#d1d1d1 2px, transparent 2px);
+  background-image: radial-gradient(#d4d4d4 2px, transparent 2px);
   background-size: 20px 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
@@ -30,10 +30,10 @@ body {
   overscroll-behavior-y: none;
 }
 
-/* Authentic laju.asia dot pattern */
+/* Authentic dot pattern on crisp white card background */
 .bg-laju-pattern {
-  background-color: #f4f4f0;
-  background-image: radial-gradient(#d1d1d1 2px, transparent 2px);
+  background-color: #ffffff;
+  background-image: radial-gradient(#d4d4d4 2px, transparent 2px);
   background-size: 20px 20px;
 }
 

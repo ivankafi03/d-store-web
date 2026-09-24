@@ -1274,25 +1274,54 @@ export default function StoreFront({ initialCategorySlug = null }) {
         </div>
       )}
 
-      {/* 7. FOOTER */}
-      <footer className="max-w-6xl mx-auto px-4 mt-12 pt-6 border-t-3 border-black text-center space-y-3">
-        <div className="flex flex-wrap items-center justify-center gap-4 text-xs font-black uppercase tracking-wider text-black">
-          <a href="https://wa.me/6281230112240?text=Halo%20Admin,%20saya%20mau%20klaim%20garansi" className="hover:underline">
-            Klaim Garansi &amp; Bantuan
-          </a>
-          <span>•</span>
-          <a href="https://t.me/dewipermata03" target="_blank" rel="noopener noreferrer" className="hover:underline">
-            Admin: @dewipermata03
-          </a>
-          <span>•</span>
-          <a href="https://t.me/dstore00000" target="_blank" rel="noopener noreferrer" className="hover:underline font-black text-blue-900">
-            Grup Tele: @dstore00000
-          </a>
-          <span>•</span>
-          <span>D STORE • Legal &amp; Bergaransi</span>
+      {/* 7. MODERN & ELEGANT FOOTER */}
+      <footer className="max-w-6xl mx-auto px-4 mt-16 pt-8 pb-4 border-t-2 border-black/15 text-center space-y-4">
+        {/* Brand Badge & Subtitle */}
+        <div className="flex flex-col sm:flex-row items-center justify-center gap-2 text-xs font-black uppercase text-black">
+          <span className="px-2.5 py-1 bg-[#FFE600] border-2 border-black rounded-lg shadow-[2px_2px_0_#000]">
+            D STORE OFFICIAL
+          </span>
+          <span className="text-zinc-600 font-bold normal-case text-xs">
+            Layanan Akun Digital Premium &amp; Bergaransi Resmi
+          </span>
         </div>
-        <p className="text-[11px] text-zinc-600 font-bold">
-          Hak Cipta D STORE. Solusi Akun Premium &amp; Layanan Digital Cepat dan Terpercaya.
+
+        {/* Quick Nav Links — Clean Elegant Pills */}
+        <div className="flex flex-wrap items-center justify-center gap-2 max-w-xl mx-auto">
+          <a 
+            href="https://wa.me/6281230112240?text=Halo%20Admin,%20saya%20mau%20klaim%20garansi" 
+            target="_blank" 
+            rel="noopener noreferrer"
+            className="px-3 py-1.5 rounded-xl bg-white hover:bg-yellow-50 text-black border-2 border-black shadow-[2px_2px_0_#000] text-xs font-bold transition flex items-center gap-1.5"
+          >
+            <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+            <span>Klaim Garansi &amp; Bantuan</span>
+          </a>
+
+          <a 
+            href="https://t.me/dewipermata03" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="px-3 py-1.5 rounded-xl bg-white hover:bg-cyan-50 text-black border-2 border-black shadow-[2px_2px_0_#000] text-xs font-bold transition flex items-center gap-1.5"
+          >
+            <Send className="w-3.5 h-3.5 text-cyan-600" />
+            <span>Admin: @dewipermata03</span>
+          </a>
+
+          <a 
+            href="https://t.me/dstore00000" 
+            target="_blank" 
+            rel="noopener noreferrer" 
+            className="px-3 py-1.5 rounded-xl bg-white hover:bg-yellow-50 text-black border-2 border-black shadow-[2px_2px_0_#000] text-xs font-bold transition flex items-center gap-1.5"
+          >
+            <Send className="w-3.5 h-3.5 text-blue-600" />
+            <span>Grup @dstore00000</span>
+          </a>
+        </div>
+
+        {/* Copyright */}
+        <p className="text-[11px] text-zinc-500 font-semibold pt-1">
+          &copy; {new Date().getFullYear()} D STORE. Solusi Akun Premium &amp; Layanan Digital Cepat dan Terpercaya.
         </p>
       </footer>
 

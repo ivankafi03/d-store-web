@@ -299,7 +299,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
   };
 
   return (
-    <div className="min-h-screen bg-[#FDFBF7] text-black font-sans pb-24 sm:pb-20 selection:bg-[#FFE600] selection:text-black">
+    <div className="min-h-screen bg-[#f4f4f0] bg-laju-pattern text-black font-sans pb-24 sm:pb-20 selection:bg-[#FFE600] selection:text-black">
       
       {/* 1. TOP ANNOUNCEMENT & CONTACT BAR */}
       <div className="bg-black text-[#FFE600] border-b-2 sm:border-b-3 border-black py-1.5 px-3 text-[11px] sm:text-xs font-black uppercase tracking-wider">

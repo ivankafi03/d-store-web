@@ -1,7 +1,7 @@
 @import "tailwindcss";
 
 :root {
-  --background: #FDFBF7;
+  --background: #f4f4f0;
   --foreground: #111111;
 }
 
@@ -11,21 +11,30 @@
 }
 
 html {
-  background-color: #FDFBF7;
+  background-color: #f4f4f0;
   min-height: 100%;
   overscroll-behavior-y: none;
   -webkit-text-size-adjust: 100%;
 }
 
 body {
-  background-color: #FDFBF7;
+  background-color: #f4f4f0;
   color: #111111;
+  background-image: radial-gradient(#d1d1d1 2px, transparent 2px);
+  background-size: 20px 20px;
   font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
   overflow-x: hidden;
   min-height: 100%;
   margin: 0;
   padding: 0;
   overscroll-behavior-y: none;
+}
+
+/* Authentic laju.asia dot pattern */
+.bg-laju-pattern {
+  background-color: #f4f4f0;
+  background-image: radial-gradient(#d1d1d1 2px, transparent 2px);
+  background-size: 20px 20px;
 }
 
 /* Sembunyikan scrollbar native pada kontainer scroll horizontal */

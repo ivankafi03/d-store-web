@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T11:32:39.791Z",
+  "updatedAt": "2026-09-24T15:39:52.616Z",
   "categories": [
     {
       "id": "cat_1",
@@ -69,12 +69,6 @@
       "categoryId": "cat_3",
       "variants": [
         {
-          "id": "var_7_2",
-          "name": "canva pro 1m",
-          "price": 4500,
-          "isAvailable": true
-        },
-        {
           "id": "var_7_1",
           "name": "canva pro head 1m [ 100 user ]",
           "price": 9000,
@@ -105,14 +99,8 @@
           "isAvailable": true
         },
         {
-          "id": "var_7_10",
-          "name": "Lifetime (Garansi 1y)",
-          "price": 12000,
-          "isAvailable": true
-        },
-        {
           "id": "var_7_11",
-          "name": "Lifetime (No Garansi)",
+          "name": "Lifetime",
           "price": 10000,
           "isAvailable": true
         }
@@ -368,44 +356,6 @@
       ]
     },
     {
-      "id": "prod_ziem_2",
-      "name": "JASA CHAT",
-      "categoryId": "cat_7",
-      "variants": [
-        {
-          "id": "var_ziem_2_1",
-          "name": "JASA CHAT WA",
-          "price": 1700,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_hp_63_1",
-      "name": "Youtube",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_ziem_3",
-          "name": "YOUTUBE FAMPLAN 1M",
-          "price": 4500,
-          "isAvailable": true
-        },
-        {
-          "id": "var_ziem_4",
-          "name": "YT JASPAY INDP 1M",
-          "price": 4000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_hp_63_3",
-          "name": "Youtube Premium 1m Invit",
-          "price": 10000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
       "id": "prod_72",
       "name": "Wink",
       "categoryId": "cat_3",
@@ -509,21 +459,9 @@
       "categoryId": "cat_1",
       "variants": [
         {
-          "id": "var_23_12",
-          "name": "Gemini Pro 1y [ invit ]",
-          "price": 29000,
-          "isAvailable": true
-        },
-        {
           "id": "var_23_13",
           "name": "Link Gemini Pro 18M",
           "price": 29000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_23_1",
-          "name": "Genmotions AI Stater",
-          "price": 38000,
           "isAvailable": true
         },
         {
@@ -536,12 +474,6 @@
           "id": "var_23_6",
           "name": "1y Famplan",
           "price": 25000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_23_7",
-          "name": "18m Famhead",
-          "price": 53000,
           "isAvailable": true
         },
         {
@@ -658,31 +590,6 @@
       ]
     },
     {
-      "id": "prod_1790079766501_rgqy",
-      "name": "Canva",
-      "categoryId": "cat_3",
-      "variants": [
-        {
-          "id": "var_5_1",
-          "name": "canva busines 1m",
-          "price": 9000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_5_2",
-          "name": "canva pro 1m",
-          "price": 7000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_hp_5_3",
-          "name": "canva basic",
-          "price": 2500,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
       "id": "prod_8",
       "name": "Capcut",
       "categoryId": "cat_3",
@@ -690,7 +597,7 @@
         {
           "id": "var_6_1",
           "name": "Capcut Pro 1m",
-          "price": 28000,
+          "price": 20000,
           "isAvailable": true
         },
         {
@@ -707,7 +614,7 @@
         },
         {
           "id": "var_8_5",
-          "name": "7d Private Full Garansi",
+          "name": "7d Pro Private",
           "price": 9000,
           "isAvailable": true
         }
@@ -738,22 +645,10 @@
       "categoryId": "cat_1",
       "variants": [
         {
-          "id": "var_8_1",
-          "name": "Code Reedem Chatgpt GO 3m",
-          "price": 5000,
-          "isAvailable": true
-        },
-        {
           "id": "var_10_2",
-          "name": "Chatgpt Plus 1m [ 24h Warranty ]",
+          "name": "Chatgpt Plus 1m",
           "price": 55000,
           "isAvailable": false
-        },
-        {
-          "id": "var_10_1",
-          "name": "Clico AI Pro Plan 1m",
-          "price": 38000,
-          "isAvailable": true
         },
         {
           "id": "var_10_4",
@@ -763,7 +658,7 @@
         },
         {
           "id": "var_10_5",
-          "name": "1m Plan Plus (Garansi 7d)",
+          "name": "1m Plan Plus",
           "price": 18000,
           "isAvailable": true
         }
@@ -1084,100 +979,15 @@
           "isAvailable": true
         },
         {
-          "id": "var_hp_25_2",
-          "name": "Colab Pro+ 7d",
-          "price": 105000,
-          "isAvailable": true
-        },
-        {
           "id": "var_hp_25_3",
           "name": "Colab Pro+ 14d",
           "price": 155010,
           "isAvailable": true
         },
         {
-          "id": "var_26_1",
-          "name": "Supergrok 6M Privat ( gift x )",
-          "price": 185000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_26_2",
-          "name": "Supergrok 3M Privat ( gift x )",
-          "price": 125000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_26_3",
-          "name": "Supergrok 3d",
-          "price": 10000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_26_4",
-          "name": "Grok AI Basic",
-          "price": 2500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_26_5",
-          "name": "Supergrok 3M Sharing [ 7d warranty ]",
-          "price": 25000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_26_6",
-          "name": "Supergrok 1y Privat ( gift x )",
-          "price": 225000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_27",
-      "name": "Grok AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_27_4",
-          "name": "Supergrok 6M Privat ( gift x )",
-          "price": 185000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_27_3",
-          "name": "Supergrok 3M Privat ( gift x )",
-          "price": 125000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_27_6",
-          "name": "Supergrok 3d",
-          "price": 8000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_27_7",
-          "name": "Grok AI Basic",
-          "price": 2500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_27_2",
-          "name": "Supergrok 3M Sharing [ 7d warranty ]",
-          "price": 22000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_27_5",
-          "name": "Supergrok 1y Privat ( gift x )",
-          "price": 225000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_27_1",
-          "name": "Hailuo AI Standard Plan 1m",
-          "price": 55000,
+          "id": "var_1790255476710_678",
+          "name": "Collab Pro 1m",
+          "price": 205000,
           "isAvailable": true
         }
       ]
@@ -1197,55 +1007,6 @@
           "id": "var_28_1",
           "name": "Hedra AI Basic 1m",
           "price": 55000,
-          "isAvailable": false
-        }
-      ]
-    },
-    {
-      "id": "prod_30",
-      "name": "Hedra AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_30_7",
-          "name": "Hedra AI Basic 1m",
-          "price": 55000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_30_1",
-          "name": "Kapwing AI Pro Plan 1m",
-          "price": 38000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_30_2",
-          "name": "Supergrok 3M Privat ( gift x )",
-          "price": 125000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_30_3",
-          "name": "Supergrok 3d",
-          "price": 7500,
-          "isAvailable": false
-        },
-        {
-          "id": "var_30_4",
-          "name": "Grok AI Basic",
-          "price": 2000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_30_5",
-          "name": "Supergrok 3M Sharing [ 7d warranty ]",
-          "price": 23000,
-          "isAvailable": false
-        },
-        {
-          "id": "var_30_6",
-          "name": "Supergrok 1y Privat ( gift x )",
-          "price": 225000,
           "isAvailable": false
         }
       ]
@@ -1659,7 +1420,7 @@
     {
       "id": "prod_55",
       "name": "Reelshort",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_55_3",
@@ -1904,7 +1665,7 @@
     {
       "id": "prod_68",
       "name": "Viu",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_71_1",
@@ -2087,7 +1848,7 @@
     {
       "id": "prod_1",
       "name": "Adobe",
-      "categoryId": "cat_1",
+      "categoryId": "cat_3",
       "variants": [
         {
           "id": "var_1_2",
@@ -2149,7 +1910,7 @@
     {
       "id": "prod_29",
       "name": "Hbo Max",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_29_1",
@@ -2241,7 +2002,7 @@
     {
       "id": "prod_32",
       "name": "Higgsfield AI",
-      "categoryId": "cat_7",
+      "categoryId": "cat_1",
       "variants": [
         {
           "id": "var_32_1",
@@ -2321,7 +2082,7 @@
     {
       "id": "prod_46",
       "name": "Netflix",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_46_3",
@@ -2406,7 +2167,7 @@
     {
       "id": "prod_52",
       "name": "Picsart",
-      "categoryId": "cat_1",
+      "categoryId": "cat_3",
       "variants": [
         {
           "id": "var_52_1",
@@ -2437,7 +2198,7 @@
     {
       "id": "prod_53",
       "name": "Prime Video",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_53_3",
@@ -2468,7 +2229,7 @@
     {
       "id": "prod_60",
       "name": "Spotify",
-      "categoryId": "cat_7",
+      "categoryId": "cat_4",
       "variants": [
         {
           "id": "var_60_3",
@@ -2530,47 +2291,29 @@
     {
       "id": "prod_74",
       "name": "YouTube Premium",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
-          "id": "var_63_3",
-          "name": "Youtube Premium 1m Invit",
-          "price": 9000,
-          "isAvailable": true
-        },
-        {
           "id": "var_74_6",
-          "name": "Famplan - 2m - Invite Member",
+          "name": "Famplan - 2m",
           "price": 11000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_74_8",
-          "name": "Indplan - 1m",
-          "price": 17000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_74_9",
-          "name": "Mixpland - 3m",
-          "price": 20000,
-          "isAvailable": true
+          "isAvailable": false
         },
         {
           "id": "var_74_10",
-          "name": "Jaspay Famhead - 1m",
+          "name": "Famhead - 1m",
           "price": 4000,
           "isAvailable": true
         },
         {
           "id": "var_74_11",
-          "name": "Jaspay Indplan - 1m",
-          "price": 9000,
+          "name": "Indplan - 1m",
+          "price": 4000,
           "isAvailable": true
         },
         {
           "id": "var_74_12",
-          "name": "Jaspay Mixpland - 3m",
+          "name": "Mixpland - 3m",
           "price": 13000,
           "isAvailable": true
         }
@@ -2579,7 +2322,7 @@
     {
       "id": "prod_looviie_1789898664900_917",
       "name": "Disney+",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664900_917_1",
@@ -2658,7 +2401,7 @@
     {
       "id": "prod_looviie_1789898664901_23",
       "name": "IQIYI",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664901_23_1",
@@ -2707,7 +2450,7 @@
     {
       "id": "prod_looviie_1789898664901_973",
       "name": "Youku",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664901_973_1",
@@ -2738,7 +2481,7 @@
     {
       "id": "prod_looviie_1789898664901_124",
       "name": "Bstation",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664901_124_1",
@@ -2769,7 +2512,7 @@
     {
       "id": "prod_looviie_1789898664901_25",
       "name": "WeTV",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664901_25_1",
@@ -2794,7 +2537,7 @@
     {
       "id": "prod_looviie_1789898664901_74",
       "name": "Moviebox",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664901_74_1",
@@ -2819,7 +2562,7 @@
     {
       "id": "prod_looviie_1789898664901_465",
       "name": "Loklok",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664901_465_1",
@@ -2862,7 +2605,7 @@
     {
       "id": "prod_looviie_1789898664901_380",
       "name": "Drakor.id",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664901_380_1",
@@ -2893,7 +2636,7 @@
     {
       "id": "prod_looviie_1789898664902_502",
       "name": "Gagaooolala",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_502_1",
@@ -2906,7 +2649,7 @@
     {
       "id": "prod_looviie_1789898664902_594",
       "name": "Catchplay",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_594_1",
@@ -2919,7 +2662,7 @@
     {
       "id": "prod_looviie_1789898664902_211",
       "name": "Dramabox",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_211_1",
@@ -2938,7 +2681,7 @@
     {
       "id": "prod_looviie_1789898664902_798",
       "name": "Melolo",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_798_1",
@@ -2951,7 +2694,7 @@
     {
       "id": "prod_looviie_1789898664902_975",
       "name": "Wibuku",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_975_1",
@@ -2964,7 +2707,7 @@
     {
       "id": "prod_looviie_1789898664902_750",
       "name": "Viki Rakuten",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_750_1",
@@ -2995,7 +2738,7 @@
     {
       "id": "prod_looviie_1789898664902_965",
       "name": "Vidio",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_965_1",
@@ -3044,7 +2787,7 @@
     {
       "id": "prod_looviie_1789898664902_220",
       "name": "Vision+",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_220_1",
@@ -3075,7 +2818,7 @@
     {
       "id": "prod_looviie_1789898664902_474",
       "name": "Apple TV",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_474_1",
@@ -3094,7 +2837,7 @@
     {
       "id": "prod_looviie_1789898664902_883",
       "name": "Mubi",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_883_1",
@@ -3113,7 +2856,7 @@
     {
       "id": "prod_looviie_1789898664902_724",
       "name": "Mangotv",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_724_1",
@@ -3138,7 +2881,7 @@
     {
       "id": "prod_looviie_1789898664902_109",
       "name": "Iflix",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_109_1",
@@ -3151,7 +2894,7 @@
     {
       "id": "prod_looviie_1789898664902_739",
       "name": "Crunchyroll",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_739_1",
@@ -3170,7 +2913,7 @@
     {
       "id": "prod_looviie_1789898664902_17",
       "name": "Dramaku",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_looviie_1789898664902_17_1",
@@ -3551,7 +3294,7 @@
     {
       "id": "prod_1789901988396_417",
       "name": "GagaOOLala",
-      "categoryId": "cat_1",
+      "categoryId": "cat_2",
       "variants": [
         {
           "id": "var_1789901988396_417_1",

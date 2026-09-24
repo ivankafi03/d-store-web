@@ -111,6 +111,20 @@ export default function Dashboard() {
   });
   const [addVariantLoading, setAddVariantLoading] = useState(false);
 
+  // Inline Edit Nama Paket Langsung di Card
+  const [inlineEditingVariantId, setInlineEditingVariantId] = useState(null);
+  const [inlineEditingVariantName, setInlineEditingVariantName] = useState('');
+
+  // Inline Tambah Varian Langsung di Card
+  const [activeAddVariantProdId, setActiveAddVariantProdId] = useState(null);
+  const [inlineAddForm, setInlineAddForm] = useState({
+    name: '',
+    price: '',
+    costPrice: '',
+    supplier: 'heavenprem'
+  });
+  const [inlineAddLoading, setInlineAddLoading] = useState(false);
+
   // Bulk Price Update Modal State
   const [bulkPriceModalOpen, setBulkPriceModalOpen] = useState(false);
   const [bulkPriceMode, setBulkPriceMode] = useState('add_to_cost'); // 'add_to_cost', 'add_to_selling', 'random_margin'
@@ -862,6 +876,82 @@ export default function Dashboard() {
       showToast('Gagal menambah varian: ' + err.message, 'error');
     } finally {
       setAddVariantLoading(false);
+    }
+  };
+
+  // Simpan Edit Nama Paket Langsung di Card (Inline)
+  const handleSaveInlineVariantName = async (variantId) => {
+    if (!inlineEditingVariantName.trim()) {
+      showToast('Nama paket tidak boleh kosong.', 'warning');
+      return;
+    }
+    const cleanNewName = standardizeDurationStr(inlineEditingVariantName.trim());
+
+    // Optimistic UI update
+    setVariants(prev => prev.map(v => v.id === variantId ? { ...v, name: cleanNewName } : v));
+    setInlineEditingVariantId(null);
+
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'update_price',
+          variantId,
+          variantName: cleanNewName
+        })
+      });
+      const data = await res.json();
+      if (data.status === 'ok') {
+        showToast(`Nama paket diubah menjadi "${cleanNewName}"!`, 'success');
+      } else {
+        showToast('Gagal update nama paket: ' + (data.message || 'Error'), 'error');
+        await loadData();
+      }
+    } catch (err) {
+      showToast('Terjadi kesalahan: ' + err.message, 'error');
+      await loadData();
+    }
+  };
+
+  // Simpan Varian Baru Langsung di Card (Inline)
+  const handleSaveInlineAddVariant = async (prod) => {
+    if (!inlineAddForm.name.trim()) {
+      showToast('Nama varian/paket wajib diisi.', 'warning');
+      return;
+    }
+    setInlineAddLoading(true);
+
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'add_variant',
+          productId: prod.id,
+          variantName: inlineAddForm.name.trim(),
+          sellingPrice: Number(inlineAddForm.price) || 0,
+          costPrice: Number(inlineAddForm.costPrice) || 0,
+          supplier: inlineAddForm.supplier || prod.variants[0]?.supplier || 'heavenprem'
+        })
+      });
+      const data = await res.json();
+      if (data.status === 'ok') {
+        const cleanVar = {
+          ...data.variant,
+          name: standardizeDurationStr(data.variant.name)
+        };
+        setVariants(prev => [...prev, cleanVar]);
+        setActiveAddVariantProdId(null);
+        setInlineAddForm({ name: '', price: '', costPrice: '', supplier: 'heavenprem' });
+        showToast(`Varian "${cleanVar.name}" berhasil ditambahkan langsung ke ${prod.name}!`, 'success');
+      } else {
+        showToast('Gagal menambah varian: ' + (data.message || 'Error'), 'error');
+      }
+    } catch (err) {
+      showToast('Terjadi kesalahan: ' + err.message, 'error');
+    } finally {
+      setInlineAddLoading(false);
     }
   };
 
@@ -2487,20 +2577,25 @@ export default function Dashboard() {
                           <button
                             type="button"
                             onClick={() => {
-                              setAddVariantTargetProd(prod);
-                              setAddVariantForm({
-                                variantName: '',
-                                sellingPrice: '',
-                                costPrice: '',
-                                supplier: prod.variants[0]?.supplier || 'heavenprem'
-                              });
-                              setAddVariantModalOpen(true);
+                              if (activeAddVariantProdId === prod.id) {
+                                setActiveAddVariantProdId(null);
+                              } else {
+                                setActiveAddVariantProdId(prod.id);
+                                setInlineAddForm({
+                                  name: '',
+                                  price: '',
+                                  costPrice: '',
+                                  supplier: prod.variants[0]?.supplier || 'heavenprem'
+                                });
+                              }
                             }}
-                            className="neo-btn text-[10px] font-black px-2 py-1 bg-emerald-300 hover:bg-emerald-400 text-black border-2 border-black shadow-[1.5px_1.5px_0_#000] uppercase tracking-tight flex items-center gap-1 cursor-pointer"
-                            title={`Tambah paket/varian baru ke ${prod.name}`}
+                            className={`neo-btn text-[10px] font-black px-2 py-1 border-2 border-black shadow-[1.5px_1.5px_0_#000] uppercase tracking-tight flex items-center gap-1 cursor-pointer transition ${
+                              activeAddVariantProdId === prod.id ? 'bg-amber-300 text-black' : 'bg-emerald-300 hover:bg-emerald-400 text-black'
+                            }`}
+                            title={`Tambah paket/varian baru langsung ke ${prod.name}`}
                           >
                             <Plus className="w-3 h-3 stroke-[3]" />
-                            <span>+ Varian</span>
+                            <span>{activeAddVariantProdId === prod.id ? 'Tutup Form' : '+ Varian'}</span>
                           </button>
                           <span className="text-xs font-black px-2.5 py-1 bg-yellow-200 text-black border-2 border-black shadow-[2px_2px_0px_0px_#000] whitespace-nowrap uppercase">
                             {prod.variants.length} Paket
@@ -2538,12 +2633,57 @@ export default function Dashboard() {
                               }`}
                             >
                               <div className="min-w-0 flex-1">
-                                {/* Baris 1: Nama variant + Badge Termurah */}
+                                {/* Baris 1: Nama variant (Bisa langsung diedit di card) + Badge Termurah */}
                                 <div className="mb-1.5 flex items-center justify-between gap-1.5 flex-wrap">
-                                  <span className="font-black text-xs text-black leading-tight break-words" title={v.name}>
-                                    {getCleanVariantName(v.name, prod.name)}
-                                  </span>
-                                  {isCheapestInProduct && (
+                                  {inlineEditingVariantId === v.id ? (
+                                    <div className="flex items-center gap-1.5 w-full my-0.5" onClick={(e) => e.stopPropagation()}>
+                                      <input
+                                        type="text"
+                                        autoFocus
+                                        value={inlineEditingVariantName}
+                                        onChange={(e) => setInlineEditingVariantName(e.target.value)}
+                                        onKeyDown={(e) => {
+                                          if (e.key === 'Enter') handleSaveInlineVariantName(v.id);
+                                          if (e.key === 'Escape') setInlineEditingVariantId(null);
+                                        }}
+                                        placeholder="Nama paket"
+                                        className="flex-1 px-2.5 py-1 text-xs font-black bg-yellow-100 border-2 border-black rounded-lg shadow-[1.5px_1.5px_0_#000] outline-none text-black"
+                                      />
+                                      <button
+                                        type="button"
+                                        onClick={() => handleSaveInlineVariantName(v.id)}
+                                        className="p-1.5 bg-emerald-400 hover:bg-emerald-300 text-black border-2 border-black rounded-lg shadow-[1.5px_1.5px_0_#000] cursor-pointer"
+                                        title="Simpan nama paket (Enter)"
+                                      >
+                                        <Check className="w-3.5 h-3.5 stroke-[3]" />
+                                      </button>
+                                      <button
+                                        type="button"
+                                        onClick={() => setInlineEditingVariantId(null)}
+                                        className="p-1.5 bg-white hover:bg-zinc-100 text-black border-2 border-black rounded-lg shadow-[1.5px_1.5px_0_#000] cursor-pointer"
+                                        title="Batal (Esc)"
+                                      >
+                                        <X className="w-3.5 h-3.5" />
+                                      </button>
+                                    </div>
+                                  ) : (
+                                    <div
+                                      className="flex items-center gap-1.5 group cursor-pointer max-w-full"
+                                      onClick={() => {
+                                        setInlineEditingVariantId(v.id);
+                                        setInlineEditingVariantName(getCleanVariantName(v.name, prod.name) || v.name);
+                                      }}
+                                      title="Klik untuk ubah nama paket langsung di card ini"
+                                    >
+                                      <span className="font-black text-xs text-black leading-tight break-words group-hover:text-amber-800 transition">
+                                        {getCleanVariantName(v.name, prod.name) || v.name}
+                                      </span>
+                                      <span className="opacity-0 group-hover:opacity-100 transition p-0.5 bg-yellow-200 border border-black rounded text-[10px] text-black shrink-0">
+                                        <Edit3 className="w-2.5 h-2.5" />
+                                      </span>
+                                    </div>
+                                  )}
+                                  {isCheapestInProduct && inlineEditingVariantId !== v.id && (
                                     <span className="text-[10px] px-2 py-0.5 bg-[#FFE600] text-black border-2 border-black font-black uppercase shadow-[1.5px_1.5px_0_#000] shrink-0">
                                       Termurah
                                     </span>
@@ -2662,24 +2802,104 @@ export default function Dashboard() {
                           );
                         })}
 
-                        {/* Tombol Tambah Varian Baru ke Produk Ini */}
-                        <button
-                          type="button"
-                          onClick={() => {
-                            setAddVariantTargetProd(prod);
-                            setAddVariantForm({
-                              variantName: '',
-                              sellingPrice: '',
-                              costPrice: '',
-                              supplier: prod.variants[0]?.supplier || 'heavenprem'
-                            });
-                            setAddVariantModalOpen(true);
-                          }}
-                          className="w-full py-2 bg-yellow-50/70 hover:bg-yellow-100 border-2 border-dashed border-black/50 hover:border-black rounded-lg text-xs font-black text-black uppercase tracking-wide flex items-center justify-center gap-1.5 transition cursor-pointer shadow-[1px_1px_0_#000]"
-                        >
-                          <Plus className="w-3.5 h-3.5 stroke-[3]" />
-                          <span>+ Tambah Varian ke {prod.name}</span>
-                        </button>
+                        {/* Inline Form Tambah Varian Langsung di Card */}
+                        {activeAddVariantProdId === prod.id ? (
+                          <div className="p-3 bg-yellow-50 border-2 border-black rounded-xl shadow-[2px_2px_0_#000] space-y-2.5 animate-in fade-in duration-150">
+                            <div className="flex items-center justify-between text-xs font-black uppercase text-black pb-1 border-b border-black/20">
+                              <span className="flex items-center gap-1.5">
+                                <Plus className="w-3.5 h-3.5 stroke-[3] text-emerald-600" />
+                                <span>Tambah Varian ke {prod.name}</span>
+                              </span>
+                              <button
+                                type="button"
+                                onClick={() => setActiveAddVariantProdId(null)}
+                                className="w-6 h-6 rounded bg-white hover:bg-zinc-200 border border-black flex items-center justify-center cursor-pointer"
+                              >
+                                <X className="w-3.5 h-3.5" />
+                              </button>
+                            </div>
+                            <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
+                              <div>
+                                <label className="text-[10px] font-black uppercase text-zinc-600">Nama Paket</label>
+                                <input
+                                  type="text"
+                                  autoFocus
+                                  placeholder="Misal: 1 Akun, 1m Famplan"
+                                  value={inlineAddForm.name}
+                                  onChange={(e) => setInlineAddForm({ ...inlineAddForm, name: e.target.value })}
+                                  onKeyDown={(e) => { if (e.key === 'Enter') handleSaveInlineAddVariant(prod); }}
+                                  className="w-full mt-0.5 px-2.5 py-1.5 text-xs font-bold bg-white border-2 border-black rounded-lg shadow-[1px_1px_0_#000] outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-[10px] font-black uppercase text-zinc-600">Harga Jual (Rp)</label>
+                                <input
+                                  type="number"
+                                  placeholder="7000"
+                                  value={inlineAddForm.price}
+                                  onChange={(e) => setInlineAddForm({ ...inlineAddForm, price: e.target.value })}
+                                  onKeyDown={(e) => { if (e.key === 'Enter') handleSaveInlineAddVariant(prod); }}
+                                  className="w-full mt-0.5 px-2.5 py-1.5 text-xs font-mono font-bold bg-white border-2 border-black rounded-lg shadow-[1px_1px_0_#000] outline-none"
+                                />
+                              </div>
+                              <div>
+                                <label className="text-[10px] font-black uppercase text-zinc-600">Harga Modal (Rp)</label>
+                                <input
+                                  type="number"
+                                  placeholder="5000"
+                                  value={inlineAddForm.costPrice}
+                                  onChange={(e) => setInlineAddForm({ ...inlineAddForm, costPrice: e.target.value })}
+                                  onKeyDown={(e) => { if (e.key === 'Enter') handleSaveInlineAddVariant(prod); }}
+                                  className="w-full mt-0.5 px-2.5 py-1.5 text-xs font-mono font-bold bg-white border-2 border-black rounded-lg shadow-[1px_1px_0_#000] outline-none"
+                                />
+                              </div>
+                            </div>
+                            <div className="flex items-center justify-end gap-2 pt-1">
+                              <button
+                                type="button"
+                                onClick={() => setActiveAddVariantProdId(null)}
+                                className="px-3 py-1.5 rounded-lg text-xs font-black text-black bg-white hover:bg-zinc-100 border-2 border-black shadow-[1px_1px_0_#000] uppercase cursor-pointer"
+                              >
+                                Batal
+                              </button>
+                              <button
+                                type="button"
+                                disabled={inlineAddLoading}
+                                onClick={() => handleSaveInlineAddVariant(prod)}
+                                className="px-4 py-1.5 rounded-lg bg-emerald-400 hover:bg-emerald-300 text-black text-xs font-black border-2 border-black shadow-[2px_2px_0_#000] uppercase flex items-center gap-1.5 cursor-pointer disabled:opacity-50"
+                              >
+                                {inlineAddLoading ? (
+                                  <>
+                                    <RefreshCw className="w-3 h-3 animate-spin" />
+                                    <span>Menyimpan...</span>
+                                  </>
+                                ) : (
+                                  <>
+                                    <Plus className="w-3.5 h-3.5 stroke-[3]" />
+                                    <span>Simpan Varian</span>
+                                  </>
+                                )}
+                              </button>
+                            </div>
+                          </div>
+                        ) : (
+                          <button
+                            type="button"
+                            onClick={() => {
+                              setActiveAddVariantProdId(prod.id);
+                              setInlineAddForm({
+                                name: '',
+                                price: '',
+                                costPrice: '',
+                                supplier: prod.variants[0]?.supplier || 'heavenprem'
+                              });
+                            }}
+                            className="w-full py-2 bg-yellow-50/70 hover:bg-yellow-100 border-2 border-dashed border-black/50 hover:border-black rounded-lg text-xs font-black text-black uppercase tracking-wide flex items-center justify-center gap-1.5 transition cursor-pointer shadow-[1px_1px_0_#000]"
+                          >
+                            <Plus className="w-3.5 h-3.5 stroke-[3]" />
+                            <span>+ Tambah Varian ke {prod.name}</span>
+                          </button>
+                        )}
                       </div>
                     </div>
                   </div>

@@ -18,6 +18,9 @@ import {
   ShoppingBag,
   ExternalLink,
   ChevronRight,
+  ChevronDown,
+  ChevronUp,
+  Home,
   TrendingUp,
   Menu,
   AlertCircle,
@@ -56,7 +59,30 @@ export default function StoreFront({ initialCategorySlug = null }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showQrisModal, setShowQrisModal] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
-  const [expandedProductId, setExpandedProductId] = useState(null);
+  const [expandedProductIds, setExpandedProductIds] = useState(new Set());
+
+  // Toggle buka/tutup varian pada satu kartu produk
+  const toggleExpand = (prodId) => {
+    setExpandedProductIds((prev) => {
+      const next = new Set(prev);
+      if (next.has(prodId)) {
+        next.delete(prodId);
+      } else {
+        next.add(prodId);
+      }
+      return next;
+    });
+  };
+
+  // Buka semua varian produk sekaligus
+  const expandAll = () => {
+    setExpandedProductIds(new Set(filteredProducts.map((p) => p.id)));
+  };
+
+  // Tutup semua varian produk sekaligus
+  const collapseAll = () => {
+    setExpandedProductIds(new Set());
+  };
 
   // Monitor scroll position untuk memunculkan running text reseller di bawah header
   useEffect(() => {
@@ -212,6 +238,16 @@ export default function StoreFront({ initialCategorySlug = null }) {
       })
       .filter(Boolean);
   }, [products, categories, selectedCategory, searchWords, stockFilter]);
+
+  // Auto-expand semua kartu varian jika jumlah produk <= 8 (misal kategori Music & Audio dengan 3 apps)
+  // agar calon pembeli langsung melihat pilihan paket dan harga tanpa harus klik satu per satu
+  useEffect(() => {
+    if (filteredProducts.length > 0 && filteredProducts.length <= 8) {
+      setExpandedProductIds(new Set(filteredProducts.map((p) => p.id)));
+    } else {
+      setExpandedProductIds(new Set());
+    }
+  }, [selectedCategory, searchQuery, filteredProducts.length]);
 
   // Hitung jumlah total varian ready
   const totalReadyVariants = useMemo(() => {
@@ -529,56 +565,82 @@ export default function StoreFront({ initialCategorySlug = null }) {
         </div>
       </header>
 
-      {/* 3. HERO & VALUE PROPOSITIONS */}
-      <section className="max-w-6xl mx-auto px-4 pt-6 pb-2">
-        <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
-          
-          <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-emerald-200 border-2 border-black flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-4 h-4 text-black" />
+      {/* 3. HERO & VALUE PROPOSITIONS (Hanya tampil di ikhtisar katalog depan) */}
+      {isCategoryOverview && (
+        <section className="max-w-6xl mx-auto px-4 pt-6 pb-2">
+          <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
+            
+            <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-emerald-200 border-2 border-black flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-4 h-4 text-black" />
+              </div>
+              <div>
+                <div className="text-[11px] font-black uppercase leading-tight">100% Bergaransi</div>
+                <div className="text-[10px] text-zinc-600 font-bold">Klaim Cepat &amp; Aman</div>
+              </div>
             </div>
-            <div>
-              <div className="text-[11px] font-black uppercase leading-tight">100% Bergaransi</div>
-              <div className="text-[10px] text-zinc-600 font-bold">Klaim Cepat &amp; Aman</div>
-            </div>
-          </div>
 
-          <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-cyan-200 border-2 border-black flex items-center justify-center shrink-0">
-              <Clock className="w-4 h-4 text-black" />
+            <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-cyan-200 border-2 border-black flex items-center justify-center shrink-0">
+                <Clock className="w-4 h-4 text-black" />
+              </div>
+              <div>
+                <div className="text-[11px] font-black uppercase leading-tight">Proses 1-5 Menit</div>
+                <div className="text-[10px] text-zinc-600 font-bold">Langsung Aktif Digunakan</div>
+              </div>
             </div>
-            <div>
-              <div className="text-[11px] font-black uppercase leading-tight">Proses 1-5 Menit</div>
-              <div className="text-[10px] text-zinc-600 font-bold">Langsung Aktif Digunakan</div>
-            </div>
-          </div>
 
-          <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-[#FFE600] border-2 border-black flex items-center justify-center shrink-0">
-              <Zap className="w-4 h-4 text-black" />
+            <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-[#FFE600] border-2 border-black flex items-center justify-center shrink-0">
+                <Zap className="w-4 h-4 text-black" />
+              </div>
+              <div>
+                <div className="text-[11px] font-black uppercase leading-tight">Bayar Pakai QRIS</div>
+                <div className="text-[10px] text-zinc-600 font-bold">Semua Bank &amp; E-Wallet</div>
+              </div>
             </div>
-            <div>
-              <div className="text-[11px] font-black uppercase leading-tight">Bayar Pakai QRIS</div>
-              <div className="text-[10px] text-zinc-600 font-bold">Semua Bank &amp; E-Wallet</div>
-            </div>
-          </div>
 
-          <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
-            <div className="w-8 h-8 rounded-lg bg-fuchsia-200 border-2 border-black flex items-center justify-center shrink-0">
-              <Sparkles className="w-4 h-4 text-black" />
+            <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-fuchsia-200 border-2 border-black flex items-center justify-center shrink-0">
+                <Sparkles className="w-4 h-4 text-black" />
+              </div>
+              <div>
+                <div className="text-[11px] font-black uppercase leading-tight">Akun Legal &amp; Anti-Hold</div>
+                <div className="text-[10px] text-zinc-600 font-bold">Bebas Gangguan</div>
+              </div>
             </div>
-            <div>
-              <div className="text-[11px] font-black uppercase leading-tight">Akun Legal &amp; Anti-Hold</div>
-              <div className="text-[10px] text-zinc-600 font-bold">Bebas Gangguan</div>
-            </div>
-          </div>
 
-        </div>
-      </section>
+          </div>
+        </section>
+      )}
 
       {/* 4. SEARCH & CATEGORY FILTER TOOLBAR */}
       <section className="max-w-6xl mx-auto px-4 py-4 space-y-3">
         
+        {/* Breadcrumb Navigation when inside category or search */}
+        {!isCategoryOverview && (
+          <div className="flex items-center gap-1.5 text-xs font-bold text-zinc-600 overflow-x-auto whitespace-nowrap pb-1 no-scrollbar">
+            <button 
+              type="button"
+              onClick={handleBackToOverview} 
+              className="hover:text-black flex items-center gap-1 font-black uppercase transition cursor-pointer"
+            >
+              <Home className="w-3.5 h-3.5" />
+              <span>Katalog Depan</span>
+            </button>
+            <ChevronRight className="w-3.5 h-3.5 text-zinc-400 shrink-0" />
+            {selectedCategoryObj && searchWords.length === 0 ? (
+              <span className="text-black font-black uppercase bg-yellow-300 px-2 py-0.5 rounded-md border border-black text-[11px] shadow-[1px_1px_0_#000]">
+                {selectedCategoryObj.name}
+              </span>
+            ) : (
+              <span className="text-black font-black uppercase bg-zinc-200 px-2 py-0.5 rounded-md border border-black text-[11px]">
+                Hasil Cari: &quot;{searchQuery}&quot;
+              </span>
+            )}
+          </div>
+        )}
+
         {/* Search Input Bar */}
         <div className="relative">
           <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none">
@@ -616,54 +678,12 @@ export default function StoreFront({ initialCategorySlug = null }) {
               <span>7 Kategori Aplikasi Resmi &amp; Bergaransi</span>
             </div>
             <span className="font-mono text-[11px] font-black bg-white border border-black px-2 py-0.5 rounded shadow-[1px_1px_0_#000]">
-              {products.length} Aplikasi
+              {products.length} Total Aplikasi
             </span>
           </div>
         ) : (
-          /* Filters: Category Navigation, Pills & Stock Toggle when in category or search */
+          /* Controls Toolbar: Category Switcher Pills & Action Buttons */
           <div className="space-y-2.5 pt-1">
-            {/* Top Navigation Row: Back button or Search result text + Stock Toggle */}
-            <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-2">
-              <div className="flex items-center gap-2">
-                <button
-                  type="button"
-                  onClick={handleBackToOverview}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-yellow-300 hover:bg-yellow-400 border-2 border-black rounded-xl font-black text-xs uppercase shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition cursor-pointer shrink-0"
-                >
-                  <ArrowLeft className="w-4 h-4" />
-                  <span>Semua Kategori (7 Kategori)</span>
-                </button>
-                {searchWords.length > 0 && (
-                  <span className="text-xs font-black uppercase text-black line-clamp-1">
-                    Hasil: &quot;{searchQuery}&quot; ({filteredProducts.length} Aplikasi)
-                  </span>
-                )}
-              </div>
-
-              {/* Stock Filter Row */}
-              <div className="inline-flex items-center gap-1 bg-white p-1 rounded-xl border-2 border-black shadow-[2px_2px_0_#000] self-start sm:self-auto">
-                <button
-                  type="button"
-                  onClick={() => setStockFilter('all')}
-                  className={`px-3 py-1 text-[11px] font-black uppercase rounded-lg transition cursor-pointer ${
-                    stockFilter === 'all' ? 'bg-[#FFE600] text-black border border-black shadow-[1px_1px_0_#000]' : 'text-zinc-600 hover:text-black'
-                  }`}
-                >
-                  Semua
-                </button>
-                <button
-                  type="button"
-                  onClick={() => setStockFilter('ready_only')}
-                  className={`px-3 py-1 text-[11px] font-black uppercase rounded-lg transition flex items-center gap-1.5 cursor-pointer ${
-                    stockFilter === 'ready_only' ? 'bg-emerald-400 text-black border border-black shadow-[1px_1px_0_#000]' : 'text-zinc-600 hover:text-black'
-                  }`}
-                >
-                  <span className="w-2 h-2 rounded-full bg-emerald-700 shrink-0"></span>
-                  <span className="whitespace-nowrap">Hanya Ready ({totalReadyVariants})</span>
-                </button>
-              </div>
-            </div>
-
             {/* Category Horizontal Scroll Pills */}
             <div className="flex items-center gap-1.5 overflow-x-auto pb-1 no-scrollbar">
               <button
@@ -675,7 +695,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
                     : 'bg-white hover:bg-yellow-100 text-black shadow-[2px_2px_0_#000]'
                 }`}
               >
-                ← Semua Kategori
+                ← Semua 7 Kategori
               </button>
 
               {categories.map((c) => {
@@ -699,6 +719,59 @@ export default function StoreFront({ initialCategorySlug = null }) {
                 );
               })}
             </div>
+
+            {/* Filter & Action Toolbar: Stock Filter + Expand/Collapse All Buttons */}
+            <div className="flex flex-wrap items-center justify-between gap-2 pt-0.5">
+              {/* Stock Filter Row */}
+              <div className="inline-flex items-center gap-1 bg-white p-1 rounded-xl border-2 border-black shadow-[2px_2px_0_#000]">
+                <button
+                  type="button"
+                  onClick={() => setStockFilter('all')}
+                  className={`px-3 py-1 text-[11px] font-black uppercase rounded-lg transition cursor-pointer ${
+                    stockFilter === 'all' ? 'bg-[#FFE600] text-black border border-black shadow-[1px_1px_0_#000]' : 'text-zinc-600 hover:text-black'
+                  }`}
+                >
+                  Semua ({filteredProducts.length})
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setStockFilter('ready_only')}
+                  className={`px-3 py-1 text-[11px] font-black uppercase rounded-lg transition flex items-center gap-1.5 cursor-pointer ${
+                    stockFilter === 'ready_only' ? 'bg-emerald-400 text-black border border-black shadow-[1px_1px_0_#000]' : 'text-zinc-600 hover:text-black'
+                  }`}
+                >
+                  <span className="w-2 h-2 rounded-full bg-emerald-700 shrink-0"></span>
+                  <span className="whitespace-nowrap">Hanya Ready ({totalReadyVariants})</span>
+                </button>
+              </div>
+
+              {/* Expand / Collapse All Variants Button */}
+              {filteredProducts.length > 0 && (
+                <div className="inline-flex items-center gap-1.5">
+                  <button
+                    type="button"
+                    onClick={expandAll}
+                    className="px-2.5 py-1.5 rounded-xl bg-white hover:bg-yellow-100 text-black border-2 border-black shadow-[2px_2px_0_#000] text-[11px] font-black uppercase flex items-center gap-1 transition cursor-pointer active:translate-x-0.5 active:translate-y-0.5"
+                    title="Buka semua paket harga produk"
+                  >
+                    <ChevronDown className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Buka Semua Paket</span>
+                    <span className="sm:hidden">Buka Semua</span>
+                  </button>
+
+                  <button
+                    type="button"
+                    onClick={collapseAll}
+                    className="px-2.5 py-1.5 rounded-xl bg-white hover:bg-yellow-100 text-black border-2 border-black shadow-[2px_2px_0_#000] text-[11px] font-black uppercase flex items-center gap-1 transition cursor-pointer active:translate-x-0.5 active:translate-y-0.5"
+                    title="Tutup semua paket harga produk"
+                  >
+                    <ChevronUp className="w-3.5 h-3.5" />
+                    <span className="hidden sm:inline">Tutup Semua</span>
+                    <span className="sm:hidden">Tutup</span>
+                  </button>
+                </div>
+              )}
+            </div>
           </div>
         )}
 
@@ -712,7 +785,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
             <div className="font-black uppercase text-sm tracking-wide">Memuat Katalog Toko...</div>
           </div>
         ) : isCategoryOverview ? (
-          /* ==================== 7 CATEGORY CARDS OVERVIEW ==================== */
+          /* ==================== 7 CATEGORY CARDS OVERVIEW (SYMMETRICAL 12-COL GRID) ==================== */
           <div className="space-y-4">
             {/* Header Kategori */}
             <div className="flex flex-col sm:flex-row sm:items-end justify-between gap-2 pb-1">
@@ -725,7 +798,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
                   Pilih Kategori Aplikasi
                 </h2>
                 <p className="text-xs sm:text-sm font-bold text-zinc-600">
-                  Klik kategori untuk melihat aplikasi yang tersedia, atau cari langsung pada kolom pencarian di atas.
+                  Klik kategori untuk melihat aplikasi dan paket yang tersedia, atau cari langsung pada kolom pencarian di atas.
                 </p>
               </div>
               <div className="text-right shrink-0">
@@ -735,9 +808,14 @@ export default function StoreFront({ initialCategorySlug = null }) {
               </div>
             </div>
 
-            {/* 7 Category Cards Grid */}
-            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
-              {categories.map((c) => {
+            {/* 7 Category Cards Grid:
+                Row 1 (3 items): lg:col-span-4 (4x3 = 12 cols)
+                Row 2 (4 items): lg:col-span-3 (3x4 = 12 cols)
+                Tablet: 7th item spans 2 cols (sm:col-span-2 lg:col-span-3)
+                No hanging cards, perfectly balanced!
+            */}
+            <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-4 sm:gap-5">
+              {categories.map((c, index) => {
                 const meta = CATEGORY_META[c.id] || CATEGORY_META.cat_1;
                 const IconComponent = meta.icon;
                 const count = categoryCounts[c.id] || categoryCounts[c.name] || categoryCounts[c.name.toLowerCase()] || 0;
@@ -753,11 +831,18 @@ export default function StoreFront({ initialCategorySlug = null }) {
                 const liveAppNames = catProds.slice(0, 4).map(p => p.name);
                 const previewList = liveAppNames.length > 0 ? liveAppNames : meta.popular.slice(0, 4);
 
+                // Span kolom simetris
+                const spanClass = index < 3 
+                  ? 'lg:col-span-4' 
+                  : index === 6 
+                    ? 'sm:col-span-2 lg:col-span-3' 
+                    : 'lg:col-span-3';
+
                 return (
                   <div
                     key={c.id}
                     onClick={() => handleSelectCategory(c.id)}
-                    className={`group bg-white rounded-2xl border-3 border-black p-5 shadow-[4px_4px_0_#000] hover:shadow-[7px_7px_0_#000] hover:-translate-y-1 transition-all duration-150 cursor-pointer flex flex-col justify-between ${meta.hoverBorder || ''}`}
+                    className={`group bg-white rounded-2xl border-3 border-black p-5 shadow-[4px_4px_0_#000] hover:shadow-[7px_7px_0_#000] hover:-translate-y-1 transition-all duration-150 cursor-pointer flex flex-col justify-between ${spanClass} ${meta.hoverBorder || ''}`}
                   >
                     <div>
                       {/* Header Card: Icon + Count Badge */}
@@ -810,9 +895,9 @@ export default function StoreFront({ initialCategorySlug = null }) {
                     </div>
 
                     {/* Bottom CTA Button */}
-                    <div className="mt-4 pt-3 border-t border-zinc-200 flex items-center justify-between">
+                    <div className="mt-5 pt-3 border-t border-zinc-200 flex items-center justify-between">
                       <span className="text-xs font-black text-black group-hover:underline flex items-center gap-1 uppercase tracking-tight">
-                        Lihat Semua {count} Aplikasi
+                        Buka Kategori ({count})
                       </span>
                       <div className="w-7 h-7 rounded-lg bg-[#FFE600] border-2 border-black flex items-center justify-center shadow-[1.5px_1.5px_0_#000] group-hover:translate-x-1 transition-transform">
                         <ChevronRight className="w-4 h-4 text-black" />
@@ -825,31 +910,82 @@ export default function StoreFront({ initialCategorySlug = null }) {
           </div>
         ) : (
           /* ==================== PRODUCT GRID (CATEGORY OR SEARCH) ==================== */
-          <div className="space-y-3">
-            {/* Banner Kategori Aktif jika bukan search */}
+          <div className="space-y-4">
+            {/* Category Hero Banner jika sedang membuka kategori spesifik */}
             {searchWords.length === 0 && selectedCategoryObj && (
+              <div className="bg-white border-3 border-black rounded-2xl p-4 sm:p-5 shadow-[4px_4px_0_#000] space-y-3">
+                <div className="flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+                  <div className="flex items-start sm:items-center gap-3.5">
+                    <div className={`w-12 h-12 sm:w-14 sm:h-14 rounded-2xl border-2 border-black ${selectedCategoryMeta?.bgIcon || 'bg-yellow-300'} flex items-center justify-center shadow-[2px_2px_0_#000] shrink-0`}>
+                      <SelectedCategoryIcon className="w-6 h-6 sm:w-7 sm:h-7 text-black" />
+                    </div>
+                    <div>
+                      <div className="flex flex-wrap items-center gap-2 mb-1">
+                        <span className="px-2 py-0.5 rounded-md bg-black text-[#FFE600] font-black text-[10px] uppercase tracking-wider">
+                          Kategori Resmi
+                        </span>
+                        <span className="px-2 py-0.5 rounded-md bg-emerald-100 text-emerald-950 border border-black font-black text-[10px] uppercase">
+                          100% Bergaransi
+                        </span>
+                      </div>
+                      <h2 className="font-black text-lg sm:text-2xl text-black uppercase tracking-tight leading-tight">
+                        {selectedCategoryObj.name}
+                      </h2>
+                      <p className="text-xs sm:text-sm font-bold text-zinc-600 mt-1 max-w-2xl leading-relaxed">
+                        {selectedCategoryMeta?.desc}
+                      </p>
+                    </div>
+                  </div>
+
+                  <button
+                    type="button"
+                    onClick={handleBackToOverview}
+                    className="inline-flex items-center justify-center gap-1.5 px-3.5 py-2 bg-yellow-300 hover:bg-yellow-400 border-2 border-black rounded-xl font-black text-xs uppercase shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition cursor-pointer shrink-0 self-start sm:self-auto"
+                  >
+                    <ArrowLeft className="w-4 h-4" />
+                    <span>Semua 7 Kategori</span>
+                  </button>
+                </div>
+
+                {/* Sub-bar statistik kategori */}
+                <div className="pt-2.5 border-t-2 border-black/10 flex flex-wrap items-center justify-between gap-2 text-xs font-bold text-zinc-600">
+                  <div className="flex flex-wrap items-center gap-2">
+                    <span className="px-2.5 py-0.5 bg-zinc-100 border border-black rounded-md text-black font-black text-[11px]">
+                      {filteredProducts.length} Aplikasi Tersedia
+                    </span>
+                    <span className="px-2.5 py-0.5 bg-emerald-50 border border-emerald-600 rounded-md text-emerald-950 font-black text-[11px] flex items-center gap-1">
+                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
+                      {totalCategoryReady} Varian Ready
+                    </span>
+                  </div>
+                  <div className="text-[11px] font-bold text-zinc-500">
+                    Garansi Resmi • Proses Cepat 1-5 Menit • Bayar via QRIS
+                  </div>
+                </div>
+              </div>
+            )}
+
+            {/* Banner Hasil Pencarian jika ada kata kunci pencarian */}
+            {searchWords.length > 0 && (
               <div className="bg-white border-3 border-black rounded-2xl p-3 sm:p-4 shadow-[3px_3px_0_#000] flex items-center justify-between gap-3">
-                <div className="flex items-center gap-2.5">
-                  <div className={`w-10 h-10 rounded-xl border-2 border-black ${selectedCategoryMeta?.bgIcon || 'bg-yellow-300'} flex items-center justify-center shadow-[1.5px_1.5px_0_#000] shrink-0`}>
-                    <SelectedCategoryIcon className="w-5 h-5 text-black" />
+                <div>
+                  <div className="text-[10px] font-black uppercase text-zinc-500 tracking-wider">
+                    Hasil Pencarian
                   </div>
-                  <div>
-                    <h2 className="font-black text-base sm:text-lg text-black uppercase leading-tight">
-                      {selectedCategoryObj.name}
-                    </h2>
-                    <p className="text-[11px] font-bold text-zinc-500">
-                      Menampilkan {filteredProducts.length} aplikasi ({totalCategoryReady} varian ready)
-                    </p>
-                  </div>
+                  <h3 className="font-black text-base sm:text-lg text-black uppercase leading-tight">
+                    &quot;{searchQuery}&quot;
+                  </h3>
+                  <p className="text-[11px] font-bold text-zinc-600">
+                    Ditemukan {filteredProducts.length} aplikasi ({totalCategoryReady} varian ready)
+                  </p>
                 </div>
                 <button
                   type="button"
-                  onClick={handleBackToOverview}
-                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-[#FFE600] hover:bg-yellow-400 border-2 border-black rounded-xl font-black text-xs uppercase shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition cursor-pointer shrink-0"
+                  onClick={() => setSearchQuery('')}
+                  className="inline-flex items-center gap-1.5 px-3 py-1.5 bg-zinc-100 hover:bg-zinc-200 border-2 border-black rounded-xl font-black text-xs uppercase shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition cursor-pointer shrink-0"
                 >
-                  <ArrowLeft className="w-3.5 h-3.5" />
-                  <span className="hidden sm:inline">Pilih Kategori Lain</span>
-                  <span className="sm:hidden">Kembali</span>
+                  <X className="w-3.5 h-3.5" />
+                  <span>Hapus Cari</span>
                 </button>
               </div>
             )}
@@ -885,57 +1021,69 @@ export default function StoreFront({ initialCategorySlug = null }) {
                 </div>
               </div>
             ) : (
-              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-4">
+              /* Product Cards Grid: 1 col on mobile, 2 on tablet, 3 on desktop */
+              <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-4 sm:gap-5">
                 {filteredProducts.map((prod) => {
                   const readyCount = prod.variants.filter(v => v.isAvailable).length;
                   const minPrice = Math.min(...prod.variants.map(v => v.price));
-                  const isExpanded = expandedProductId === prod.id;
+                  const isExpanded = expandedProductIds.has(prod.id);
+
                   return (
                     <div
                       key={prod.id}
-                      className="bg-white rounded-2xl border-3 border-black shadow-[4px_4px_0_#000] flex flex-col overflow-hidden hover:shadow-[5px_5px_0_#000] transition-shadow"
+                      className="bg-white rounded-2xl border-3 border-black shadow-[4px_4px_0_#000] flex flex-col overflow-hidden hover:shadow-[6px_6px_0_#000] transition-shadow duration-150"
                     >
-                      {/* Header — klik untuk buka/tutup varian */}
-                      <button
-                        type="button"
-                        onClick={() => setExpandedProductId(isExpanded ? null : prod.id)}
-                        className="w-full text-left p-3.5 bg-yellow-50/40 hover:bg-yellow-100/50 transition-colors cursor-pointer"
+                      {/* Header — klik untuk toggle buka/tutup varian */}
+                      <div
+                        onClick={() => toggleExpand(prod.id)}
+                        className="w-full text-left p-4 bg-yellow-50/40 hover:bg-yellow-100/60 transition-colors cursor-pointer select-none"
                       >
-                        <div className="flex items-center justify-between gap-1.5 mb-1.5">
-                          <span className="text-[9px] font-black uppercase tracking-wider px-2 py-0.5 bg-yellow-200 border border-black rounded-md text-black">
+                        <div className="flex items-center justify-between gap-1.5 mb-2">
+                          <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 bg-yellow-200 border border-black rounded-md text-black">
                             {prod.categoryName || 'Umum'}
                           </span>
-                          <span className={`text-[9px] font-black uppercase px-1.5 py-0.5 rounded border border-black ${
+                          <span className={`text-[10px] font-black uppercase px-2 py-0.5 rounded border border-black font-mono ${
                             readyCount > 0 ? 'bg-emerald-100 text-emerald-950' : 'bg-rose-100 text-rose-950'
                           }`}>
                             {readyCount > 0 ? `${readyCount} Ready` : 'Habis'}
                           </span>
                         </div>
 
-                        <h2 className="font-black text-sm sm:text-base text-black uppercase leading-tight tracking-tight line-clamp-1">
+                        <h3 className="font-black text-base sm:text-lg text-black uppercase leading-tight tracking-tight line-clamp-1">
                           {prod.name}
-                        </h2>
+                        </h3>
 
-                        {/* Info ringkas & toggle icon */}
-                        <div className="flex items-center justify-between mt-2">
-                          <div className="text-[11px] font-bold text-zinc-500">
-                            Mulai <span className="text-black font-black">{formatRupiah(minPrice)}</span>
-                            {' · '}{prod.variants.length} pilihan
+                        {/* Info ringkas & Action Button */}
+                        <div className="flex items-center justify-between mt-3 pt-2 border-t border-black/10">
+                          <div className="text-xs font-bold text-zinc-600">
+                            Mulai <span className="text-black font-black font-mono text-sm bg-[#FFE600] px-1.5 py-0.5 rounded border border-black">{formatRupiah(minPrice)}</span>
                           </div>
-                          <ChevronRight className={`w-4 h-4 text-zinc-500 shrink-0 transition-transform duration-200 ${isExpanded ? 'rotate-90' : ''}`} />
-                        </div>
-                      </button>
 
-                      {/* Daftar Varian — hanya muncul saat expanded */}
+                          <div className="inline-flex items-center gap-1 px-2.5 py-1 bg-white hover:bg-yellow-100 border-2 border-black rounded-lg text-[11px] font-black uppercase shadow-[1.5px_1.5px_0_#000]">
+                            <span>{isExpanded ? 'Tutup' : `${prod.variants.length} Paket`}</span>
+                            {isExpanded ? (
+                              <ChevronUp className="w-3.5 h-3.5 text-black" />
+                            ) : (
+                              <ChevronDown className="w-3.5 h-3.5 text-black" />
+                            )}
+                          </div>
+                        </div>
+                      </div>
+
+                      {/* Daftar Varian Paket Harga — muncul saat expanded */}
                       {isExpanded && (
-                        <div className="border-t-2 border-black">
-                          <div className="p-3 space-y-2">
+                        <div className="border-t-3 border-black bg-white flex-1 flex flex-col justify-between">
+                          <div className="p-3.5 space-y-2">
+                            <div className="text-[10px] font-black uppercase text-zinc-500 tracking-wider">
+                              Pilih Paket &amp; Beli:
+                            </div>
+
                             {prod.variants.map((v) => (
                               <div
                                 key={v.id}
-                                className={`p-2 rounded-xl border-2 border-black flex items-center justify-between gap-2 transition ${
+                                className={`p-2.5 rounded-xl border-2 border-black flex items-center justify-between gap-2.5 transition ${
                                   v.isAvailable
-                                    ? 'bg-[#FAF8F5] hover:bg-yellow-50 shadow-[1.5px_1.5px_0_#000]'
+                                    ? 'bg-[#FAF8F5] hover:bg-yellow-50 shadow-[2px_2px_0_#000]'
                                     : 'bg-zinc-100/70 border-dashed opacity-60'
                                 }`}
                               >
@@ -943,7 +1091,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
                                   <div className="font-black text-xs text-black leading-snug truncate" title={v.name}>
                                     {v.cleanName || v.name}
                                   </div>
-                                  <div className="font-mono font-black text-xs text-zinc-900 mt-0.5">
+                                  <div className="font-mono font-black text-xs text-zinc-900 mt-1">
                                     {formatRupiah(v.price)}
                                   </div>
                                 </div>
@@ -952,18 +1100,21 @@ export default function StoreFront({ initialCategorySlug = null }) {
                                   {v.isAvailable ? (
                                     <button
                                       type="button"
-                                      onClick={() => setSelectedVariantOrder({
-                                        productName: prod.name,
-                                        variantName: v.cleanName || v.name,
-                                        price: v.price
-                                      })}
-                                      className="px-2.5 py-1 rounded-lg bg-emerald-400 hover:bg-emerald-300 text-black border-2 border-black font-black text-[11px] uppercase tracking-tight shadow-[1.5px_1.5px_0_#000] cursor-pointer active:translate-x-0.5 active:translate-y-0.5 transition flex items-center gap-1"
+                                      onClick={(e) => {
+                                        e.stopPropagation();
+                                        setSelectedVariantOrder({
+                                          productName: prod.name,
+                                          variantName: v.cleanName || v.name,
+                                          price: v.price
+                                        });
+                                      }}
+                                      className="px-3 py-1.5 rounded-lg bg-emerald-400 hover:bg-emerald-300 text-black border-2 border-black font-black text-xs uppercase tracking-tight shadow-[2px_2px_0_#000] cursor-pointer active:translate-x-0.5 active:translate-y-0.5 transition flex items-center gap-1.5"
                                     >
                                       <span>Beli</span>
-                                      <ChevronRight className="w-3 h-3" />
+                                      <ChevronRight className="w-3.5 h-3.5" />
                                     </button>
                                   ) : (
-                                    <span className="px-2 py-0.5 rounded text-[10px] font-black uppercase bg-rose-200 text-rose-950 border border-black line-through">
+                                    <span className="px-2 py-1 rounded text-[10px] font-black uppercase bg-rose-200 text-rose-950 border border-black line-through">
                                       Habis
                                     </span>
                                   )}
@@ -972,10 +1123,16 @@ export default function StoreFront({ initialCategorySlug = null }) {
                             ))}
                           </div>
 
-                          {/* Footer */}
-                          <div className="px-3 pb-3 pt-1 border-t border-zinc-200 flex items-center justify-between text-[10px] font-bold text-zinc-500">
-                            <span>Garansi Aktif</span>
-                            <span>Proses 1-5 Menit</span>
+                          {/* Footer Info Kartu */}
+                          <div className="px-3.5 py-2.5 bg-zinc-50 border-t-2 border-black/10 flex items-center justify-between text-[10px] font-bold text-zinc-600">
+                            <span className="flex items-center gap-1">
+                              <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                              <span>Garansi Resmi</span>
+                            </span>
+                            <span className="flex items-center gap-1">
+                              <Clock className="w-3.5 h-3.5 text-zinc-600" />
+                              <span>Proses 1-5 Menit</span>
+                            </span>
                           </div>
                         </div>
                       )}

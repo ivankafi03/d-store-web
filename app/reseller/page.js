@@ -611,14 +611,14 @@ export default function ResellerStudioPage() {
           {/* Desktop Navigation Buttons */}
           <div className="hidden sm:flex items-center gap-2 shrink-0">
             <a
-              href="https://t.me/dstore00000"
+              href="https://chat.whatsapp.com/EABjpw4T4om1z4pM5RMLcf"
               target="_blank"
               rel="noopener noreferrer"
-              className="neo-btn px-3 py-2 rounded-xl bg-cyan-300 hover:bg-cyan-200 text-black text-xs font-black border-2 border-black shadow-[2px_2px_0_#000] uppercase tracking-wider flex items-center gap-1.5"
-              title="Gabung Grup Telegram Resmi D Store"
+              className="neo-btn px-3 py-2 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-black text-xs font-black border-2 border-black shadow-[2px_2px_0_#000] uppercase tracking-wider flex items-center gap-1.5"
+              title="Gabung Grup WhatsApp Resmi D Store"
             >
-              <Send className="w-3.5 h-3.5" />
-              <span>Grup Tele</span>
+              <MessageCircle className="w-3.5 h-3.5 fill-black text-emerald-400" />
+              <span>Grup WA</span>
             </a>
             <Link
               href="/store"
@@ -656,17 +656,17 @@ export default function ResellerStudioPage() {
               Menu Navigasi Reseller
             </div>
             <a
-              href="https://t.me/dstore00000"
+              href="https://chat.whatsapp.com/EABjpw4T4om1z4pM5RMLcf"
               target="_blank"
               rel="noopener noreferrer"
               onClick={() => setMobileMenuOpen(false)}
-              className="w-full neo-btn px-3 py-2.5 rounded-xl bg-cyan-300 hover:bg-cyan-200 text-black text-xs font-black border-2 border-black shadow-[2px_2px_0_#000] uppercase tracking-wider flex items-center justify-between"
+              className="w-full neo-btn px-3 py-2.5 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-black text-xs font-black border-2 border-black shadow-[2px_2px_0_#000] uppercase tracking-wider flex items-center justify-between"
             >
               <span className="flex items-center gap-2">
-                <Send className="w-4 h-4" />
-                <span>Grup Telegram Resmi</span>
+                <MessageCircle className="w-4 h-4 fill-black text-emerald-400" />
+                <span>Grup WhatsApp Resmi</span>
               </span>
-              <span className="text-[9px] font-bold text-cyan-950">@dstore00000</span>
+              <span className="text-[9px] font-bold text-emerald-950">Komunitas WA</span>
             </a>
 
             <Link

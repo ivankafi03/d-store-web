@@ -32,6 +32,7 @@ import {
   GraduationCap,
   Briefcase,
   ArrowLeft,
+  ArrowRight,
   ArrowDown,
   ArrowUpRight
 } from 'lucide-react';
@@ -1175,60 +1176,31 @@ export default function StoreFront({ initialCategorySlug = null }) {
         </a>
       </section>
 
-      {/* 5.6 DEDICATED TELEGRAM GROUP CTA WIDGET (STYLE INSPIRASI LAJU.ASIA DENGAN SENTUHAN D STORE) */}
-      <section className="max-w-6xl mx-auto px-4 pt-6 pb-2 text-center">
-        <div className="flex flex-col items-center">
-          
-          {/* Tilted Callout Banner Top */}
-          <div className="inline-block transform -rotate-2 hover:rotate-0 transition-transform duration-200">
-            <div className="bg-white text-black border-3 border-black shadow-[4px_4px_0_#000] px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider flex items-center gap-2">
-              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
-              <span>Update Stok Realtime, Promo Kilat &amp; Info Akun Terbaru!</span>
-            </div>
-          </div>
-
-          {/* Animated Down Arrow */}
-          <div className="my-2.5 sm:my-3 text-black">
-            <ArrowDown className="w-6 h-6 sm:w-7 sm:h-7 mx-auto animate-bounce stroke-[3]" />
-          </div>
-
-          {/* Big Bold CTA Button with Tilted Corner Badge */}
-          <div className="relative w-full max-w-xl group">
-            {/* Tilted Corner Badge */}
-            <div className="absolute -top-3.5 -right-2 sm:-right-3 bg-rose-600 text-white font-black text-[11px] sm:text-xs uppercase px-3 py-1 border-2 border-black rounded-lg shadow-[2px_2px_0_#000] rotate-6 group-hover:rotate-12 transition-transform z-10 pointer-events-none">
-              GRATIS JOIN
-            </div>
-
-            {/* Main Interactive Button Link */}
-            <a
-              href="https://t.me/dstore00000"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="w-full neo-card bg-[#FFE600] hover:bg-yellow-300 text-black border-3 sm:border-4 border-black shadow-[5px_5px_0_#000] hover:shadow-[8px_8px_0_#000] hover:-translate-y-1 hover:-translate-x-1 active:translate-x-1 active:translate-y-1 rounded-2xl p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 transition-all cursor-pointer"
-            >
-              <div className="flex items-center gap-3 sm:gap-4 min-w-0">
-                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-black text-[#FFE600] border-2 sm:border-3 border-black rounded-xl flex items-center justify-center shrink-0 shadow-[2px_2px_0_#FFE600] group-hover:scale-105 transition-transform">
-                  <Send className="w-6 h-6 sm:w-7 sm:h-7 -translate-x-0.5 translate-y-0.5" />
-                </div>
-                <div className="text-left min-w-0">
-                  <div className="text-base sm:text-xl font-black uppercase tracking-tight text-black leading-tight truncate">
-                    Grup Telegram D Store
-                  </div>
-                  <div className="text-[11px] sm:text-xs font-bold text-zinc-800 tracking-tight mt-0.5 truncate">
-                    @dstore00000 • Komunitas Resmi &amp; Promo Eksklusif
-                  </div>
-                </div>
-              </div>
-
-              <div className="flex items-center gap-1.5 bg-black text-[#FFE600] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider shrink-0 border-2 border-black shadow-[2px_2px_0_#000] group-hover:bg-zinc-900 transition-colors">
-                <span>Gabung</span>
-                <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[3] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
-              </div>
-            </a>
-          </div>
-
+      {/* FLOATING WHATSAPP GROUP CTA (PERSIS TEMPAT & STRUKTUR LAJU.ASIA) */}
+      <div className="fixed bottom-18 right-3 sm:bottom-6 sm:right-6 z-40 flex flex-row sm:flex-col items-center sm:items-end gap-2 sm:gap-0 pointer-events-auto">
+        {/* Tilted Callout Bubble with Bounce */}
+        <div className="flex flex-row sm:flex-col items-center animate-bounce sm:mb-2 sm:mr-4">
+          <span className="font-black text-black bg-white px-2.5 py-1 border-2 border-black shadow-[2px_2px_0_#000] -rotate-6 whitespace-nowrap text-[10px] sm:text-xs uppercase tracking-tight">
+            Join Group!
+          </span>
+          <ArrowRight className="w-4 h-4 text-black ml-1 sm:hidden stroke-[2.5]" />
+          <ArrowDown className="w-5 h-5 text-black mt-1 hidden sm:block stroke-[2.5]" />
         </div>
-      </section>
+
+        {/* Floating CTA Button with Tilted Badge */}
+        <a
+          href="https://chat.whatsapp.com/EABjpw4T4om1z4pM5RMLcf"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="bg-[#FFE600] text-black font-black uppercase border-3 border-black shadow-[4px_4px_0_#000] hover:shadow-[6px_6px_0_#000] transition-all hover:-translate-y-1 hover:-translate-x-1 hover:bg-white p-2.5 sm:px-4 sm:py-3 flex items-center gap-2 focus:outline-none focus:ring-4 focus:ring-black group relative cursor-pointer"
+        >
+          <span className="absolute -top-3 -right-2 bg-red-600 text-white font-black text-[9px] sm:text-[10px] px-2 py-0.5 border-2 border-black shadow-[2px_2px_0_#000] rotate-12 group-hover:-rotate-12 transition-transform z-10">
+            FREE
+          </span>
+          <MessageCircle className="w-5 h-5 fill-black text-[#FFE600] shrink-0" />
+          <span className="text-xs sm:text-sm font-black tracking-tight">Grup WA D Store</span>
+        </a>
+      </div>
 
       {/* 6. MODAL ORDER CEPAT PEMBELI (NEO-BRUTALIST MODAL) */}
       {selectedVariantOrder && (

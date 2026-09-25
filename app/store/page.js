@@ -1175,8 +1175,8 @@ export default function StoreFront({ initialCategorySlug = null }) {
 
       {/* FLOATING WHATSAPP GROUP CTA (BULAT, HANYA LOGO WA, TANPA TEKS & JOIN GROUP TEPAT DI ATAS) */}
       <div className="fixed bottom-[84px] sm:bottom-6 right-4 sm:right-6 z-40 flex flex-col items-center pointer-events-auto group">
-        {/* Simple "Join Group!" badge menempel rapi tepat di atas lingkaran */}
-        <span className="font-black text-black bg-white px-2 py-0.5 border-2 border-black shadow-[2px_2px_0_#000] -rotate-3 text-[9px] sm:text-[10px] uppercase tracking-tight -mb-1.5 z-10 pointer-events-none whitespace-nowrap transition-transform group-hover:-translate-y-0.5">
+        {/* Simple "Join Group!" badge menempel rapi tepat di atas lingkaran dengan animasi bounce */}
+        <span className="font-black text-black bg-white px-2 py-0.5 border-2 border-black shadow-[2px_2px_0_#000] -rotate-3 text-[9px] sm:text-[10px] uppercase tracking-tight -mb-1.5 z-10 pointer-events-none whitespace-nowrap animate-bounce">
           Join Group!
         </span>
 

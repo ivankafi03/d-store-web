@@ -10,7 +10,6 @@ import {
   Clock, 
   MessageCircle, 
   Send, 
-  Sparkles, 
   Check, 
   X, 
   Layers, 
@@ -273,7 +272,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
     return CATEGORY_META[selectedCategoryObj.id] || CATEGORY_META.cat_1;
   }, [selectedCategoryObj]);
 
-  const SelectedCategoryIcon = selectedCategoryMeta?.icon || Sparkles;
+  const SelectedCategoryIcon = selectedCategoryMeta?.icon || ShoppingBag;
 
   const totalCategoryReady = useMemo(() => {
     return filteredProducts.reduce((acc, p) => acc + (p.variants?.filter(v => v.isAvailable).length || 0), 0);
@@ -602,7 +601,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
 
             <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
               <div className="w-8 h-8 rounded-lg bg-fuchsia-200 border-2 border-black flex items-center justify-center shrink-0">
-                <Sparkles className="w-4 h-4 text-black" />
+                <ShieldCheck className="w-4 h-4 text-black" />
               </div>
               <div>
                 <div className="text-[11px] font-black uppercase leading-tight">Akun Legal &amp; Anti-Hold</div>
@@ -1200,7 +1199,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
               </div>
 
               <span className="text-[11px] font-black text-zinc-600 uppercase tracking-tight flex items-center gap-1">
-                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                <Check className="w-3.5 h-3.5 text-emerald-600" />
                 <span>Bebas Request Fitur Suka-Suka</span>
               </span>
             </div>

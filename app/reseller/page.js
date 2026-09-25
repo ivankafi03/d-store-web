@@ -9,7 +9,6 @@ import {
   Download,
   Copy,
   Share2,
-  Sparkles,
   RefreshCw,
   Search,
   Filter,
@@ -579,7 +578,7 @@ export default function ResellerStudioPage() {
               ) : t.type === 'error' ? (
                 <XCircle className="w-4 h-4" />
               ) : (
-                <Sparkles className="w-4 h-4" />
+                <Zap className="w-4 h-4" />
               )}
             </div>
             <div className="flex-1 leading-snug break-words">{t.message}</div>

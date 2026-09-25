@@ -1139,6 +1139,75 @@ export default function StoreFront({ initialCategorySlug = null }) {
         )}
       </main>
 
+      {/* 5.5 BANNER PROMOSI JASA DEV & BOT (STYLE PERSIS LAJU.ASIA) */}
+      <section className="max-w-6xl mx-auto px-4 pt-4 pb-2">
+        <a
+          href="https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store,%20saya%20tertarik%20mau%20konsultasi%20pembuatan%20Website%20/%20Bot%20/%20Aplikasi"
+          target="_blank"
+          rel="noopener noreferrer"
+          className="w-full neo-card-lg bg-white border-3 border-black shadow-[5px_5px_0_#000] overflow-hidden flex flex-col sm:flex-row group transition-all hover:-translate-y-1 hover:-translate-x-1 hover:shadow-[7px_7px_0_#000] focus:outline-none focus:ring-4 focus:ring-black cursor-pointer"
+        >
+          {/* Gambar Thumbnail Sisi Kiri (Persis Laju.asia) */}
+          <div className="w-full sm:w-52 md:w-60 shrink-0 overflow-hidden border-b-3 sm:border-b-0 sm:border-r-3 border-black bg-zinc-950">
+            <img
+              src="/dev-services.webp"
+              alt="D Store Software & Bot Development Services"
+              className="w-full h-44 sm:h-full object-cover group-hover:scale-105 transition-transform duration-300"
+              loading="lazy"
+            />
+          </div>
+
+          {/* Konten Kanan Banner */}
+          <div className="flex flex-col justify-between p-5 sm:p-6 gap-4 flex-1">
+            <div>
+              <div className="flex flex-wrap items-center gap-2 mb-2.5">
+                <span className="bg-black text-[#FFE600] text-xs font-black uppercase px-2.5 py-0.5 border-2 border-black shadow-[2px_2px_0_#FFE600]">
+                  Layanan Khusus
+                </span>
+                <span className="text-xs font-black uppercase text-zinc-500 tracking-wider">
+                  Custom Engineering &amp; Automation
+                </span>
+              </div>
+
+              <h2 className="text-lg sm:text-2xl font-black uppercase tracking-tight mb-2 leading-tight text-black group-hover:text-amber-600 transition-colors">
+                Jasa Pembuatan Website, Bot Telegram/WA &amp; Aplikasi Custom
+              </h2>
+
+              <p className="text-xs sm:text-sm font-bold text-zinc-600 leading-relaxed">
+                Punya ide bisnis atau butuh automasi? Kami melayani pembuatan Website Toko, Bot Telegram / WhatsApp otomatis, Landing Page, Scraper Data, hingga Aplikasi Web sesuai kebutuhanmu. Pengerjaan cepat, rapi, dan konsultasi gratis!
+              </p>
+            </div>
+
+            {/* Tombol Aksi di Bawah (Persis Laju.asia style) */}
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-zinc-200">
+              <div className="flex flex-wrap items-center gap-2">
+                <div className="neo-btn bg-[#25D366] hover:bg-[#20ba5a] text-black px-4 sm:px-5 py-2 sm:py-2.5 uppercase font-black text-xs sm:text-sm flex items-center gap-2 border-2 sm:border-3 border-black shadow-[3px_3px_0_#000] transition-colors shrink-0">
+                  <MessageCircle className="w-4 h-4 fill-black text-[#25D366]" />
+                  <span>Konsultasi via WhatsApp</span>
+                </div>
+
+                <a
+                  href="https://t.me/dewipermata03"
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  onClick={(e) => e.stopPropagation()}
+                  className="neo-btn bg-[#229ED9] hover:bg-[#1a7fb0] text-white px-3 sm:px-4 py-2 sm:py-2.5 uppercase font-black text-xs sm:text-sm flex items-center gap-1.5 border-2 sm:border-3 border-black shadow-[3px_3px_0_#000] transition-colors shrink-0"
+                  title="Konsultasi via Telegram"
+                >
+                  <Send className="w-4 h-4" />
+                  <span>Telegram</span>
+                </a>
+              </div>
+
+              <span className="text-[11px] font-black text-zinc-600 uppercase tracking-tight flex items-center gap-1">
+                <Sparkles className="w-3.5 h-3.5 text-amber-500" />
+                <span>Bebas Request Fitur Suka-Suka</span>
+              </span>
+            </div>
+          </div>
+        </a>
+      </section>
+
       {/* 6. MODAL ORDER CEPAT PEMBELI (NEO-BRUTALIST MODAL) */}
       {selectedVariantOrder && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-2 sm:p-4">

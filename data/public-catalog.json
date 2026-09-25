@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-24T17:18:07.312Z",
+  "updatedAt": "2026-09-25T06:19:48.765Z",
   "categories": [
     {
       "id": "cat_1",
@@ -562,13 +562,13 @@
         {
           "id": "var_10_4",
           "name": "1m 6U Plan Go",
-          "price": 13000,
+          "price": 20000,
           "isAvailable": true
         },
         {
           "id": "var_10_5",
           "name": "1m Plan Plus",
-          "price": 18000,
+          "price": 27000,
           "isAvailable": true
         }
       ]

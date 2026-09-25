@@ -31,7 +31,9 @@ import {
   Music,
   GraduationCap,
   Briefcase,
-  ArrowLeft
+  ArrowLeft,
+  ArrowDown,
+  ArrowUpRight
 } from 'lucide-react';
 
 import { DEFAULT_CATEGORIES, CATEGORY_META, resolveCategorySlug } from '@/lib/categories';
@@ -298,7 +300,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
   };
 
   return (
-    <div className="min-h-screen bg-white bg-laju-pattern text-black font-sans pb-24 sm:pb-20 selection:bg-[#FFE600] selection:text-black">
+    <div className="min-h-screen bg-white text-black font-sans pb-24 sm:pb-20 selection:bg-[#FFE600] selection:text-black">
       
       {/* 1. TOP ANNOUNCEMENT & CONTACT BAR */}
       <div className="bg-black text-[#FFE600] border-b-2 sm:border-b-3 border-black py-1.5 px-3 text-[11px] sm:text-xs font-black uppercase tracking-wider">
@@ -324,15 +326,6 @@ export default function StoreFront({ initialCategorySlug = null }) {
               className="hover:text-cyan-300 transition"
             >
               Telegram
-            </a>
-            <span className="text-zinc-600">•</span>
-            <a 
-              href="https://t.me/dstore00000" 
-              target="_blank" 
-              rel="noopener noreferrer"
-              className="text-[#FFE600] hover:underline transition"
-            >
-              Grup
             </a>
           </div>
         </div>
@@ -392,17 +385,6 @@ export default function StoreFront({ initialCategorySlug = null }) {
               <QrCode className="w-4 h-4" />
               <span>QRIS Toko</span>
             </button>
-
-            <a
-              href="https://t.me/dstore00000"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="px-2.5 sm:px-3 py-1.5 sm:py-2 rounded-xl bg-cyan-300 hover:bg-cyan-200 text-black border-2 border-black shadow-[2px_2px_0_#000] text-xs font-black uppercase tracking-tight flex items-center gap-1.5 cursor-pointer transition"
-              title="Gabung Grup Telegram Resmi D Store"
-            >
-              <Send className="w-4 h-4" />
-              <span>Grup Tele</span>
-            </a>
 
             <a
               href="https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store,%20saya%20mau%20tanya%20produk"
@@ -470,20 +452,6 @@ export default function StoreFront({ initialCategorySlug = null }) {
                 <span>Chat Admin / Pemesanan</span>
               </span>
               <span className="text-[9px] font-bold text-emerald-950">WA Resmi</span>
-            </a>
-
-            <a
-              href="https://t.me/dstore00000"
-              target="_blank"
-              rel="noopener noreferrer"
-              onClick={() => setMobileMenuOpen(false)}
-              className="w-full neo-btn px-3 py-2.5 rounded-xl bg-cyan-300 hover:bg-cyan-200 text-black text-xs font-black border-2 border-black shadow-[2px_2px_0_#000] uppercase tracking-wider flex items-center justify-between"
-            >
-              <span className="flex items-center gap-2">
-                <Send className="w-4 h-4" />
-                <span>Grup Telegram Resmi</span>
-              </span>
-              <span className="text-[9px] font-bold text-cyan-950">@dstore00000</span>
             </a>
 
             <Link
@@ -1207,6 +1175,61 @@ export default function StoreFront({ initialCategorySlug = null }) {
         </a>
       </section>
 
+      {/* 5.6 DEDICATED TELEGRAM GROUP CTA WIDGET (STYLE INSPIRASI LAJU.ASIA DENGAN SENTUHAN D STORE) */}
+      <section className="max-w-6xl mx-auto px-4 pt-6 pb-2 text-center">
+        <div className="flex flex-col items-center">
+          
+          {/* Tilted Callout Banner Top */}
+          <div className="inline-block transform -rotate-2 hover:rotate-0 transition-transform duration-200">
+            <div className="bg-white text-black border-3 border-black shadow-[4px_4px_0_#000] px-4 sm:px-6 py-2 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider flex items-center gap-2">
+              <span className="w-2.5 h-2.5 rounded-full bg-emerald-500 animate-ping"></span>
+              <span>Update Stok Realtime, Promo Kilat &amp; Info Akun Terbaru!</span>
+            </div>
+          </div>
+
+          {/* Animated Down Arrow */}
+          <div className="my-2.5 sm:my-3 text-black">
+            <ArrowDown className="w-6 h-6 sm:w-7 sm:h-7 mx-auto animate-bounce stroke-[3]" />
+          </div>
+
+          {/* Big Bold CTA Button with Tilted Corner Badge */}
+          <div className="relative w-full max-w-xl group">
+            {/* Tilted Corner Badge */}
+            <div className="absolute -top-3.5 -right-2 sm:-right-3 bg-rose-600 text-white font-black text-[11px] sm:text-xs uppercase px-3 py-1 border-2 border-black rounded-lg shadow-[2px_2px_0_#000] rotate-6 group-hover:rotate-12 transition-transform z-10 pointer-events-none">
+              GRATIS JOIN
+            </div>
+
+            {/* Main Interactive Button Link */}
+            <a
+              href="https://t.me/dstore00000"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="w-full neo-card bg-[#FFE600] hover:bg-yellow-300 text-black border-3 sm:border-4 border-black shadow-[5px_5px_0_#000] hover:shadow-[8px_8px_0_#000] hover:-translate-y-1 hover:-translate-x-1 active:translate-x-1 active:translate-y-1 rounded-2xl p-4 sm:p-5 flex items-center justify-between gap-3 sm:gap-4 transition-all cursor-pointer"
+            >
+              <div className="flex items-center gap-3 sm:gap-4 min-w-0">
+                <div className="w-12 h-12 sm:w-14 sm:h-14 bg-black text-[#FFE600] border-2 sm:border-3 border-black rounded-xl flex items-center justify-center shrink-0 shadow-[2px_2px_0_#FFE600] group-hover:scale-105 transition-transform">
+                  <Send className="w-6 h-6 sm:w-7 sm:h-7 -translate-x-0.5 translate-y-0.5" />
+                </div>
+                <div className="text-left min-w-0">
+                  <div className="text-base sm:text-xl font-black uppercase tracking-tight text-black leading-tight truncate">
+                    Grup Telegram D Store
+                  </div>
+                  <div className="text-[11px] sm:text-xs font-bold text-zinc-800 tracking-tight mt-0.5 truncate">
+                    @dstore00000 • Komunitas Resmi &amp; Promo Eksklusif
+                  </div>
+                </div>
+              </div>
+
+              <div className="flex items-center gap-1.5 bg-black text-[#FFE600] px-3.5 sm:px-4 py-2 sm:py-2.5 rounded-xl text-xs sm:text-sm font-black uppercase tracking-wider shrink-0 border-2 border-black shadow-[2px_2px_0_#000] group-hover:bg-zinc-900 transition-colors">
+                <span>Gabung</span>
+                <ArrowUpRight className="w-4 h-4 sm:w-5 sm:h-5 stroke-[3] group-hover:translate-x-0.5 group-hover:-translate-y-0.5 transition-transform" />
+              </div>
+            </a>
+          </div>
+
+        </div>
+      </section>
+
       {/* 6. MODAL ORDER CEPAT PEMBELI (NEO-BRUTALIST MODAL) */}
       {selectedVariantOrder && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-2 sm:p-4">
@@ -1324,16 +1347,6 @@ export default function StoreFront({ initialCategorySlug = null }) {
                   <Send className="w-4 h-4" />
                   <span>Order via Telegram (@dewipermata03)</span>
                 </a>
-
-                <a
-                  href="https://t.me/dstore00000"
-                  target="_blank"
-                  rel="noopener noreferrer"
-                  className="w-full py-2 px-4 rounded-xl bg-yellow-100 hover:bg-yellow-200 text-black border-2 border-black shadow-[2px_2px_0_#000] font-black text-xs uppercase tracking-wider flex items-center justify-center gap-2 cursor-pointer transition text-center"
-                >
-                  <Send className="w-3.5 h-3.5" />
-                  <span>Gabung Grup Telegram Promo (@dstore00000)</span>
-                </a>
               </div>
 
             </div>
@@ -1375,21 +1388,11 @@ export default function StoreFront({ initialCategorySlug = null }) {
             <Send className="w-3.5 h-3.5 text-cyan-600" />
             <span>Admin: @dewipermata03</span>
           </a>
-
-          <a 
-            href="https://t.me/dstore00000" 
-            target="_blank" 
-            rel="noopener noreferrer" 
-            className="px-3 py-1.5 rounded-xl bg-white hover:bg-yellow-50 text-black border-2 border-black shadow-[2px_2px_0_#000] text-xs font-bold transition flex items-center gap-1.5"
-          >
-            <Send className="w-3.5 h-3.5 text-blue-600" />
-            <span>Grup @dstore00000</span>
-          </a>
         </div>
 
         {/* Copyright */}
         <p className="text-[11px] text-zinc-500 font-semibold pt-1">
-          &copy; {new Date().getFullYear()} D STORE. Solusi Akun Premium &amp; Layanan Digital Cepat dan Terpercaya.
+          &copy; 2026 D STORE. Solusi Akun Premium &amp; Layanan Digital Cepat dan Terpercaya.
         </p>
       </footer>
 
@@ -1401,30 +1404,18 @@ export default function StoreFront({ initialCategorySlug = null }) {
             href="https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store,%20saya%20mau%20order"
             target="_blank"
             rel="noopener noreferrer"
-            className="flex-1 py-2 px-2 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-black border-2 border-black font-black text-[11px] uppercase tracking-tight flex items-center justify-center gap-1.5 shadow-[1.5px_1.5px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition"
+            className="flex-1 py-2.5 px-3 rounded-xl bg-emerald-400 hover:bg-emerald-300 text-black border-2 border-black font-black text-xs uppercase tracking-tight flex items-center justify-center gap-1.5 shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition"
           >
-            <MessageCircle className="w-3.5 h-3.5 fill-black text-emerald-400 shrink-0" />
+            <MessageCircle className="w-4 h-4 fill-black text-emerald-400 shrink-0" />
             <span>Chat WA</span>
-          </a>
-
-          {/* Grup Tele */}
-          <a
-            href="https://t.me/dstore00000"
-            target="_blank"
-            rel="noopener noreferrer"
-            className="py-2 px-2.5 rounded-xl bg-cyan-300 hover:bg-cyan-200 text-black border-2 border-black font-black text-[11px] uppercase tracking-tight flex items-center justify-center gap-1 shadow-[1.5px_1.5px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition shrink-0"
-            title="Grup Telegram"
-          >
-            <Send className="w-3.5 h-3.5 shrink-0" />
-            <span>Grup</span>
           </a>
 
           {/* Studio Reseller */}
           <Link
             href="/reseller"
-            className="flex-1 py-2 px-2 rounded-xl bg-[#FFE600] hover:bg-yellow-300 text-black border-2 border-black font-black text-[11px] uppercase tracking-tight flex items-center justify-center gap-1.5 shadow-[1.5px_1.5px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition"
+            className="flex-1 py-2.5 px-3 rounded-xl bg-[#FFE600] hover:bg-yellow-300 text-black border-2 border-black font-black text-xs uppercase tracking-tight flex items-center justify-center gap-1.5 shadow-[2px_2px_0_#000] active:translate-x-0.5 active:translate-y-0.5 transition"
           >
-            <TrendingUp className="w-3.5 h-3.5 shrink-0" />
+            <TrendingUp className="w-4 h-4 shrink-0" />
             <span>Jual Lagi</span>
           </Link>
         </div>

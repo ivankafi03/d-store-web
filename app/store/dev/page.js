@@ -43,10 +43,12 @@ export default function ZaloraMenDevPage() {
   const [activeSegment, setActiveSegment] = useState('men');
   const [activeSpeedDealIndex, setActiveSpeedDealIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
+  const [selectedBrandFilter, setSelectedBrandFilter] = useState(null);
   const [wishlist, setWishlist] = useState([]);
   const [cart, setCart] = useState([]);
   const [showSeoText, setShowSeoText] = useState(false);
   const [activeProductModal, setActiveProductModal] = useState(null);
+  const [selectedSize, setSelectedSize] = useState('42 / L');
   const [showQuickAlert, setShowQuickAlert] = useState(null);
 
   // Speed deals auto rotation
@@ -58,6 +60,17 @@ export default function ZaloraMenDevPage() {
   }, []);
 
   const formatRupiah = (num) => 'Rp ' + Number(num || 0).toLocaleString('id-ID');
+
+  const filteredProducts = ZALORA_PRODUCTS.filter((prod) => {
+    if (selectedBrandFilter && prod.brand.toLowerCase() !== selectedBrandFilter.toLowerCase()) {
+      return false;
+    }
+    if (searchQuery.trim()) {
+      const q = searchQuery.toLowerCase().trim();
+      return prod.name.toLowerCase().includes(q) || prod.brand.toLowerCase().includes(q) || prod.category.toLowerCase().includes(q);
+    }
+    return true;
+  });
 
   const toggleWishlist = (productId) => {
     setWishlist((prev) => {
@@ -256,10 +269,16 @@ export default function ZaloraMenDevPage() {
       <section className="max-w-[1240px] mx-auto px-4 pt-6 pb-4">
         <div className="flex items-start gap-4 sm:gap-6 overflow-x-auto no-scrollbar py-2">
           {ZALORA_BUBBLES.map((bubble, i) => (
-            <a
+            <div
               key={i}
-              href={bubble.link}
-              className="flex flex-col items-center gap-1.5 shrink-0 group cursor-pointer w-[68px] sm:w-[84px] text-center"
+              onClick={() => {
+                setSearchQuery(bubble.label);
+                setSelectedBrandFilter(null);
+                const el = document.getElementById('products-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                showNotification(`Melihat koleksi: ${bubble.label}`);
+              }}
+              className="flex flex-col items-center gap-1.5 shrink-0 group cursor-pointer w-[68px] sm:w-[84px] text-center select-none"
             >
               <div className="w-[62px] h-[62px] sm:w-[76px] sm:h-[76px] rounded-full p-0.5 bg-gradient-to-tr from-zinc-200 via-zinc-300 to-zinc-400 group-hover:from-black group-hover:to-zinc-600 transition shadow-xs">
                 <div className="w-full h-full rounded-full bg-white p-1 overflow-hidden flex items-center justify-center">
@@ -274,7 +293,7 @@ export default function ZaloraMenDevPage() {
               <span className="text-[10px] sm:text-[11px] font-medium text-[#444] group-hover:text-black line-clamp-1 leading-tight">
                 {bubble.label}
               </span>
-            </a>
+            </div>
           ))}
         </div>
       </section>
@@ -284,9 +303,14 @@ export default function ZaloraMenDevPage() {
       ========================================================= */}
       {ZALORA_HERO && (
         <section className="max-w-[1240px] mx-auto px-4 py-3">
-          <a
-            href={ZALORA_HERO.link}
-            className="block relative rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition duration-300 group"
+          <div
+            onClick={() => {
+              setSelectedBrandFilter('ADIDAS');
+              const el = document.getElementById('products-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+              showNotification('Flash Sale Adidas 10.10 Aktif!');
+            }}
+            className="block relative rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition duration-300 group cursor-pointer"
           >
             <img
               src={ZALORA_HERO.desktopImg}
@@ -298,7 +322,7 @@ export default function ZaloraMenDevPage() {
               <Clock className="w-3.5 h-3.5 text-amber-400 animate-spin" />
               <span>FLASH SALE BERAKHIR DALAM: 05:42:19</span>
             </div>
-          </a>
+          </div>
         </section>
       )}
 
@@ -307,16 +331,21 @@ export default function ZaloraMenDevPage() {
       ========================================================= */}
       <section className="max-w-[1240px] mx-auto px-4 py-4">
         <div className="relative rounded-2xl overflow-hidden shadow-xs bg-zinc-100 group">
-          <a 
-            href={ZALORA_SPEED_DEALS[activeSpeedDealIndex]?.link}
-            className="block w-full"
+          <div 
+            onClick={() => {
+              const currentDeal = ZALORA_SPEED_DEALS[activeSpeedDealIndex];
+              showNotification(`Penawaran Spesial: ${currentDeal?.title || 'Speed Deal'}`);
+              const el = document.getElementById('products-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="block w-full cursor-pointer"
           >
             <img
               src={ZALORA_SPEED_DEALS[activeSpeedDealIndex]?.img}
               alt={ZALORA_SPEED_DEALS[activeSpeedDealIndex]?.title}
               className="w-full h-auto object-cover transition-opacity duration-500"
             />
-          </a>
+          </div>
 
           {/* Navigation Arrows */}
           <button
@@ -363,17 +392,30 @@ export default function ZaloraMenDevPage() {
             </h2>
             <p className="text-xs text-[#777] mt-0.5">Koleksi brand pria terfavorit dengan penawaran spesial</p>
           </div>
-          <Link href="/brands" className="text-xs font-bold uppercase underline tracking-wide text-black hover:text-[#555]">
-            Lihat Semua Brand &gt;
-          </Link>
+          <button 
+            type="button"
+            onClick={() => {
+              setSelectedBrandFilter(null);
+              const el = document.getElementById('products-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="text-xs font-bold uppercase underline tracking-wide text-black hover:text-[#555] cursor-pointer"
+          >
+            Lihat Semua Produk &gt;
+          </button>
         </div>
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
           {ZALORA_BRANDS_1.map((item, idx) => (
-            <a
+            <div
               key={idx}
-              href={item.link}
-              className="group relative rounded-xl overflow-hidden bg-zinc-100 shadow-2xs hover:shadow-md transition duration-300"
+              onClick={() => {
+                setSelectedBrandFilter(item.brand);
+                const el = document.getElementById('products-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                showNotification(`Memfilter brand: ${item.brand}`);
+              }}
+              className="group relative rounded-xl overflow-hidden bg-zinc-100 shadow-2xs hover:shadow-md transition duration-300 cursor-pointer"
             >
               <div className="aspect-[280/404] w-full overflow-hidden">
                 <img
@@ -391,7 +433,7 @@ export default function ZaloraMenDevPage() {
                   {item.label}
                 </span>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </section>
@@ -399,8 +441,8 @@ export default function ZaloraMenDevPage() {
       {/* =========================================================
           7. TOP TIER RECOMMENDATIONS (Real Product Grid)
       ========================================================= */}
-      <section className="max-w-[1240px] mx-auto px-4 py-8 bg-[#FAFAFA] rounded-3xl my-6">
-        <div className="flex items-center justify-between mb-6">
+      <section id="products-section" className="max-w-[1240px] mx-auto px-4 py-8 bg-[#FAFAFA] rounded-3xl my-6 scroll-mt-20">
+        <div className="flex items-center justify-between mb-4">
           <div>
             <div className="flex items-center gap-2">
               <span className="bg-black text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Curated</span>
@@ -412,109 +454,174 @@ export default function ZaloraMenDevPage() {
           </div>
           <button 
             type="button"
-            onClick={() => showNotification('Memuat rekomendasi tambahan...')}
-            className="text-xs font-bold uppercase underline tracking-wide text-black hover:text-[#555]"
+            onClick={() => {
+              setSelectedBrandFilter(null);
+              setSearchQuery('');
+              showNotification('Menampilkan seluruh rekomendasi!');
+            }}
+            className="text-xs font-bold uppercase underline tracking-wide text-black hover:text-[#555] cursor-pointer"
           >
-            Refresh Produk
+            Reset Filter
           </button>
         </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
-          {ZALORA_PRODUCTS.map((prod) => {
-            const isWishlisted = wishlist.includes(prod.id);
-            return (
-              <div
-                key={prod.id}
-                className="group relative bg-white rounded-xl overflow-hidden border border-[#EAEAEA] shadow-2xs hover:shadow-lg transition duration-300 flex flex-col"
-              >
-                {/* Product Image & Wishlist Button */}
-                <div className="relative aspect-[3/4] w-full overflow-hidden bg-zinc-100">
-                  <img
-                    src={prod.image}
-                    alt={prod.name}
-                    className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                    loading="lazy"
-                  />
-                  
-                  {/* Badge */}
-                  {prod.badge && (
-                    <span className="absolute top-2.5 left-2.5 bg-black text-white text-[9px] font-extrabold px-2 py-0.5 rounded-sm tracking-wider uppercase shadow-xs">
-                      {prod.badge}
-                    </span>
-                  )}
+        {/* Active Filter Chips */}
+        {(selectedBrandFilter || searchQuery) && (
+          <div className="flex flex-wrap items-center gap-2 mb-5">
+            {selectedBrandFilter && (
+              <div className="inline-flex items-center gap-2 bg-black text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-xs">
+                <span>Brand: <strong>{selectedBrandFilter}</strong></span>
+                <button 
+                  type="button"
+                  onClick={() => setSelectedBrandFilter(null)}
+                  className="p-0.5 hover:bg-zinc-700 rounded-full"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+            {searchQuery && (
+              <div className="inline-flex items-center gap-2 bg-zinc-200 text-black px-3 py-1.5 rounded-full text-xs font-bold">
+                <span>Cari: &quot;{searchQuery}&quot;</span>
+                <button 
+                  type="button"
+                  onClick={() => setSearchQuery('')}
+                  className="p-0.5 hover:bg-zinc-300 rounded-full"
+                >
+                  <X className="w-3.5 h-3.5" />
+                </button>
+              </div>
+            )}
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedBrandFilter(null);
+                setSearchQuery('');
+              }}
+              className="text-xs text-[#666] underline hover:text-black ml-1 cursor-pointer"
+            >
+              Hapus Semua Filter
+            </button>
+          </div>
+        )}
 
-                  {/* Wishlist Button */}
-                  <button
-                    type="button"
-                    onClick={(e) => {
-                      e.stopPropagation();
-                      toggleWishlist(prod.id);
-                    }}
-                    className={`absolute top-2.5 right-2.5 w-8 h-8 rounded-full flex items-center justify-center transition shadow-md ${
-                      isWishlisted 
-                        ? 'bg-rose-500 text-white' 
-                        : 'bg-white/90 text-zinc-700 hover:text-black hover:bg-white'
-                    }`}
-                    aria-label="Wishlist"
-                  >
-                    <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
-                  </button>
-                </div>
-
-                {/* Details */}
-                <div className="p-3.5 flex flex-col justify-between flex-1 gap-2">
-                  <div>
-                    <div className="text-[11px] font-bold uppercase tracking-wider text-[#777]">
-                      {prod.brand}
-                    </div>
-                    <h3 className="font-normal text-xs sm:text-sm text-black line-clamp-2 mt-0.5 leading-snug">
-                      {prod.name}
-                    </h3>
-                  </div>
-
-                  <div className="pt-2 border-t border-zinc-100">
-                    <div className="flex items-baseline gap-2">
-                      <span className="text-xs sm:text-sm font-bold text-[#D52222]">
-                        {formatRupiah(prod.price)}
-                      </span>
-                      {prod.originalPrice && (
-                        <span className="text-[10px] text-[#999] line-through">
-                          {formatRupiah(prod.originalPrice)}
-                        </span>
-                      )}
-                    </div>
-                    {prod.discount && (
-                      <span className="text-[10px] font-bold text-[#D52222] mt-0.5 block">
-                        {prod.discount}
+        {filteredProducts.length === 0 ? (
+          <div className="text-center py-12 bg-white rounded-2xl border border-zinc-200">
+            <p className="text-sm font-semibold text-zinc-600">Tidak ada produk yang cocok dengan filter atau kata kunci Anda.</p>
+            <button
+              type="button"
+              onClick={() => {
+                setSelectedBrandFilter(null);
+                setSearchQuery('');
+              }}
+              className="mt-3 px-4 py-2 bg-black text-white text-xs font-bold rounded-lg hover:bg-zinc-800 transition cursor-pointer"
+            >
+              Tampilkan Semua Produk
+            </button>
+          </div>
+        ) : (
+          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
+            {filteredProducts.map((prod) => {
+              const isWishlisted = wishlist.includes(prod.id);
+              return (
+                <div
+                  key={prod.id}
+                  onClick={() => setActiveProductModal(prod)}
+                  className="group relative bg-white rounded-xl overflow-hidden border border-[#EAEAEA] shadow-2xs hover:shadow-lg transition duration-300 flex flex-col cursor-pointer"
+                >
+                  {/* Product Image & Wishlist Button */}
+                  <div className="relative aspect-[3/4] w-full overflow-hidden bg-zinc-100">
+                    <img
+                      src={prod.image}
+                      alt={prod.name}
+                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
+                      loading="lazy"
+                    />
+                    
+                    {/* Badge */}
+                    {prod.badge && (
+                      <span className="absolute top-2.5 left-2.5 bg-black text-white text-[9px] font-extrabold px-2 py-0.5 rounded-sm tracking-wider uppercase shadow-xs">
+                        {prod.badge}
                       </span>
                     )}
 
-                    {/* Action Button: Add to Cart / WhatsApp */}
-                    <div className="mt-3 flex items-center gap-2">
-                      <button
-                        type="button"
-                        onClick={() => addToCart(prod)}
-                        className="flex-1 py-2 px-3 rounded-lg bg-black text-white text-xs font-bold hover:bg-zinc-800 transition flex items-center justify-center gap-1.5"
-                      >
-                        <ShoppingBag className="w-3.5 h-3.5" />
-                        <span>Beli</span>
-                      </button>
-                      <a
-                        href={getWhatsAppOrderUrl(prod.name, prod.price)}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="p-2 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition border border-emerald-200"
-                        title="Order via WhatsApp"
-                      >
-                        <MessageCircle className="w-4 h-4" />
-                      </a>
+                    {/* Wishlist Button */}
+                    <button
+                      type="button"
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        toggleWishlist(prod.id);
+                      }}
+                      className={`absolute top-2.5 right-2.5 w-8 h-8 rounded-full flex items-center justify-center transition shadow-md ${
+                        isWishlisted 
+                          ? 'bg-rose-500 text-white' 
+                          : 'bg-white/90 text-zinc-700 hover:text-black hover:bg-white'
+                      }`}
+                      aria-label="Wishlist"
+                    >
+                      <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
+                    </button>
+                  </div>
+
+                  {/* Details */}
+                  <div className="p-3.5 flex flex-col justify-between flex-1 gap-2">
+                    <div>
+                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#777]">
+                        {prod.brand}
+                      </div>
+                      <h3 className="font-normal text-xs sm:text-sm text-black line-clamp-2 mt-0.5 leading-snug">
+                        {prod.name}
+                      </h3>
+                    </div>
+
+                    <div className="pt-2 border-t border-zinc-100">
+                      <div className="flex items-baseline gap-2">
+                        <span className="text-xs sm:text-sm font-bold text-[#D52222]">
+                          {formatRupiah(prod.price)}
+                        </span>
+                        {prod.originalPrice && (
+                          <span className="text-[10px] text-[#999] line-through">
+                            {formatRupiah(prod.originalPrice)}
+                          </span>
+                        )}
+                      </div>
+                      {prod.discount && (
+                        <span className="text-[10px] font-bold text-[#D52222] mt-0.5 block">
+                          {prod.discount}
+                        </span>
+                      )}
+
+                      {/* Action Button: Detail / Beli / WhatsApp */}
+                      <div className="mt-3 flex items-center gap-2">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setActiveProductModal(prod);
+                          }}
+                          className="flex-1 py-2 px-3 rounded-lg bg-black text-white text-xs font-bold hover:bg-zinc-800 transition flex items-center justify-center gap-1.5"
+                        >
+                          <ShoppingBag className="w-3.5 h-3.5" />
+                          <span>Lihat Detail</span>
+                        </button>
+                        <a
+                          href={getWhatsAppOrderUrl(prod.name, prod.price)}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          onClick={(e) => e.stopPropagation()}
+                          className="p-2 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition border border-emerald-200"
+                          title="Order via WhatsApp"
+                        >
+                          <MessageCircle className="w-4 h-4" />
+                        </a>
+                      </div>
                     </div>
                   </div>
                 </div>
-              </div>
-            );
-          })}
-        </div>
+              );
+            })}
+          </div>
+        )}
       </section>
 
       {/* =========================================================
@@ -530,10 +637,15 @@ export default function ZaloraMenDevPage() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
           {ZALORA_TRENDING.map((trend, idx) => (
-            <a
+            <div
               key={idx}
-              href={trend.link}
-              className="group relative rounded-xl overflow-hidden bg-zinc-900 shadow-sm hover:shadow-lg transition duration-300"
+              onClick={() => {
+                setSearchQuery(trend.title);
+                const el = document.getElementById('products-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                showNotification(`Melihat inspirasi gaya: ${trend.title}`);
+              }}
+              className="group relative rounded-xl overflow-hidden bg-zinc-900 shadow-sm hover:shadow-lg transition duration-300 cursor-pointer"
             >
               <div className="aspect-[700/1200] w-full overflow-hidden">
                 <img
@@ -551,7 +663,7 @@ export default function ZaloraMenDevPage() {
                   {trend.label}
                 </span>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </section>
@@ -568,10 +680,15 @@ export default function ZaloraMenDevPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {ZALORA_STEALS.map((steal, idx) => (
-            <a
+            <div
               key={idx}
-              href={steal.link}
-              className="block relative rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition duration-300 group"
+              onClick={() => {
+                setSearchQuery(steal.title);
+                const el = document.getElementById('products-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                showNotification(`Penawaran Steals: ${steal.title}`);
+              }}
+              className="block relative rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition duration-300 group cursor-pointer"
             >
               <img
                 src={steal.img}
@@ -579,7 +696,7 @@ export default function ZaloraMenDevPage() {
                 className="w-full h-auto object-cover group-hover:scale-[1.02] transition duration-500"
                 loading="lazy"
               />
-            </a>
+            </div>
           ))}
         </div>
       </section>
@@ -597,10 +714,15 @@ export default function ZaloraMenDevPage() {
 
         <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
           {ZALORA_BRANDS_2.map((item, idx) => (
-            <a
+            <div
               key={idx}
-              href={item.link}
-              className="group relative rounded-xl overflow-hidden bg-zinc-100 shadow-2xs hover:shadow-md transition duration-300"
+              onClick={() => {
+                setSelectedBrandFilter(item.brand);
+                const el = document.getElementById('products-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                showNotification(`Memfilter brand: ${item.brand}`);
+              }}
+              className="group relative rounded-xl overflow-hidden bg-zinc-100 shadow-2xs hover:shadow-md transition duration-300 cursor-pointer"
             >
               <div className="aspect-[280/404] w-full overflow-hidden">
                 <img
@@ -618,7 +740,7 @@ export default function ZaloraMenDevPage() {
                   {item.label}
                 </span>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </section>
@@ -636,10 +758,15 @@ export default function ZaloraMenDevPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
           {ZALORA_FEATURED_COLLECTIONS.map((feat, idx) => (
-            <a
+            <div
               key={idx}
-              href={feat.link}
-              className="group relative rounded-2xl overflow-hidden shadow-xs hover:shadow-lg transition duration-300 bg-black"
+              onClick={() => {
+                setSearchQuery(feat.title);
+                const el = document.getElementById('products-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                showNotification(`Koleksi: ${feat.title}`);
+              }}
+              className="group relative rounded-2xl overflow-hidden shadow-xs hover:shadow-lg transition duration-300 bg-black cursor-pointer"
             >
               <div className="aspect-[1280/720] w-full overflow-hidden">
                 <img
@@ -657,7 +784,7 @@ export default function ZaloraMenDevPage() {
                   {feat.label}
                 </p>
               </div>
-            </a>
+            </div>
           ))}
         </div>
       </section>
@@ -674,10 +801,10 @@ export default function ZaloraMenDevPage() {
 
         <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
           {ZALORA_SAVE_BANNERS.map((banner, idx) => (
-            <a
+            <div
               key={idx}
-              href={banner.link}
-              className="block rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition duration-300 group"
+              onClick={() => showNotification(`Promo Pembayaran: ${banner.title}`)}
+              className="block rounded-2xl overflow-hidden shadow-2xs hover:shadow-md transition duration-300 group cursor-pointer"
             >
               <img
                 src={banner.img}
@@ -685,7 +812,7 @@ export default function ZaloraMenDevPage() {
                 className="w-full h-auto object-cover group-hover:scale-[1.02] transition duration-500"
                 loading="lazy"
               />
-            </a>
+            </div>
           ))}
         </div>
       </section>
@@ -697,13 +824,19 @@ export default function ZaloraMenDevPage() {
         <div className="flex flex-wrap items-center gap-2 mb-6">
           <span className="text-xs font-bold uppercase text-black mr-2">KATEGORI:</span>
           {ZALORA_MEN_CATEGORIES.map((cat, idx) => (
-            <a
+            <button
               key={idx}
-              href={cat.href}
-              className="text-xs text-[#555] hover:text-black underline px-2.5 py-1 border-r border-zinc-300 last:border-none"
+              type="button"
+              onClick={() => {
+                setSearchQuery(cat.name);
+                const el = document.getElementById('products-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                showNotification(`Kategori: ${cat.name}`);
+              }}
+              className="text-xs text-[#555] hover:text-black underline px-2.5 py-1 border-r border-zinc-300 last:border-none cursor-pointer"
             >
               {cat.name}
-            </a>
+            </button>
           ))}
         </div>
 
@@ -751,12 +884,33 @@ export default function ZaloraMenDevPage() {
           <div>
             <div className="flex items-center justify-between mb-3">
               <h4 className="font-bold uppercase tracking-wider text-black text-xs">BRAND PALING TOP</h4>
-              <a href="/brands" className="text-[11px] underline text-[#666] hover:text-black">Lihat Semua Brand</a>
+              <button 
+                type="button" 
+                onClick={() => {
+                  setSelectedBrandFilter(null);
+                  const el = document.getElementById('products-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                }}
+                className="text-[11px] underline text-[#666] hover:text-black cursor-pointer"
+              >
+                Lihat Semua Brand
+              </button>
             </div>
             <div className="flex flex-wrap gap-x-3 gap-y-1.5 leading-relaxed">
               {ZALORA_TOP_BRANDS.map((b, i) => (
                 <span key={i} className="inline-flex items-center">
-                  <a href={`/c/${b.toLowerCase().replace(/[^a-z0-9]/g, '-')}`} className="hover:text-black hover:underline">{b}</a>
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      setSelectedBrandFilter(b);
+                      const el = document.getElementById('products-section');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      showNotification(`Brand: ${b}`);
+                    }}
+                    className="hover:text-black hover:underline cursor-pointer text-left"
+                  >
+                    {b}
+                  </button>
                   {i < ZALORA_TOP_BRANDS.length - 1 && <span className="ml-3 text-zinc-300">|</span>}
                 </span>
               ))}
@@ -769,7 +923,18 @@ export default function ZaloraMenDevPage() {
             <div className="flex flex-wrap gap-x-3 gap-y-1.5 leading-relaxed">
               {ZALORA_POPULAR_SEARCHES.map((s, i) => (
                 <span key={i} className="inline-flex items-center">
-                  <a href={`/search?q=${encodeURIComponent(s)}`} className="hover:text-black hover:underline">{s}</a>
+                  <button 
+                    type="button"
+                    onClick={() => {
+                      setSearchQuery(s);
+                      const el = document.getElementById('products-section');
+                      if (el) el.scrollIntoView({ behavior: 'smooth' });
+                      showNotification(`Pencarian: ${s}`);
+                    }}
+                    className="hover:text-black hover:underline cursor-pointer text-left"
+                  >
+                    {s}
+                  </button>
                   {i < ZALORA_POPULAR_SEARCHES.length - 1 && <span className="ml-3 text-zinc-300">|</span>}
                 </span>
               ))}
@@ -833,6 +998,143 @@ export default function ZaloraMenDevPage() {
           <p className="text-[11px]">Replicated in Pixel-Perfect Zalora /s/men Standard.</p>
         </div>
       </footer>
+
+      {/* =========================================================
+          15. PRODUCT DETAIL MODAL (Quick View & Direct Order)
+      ========================================================= */}
+      {activeProductModal && (
+        <div 
+          className="fixed inset-0 z-[120] bg-black/70 backdrop-blur-sm flex items-center justify-center p-4 sm:p-6"
+          onClick={() => setActiveProductModal(null)}
+        >
+          <div 
+            className="bg-white text-black rounded-3xl max-w-2xl w-full overflow-hidden shadow-2xl relative max-h-[90vh] flex flex-col"
+            onClick={(e) => e.stopPropagation()}
+          >
+            {/* Close Button */}
+            <button
+              type="button"
+              onClick={() => setActiveProductModal(null)}
+              className="absolute top-4 right-4 z-10 w-9 h-9 rounded-full bg-white/90 shadow-md border border-zinc-200 flex items-center justify-center text-zinc-700 hover:text-black hover:bg-white transition cursor-pointer"
+              aria-label="Tutup"
+            >
+              <X className="w-5 h-5" />
+            </button>
+
+            <div className="overflow-y-auto p-5 sm:p-8 flex flex-col md:flex-row gap-6">
+              {/* Product Image */}
+              <div className="w-full md:w-1/2 shrink-0">
+                <div className="relative aspect-[3/4] w-full rounded-2xl overflow-hidden bg-zinc-100 shadow-inner">
+                  <img
+                    src={activeProductModal.image}
+                    alt={activeProductModal.name}
+                    className="w-full h-full object-cover"
+                  />
+                  {activeProductModal.badge && (
+                    <span className="absolute top-3 left-3 bg-black text-white text-[10px] font-extrabold px-2.5 py-1 rounded tracking-wider uppercase">
+                      {activeProductModal.badge}
+                    </span>
+                  )}
+                </div>
+              </div>
+
+              {/* Product Details & Actions */}
+              <div className="flex-1 flex flex-col justify-between">
+                <div>
+                  <div className="text-xs font-extrabold uppercase tracking-widest text-[#777]">
+                    {activeProductModal.brand}
+                  </div>
+                  <h2 className="text-base sm:text-lg font-bold text-black mt-1 leading-snug">
+                    {activeProductModal.name}
+                  </h2>
+                  <div className="text-xs text-[#555] mt-1">
+                    Kategori: {activeProductModal.category}
+                  </div>
+
+                  {/* Pricing */}
+                  <div className="mt-4 p-3 bg-zinc-50 rounded-xl border border-zinc-100">
+                    <div className="flex items-baseline gap-2.5">
+                      <span className="text-xl sm:text-2xl font-black text-[#D52222]">
+                        {formatRupiah(activeProductModal.price)}
+                      </span>
+                      {activeProductModal.originalPrice && (
+                        <span className="text-xs sm:text-sm text-zinc-400 line-through">
+                          {formatRupiah(activeProductModal.originalPrice)}
+                        </span>
+                      )}
+                      {activeProductModal.discount && (
+                        <span className="text-xs font-bold text-[#D52222] bg-rose-50 px-2 py-0.5 rounded">
+                          {activeProductModal.discount}
+                        </span>
+                      )}
+                    </div>
+                  </div>
+
+                  {/* Size Selector */}
+                  <div className="mt-5">
+                    <label className="block text-xs font-bold uppercase tracking-wider text-black mb-2">
+                      PILIH UKURAN: <span className="text-[#666] font-normal">{selectedSize}</span>
+                    </label>
+                    <div className="flex flex-wrap gap-2">
+                      {['39 / S', '40 / M', '41 / L', '42 / XL', '43 / XXL'].map((sz) => (
+                        <button
+                          key={sz}
+                          type="button"
+                          onClick={() => setSelectedSize(sz)}
+                          className={`px-3 py-1.5 rounded-lg text-xs font-semibold border transition cursor-pointer ${
+                            selectedSize === sz
+                              ? 'bg-black text-white border-black'
+                              : 'bg-white text-zinc-700 border-zinc-300 hover:border-black'
+                          }`}
+                        >
+                          {sz}
+                        </button>
+                      ))}
+                    </div>
+                  </div>
+
+                  {/* Value Highlights */}
+                  <div className="mt-5 space-y-2 text-[11px] text-[#666]">
+                    <div className="flex items-center gap-2">
+                      <ShieldCheck className="w-4 h-4 text-emerald-600 shrink-0" />
+                      <span>100% Original &amp; Lisensi Resmi Terjamin</span>
+                    </div>
+                    <div className="flex items-center gap-2">
+                      <Clock className="w-4 h-4 text-sky-600 shrink-0" />
+                      <span>30 Hari Pengembalian Gratis | Ready Stock</span>
+                    </div>
+                  </div>
+                </div>
+
+                {/* CTAs */}
+                <div className="mt-6 space-y-2.5 pt-4 border-t border-zinc-200">
+                  <a
+                    href={getWhatsAppOrderUrl(`${activeProductModal.name} (Ukuran: ${selectedSize})`, activeProductModal.price)}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="w-full py-3 px-4 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition shadow-md cursor-pointer"
+                  >
+                    <MessageCircle className="w-4 h-4" />
+                    <span>Pesan Langsung via WhatsApp</span>
+                  </a>
+
+                  <button
+                    type="button"
+                    onClick={() => {
+                      addToCart(activeProductModal);
+                      setActiveProductModal(null);
+                    }}
+                    className="w-full py-3 px-4 rounded-xl bg-black hover:bg-zinc-800 text-white font-bold text-xs uppercase tracking-wider flex items-center justify-center gap-2 transition cursor-pointer"
+                  >
+                    <ShoppingBag className="w-4 h-4" />
+                    <span>Tambah ke Tas Belanja</span>
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      )}
 
       {/* =========================================================
           16. ZALORA OFFICIAL FLOATING PILL MOBILE BOTTOM NAVIGATION BAR

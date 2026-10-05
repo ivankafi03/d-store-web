@@ -40,7 +40,7 @@ import {
 } from '@/lib/zaloraMenData';
 
 export default function ZaloraMenDevPage() {
-  const [activeSegment, setActiveSegment] = useState('men');
+  const [activeSegment, setActiveSegment] = useState('women');
   const [activeSpeedDealIndex, setActiveSpeedDealIndex] = useState(0);
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBrandFilter, setSelectedBrandFilter] = useState(null);
@@ -50,6 +50,7 @@ export default function ZaloraMenDevPage() {
   const [activeProductModal, setActiveProductModal] = useState(null);
   const [selectedSize, setSelectedSize] = useState('42 / L');
   const [showQuickAlert, setShowQuickAlert] = useState(null);
+  const [showSearchModal, setShowSearchModal] = useState(false);
 
   // Speed deals auto rotation
   useEffect(() => {
@@ -108,9 +109,9 @@ export default function ZaloraMenDevPage() {
       )}
 
       {/* =========================================================
-          1. TOP UTILITY ANNOUNCEMENT BAR (Persis Asli Zalora)
+          1. TOP UTILITY ANNOUNCEMENT BAR (Desktop Only)
       ========================================================= */}
-      <div className="bg-[#F8F8F8] text-[#555555] text-[11px] py-1.5 px-4 border-b border-[#EAEAEA]">
+      <div className="hidden md:block bg-[#F8F8F8] text-[#555555] text-[11px] py-1.5 px-4 border-b border-[#EAEAEA]">
         <div className="max-w-[1240px] mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-6 overflow-x-auto no-scrollbar whitespace-nowrap">
             <span className="flex items-center gap-1">
@@ -140,9 +141,9 @@ export default function ZaloraMenDevPage() {
       </div>
 
       {/* =========================================================
-          2. MAIN HEADER (Sticky Desktop & Mobile)
+          2. MAIN DESKTOP HEADER (Hidden on Mobile)
       ========================================================= */}
-      <header className="sticky top-0 z-40 bg-white border-b border-[#EAEAEA] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
+      <header className="hidden md:block sticky top-0 z-40 bg-white border-b border-[#EAEAEA] shadow-[0_2px_8px_rgba(0,0,0,0.04)]">
         <div className="max-w-[1240px] mx-auto px-4 py-3 flex items-center justify-between gap-4 sm:gap-8">
           
           {/* Zalora Wordmark Logo */}
@@ -152,7 +153,7 @@ export default function ZaloraMenDevPage() {
             </span>
           </Link>
 
-          {/* Search Bar Pill (Pusat Pencarian) */}
+          {/* Search Bar Pill */}
           <div className="flex-1 max-w-2xl relative">
             <div className="relative flex items-center">
               <Search className="absolute left-4 w-4 h-4 text-[#888888] pointer-events-none" />
@@ -167,7 +168,7 @@ export default function ZaloraMenDevPage() {
                 <button 
                   type="button" 
                   onClick={() => setSearchQuery('')}
-                  className="absolute right-3.5 text-[#888] hover:text-black"
+                  className="absolute right-3.5 text-[#888] hover:text-black cursor-pointer"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
@@ -175,9 +176,8 @@ export default function ZaloraMenDevPage() {
             </div>
           </div>
 
-          {/* Header Action Icons */}
+          {/* Desktop Header Action Icons */}
           <div className="flex items-center gap-4 sm:gap-6 shrink-0 text-[#222]">
-            {/* Akun Saya */}
             <a 
               href="https://wa.me/6281230112240"
               target="_blank"
@@ -188,7 +188,6 @@ export default function ZaloraMenDevPage() {
               <span className="hidden xl:inline text-xs font-semibold">Akun Saya</span>
             </a>
 
-            {/* Wishlist */}
             <div 
               onClick={() => showNotification(`Anda memiliki ${wishlist.length} produk di Wishlist!`)}
               className="relative cursor-pointer hover:opacity-75 transition select-none"
@@ -202,7 +201,6 @@ export default function ZaloraMenDevPage() {
               )}
             </div>
 
-            {/* Tas / Cart */}
             <div 
               onClick={() => showNotification(`Tas belanja: ${cart.length} produk`)}
               className="relative cursor-pointer hover:opacity-75 transition select-none"
@@ -219,15 +217,16 @@ export default function ZaloraMenDevPage() {
         </div>
 
         {/* Desktop Segment Tabs */}
-        <div className="hidden md:block max-w-[1240px] mx-auto px-4">
+        <div className="max-w-[1240px] mx-auto px-4">
           <nav className="flex items-center gap-8 text-xs font-bold uppercase tracking-wider">
             {ZALORA_SEGMENTS.map((seg) => {
               const isActive = seg.id === activeSegment;
               return (
                 <button
                   key={seg.id}
+                  type="button"
                   onClick={() => setActiveSegment(seg.id)}
-                  className={`pb-2.5 pt-1 border-b-2 transition-all ${
+                  className={`pb-2.5 pt-1 border-b-2 transition-all cursor-pointer ${
                     isActive 
                       ? 'border-black text-black font-extrabold' 
                       : 'border-transparent text-[#777] hover:text-black'
@@ -241,18 +240,32 @@ export default function ZaloraMenDevPage() {
         </div>
       </header>
 
-      {/* Mobile Sticky Segment Tabs (Scrollable Horizontal Pills) */}
-      <div className="md:hidden sticky top-[57px] z-30 bg-white py-2.5 px-4 border-b border-[#EAEAEA] shadow-xs">
-        <div className="flex items-center gap-2 overflow-x-auto no-scrollbar">
+      {/* =========================================================
+          2B. MOBILE ULTRA-CLEAN TOP BAR (100% PERSIS SCREENSHOT ZALORA)
+      ========================================================= */}
+      <div className="md:hidden sticky top-0 z-40 bg-white/95 backdrop-blur-md px-3 py-2 flex items-center gap-2 border-b border-zinc-100 shadow-2xs">
+        {/* Search Square Button */}
+        <button
+          type="button"
+          onClick={() => setShowSearchModal(true)}
+          className="w-10 h-10 shrink-0 rounded-xl border border-zinc-200 bg-white flex items-center justify-center text-zinc-900 shadow-2xs active:scale-95 transition cursor-pointer"
+          aria-label="Cari Produk"
+        >
+          <Search className="w-5 h-5 stroke-[2.2]" />
+        </button>
+
+        {/* Category Pills: Wanita, Pria, Sports, Anak, Luxury, Beauty */}
+        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar scroll-smooth py-0.5">
           {ZALORA_SEGMENTS.map((seg) => {
             const isActive = seg.id === activeSegment;
             return (
               <button
                 key={seg.id}
+                type="button"
                 onClick={() => setActiveSegment(seg.id)}
-                className={`px-4 py-2 rounded-lg text-xs font-bold whitespace-nowrap transition shrink-0 ${
+                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
                   isActive
-                    ? 'bg-black text-white shadow-xs'
+                    ? 'bg-[#222222] text-white shadow-xs'
                     : 'bg-[#F2F2F2] text-[#444] hover:bg-[#E5E5E5]'
                 }`}
               >
@@ -263,68 +276,322 @@ export default function ZaloraMenDevPage() {
         </div>
       </div>
 
-      {/* =========================================================
-          3. TOP BRAND DEALS BUBBLES (18 Circular Story Badges)
-      ========================================================= */}
-      <section className="max-w-[1240px] mx-auto px-4 pt-6 pb-4">
-        <div className="flex items-start gap-4 sm:gap-6 overflow-x-auto no-scrollbar py-2">
-          {ZALORA_BUBBLES.map((bubble, i) => (
-            <div
-              key={i}
-              onClick={() => {
-                setSearchQuery(bubble.label);
-                setSelectedBrandFilter(null);
-                const el = document.getElementById('products-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                showNotification(`Melihat koleksi: ${bubble.label}`);
-              }}
-              className="flex flex-col items-center gap-1.5 shrink-0 group cursor-pointer w-[68px] sm:w-[84px] text-center select-none"
-            >
-              <div className="w-[62px] h-[62px] sm:w-[76px] sm:h-[76px] rounded-full p-0.5 bg-gradient-to-tr from-zinc-200 via-zinc-300 to-zinc-400 group-hover:from-black group-hover:to-zinc-600 transition shadow-xs">
-                <div className="w-full h-full rounded-full bg-white p-1 overflow-hidden flex items-center justify-center">
-                  <img
-                    src={bubble.img}
-                    alt={bubble.label}
-                    className="w-full h-full object-contain group-hover:scale-105 transition duration-300"
-                    loading="lazy"
-                  />
-                </div>
-              </div>
-              <span className="text-[10px] sm:text-[11px] font-medium text-[#444] group-hover:text-black line-clamp-1 leading-tight">
-                {bubble.label}
-              </span>
+      {/* Mobile Search Modal */}
+      {showSearchModal && (
+        <div className="fixed inset-0 z-[150] bg-white flex flex-col p-4 animate-in fade-in duration-150">
+          <div className="flex items-center gap-3 pb-3 border-b border-zinc-200">
+            <div className="flex-1 relative flex items-center">
+              <Search className="absolute left-3 w-4 h-4 text-zinc-500" />
+              <input
+                type="text"
+                autoFocus
+                value={searchQuery}
+                onChange={(e) => setSearchQuery(e.target.value)}
+                placeholder="Cari produk, tren, dan merek..."
+                className="w-full bg-zinc-100 pl-10 pr-4 py-2.5 rounded-xl text-sm outline-none border border-transparent focus:border-black"
+                onKeyDown={(e) => {
+                  if (e.key === 'Enter') {
+                    setShowSearchModal(false);
+                    document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+                  }
+                }}
+              />
             </div>
-          ))}
+            <button
+              type="button"
+              onClick={() => setShowSearchModal(false)}
+              className="text-sm font-bold text-zinc-700 hover:text-black p-1 cursor-pointer"
+            >
+              Batal
+            </button>
+          </div>
+
+          <div className="pt-4">
+            <div className="text-xs font-bold uppercase text-zinc-400 mb-2">Pencarian Populer</div>
+            <div className="flex flex-wrap gap-2">
+              {['Adidas', 'Sepatu Sneakers', 'Kaos Kaki', 'Clarks', 'Batik', 'Skechers', 'Vans', 'Tommy Hilfiger'].map((s, idx) => (
+                <button
+                  key={idx}
+                  type="button"
+                  onClick={() => {
+                    setSearchQuery(s);
+                    setShowSearchModal(false);
+                    document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+                  }}
+                  className="px-3 py-1.5 rounded-lg bg-zinc-100 text-xs font-medium hover:bg-zinc-200 text-zinc-800 cursor-pointer"
+                >
+                  {s}
+                </button>
+              ))}
+            </div>
+          </div>
         </div>
-      </section>
+      )}
 
       {/* =========================================================
-          4. MAIN HERO BANNER ("Got You Splurging - 10.10 Flash Sale")
+          3A. HERO POSTER MOBILE (100% PERSIS SCREENSHOT ZALORA)
       ========================================================= */}
-      {ZALORA_HERO && (
-        <section className="max-w-[1240px] mx-auto px-4 py-3">
+      <div className="md:hidden px-2 pt-1 pb-2">
+        <div className="relative w-full rounded-2xl overflow-hidden shadow-sm bg-[#1A1A1A]">
+          {/* Main Hero Image Asli dari Screenshot */}
+          <img
+            src="/images/zalora-hero-mobile.png"
+            alt="ZALORA 10.10 Super Flash Sale Adidas"
+            className="w-full h-auto object-cover block"
+          />
+
+          {/* Clickable Hotspot over "SHOP NOW >" */}
           <div
             onClick={() => {
               setSelectedBrandFilter('ADIDAS');
               const el = document.getElementById('products-section');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
-              showNotification('Flash Sale Adidas 10.10 Aktif!');
+              showNotification('Menampilkan koleksi Adidas Flash Sale!');
             }}
-            className="block relative rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition duration-300 group cursor-pointer"
-          >
-            <img
-              src={ZALORA_HERO.desktopImg}
-              alt={ZALORA_HERO.title}
-              className="w-full h-auto object-cover group-hover:scale-[1.01] transition duration-500"
+            className="absolute top-[52%] left-1/2 -translate-x-1/2 w-40 h-10 rounded-full cursor-pointer"
+            title="Shop Adidas Now"
+          />
+
+          {/* Clickable Hotspots over the 4 Mini Product Cards at bottom of hero */}
+          <div className="absolute bottom-[4.5%] inset-x-2 h-[26%] flex gap-2">
+            {/* Card 1: Kaos Kaki Adidas (Rp 121.500) */}
+            <div
+              onClick={() => setActiveProductModal({
+                id: 'hero-socks',
+                brand: 'ADIDAS',
+                name: 'Adidas Cushioned Ankle Socks 3 Pairs Black',
+                category: 'Aksesoris Olahraga',
+                price: 121500,
+                originalPrice: 199000,
+                discount: '39% OFF',
+                badge: 'FLASH DEAL',
+                image: 'https://images.ctfassets.net/9q8du028z7sn/3Y4VKiawE07XtOXiOFThxp/b7ea3c13c4034daf55858a71101d06ef/280x404_BRANDGRID_NEWREGBRAND___3_.jpg'
+              })}
+              className="flex-1 cursor-pointer rounded-xl"
+              title="Adidas Socks - Rp 121.500"
             />
-            {/* Countdown Badge Float */}
-            <div className="absolute top-3 left-3 sm:top-5 sm:left-5 bg-black/85 backdrop-blur-md text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
-              <Clock className="w-3.5 h-3.5 text-amber-400 animate-spin" />
-              <span>FLASH SALE BERAKHIR DALAM: 05:42:19</span>
-            </div>
+            {/* Card 2: Adizero Boston (Rp 1.603.125) */}
+            <div
+              onClick={() => setActiveProductModal({
+                id: 'hero-adizero',
+                brand: 'ADIDAS',
+                name: 'Adidas Adizero Boston 12 Running Shoes White',
+                category: 'Sepatu Olahraga',
+                price: 1603125,
+                originalPrice: 2499000,
+                discount: '36% OFF',
+                badge: 'FLASH DEAL',
+                image: 'https://images.ctfassets.net/9q8du028z7sn/dZsQELYBUpUV8b0192XBY/210ef9d476ee53bb02af154c10417f85/225x225_BB2026_ADIDAS.png'
+              })}
+              className="flex-1 cursor-pointer rounded-xl"
+              title="Adizero Boston 12 - Rp 1.603.125"
+            />
+            {/* Card 3: Response CL (Rp 1.093.500) */}
+            <div
+              onClick={() => setActiveProductModal({
+                id: 'hero-response',
+                brand: 'ADIDAS',
+                name: 'Adidas Response CL Sneakers Off-White / Beige',
+                category: 'Sepatu Sneakers',
+                price: 1093500,
+                originalPrice: 1800000,
+                discount: '39% OFF',
+                badge: 'FLASH DEAL',
+                image: 'https://images.ctfassets.net/9q8du028z7sn/7wxipMmzcMa3uNwS7fk6m8/ab52d548583c95cfe151b4e9df070dc5/APP_HEROSECONDARY_1280x720_1010CD_FSBRAND_ADIDAS.jpg'
+              })}
+              className="flex-1 cursor-pointer rounded-xl"
+              title="Response CL - Rp 1.093.500"
+            />
+            {/* Card 4: Clarks Loafer (Rp 1.485.000) */}
+            <div
+              onClick={() => setActiveProductModal({
+                id: 'hero-loafer',
+                brand: 'CLARKS',
+                name: 'Clarks Torhill Lo Suede Loafers Brown Moccasin',
+                category: 'Sepatu Kasual',
+                price: 1485000,
+                originalPrice: 2399000,
+                discount: '38% OFF',
+                badge: 'FLASH DEAL',
+                image: 'https://images.ctfassets.net/9q8du028z7sn/7dI83E7t2hB/BRANDGRID_280x404_1010CD_FBB_JIMJOKER.jpg'
+              })}
+              className="flex-1 cursor-pointer rounded-xl"
+              title="Clarks Loafers - Rp 1.485.000"
+            />
+          </div>
+        </div>
+      </div>
+
+      {/* =========================================================
+          3B. MOBILE SOLID BLACK BRAND CIRCLES (100% PERSIS SCREENSHOT ZALORA)
+      ========================================================= */}
+      <section className="md:hidden px-3 py-2">
+        <div className="flex items-center gap-3 overflow-x-auto no-scrollbar py-1">
+          {/* 1. Zalora 10.10 Sale Countdown */}
+          <div
+            onClick={() => {
+              showNotification('ZALORA 10.10 Sale Countdown Aktif!');
+              document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex flex-col items-center justify-center p-1 text-center cursor-pointer shadow-xs active:scale-95 transition"
+          >
+            <span className="text-[7px] leading-[8px] font-bold tracking-tight uppercase">ZALORA</span>
+            <span className="text-[10px] leading-[11px] font-black tracking-tight text-white">10.10</span>
+            <span className="text-[7px] leading-[8px] font-extrabold uppercase">SALE</span>
+            <span className="text-[5px] leading-[6px] tracking-tighter text-zinc-300 uppercase">COUNTDOWN</span>
+          </div>
+
+          {/* 2. Adidas */}
+          <div
+            onClick={() => {
+              setSelectedBrandFilter('ADIDAS');
+              document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+              showNotification('Brand: Adidas');
+            }}
+            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition"
+          >
+            <svg width="28" height="20" viewBox="0 0 28 20" fill="currentColor">
+              <path d="M4.5 18L1.5 13H5L8 18H4.5ZM12.5 18L7.5 9.5H11L16 18H12.5ZM20.5 18L13.5 6H17L24 18H20.5Z"/>
+            </svg>
+          </div>
+
+          {/* 3. On Running */}
+          <div
+            onClick={() => {
+              setSelectedBrandFilter('ON');
+              document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+              showNotification('Brand: On Running');
+            }}
+            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition"
+          >
+            <span className="font-bold text-xl lowercase tracking-tighter leading-none">on</span>
+          </div>
+
+          {/* 4. COACH */}
+          <div
+            onClick={() => {
+              setSelectedBrandFilter('COACH');
+              document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+              showNotification('Brand: COACH');
+            }}
+            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition px-1"
+          >
+            <span className="font-serif font-black text-[10px] tracking-widest uppercase">COACH</span>
+          </div>
+
+          {/* 5. trendyol */}
+          <div
+            onClick={() => {
+              setSearchQuery('trendyol');
+              document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+              showNotification('Koleksi: trendyol');
+            }}
+            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition px-1"
+          >
+            <span className="font-sans font-extrabold text-[10px] tracking-tight lowercase">trendyol</span>
+          </div>
+
+          {/* 6. Tommy Hilfiger */}
+          <div
+            onClick={() => {
+              setSelectedBrandFilter('TOMMY HILFIGER');
+              document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+              showNotification('Brand: Tommy Hilfiger');
+            }}
+            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex flex-col items-center justify-center cursor-pointer shadow-xs active:scale-95 transition p-1"
+          >
+            <span className="text-[7px] leading-[8px] font-black uppercase tracking-wider">TOMMY</span>
+            <span className="text-[6px] leading-[7px] font-bold uppercase tracking-tight text-zinc-300">HILFIGER</span>
+          </div>
+
+          {/* 7. BOSS */}
+          <div
+            onClick={() => {
+              setSelectedBrandFilter('HUGO BOSS');
+              document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+              showNotification('Brand: Hugo Boss');
+            }}
+            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition"
+          >
+            <span className="font-black text-xs uppercase tracking-wider">BOSS</span>
+          </div>
+
+          {/* 8. H&M */}
+          <div
+            onClick={() => {
+              setSelectedBrandFilter('H&M');
+              document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+              showNotification('Brand: H&M');
+            }}
+            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition"
+          >
+            <span className="font-black text-xs uppercase tracking-tight">H&amp;M</span>
+          </div>
+        </div>
+      </section>
+
+      {/* =========================================================
+          4A. DESKTOP HERO & TOP BRAND DEALS (Hidden on Mobile)
+      ========================================================= */}
+      <div className="hidden md:block">
+        {/* Desktop Top Brand Deals Bubbles */}
+        <section className="max-w-[1240px] mx-auto px-4 pt-6 pb-4">
+          <div className="flex items-start gap-4 sm:gap-6 overflow-x-auto no-scrollbar py-2">
+            {ZALORA_BUBBLES.map((bubble, i) => (
+              <div
+                key={i}
+                onClick={() => {
+                  setSearchQuery(bubble.label);
+                  setSelectedBrandFilter(null);
+                  const el = document.getElementById('products-section');
+                  if (el) el.scrollIntoView({ behavior: 'smooth' });
+                  showNotification(`Melihat koleksi: ${bubble.label}`);
+                }}
+                className="flex flex-col items-center gap-1.5 shrink-0 group cursor-pointer w-[68px] sm:w-[84px] text-center select-none"
+              >
+                <div className="w-[62px] h-[62px] sm:w-[76px] sm:h-[76px] rounded-full p-0.5 bg-gradient-to-tr from-zinc-200 via-zinc-300 to-zinc-400 group-hover:from-black group-hover:to-zinc-600 transition shadow-xs">
+                  <div className="w-full h-full rounded-full bg-white p-1 overflow-hidden flex items-center justify-center">
+                    <img
+                      src={bubble.img}
+                      alt={bubble.label}
+                      className="w-full h-full object-contain group-hover:scale-105 transition duration-300"
+                      loading="lazy"
+                    />
+                  </div>
+                </div>
+                <span className="text-[10px] sm:text-[11px] font-medium text-[#444] group-hover:text-black line-clamp-1 leading-tight">
+                  {bubble.label}
+                </span>
+              </div>
+            ))}
           </div>
         </section>
-      )}
+
+        {/* Desktop Main Hero Banner */}
+        {ZALORA_HERO && (
+          <section className="max-w-[1240px] mx-auto px-4 py-3">
+            <div
+              onClick={() => {
+                setSelectedBrandFilter('ADIDAS');
+                const el = document.getElementById('products-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+                showNotification('Flash Sale Adidas 10.10 Aktif!');
+              }}
+              className="block relative rounded-2xl overflow-hidden shadow-sm hover:shadow-md transition duration-300 group cursor-pointer"
+            >
+              <img
+                src={ZALORA_HERO.desktopImg}
+                alt={ZALORA_HERO.title}
+                className="w-full h-auto object-cover group-hover:scale-[1.01] transition duration-500"
+              />
+              <div className="absolute top-3 left-3 sm:top-5 sm:left-5 bg-black/85 backdrop-blur-md text-white text-[10px] sm:text-xs font-bold px-3 py-1.5 rounded-full flex items-center gap-1.5 shadow-md">
+                <Clock className="w-3.5 h-3.5 text-amber-400 animate-spin" />
+                <span>FLASH SALE BERAKHIR DALAM: 05:42:19</span>
+              </div>
+            </div>
+          </section>
+        )}
+      </div>
 
       {/* =========================================================
           5. SPEED DEALS & SECONDARY BANNER CAROUSEL

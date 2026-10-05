@@ -9,24 +9,16 @@ import {
   ShieldCheck, 
   Clock, 
   MessageCircle, 
-  Send, 
-  Check, 
   X, 
   RefreshCw,
   ShoppingBag,
-  ExternalLink,
   ChevronRight,
   TrendingUp,
-  Menu,
   QrCode,
   Download,
-  Bot,
-  Tv,
-  Palette,
-  Music,
-  GraduationCap,
-  Briefcase,
-  ArrowRight
+  ArrowRight,
+  CheckCircle2,
+  Lock
 } from 'lucide-react';
 
 import { DEFAULT_CATEGORIES, CATEGORY_META, resolveCategorySlug } from '@/lib/categories';
@@ -50,13 +42,10 @@ export default function StoreFront({ initialCategorySlug = null }) {
   const [selectedCategory, setSelectedCategory] = useState(initialCatId);
   const [stockFilter, setStockFilter] = useState('all'); // 'all', 'ready_only'
   
-  // Modal / Drawer Detail Produk ala Zalora
+  // Modal / Bottom Sheet Detail Produk
   const [activeProductModal, setActiveProductModal] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [showQrisInModal, setShowQrisInModal] = useState(false);
-
-  const [copiedLink, setCopiedLink] = useState(false);
-  const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [showGlobalQris, setShowGlobalQris] = useState(false);
 
   // Sinkronisasi kategori ketika slug URL berubah
@@ -163,7 +152,6 @@ export default function StoreFront({ initialCategorySlug = null }) {
   const openProductDetail = (prod) => {
     setActiveProductModal(prod);
     setShowQrisInModal(false);
-    // Otomatis pilih varian pertama yang ready, atau varian pertama
     const firstReady = prod.variants?.find(v => v.isAvailable) || prod.variants?.[0] || null;
     setSelectedVariant(firstReady);
   };
@@ -180,16 +168,8 @@ export default function StoreFront({ initialCategorySlug = null }) {
     return `https://wa.me/6281230112240?text=${text}`;
   };
 
-  const handleShareLink = () => {
-    if (typeof window !== 'undefined' && navigator.clipboard) {
-      navigator.clipboard.writeText(window.location.href);
-      setCopiedLink(true);
-      setTimeout(() => setCopiedLink(false), 2500);
-    }
-  };
-
   return (
-    <div className="min-h-screen bg-[#FDFDFD] text-zinc-900 font-sans selection:bg-black selection:text-white pb-24 sm:pb-20">
+    <div className="min-h-screen bg-white text-zinc-900 font-sans selection:bg-black selection:text-white pb-24 sm:pb-20">
       
       {/* SVG Filter untuk Efek Ombak Air Halus D STORE */}
       <svg width="0" height="0" className="absolute pointer-events-none" style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
@@ -215,14 +195,14 @@ export default function StoreFront({ initialCategorySlug = null }) {
         </defs>
       </svg>
       
-      {/* 1. TOP ANNOUNCEMENT RIBBON (ZALORA STYLE SLIM BAR) */}
-      <div className="bg-black text-white text-[11px] sm:text-xs py-2 px-3 tracking-wide">
+      {/* 1. TOP ANNOUNCEMENT RIBBON (ZALORA STYLE SLIM ANNOUNCEMENT) */}
+      <div className="bg-black text-white text-[11px] sm:text-xs py-2 px-4 tracking-wide border-b border-zinc-800">
         <div className="max-w-7xl mx-auto flex items-center justify-between gap-3">
           <div className="flex items-center gap-2 truncate text-zinc-300">
-            <span className="w-2 h-2 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
+            <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></span>
             <span className="truncate">⚡ Proses 1-5 Menit • 100% Garansi Resmi • Pembayaran QRIS Instan</span>
           </div>
-          <div className="flex items-center gap-3 shrink-0 text-xs font-semibold text-zinc-300">
+          <div className="flex items-center gap-3 shrink-0 text-xs font-medium text-zinc-300">
             <a href="https://wa.me/6281230112240" target="_blank" rel="noopener noreferrer" className="hover:text-white transition">
               Bantuan WA
             </a>
@@ -234,22 +214,14 @@ export default function StoreFront({ initialCategorySlug = null }) {
         </div>
       </div>
 
-      {/* 2. MAIN HEADER (CLEAN MINIMALIST WHITE LIKE ZALORA) */}
-      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-zinc-200 shadow-xs">
+      {/* 2. MAIN HEADER (CLEAN ZALORA LOGO & PILL SEARCH) */}
+      <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-zinc-100 shadow-[0_1px_3px_rgba(0,0,0,0.03)]">
         <div className="max-w-7xl mx-auto px-4 py-3 sm:py-3.5 flex items-center justify-between gap-3 sm:gap-6">
           
-          {/* Brand Logo */}
+          {/* Zalora Style Wordmark Logo */}
           <Link href="/store" className="flex items-center gap-2 shrink-0 group">
-            <div className="w-9 h-9 sm:w-10 sm:h-10 rounded-xl bg-black flex items-center justify-center text-white font-black text-base shadow-xs group-hover:scale-105 transition-transform">
-              D
-            </div>
-            <div>
-              <div className="font-extrabold text-lg sm:text-xl text-black tracking-tight leading-none">
-                D STORE
-              </div>
-              <div className="text-[10px] text-zinc-500 font-medium tracking-wide mt-0.5">
-                Digital Premium
-              </div>
+            <div className="font-black text-xl sm:text-2xl text-black tracking-[0.12em] uppercase leading-none select-none">
+              D STORE
             </div>
           </Link>
 
@@ -263,7 +235,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari Canva, Netflix, ChatGPT, Spotify, CapCut..."
-              className="w-full pl-10 pr-9 py-2 text-sm bg-zinc-100/80 hover:bg-zinc-100 focus:bg-white border border-transparent focus:border-zinc-400 rounded-full outline-none transition text-zinc-900 placeholder:text-zinc-500 font-medium"
+              className="w-full pl-10 pr-9 py-2 text-sm bg-zinc-100/80 hover:bg-zinc-100 focus:bg-white border border-transparent focus:border-zinc-300 rounded-full outline-none transition text-zinc-900 placeholder:text-zinc-400 font-normal"
             />
             {searchQuery && (
               <button
@@ -281,35 +253,35 @@ export default function StoreFront({ initialCategorySlug = null }) {
             <button
               type="button"
               onClick={() => setShowGlobalQris(true)}
-              className="px-3 py-2 rounded-full border border-zinc-200 hover:border-zinc-400 hover:bg-zinc-50 text-xs font-semibold text-zinc-800 flex items-center gap-1.5 transition cursor-pointer"
+              className="px-3 py-1.5 rounded-full border border-zinc-200 hover:border-zinc-300 hover:bg-zinc-50 text-xs font-semibold text-zinc-800 flex items-center gap-1.5 transition cursor-pointer"
               title="Scan QRIS Toko"
             >
               <QrCode className="w-3.5 h-3.5 text-zinc-700" />
-              <span className="hidden sm:inline">QRIS Toko</span>
+              <span className="hidden sm:inline">QRIS</span>
             </button>
 
             <a
               href="https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store,%20saya%20mau%20tanya%20stok"
               target="_blank"
               rel="noopener noreferrer"
-              className="px-3.5 py-2 rounded-full bg-black hover:bg-zinc-800 text-white text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
+              className="px-3.5 py-1.5 rounded-full bg-black hover:bg-zinc-800 text-white text-xs font-semibold flex items-center gap-1.5 transition shadow-xs"
             >
               <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
-              <span className="hidden sm:inline">Chat Admin</span>
+              <span className="hidden sm:inline">Chat WA</span>
             </a>
 
             <Link
               href="/reseller"
-              className="px-3 py-2 rounded-full bg-purple-50 hover:bg-purple-100 text-purple-900 border border-purple-200 text-xs font-semibold flex items-center gap-1 transition"
+              className="px-3 py-1.5 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-xs font-semibold flex items-center gap-1 transition"
               title="Reseller Studio"
             >
-              <TrendingUp className="w-3.5 h-3.5 text-purple-600" />
+              <TrendingUp className="w-3.5 h-3.5 text-zinc-600" />
               <span className="hidden md:inline">Reseller</span>
             </Link>
           </div>
         </div>
 
-        {/* Mobile Search Bar (Hanya tampil di layar HP) */}
+        {/* Mobile Search Bar (Khusus layar kecil di bawah logo) */}
         <div className="px-4 pb-2.5 md:hidden">
           <div className="relative">
             <div className="absolute inset-y-0 left-0 pl-3.5 flex items-center pointer-events-none text-zinc-400">
@@ -320,7 +292,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
               value={searchQuery}
               onChange={(e) => setSearchQuery(e.target.value)}
               placeholder="Cari Canva, Netflix, ChatGPT, Spotify..."
-              className="w-full pl-10 pr-9 py-2 text-xs bg-zinc-100 hover:bg-zinc-100 focus:bg-white border border-transparent focus:border-zinc-300 rounded-full outline-none transition text-zinc-900 placeholder:text-zinc-500 font-medium"
+              className="w-full pl-10 pr-9 py-2 text-xs bg-zinc-100 hover:bg-zinc-100 focus:bg-white border border-transparent focus:border-zinc-300 rounded-full outline-none transition text-zinc-900 placeholder:text-zinc-400 font-normal"
             />
             {searchQuery && (
               <button
@@ -334,16 +306,16 @@ export default function StoreFront({ initialCategorySlug = null }) {
           </div>
         </div>
 
-        {/* 3. CATEGORY TABS HORIZONTAL (ZALORA SIGNATURE CLEAN SCROLLABLE TABS) */}
+        {/* 3. CATEGORY TABS HORIZONTAL (ZALORA SIGNATURE SEGMENT TABS) */}
         <div className="border-t border-zinc-100 bg-white">
-          <div className="max-w-7xl mx-auto px-4 overflow-x-auto no-scrollbar py-2 flex items-center gap-1.5 sm:gap-2">
+          <div className="max-w-7xl mx-auto px-4 overflow-x-auto no-scrollbar py-2 flex items-center gap-2">
             <button
               type="button"
               onClick={() => handleSelectCategory('all')}
               className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition cursor-pointer shrink-0 ${
                 selectedCategory === 'all'
                   ? 'bg-black text-white shadow-xs'
-                  : 'text-zinc-600 hover:text-black hover:bg-zinc-100'
+                  : 'bg-zinc-100 text-zinc-600 hover:text-black hover:bg-zinc-200'
               }`}
             >
               Semua ({products.length})
@@ -360,11 +332,11 @@ export default function StoreFront({ initialCategorySlug = null }) {
                   className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition cursor-pointer shrink-0 flex items-center gap-1.5 ${
                     isActive
                       ? 'bg-black text-white shadow-xs'
-                      : 'text-zinc-600 hover:text-black hover:bg-zinc-100'
+                      : 'bg-zinc-100 text-zinc-600 hover:text-black hover:bg-zinc-200'
                   }`}
                 >
                   <span>{c.name}</span>
-                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-zinc-700 text-white' : 'bg-zinc-100 text-zinc-500'}`}>
+                  <span className={`text-[10px] px-1.5 py-0.2 rounded-full ${isActive ? 'bg-zinc-700 text-white' : 'bg-zinc-200 text-zinc-500'}`}>
                     {count}
                   </span>
                 </button>
@@ -374,9 +346,9 @@ export default function StoreFront({ initialCategorySlug = null }) {
         </div>
       </header>
 
-      {/* 4. HERO SECTION: WAVY "D STORE" LIQUID BANNER (GRADIENT HITAM-KUNING MEWAH) */}
+      {/* 4. HERO SECTION: WAVY "D STORE" LIQUID BANNER (MEWAH GRADIENT HITAM-KUNING) */}
       <section className="max-w-7xl mx-auto px-4 pt-4 sm:pt-6 pb-2 space-y-4">
-        <div className="relative rounded-2xl sm:rounded-3xl p-8 sm:p-12 text-center overflow-hidden border border-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.12)] bg-gradient-to-br from-black via-[#141208] to-[#3A3005]">
+        <div className="relative rounded-2xl sm:rounded-3xl p-8 sm:p-14 text-center overflow-hidden border border-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.1)] bg-gradient-to-br from-black via-[#141208] to-[#3A3005]">
           {/* Ambient Glow Emas Lembut di Sudut */}
           <div className="absolute -top-16 -left-16 w-56 h-56 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
           <div className="absolute -bottom-16 -right-16 w-56 h-56 bg-yellow-400/25 rounded-full blur-3xl pointer-events-none"></div>
@@ -384,7 +356,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
           {/* Teks Wavy D STORE Bergelombang Ombak Air - Font Putih Ramping & Proporsional */}
           <div className="py-2 sm:py-3 select-none">
             <h1 
-              style={{ filter: 'url(#water-wave)', letterSpacing: '0.18em' }} 
+              style={{ filter: 'url(#water-wave)', letterSpacing: '0.22em' }} 
               className="text-4xl sm:text-6xl md:text-7xl font-semibold uppercase text-white inline-block drop-shadow-[0_2px_14px_rgba(255,255,255,0.25)]"
             >
               D STORE
@@ -392,45 +364,45 @@ export default function StoreFront({ initialCategorySlug = null }) {
           </div>
         </div>
 
-        {/* 4 Value Proposition Cards Bersih di Bawah Banner (Zalora Style Minimalist) */}
+        {/* 4 Value Proposition Cards Bersih di Bawah Banner (Sesuai Permintaan Spesifik User) */}
         <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
-          <div className="bg-white p-3 sm:p-3.5 rounded-xl border border-zinc-200/90 shadow-2xs hover:border-zinc-300 transition flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-4 h-4 text-emerald-600" />
+          <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-zinc-200/80 shadow-[0_1px_4px_rgba(0,0,0,0.03)] hover:border-zinc-300 transition flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-emerald-50 border border-emerald-100 flex items-center justify-center shrink-0">
+              <ShieldCheck className="w-4.5 h-4.5 text-emerald-600" />
             </div>
             <div>
               <div className="text-xs font-bold text-zinc-900 leading-tight">100% Bergaransi</div>
-              <div className="text-[11px] text-zinc-500 font-medium">Klaim Cepat &amp; Aman</div>
+              <div className="text-[11px] text-zinc-500 font-medium mt-0.5">Klaim Cepat &amp; Aman</div>
             </div>
           </div>
 
-          <div className="bg-white p-3 sm:p-3.5 rounded-xl border border-zinc-200/90 shadow-2xs hover:border-zinc-300 transition flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-cyan-50 border border-cyan-100 flex items-center justify-center shrink-0">
-              <Clock className="w-4 h-4 text-cyan-600" />
+          <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-zinc-200/80 shadow-[0_1px_4px_rgba(0,0,0,0.03)] hover:border-zinc-300 transition flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-sky-50 border border-sky-100 flex items-center justify-center shrink-0">
+              <Clock className="w-4.5 h-4.5 text-sky-600" />
             </div>
             <div>
               <div className="text-xs font-bold text-zinc-900 leading-tight">Proses 1-5 Menit</div>
-              <div className="text-[11px] text-zinc-500 font-medium">Langsung Aktif Digunakan</div>
+              <div className="text-[11px] text-zinc-500 font-medium mt-0.5">Langsung Aktif Digunakan</div>
             </div>
           </div>
 
-          <div className="bg-white p-3 sm:p-3.5 rounded-xl border border-zinc-200/90 shadow-2xs hover:border-zinc-300 transition flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center shrink-0">
-              <Zap className="w-4 h-4 text-amber-600" />
+          <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-zinc-200/80 shadow-[0_1px_4px_rgba(0,0,0,0.03)] hover:border-zinc-300 transition flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-amber-50 border border-amber-100 flex items-center justify-center shrink-0">
+              <Zap className="w-4.5 h-4.5 text-amber-600" />
             </div>
             <div>
               <div className="text-xs font-bold text-zinc-900 leading-tight">Bayar Pakai QRIS</div>
-              <div className="text-[11px] text-zinc-500 font-medium">Semua Bank &amp; E-Wallet</div>
+              <div className="text-[11px] text-zinc-500 font-medium mt-0.5">Semua Bank &amp; E-Wallet</div>
             </div>
           </div>
 
-          <div className="bg-white p-3 sm:p-3.5 rounded-xl border border-zinc-200/90 shadow-2xs hover:border-zinc-300 transition flex items-center gap-3">
-            <div className="w-8 h-8 rounded-lg bg-purple-50 border border-purple-100 flex items-center justify-center shrink-0">
-              <ShieldCheck className="w-4 h-4 text-purple-600" />
+          <div className="bg-white p-3.5 sm:p-4 rounded-xl border border-zinc-200/80 shadow-[0_1px_4px_rgba(0,0,0,0.03)] hover:border-zinc-300 transition flex items-center gap-3">
+            <div className="w-9 h-9 rounded-lg bg-purple-50 border border-purple-100 flex items-center justify-center shrink-0">
+              <Lock className="w-4.5 h-4.5 text-purple-600" />
             </div>
             <div>
               <div className="text-xs font-bold text-zinc-900 leading-tight">Akun Legal &amp; Anti-Hold</div>
-              <div className="text-[11px] text-zinc-500 font-medium">Bebas Gangguan</div>
+              <div className="text-[11px] text-zinc-500 font-medium mt-0.5">Bebas Gangguan</div>
             </div>
           </div>
         </div>
@@ -438,7 +410,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
 
       {/* 5. TOOLBAR SUB-FILTER & COUNTER (ZALORA STYLE) */}
       <section className="max-w-7xl mx-auto px-4 pt-4 pb-2">
-        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-200 pb-3">
+        <div className="flex flex-wrap items-center justify-between gap-3 border-b border-zinc-100 pb-3">
           <div className="text-xs font-semibold text-zinc-600">
             Menampilkan <span className="font-bold text-black">{filteredProducts.length} Produk</span>
             {searchQuery && <span> untuk pencarian &quot;{searchQuery}&quot;</span>}
@@ -469,7 +441,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
         </div>
       </section>
 
-      {/* 6. MAIN CATALOG GRID (ZALORA SIGNATURE PRODUCT CARD GRID) */}
+      {/* 6. MAIN CATALOG GRID (ZALORA AUTHENTIC PRODUCT CARD GRID) */}
       <main className="max-w-7xl mx-auto px-4 py-4">
         {loading ? (
           <div className="py-24 text-center space-y-3">
@@ -505,42 +477,41 @@ export default function StoreFront({ initialCategorySlug = null }) {
                 <div
                   key={prod.id}
                   onClick={() => openProductDetail(prod)}
-                  className="bg-white rounded-xl border border-zinc-200/90 overflow-hidden hover:shadow-lg hover:border-zinc-400 transition-all duration-200 flex flex-col justify-between group cursor-pointer"
+                  className="bg-white rounded-2xl border border-zinc-200/70 overflow-hidden hover:border-zinc-300 hover:shadow-md transition-all duration-200 flex flex-col justify-between group cursor-pointer"
                 >
-                  {/* Image Box (Rasio 1:1, Latar Bersih, Logo Asli Resmi) */}
-                  <div className="aspect-square bg-[#F8F9FA] p-5 sm:p-6 flex items-center justify-center relative overflow-hidden group-hover:bg-[#F2F4F7] transition-colors">
+                  {/* Image Box (Rasio 1:1, Latar Bersih #F7F7F8 khas Zalora) */}
+                  <div className="aspect-square bg-[#F7F7F8] p-5 sm:p-6 flex items-center justify-center relative overflow-hidden group-hover:bg-[#F2F2F4] transition-colors">
                     
                     {/* Badge Ready / Habis di Sudut Kiri Atas */}
                     <div className="absolute top-2 left-2 z-10">
                       {readyCount > 0 ? (
-                        <span className="px-2 py-0.5 rounded-full bg-emerald-100 text-emerald-800 text-[9px] sm:text-[10px] font-bold flex items-center gap-1 border border-emerald-200 shadow-2xs">
-                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-600 animate-pulse"></span>
+                        <span className="px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 text-[9px] sm:text-[10px] font-bold flex items-center gap-1 border border-emerald-200/80 shadow-2xs">
+                          <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse"></span>
                           <span>Ready</span>
                         </span>
                       ) : (
-                        <span className="px-2 py-0.5 rounded-full bg-zinc-200 text-zinc-600 text-[9px] sm:text-[10px] font-medium border border-zinc-300">
+                        <span className="px-2 py-0.5 rounded-full bg-zinc-200/80 text-zinc-600 text-[9px] sm:text-[10px] font-medium border border-zinc-300">
                           Habis
                         </span>
                       )}
                     </div>
 
-                    {/* Logo Resmi Aplikasi */}
+                    {/* Logo Resmi Aplikasi (Jernih 128px dari sumber domain resmi) */}
                     {logoUrl ? (
                       <img
                         src={logoUrl}
                         alt={`Logo ${prod.name}`}
                         loading="lazy"
-                        className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-xs group-hover:scale-108 transition-transform duration-200"
+                        className="w-16 h-16 sm:w-20 sm:h-20 object-contain drop-shadow-xs group-hover:scale-105 transition-transform duration-200"
                         onError={(e) => {
-                          // Fallback jika unavatar gagal load
                           e.target.style.display = 'none';
                           e.target.nextElementSibling?.classList.remove('hidden');
                         }}
                       />
                     ) : null}
 
-                    {/* Fallback Monogram Bersih Elegan (Hanya jika produk custom/tanpa logo) */}
-                    <div className={`${logoUrl ? 'hidden' : ''} w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-zinc-900 text-white flex items-center justify-center font-extrabold text-xl tracking-wider shadow-sm group-hover:scale-108 transition-transform duration-200`}>
+                    {/* Fallback Monogram Bersih Elegan untuk produk developer / custom */}
+                    <div className={`${logoUrl ? 'hidden' : ''} w-16 h-16 sm:w-20 sm:h-20 rounded-2xl bg-zinc-900 text-white flex items-center justify-center font-extrabold text-xl tracking-wider shadow-sm group-hover:scale-105 transition-transform duration-200`}>
                       {monogram}
                     </div>
 
@@ -559,7 +530,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
                       </div>
 
                       {/* Nama Produk */}
-                      <h3 className="font-bold text-xs sm:text-sm text-zinc-900 leading-snug line-clamp-2 mt-0.5 group-hover:text-black transition-colors" title={prod.name}>
+                      <h3 className="font-semibold text-xs sm:text-sm text-zinc-900 leading-snug line-clamp-2 mt-0.5 min-h-[32px] sm:min-h-[40px] group-hover:text-black transition-colors" title={prod.name}>
                         {prod.name}
                       </h3>
                     </div>
@@ -569,7 +540,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
                       <div className="flex items-baseline justify-between gap-1">
                         <div>
                           <span className="text-[10px] text-zinc-400 font-medium">Mulai </span>
-                          <span className="font-extrabold text-xs sm:text-sm text-zinc-950 font-mono">
+                          <span className="font-bold text-xs sm:text-sm text-zinc-950 font-mono">
                             {formatRupiah(minPrice)}
                           </span>
                         </div>
@@ -581,10 +552,10 @@ export default function StoreFront({ initialCategorySlug = null }) {
                       {/* Tombol Pilih Paket (Zalora Style Sleek Button) */}
                       <button
                         type="button"
-                        className="w-full py-1.5 sm:py-2 rounded-lg bg-zinc-900 group-hover:bg-black text-white text-[11px] sm:text-xs font-semibold tracking-wide transition flex items-center justify-center gap-1 shadow-2xs"
+                        className="w-full py-2 rounded-lg bg-black hover:bg-zinc-800 text-white text-xs font-semibold tracking-wide transition flex items-center justify-center gap-1 shadow-2xs"
                       >
                         <span>Pilih Paket</span>
-                        <ChevronRight className="w-3 h-3 group-hover:translate-x-0.5 transition-transform" />
+                        <ChevronRight className="w-3.5 h-3.5 group-hover:translate-x-0.5 transition-transform" />
                       </button>
                     </div>
                   </div>
@@ -595,9 +566,9 @@ export default function StoreFront({ initialCategorySlug = null }) {
         )}
       </main>
 
-      {/* 7. PRODUCT DETAIL MODAL / DRAWER (ZALORA STYLE SELECTION SHEET) */}
+      {/* 7. PRODUCT DETAIL MODAL / BOTTOM SHEET (ZALORA SELECTION SHEET) */}
       {activeProductModal && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in duration-150">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in duration-150">
           <div 
             className="w-full max-w-lg bg-white sm:rounded-2xl rounded-t-3xl shadow-2xl overflow-hidden flex flex-col max-h-[90dvh] sm:max-h-[85vh] animate-in slide-in-from-bottom-6 duration-200"
             onClick={(e) => e.stopPropagation()}
@@ -605,7 +576,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
             {/* Header Modal */}
             <div className="p-4 sm:p-5 border-b border-zinc-100 flex items-center justify-between shrink-0 bg-white">
               <div className="flex items-center gap-3">
-                <div className="w-12 h-12 rounded-xl bg-[#F8F9FA] p-2 flex items-center justify-center border border-zinc-200 shrink-0">
+                <div className="w-12 h-12 rounded-xl bg-[#F7F7F8] p-2 flex items-center justify-center border border-zinc-200 shrink-0">
                   {getProductLogoUrl(activeProductModal.name) ? (
                     <img 
                       src={getProductLogoUrl(activeProductModal.name)} 
@@ -625,7 +596,10 @@ export default function StoreFront({ initialCategorySlug = null }) {
                   <div className="text-[11px] text-zinc-500 font-medium mt-0.5 flex items-center gap-1.5">
                     <span>{activeProductModal.categoryName || 'Aplikasi'}</span>
                     <span>•</span>
-                    <span className="text-emerald-700 font-semibold">100% Bergaransi Resmi</span>
+                    <span className="text-emerald-700 font-semibold flex items-center gap-1">
+                      <CheckCircle2 className="w-3 h-3 text-emerald-600 inline" />
+                      100% Bergaransi Resmi
+                    </span>
                   </div>
                 </div>
               </div>
@@ -692,7 +666,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
               </div>
 
               {/* Box Jaminan & QRIS Info */}
-              <div className="p-3 rounded-xl bg-zinc-50 border border-zinc-200 text-xs text-zinc-600 space-y-1.5">
+              <div className="p-3.5 rounded-xl bg-zinc-50 border border-zinc-200/80 text-xs text-zinc-600 space-y-1.5">
                 <div className="flex items-center justify-between font-bold text-zinc-900">
                   <span className="flex items-center gap-1.5">
                     <ShieldCheck className="w-4 h-4 text-emerald-600" />
@@ -738,7 +712,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
                 <div className="flex items-center gap-3">
                   <div className="shrink-0">
                     <div className="text-[10px] text-zinc-500 font-medium">Total Harga:</div>
-                    <div className="font-extrabold text-base sm:text-lg text-black font-mono leading-tight">
+                    <div className="font-bold text-base sm:text-lg text-black font-mono leading-tight">
                       {formatRupiah(selectedVariant.price)}
                     </div>
                   </div>
@@ -770,7 +744,7 @@ export default function StoreFront({ initialCategorySlug = null }) {
 
       {/* 8. MODAL GLOBAL QRIS TOKO */}
       {showGlobalQris && (
-        <div className="fixed inset-0 z-50 bg-black/50 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-center justify-center p-4 animate-in fade-in duration-150">
           <div className="w-full max-w-sm bg-white rounded-2xl shadow-2xl p-5 text-center space-y-4">
             <div className="flex items-center justify-between">
               <div className="flex items-center gap-2 font-bold text-sm text-zinc-900">

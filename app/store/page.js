@@ -300,6 +300,30 @@ export default function StoreFront({ initialCategorySlug = null }) {
   return (
     <div className="min-h-screen bg-white text-black font-sans pb-24 sm:pb-20 selection:bg-[#FFE600] selection:text-black">
       
+      {/* SVG Filter untuk Efek Ombak Air (Water Ripple Distortion) */}
+      <svg width="0" height="0" className="absolute pointer-events-none" style={{ position: 'absolute', width: 0, height: 0 }} aria-hidden="true">
+        <defs>
+          <filter id="water-wave" x="-20%" y="-20%" width="140%" height="140%">
+            <feTurbulence 
+              type="fractalNoise" 
+              baseFrequency="0.015 0.065" 
+              numOctaves="2" 
+              result="noise" 
+              seed="2"
+            >
+              <animate 
+                attributeName="baseFrequency" 
+                dur="4s" 
+                keyTimes="0; 0.33; 0.66; 1" 
+                values="0.012 0.055; 0.018 0.085; 0.015 0.060; 0.012 0.055" 
+                repeatCount="indefinite" 
+              />
+            </feTurbulence>
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G" />
+          </filter>
+        </defs>
+      </svg>
+      
       {/* 1. TOP ANNOUNCEMENT & CONTACT BAR */}
       <div className="bg-black text-[#FFE600] border-b-2 sm:border-b-3 border-black py-1.5 px-3 text-[11px] sm:text-xs font-black uppercase tracking-wider">
         <div className="max-w-6xl mx-auto flex items-center justify-between gap-2">
@@ -530,9 +554,36 @@ export default function StoreFront({ initialCategorySlug = null }) {
         </div>
       </header>
 
-      {/* 3. HERO & VALUE PROPOSITIONS (Hanya tampil di ikhtisar katalog depan) */}
+      {/* 3. HERO WAVY BANNER & VALUE PROPOSITIONS (Hanya tampil di ikhtisar katalog depan) */}
       {isCategoryOverview && (
-        <section className="max-w-6xl mx-auto px-4 pt-6 pb-2">
+        <section className="max-w-6xl mx-auto px-4 pt-4 sm:pt-6 pb-2 space-y-3.5">
+          {/* Hero Banner dengan Efek Ombak Air D STORE */}
+          <div className="bg-black text-[#FFE600] rounded-2xl sm:rounded-3xl border-3 border-black p-6 sm:p-9 text-center relative overflow-hidden shadow-[5px_5px_0_#000]">
+            {/* Ambient Glow */}
+            <div className="absolute -top-12 -left-12 w-48 h-48 bg-[#FFE600]/15 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-yellow-400/15 rounded-full blur-3xl pointer-events-none"></div>
+
+            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFE600] text-black font-black text-[10px] sm:text-xs uppercase tracking-wider mb-2 border-2 border-black shadow-[2px_2px_0_#000]">
+              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
+              <span>Official Digital Store</span>
+            </div>
+
+            {/* Teks Wavy D STORE Bergelombang Ombak Air */}
+            <div className="py-1 sm:py-2 select-none">
+              <h1 
+                style={{ filter: 'url(#water-wave)' }} 
+                className="text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tight text-[#FFE600] inline-block drop-shadow-[0_4px_16px_rgba(255,230,0,0.35)]"
+              >
+                D STORE
+              </h1>
+            </div>
+
+            <p className="text-xs sm:text-sm font-bold text-zinc-300 max-w-md mx-auto mt-1 leading-relaxed">
+              Pusat Lisensi &amp; Akun Premium Bergaransi Resmi. Proses 1-5 Menit Langsung Aktif!
+            </p>
+          </div>
+
+          {/* 4 Value Proposition Cards */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
             
             <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">

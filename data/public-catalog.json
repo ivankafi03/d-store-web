@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-09-25T06:19:48.765Z",
+  "updatedAt": "2026-10-05T07:03:48.655Z",
   "categories": [
     {
       "id": "cat_1",
@@ -73,12 +73,6 @@
           "name": "canva pro head 1m [ 100 user ]",
           "price": 9000,
           "isAvailable": true
-        },
-        {
-          "id": "var_7_3",
-          "name": "canva basic",
-          "price": 2500,
-          "isAvailable": false
         },
         {
           "id": "var_7_4",
@@ -569,7 +563,7 @@
           "id": "var_10_5",
           "name": "1m Plan Plus",
           "price": 27000,
-          "isAvailable": true
+          "isAvailable": false
         }
       ]
     },
@@ -1194,13 +1188,13 @@
           "id": "var_46_5",
           "name": "7d - Login By Link/Tv By Code",
           "price": 9000,
-          "isAvailable": true
+          "isAvailable": false
         },
         {
           "id": "var_46_6",
           "name": "1m - Login By Link/Tv By Code",
           "price": 18000,
-          "isAvailable": true
+          "isAvailable": false
         },
         {
           "id": "var_46_7",
@@ -1212,7 +1206,7 @@
           "id": "var_46_8",
           "name": "3d 1p1u - Login By Code/Password",
           "price": 10000,
-          "isAvailable": true
+          "isAvailable": false
         },
         {
           "id": "var_46_10",
@@ -1224,7 +1218,7 @@
           "id": "var_46_11",
           "name": "1m 1p2u - Login By Code/Password",
           "price": 27000,
-          "isAvailable": true
+          "isAvailable": false
         },
         {
           "id": "var_46_12",

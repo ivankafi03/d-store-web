@@ -306,20 +306,20 @@ export default function StoreFront({ initialCategorySlug = null }) {
           <filter id="water-wave" x="-20%" y="-20%" width="140%" height="140%">
             <feTurbulence 
               type="fractalNoise" 
-              baseFrequency="0.015 0.065" 
-              numOctaves="2" 
+              baseFrequency="0.012 0.05" 
+              numOctaves="1" 
               result="noise" 
-              seed="2"
+              seed="3"
             >
               <animate 
                 attributeName="baseFrequency" 
-                dur="4s" 
-                keyTimes="0; 0.33; 0.66; 1" 
-                values="0.012 0.055; 0.018 0.085; 0.015 0.060; 0.012 0.055" 
+                dur="4.5s" 
+                keyTimes="0; 0.5; 1" 
+                values="0.010 0.045; 0.014 0.070; 0.010 0.045" 
                 repeatCount="indefinite" 
               />
             </feTurbulence>
-            <feDisplacementMap in="SourceGraphic" in2="noise" scale="18" xChannelSelector="R" yChannelSelector="G" />
+            <feDisplacementMap in="SourceGraphic" in2="noise" scale="14" xChannelSelector="R" yChannelSelector="G" />
           </filter>
         </defs>
       </svg>
@@ -557,72 +557,63 @@ export default function StoreFront({ initialCategorySlug = null }) {
       {/* 3. HERO WAVY BANNER & VALUE PROPOSITIONS (Hanya tampil di ikhtisar katalog depan) */}
       {isCategoryOverview && (
         <section className="max-w-6xl mx-auto px-4 pt-4 sm:pt-6 pb-2 space-y-3.5">
-          {/* Hero Banner dengan Efek Ombak Air D STORE */}
-          <div className="bg-black text-[#FFE600] rounded-2xl sm:rounded-3xl border-3 border-black p-6 sm:p-9 text-center relative overflow-hidden shadow-[5px_5px_0_#000]">
-            {/* Ambient Glow */}
-            <div className="absolute -top-12 -left-12 w-48 h-48 bg-[#FFE600]/15 rounded-full blur-3xl pointer-events-none"></div>
-            <div className="absolute -bottom-12 -right-12 w-48 h-48 bg-yellow-400/15 rounded-full blur-3xl pointer-events-none"></div>
+          {/* Hero Banner dengan Efek Ombak Air D STORE (Gradient Hitam-Kuning, Font Putih Ramping Bersih) */}
+          <div className="relative rounded-2xl sm:rounded-3xl p-8 sm:p-14 text-center overflow-hidden border border-black/20 shadow-[0_8px_30px_rgb(0,0,0,0.14)] bg-gradient-to-br from-black via-[#141208] to-[#3A3005]">
+            {/* Ambient Semburat Cahaya Aksen Kuning Elegan di Sudut */}
+            <div className="absolute -top-16 -left-16 w-56 h-56 bg-amber-400/20 rounded-full blur-3xl pointer-events-none"></div>
+            <div className="absolute -bottom-16 -right-16 w-56 h-56 bg-yellow-400/25 rounded-full blur-3xl pointer-events-none"></div>
 
-            <div className="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-[#FFE600] text-black font-black text-[10px] sm:text-xs uppercase tracking-wider mb-2 border-2 border-black shadow-[2px_2px_0_#000]">
-              <span className="w-2 h-2 rounded-full bg-emerald-500 animate-pulse"></span>
-              <span>Official Digital Store</span>
-            </div>
-
-            {/* Teks Wavy D STORE Bergelombang Ombak Air */}
-            <div className="py-1 sm:py-2 select-none">
+            {/* Teks Wavy D STORE Bergelombang Ombak Air - Font Putih, Ramping, Proporsional Sesuai Referensi */}
+            <div className="py-2 sm:py-4 select-none">
               <h1 
-                style={{ filter: 'url(#water-wave)' }} 
-                className="text-5xl sm:text-7xl md:text-8xl font-black uppercase tracking-tight text-[#FFE600] inline-block drop-shadow-[0_4px_16px_rgba(255,230,0,0.35)]"
+                style={{ filter: 'url(#water-wave)', letterSpacing: '0.18em' }} 
+                className="text-4xl sm:text-6xl md:text-7xl font-semibold uppercase text-white inline-block drop-shadow-[0_2px_14px_rgba(255,255,255,0.25)]"
               >
                 D STORE
               </h1>
             </div>
-
-            <p className="text-xs sm:text-sm font-bold text-zinc-300 max-w-md mx-auto mt-1 leading-relaxed">
-              Pusat Lisensi &amp; Akun Premium Bergaransi Resmi. Proses 1-5 Menit Langsung Aktif!
-            </p>
           </div>
 
-          {/* 4 Value Proposition Cards */}
+          {/* 4 Value Proposition Cards Bersih di Bawah Banner */}
           <div className="grid grid-cols-2 md:grid-cols-4 gap-2.5 sm:gap-3">
             
-            <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-emerald-200 border-2 border-black flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-4 h-4 text-black" />
+            <div className="bg-white p-3 rounded-xl border border-zinc-200/90 shadow-xs hover:border-zinc-300 transition flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-emerald-50 border border-emerald-200 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-4 h-4 text-emerald-600" />
               </div>
               <div>
-                <div className="text-[11px] font-black uppercase leading-tight">100% Bergaransi</div>
-                <div className="text-[10px] text-zinc-600 font-bold">Klaim Cepat &amp; Aman</div>
+                <div className="text-[11px] font-bold text-zinc-900 leading-tight">100% Bergaransi</div>
+                <div className="text-[10px] text-zinc-500 font-medium">Klaim Cepat &amp; Aman</div>
               </div>
             </div>
 
-            <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-cyan-200 border-2 border-black flex items-center justify-center shrink-0">
-                <Clock className="w-4 h-4 text-black" />
+            <div className="bg-white p-3 rounded-xl border border-zinc-200/90 shadow-xs hover:border-zinc-300 transition flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-cyan-50 border border-cyan-200 flex items-center justify-center shrink-0">
+                <Clock className="w-4 h-4 text-cyan-600" />
               </div>
               <div>
-                <div className="text-[11px] font-black uppercase leading-tight">Proses 1-5 Menit</div>
-                <div className="text-[10px] text-zinc-600 font-bold">Langsung Aktif Digunakan</div>
+                <div className="text-[11px] font-bold text-zinc-900 leading-tight">Proses 1-5 Menit</div>
+                <div className="text-[10px] text-zinc-500 font-medium">Langsung Aktif Digunakan</div>
               </div>
             </div>
 
-            <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-[#FFE600] border-2 border-black flex items-center justify-center shrink-0">
-                <Zap className="w-4 h-4 text-black" />
+            <div className="bg-white p-3 rounded-xl border border-zinc-200/90 shadow-xs hover:border-zinc-300 transition flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-amber-50 border border-amber-200 flex items-center justify-center shrink-0">
+                <Zap className="w-4 h-4 text-amber-600" />
               </div>
               <div>
-                <div className="text-[11px] font-black uppercase leading-tight">Bayar Pakai QRIS</div>
-                <div className="text-[10px] text-zinc-600 font-bold">Semua Bank &amp; E-Wallet</div>
+                <div className="text-[11px] font-bold text-zinc-900 leading-tight">Bayar Pakai QRIS</div>
+                <div className="text-[10px] text-zinc-500 font-medium">Semua Bank &amp; E-Wallet</div>
               </div>
             </div>
 
-            <div className="bg-white p-3 rounded-xl border-3 border-black shadow-[3px_3px_0_#000] flex items-center gap-2.5">
-              <div className="w-8 h-8 rounded-lg bg-fuchsia-200 border-2 border-black flex items-center justify-center shrink-0">
-                <ShieldCheck className="w-4 h-4 text-black" />
+            <div className="bg-white p-3 rounded-xl border border-zinc-200/90 shadow-xs hover:border-zinc-300 transition flex items-center gap-2.5">
+              <div className="w-8 h-8 rounded-lg bg-purple-50 border border-purple-200 flex items-center justify-center shrink-0">
+                <ShieldCheck className="w-4 h-4 text-purple-600" />
               </div>
               <div>
-                <div className="text-[11px] font-black uppercase leading-tight">Akun Legal &amp; Anti-Hold</div>
-                <div className="text-[10px] text-zinc-600 font-bold">Bebas Gangguan</div>
+                <div className="text-[11px] font-bold text-zinc-900 leading-tight">Akun Legal &amp; Anti-Hold</div>
+                <div className="text-[10px] text-zinc-500 font-medium">Bebas Gangguan</div>
               </div>
             </div>
 

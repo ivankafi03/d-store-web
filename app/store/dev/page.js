@@ -39,6 +39,105 @@ import {
   ZALORA_MEN_CATEGORIES
 } from '@/lib/zaloraMenData';
 
+const HERO_CAROUSEL_ITEMS = [
+  {
+    id: 'hero-socks-1',
+    cardImg: '/images/hero-card-1.png',
+    name: 'Adidas Cushioned Ankle Socks 3 Pairs Black',
+    brand: 'ADIDAS',
+    price: 121500,
+    originalPrice: 199000,
+    discount: '39% OFF',
+    badge: 'FLASH SALE',
+    category: 'Aksesoris Olahraga',
+    image: 'https://images.ctfassets.net/9q8du028z7sn/3Y4VKiawE07XtOXiOFThxp/b7ea3c13c4034daf55858a71101d06ef/280x404_BRANDGRID_NEWREGBRAND___3_.jpg'
+  },
+  {
+    id: 'hero-adizero-1',
+    cardImg: '/images/hero-card-2.png',
+    name: 'Adidas Adizero Boston 12 Running Shoes White',
+    brand: 'ADIDAS',
+    price: 1603125,
+    originalPrice: 2499000,
+    discount: '36% OFF',
+    badge: 'FLASH SALE',
+    category: 'Sepatu Olahraga',
+    image: 'https://images.ctfassets.net/9q8du028z7sn/dZsQELYBUpUV8b0192XBY/210ef9d476ee53bb02af154c10417f85/225x225_BB2026_ADIDAS.png'
+  },
+  {
+    id: 'hero-response-1',
+    cardImg: '/images/hero-card-3.png',
+    name: 'Adidas Response CL Sneakers Off-White / Beige',
+    brand: 'ADIDAS',
+    price: 1093500,
+    originalPrice: 1800000,
+    discount: '39% OFF',
+    badge: 'FLASH SALE',
+    category: 'Sepatu Sneakers',
+    image: 'https://images.ctfassets.net/9q8du028z7sn/7wxipMmzcMa3uNwS7fk6m8/ab52d548583c95cfe151b4e9df070dc5/APP_HEROSECONDARY_1280x720_1010CD_FSBRAND_ADIDAS.jpg'
+  },
+  {
+    id: 'hero-loafer-1',
+    cardImg: '/images/hero-card-4.png',
+    name: 'Clarks Torhill Lo Suede Loafers Brown Moccasin',
+    brand: 'CLARKS',
+    price: 1485000,
+    originalPrice: 2399000,
+    discount: '38% OFF',
+    badge: 'FLASH SALE',
+    category: 'Sepatu Kasual',
+    image: 'https://images.ctfassets.net/9q8du028z7sn/7dI83E7t2hB/BRANDGRID_280x404_1010CD_FBB_JIMJOKER.jpg'
+  },
+  {
+    id: 'hero-socks-2',
+    cardImg: '/images/hero-card-1.png',
+    name: 'Adidas Cushioned Ankle Socks 3 Pairs White/Grey',
+    brand: 'ADIDAS',
+    price: 121500,
+    originalPrice: 199000,
+    discount: '39% OFF',
+    badge: 'FLASH SALE',
+    category: 'Aksesoris Olahraga',
+    image: 'https://images.ctfassets.net/9q8du028z7sn/3Y4VKiawE07XtOXiOFThxp/b7ea3c13c4034daf55858a71101d06ef/280x404_BRANDGRID_NEWREGBRAND___3_.jpg'
+  },
+  {
+    id: 'hero-adizero-2',
+    cardImg: '/images/hero-card-2.png',
+    name: 'Adidas Adizero Boston 12 Core Black / Lucid Lemon',
+    brand: 'ADIDAS',
+    price: 1603125,
+    originalPrice: 2499000,
+    discount: '36% OFF',
+    badge: 'FLASH SALE',
+    category: 'Sepatu Olahraga',
+    image: 'https://images.ctfassets.net/9q8du028z7sn/dZsQELYBUpUV8b0192XBY/210ef9d476ee53bb02af154c10417f85/225x225_BB2026_ADIDAS.png'
+  },
+  {
+    id: 'hero-response-2',
+    cardImg: '/images/hero-card-3.png',
+    name: 'Adidas Response CL Triple Black Edition',
+    brand: 'ADIDAS',
+    price: 1093500,
+    originalPrice: 1800000,
+    discount: '39% OFF',
+    badge: 'FLASH SALE',
+    category: 'Sepatu Sneakers',
+    image: 'https://images.ctfassets.net/9q8du028z7sn/7wxipMmzcMa3uNwS7fk6m8/ab52d548583c95cfe151b4e9df070dc5/APP_HEROSECONDARY_1280x720_1010CD_FSBRAND_ADIDAS.jpg'
+  },
+  {
+    id: 'hero-loafer-2',
+    cardImg: '/images/hero-card-4.png',
+    name: 'Clarks Wallabee Suede Maple Moccasin',
+    brand: 'CLARKS',
+    price: 1485000,
+    originalPrice: 2399000,
+    discount: '38% OFF',
+    badge: 'FLASH SALE',
+    category: 'Sepatu Kasual',
+    image: 'https://images.ctfassets.net/9q8du028z7sn/7dI83E7t2hB/BRANDGRID_280x404_1010CD_FBB_JIMJOKER.jpg'
+  }
+];
+
 export default function ZaloraMenDevPage() {
   const [activeSegment, setActiveSegment] = useState('women');
   const [activeSpeedDealIndex, setActiveSpeedDealIndex] = useState(0);
@@ -51,6 +150,19 @@ export default function ZaloraMenDevPage() {
   const [selectedSize, setSelectedSize] = useState('42 / L');
   const [showQuickAlert, setShowQuickAlert] = useState(null);
   const [showSearchModal, setShowSearchModal] = useState(false);
+
+  // Hero carousel state
+  const heroSliderRef = useRef(null);
+  const [heroSlideIndex, setHeroSlideIndex] = useState(0);
+
+  const handleHeroScroll = () => {
+    if (!heroSliderRef.current) return;
+    const { scrollLeft, scrollWidth, clientWidth } = heroSliderRef.current;
+    const maxScroll = scrollWidth - clientWidth;
+    if (maxScroll <= 0) return;
+    const index = Math.round((scrollLeft / maxScroll) * 4);
+    setHeroSlideIndex(Math.min(4, Math.max(0, index)));
+  };
 
   // Speed deals auto rotation
   useEffect(() => {
@@ -329,15 +441,15 @@ export default function ZaloraMenDevPage() {
       )}
 
       {/* =========================================================
-          3A. HERO POSTER MOBILE (100% PERSIS SCREENSHOT ZALORA)
+          3A. HERO POSTER MOBILE (100% FULL-BLEED DENGAN SLIDER NYATA)
       ========================================================= */}
-      <div className="md:hidden px-2 pt-1 pb-2">
-        <div className="relative w-full rounded-2xl overflow-hidden shadow-sm bg-[#1A1A1A]">
-          {/* Main Hero Image Asli dari Screenshot */}
+      <div className="md:hidden w-full px-0 pt-0 pb-0">
+        <div className="relative w-full overflow-hidden bg-[#1A1A1A]">
+          {/* Main Hero Background (Clean background dengan models & SHOP NOW) */}
           <img
-            src="/images/zalora-hero-mobile.png"
+            src="/images/zalora-hero-clean-bg.png"
             alt="ZALORA 10.10 Super Flash Sale Adidas"
-            className="w-full h-auto object-cover block"
+            className="w-full h-auto object-cover block select-none pointer-events-none"
           />
 
           {/* Clickable Hotspot over "SHOP NOW >" */}
@@ -348,76 +460,57 @@ export default function ZaloraMenDevPage() {
               if (el) el.scrollIntoView({ behavior: 'smooth' });
               showNotification('Menampilkan koleksi Adidas Flash Sale!');
             }}
-            className="absolute top-[52%] left-1/2 -translate-x-1/2 w-40 h-10 rounded-full cursor-pointer"
+            className="absolute top-[52%] left-1/2 -translate-x-1/2 w-40 h-10 rounded-full cursor-pointer z-10"
             title="Shop Adidas Now"
           />
 
-          {/* Clickable Hotspots over the 4 Mini Product Cards at bottom of hero */}
-          <div className="absolute bottom-[4.5%] inset-x-2 h-[26%] flex gap-2">
-            {/* Card 1: Kaos Kaki Adidas (Rp 121.500) */}
+          {/* REAL SWIPEABLE CAROUSEL OF MINI PRODUCT CARDS */}
+          <div className="absolute bottom-[2%] inset-x-0 z-20">
             <div
-              onClick={() => setActiveProductModal({
-                id: 'hero-socks',
-                brand: 'ADIDAS',
-                name: 'Adidas Cushioned Ankle Socks 3 Pairs Black',
-                category: 'Aksesoris Olahraga',
-                price: 121500,
-                originalPrice: 199000,
-                discount: '39% OFF',
-                badge: 'FLASH DEAL',
-                image: 'https://images.ctfassets.net/9q8du028z7sn/3Y4VKiawE07XtOXiOFThxp/b7ea3c13c4034daf55858a71101d06ef/280x404_BRANDGRID_NEWREGBRAND___3_.jpg'
-              })}
-              className="flex-1 cursor-pointer rounded-xl"
-              title="Adidas Socks - Rp 121.500"
-            />
-            {/* Card 2: Adizero Boston (Rp 1.603.125) */}
-            <div
-              onClick={() => setActiveProductModal({
-                id: 'hero-adizero',
-                brand: 'ADIDAS',
-                name: 'Adidas Adizero Boston 12 Running Shoes White',
-                category: 'Sepatu Olahraga',
-                price: 1603125,
-                originalPrice: 2499000,
-                discount: '36% OFF',
-                badge: 'FLASH DEAL',
-                image: 'https://images.ctfassets.net/9q8du028z7sn/dZsQELYBUpUV8b0192XBY/210ef9d476ee53bb02af154c10417f85/225x225_BB2026_ADIDAS.png'
-              })}
-              className="flex-1 cursor-pointer rounded-xl"
-              title="Adizero Boston 12 - Rp 1.603.125"
-            />
-            {/* Card 3: Response CL (Rp 1.093.500) */}
-            <div
-              onClick={() => setActiveProductModal({
-                id: 'hero-response',
-                brand: 'ADIDAS',
-                name: 'Adidas Response CL Sneakers Off-White / Beige',
-                category: 'Sepatu Sneakers',
-                price: 1093500,
-                originalPrice: 1800000,
-                discount: '39% OFF',
-                badge: 'FLASH DEAL',
-                image: 'https://images.ctfassets.net/9q8du028z7sn/7wxipMmzcMa3uNwS7fk6m8/ab52d548583c95cfe151b4e9df070dc5/APP_HEROSECONDARY_1280x720_1010CD_FSBRAND_ADIDAS.jpg'
-              })}
-              className="flex-1 cursor-pointer rounded-xl"
-              title="Response CL - Rp 1.093.500"
-            />
-            {/* Card 4: Clarks Loafer (Rp 1.485.000) */}
-            <div
-              onClick={() => setActiveProductModal({
-                id: 'hero-loafer',
-                brand: 'CLARKS',
-                name: 'Clarks Torhill Lo Suede Loafers Brown Moccasin',
-                category: 'Sepatu Kasual',
-                price: 1485000,
-                originalPrice: 2399000,
-                discount: '38% OFF',
-                badge: 'FLASH DEAL',
-                image: 'https://images.ctfassets.net/9q8du028z7sn/7dI83E7t2hB/BRANDGRID_280x404_1010CD_FBB_JIMJOKER.jpg'
-              })}
-              className="flex-1 cursor-pointer rounded-xl"
-              title="Clarks Loafers - Rp 1.485.000"
-            />
+              ref={heroSliderRef}
+              onScroll={handleHeroScroll}
+              className="flex items-center gap-2 overflow-x-auto snap-x snap-mandatory px-3 no-scrollbar scroll-smooth cursor-grab active:cursor-grabbing select-none"
+              style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
+            >
+              {HERO_CAROUSEL_ITEMS.map((item) => (
+                <div
+                  key={item.id}
+                  onClick={() => setActiveProductModal(item)}
+                  className="shrink-0 snap-start select-none cursor-pointer active:scale-95 transition"
+                >
+                  <img
+                    src={item.cardImg}
+                    alt={item.name}
+                    className="w-[78px] sm:w-[88px] h-auto rounded-xl shadow-md border border-white/30 block pointer-events-none"
+                    loading="eager"
+                  />
+                </div>
+              ))}
+            </div>
+
+            {/* Pagination Indicators (1 Elongated Bar + 4 Dots) */}
+            <div className="flex items-center justify-center gap-1.5 pt-2">
+              {[0, 1, 2, 3, 4].map((dot) => (
+                <button
+                  key={dot}
+                  type="button"
+                  onClick={() => {
+                    if (!heroSliderRef.current) return;
+                    const { scrollWidth, clientWidth } = heroSliderRef.current;
+                    const maxScroll = scrollWidth - clientWidth;
+                    heroSliderRef.current.scrollTo({
+                      left: (dot / 4) * maxScroll,
+                      behavior: 'smooth'
+                    });
+                    setHeroSlideIndex(dot);
+                  }}
+                  className={`h-1 rounded-full transition-all duration-300 cursor-pointer ${
+                    dot === heroSlideIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/40'
+                  }`}
+                  aria-label={`Slide ${dot + 1}`}
+                />
+              ))}
+            </div>
           </div>
         </div>
       </div>
@@ -596,8 +689,8 @@ export default function ZaloraMenDevPage() {
       {/* =========================================================
           5. SPEED DEALS & SECONDARY BANNER CAROUSEL
       ========================================================= */}
-      <section className="max-w-[1240px] mx-auto px-4 py-4">
-        <div className="relative rounded-2xl overflow-hidden shadow-xs bg-zinc-100 group">
+      <section className="max-w-[1240px] mx-auto px-0 md:px-4 py-1 md:py-4">
+        <div className="relative rounded-none md:rounded-2xl overflow-hidden shadow-xs bg-zinc-100 group">
           <div 
             onClick={() => {
               const currentDeal = ZALORA_SPEED_DEALS[activeSpeedDealIndex];

@@ -870,19 +870,19 @@ export default function StoreDevPreview() {
       )}
 
       {/* =========================================================
-          ZALORA OFFICIAL MOBILE BOTTOM NAVIGATION BAR (PERSIS KODE ASLI ZALORA)
+          ZALORA OFFICIAL MOBILE BOTTOM NAVIGATION BAR (PERSIS 100% KODE ASLI ZALORA)
       ========================================================= */}
-      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-zinc-200 md:hidden">
+      <div id="mobile_bottom_nav" className="fixed inset-x-0 bottom-0 z-50 bg-white/95 backdrop-blur-md border-t border-[#E5E5E5] md:hidden shadow-[0_-2px_10px_rgba(0,0,0,0.06)]" style={{ transform: 'translateZ(0)' }}>
         <div className="relative flex items-center justify-center px-2 py-1 max-w-lg mx-auto">
           
           {/* 1. Home */}
-          <button 
-            type="button"
+          <a 
+            aria-current="page"
             onClick={() => {
               setSelectedCategory('all');
               window.scrollTo({ top: 0, behavior: 'smooth' });
             }}
-            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer"
+            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none"
           >
             {selectedCategory === 'all' && (
               <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-20 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-zinc-200/50 backdrop-blur-[2px]"></span>
@@ -895,20 +895,22 @@ export default function StoreDevPreview() {
                 </svg>
               </span>
             </span>
-            <span className={`relative text-[10px] leading-3 ${selectedCategory === 'all' ? 'font-bold text-black' : 'font-normal text-zinc-500'}`}>
+            <span className={`relative text-[10px] leading-3 ${selectedCategory === 'all' ? 'font-bold text-black' : 'font-normal text-[#737373]'}`}>
               Home
             </span>
-          </button>
+          </a>
 
           {/* 2. Kategori */}
-          <button 
-            type="button"
+          <a 
             onClick={() => {
               const el = document.getElementById('catalog-section');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer"
+            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none"
           >
+            {selectedCategory !== 'all' && (
+              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-20 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-zinc-200/50 backdrop-blur-[2px]"></span>
+            )}
             <span className="relative">
               <span>
                 <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
@@ -917,20 +919,23 @@ export default function StoreDevPreview() {
                 </svg>
               </span>
             </span>
-            <span className="relative text-[10px] leading-3 font-normal text-zinc-500">
+            <span className={`relative text-[10px] leading-3 ${selectedCategory !== 'all' ? 'font-bold text-black' : 'font-normal text-[#737373]'}`}>
               Kategori
             </span>
-          </button>
+          </a>
 
-          {/* 3. Tas / Order */}
-          <button 
-            type="button"
+          {/* 3. Tas */}
+          <a 
+            rel="noindex,nofollow" 
+            aria-label="Go To Cart" 
+            data-test-id="cartLink"
             onClick={() => {
               const el = document.getElementById('catalog-section');
               if (el) el.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer"
+            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none"
           >
+            <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-20 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
             <span className="relative">
               <span>
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
@@ -938,17 +943,20 @@ export default function StoreDevPreview() {
                 </svg>
               </span>
             </span>
-            <span className="relative text-[10px] leading-3 font-normal text-zinc-500">
-              Tas ({products.length})
+            <span className="relative text-[10px] leading-3 font-normal text-[#737373]">
+              Tas
             </span>
-          </button>
+          </a>
 
-          {/* 4. Wishlist / QRIS */}
-          <button 
-            type="button"
+          {/* 4. Wishlist */}
+          <a 
+            rel="noindex,nofollow" 
+            aria-label="Wishlist" 
+            data-test-id="wishlistLink"
             onClick={() => setShowGlobalQris(true)}
-            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer"
+            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none"
           >
+            <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-20 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
             <span className="relative">
               <span>
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
@@ -956,18 +964,21 @@ export default function StoreDevPreview() {
                 </svg>
               </span>
             </span>
-            <span className="relative text-[10px] leading-3 font-normal text-zinc-500">
-              QRIS
+            <span className="relative text-[10px] leading-3 font-normal text-[#737373]">
+              Wishlist
             </span>
-          </button>
+          </a>
 
-          {/* 5. Akun Saya / WhatsApp */}
+          {/* 5. Akun Saya */}
           <a 
+            rel="noindex,nofollow" 
+            data-test-id="bottomNavAccountIcon"
             href="https://wa.me/6281230112240"
             target="_blank"
             rel="noopener noreferrer"
-            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5"
+            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none"
           >
+            <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-20 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
             <span className="relative">
               <span>
                 <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
@@ -975,13 +986,13 @@ export default function StoreDevPreview() {
                 </svg>
               </span>
             </span>
-            <span className="relative text-[10px] leading-3 font-normal text-zinc-500">
+            <span className="relative text-[10px] leading-3 font-normal text-[#737373]">
               Akun Saya
             </span>
           </a>
 
         </div>
-      </nav>
+      </div>
 
     </div>
   );

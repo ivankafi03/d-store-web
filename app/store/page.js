@@ -3,6 +3,7 @@
 import { Suspense } from 'react';
 import Link from 'next/link';
 import { MessageCircle, ShieldCheck, Zap, QrCode } from 'lucide-react';
+import StoreDevPreview from './dev/page';
 
 function HoldingContent() {
   return (
@@ -106,6 +107,12 @@ function HoldingContent() {
 }
 
 export default function StoreFront() {
+  // Jika di lokal (dev mode), langsung tampilkan halaman Zalora lengkap!
+  if (process.env.NODE_ENV === 'development') {
+    return <StoreDevPreview />;
+  }
+
+  // Jika di production (live web), tampilkan layar hitam penutup
   return (
     <Suspense fallback={<div className="min-h-screen bg-black" />}>
       <HoldingContent />

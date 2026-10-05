@@ -869,6 +869,120 @@ export default function StoreDevPreview() {
         </div>
       )}
 
+      {/* =========================================================
+          ZALORA OFFICIAL MOBILE BOTTOM NAVIGATION BAR (PERSIS KODE ASLI ZALORA)
+      ========================================================= */}
+      <nav className="fixed bottom-0 left-0 right-0 z-40 bg-white/95 backdrop-blur-md border-t border-zinc-200 md:hidden">
+        <div className="relative flex items-center justify-center px-2 py-1 max-w-lg mx-auto">
+          
+          {/* 1. Home */}
+          <button 
+            type="button"
+            onClick={() => {
+              setSelectedCategory('all');
+              window.scrollTo({ top: 0, behavior: 'smooth' });
+            }}
+            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer"
+          >
+            {selectedCategory === 'all' && (
+              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-20 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-zinc-200/50 backdrop-blur-[2px]"></span>
+            )}
+            <span className="relative">
+              <span>
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
+                  <rect width="24" height="24" rx="2" fill="#000"></rect>
+                  <path d="M4.278 3H21L5.555 19.875h14.682V21H3L18.443 4.125H4.278V3z" fill="#fff"></path>
+                </svg>
+              </span>
+            </span>
+            <span className={`relative text-[10px] leading-3 ${selectedCategory === 'all' ? 'font-bold text-black' : 'font-normal text-zinc-500'}`}>
+              Home
+            </span>
+          </button>
+
+          {/* 2. Kategori */}
+          <button 
+            type="button"
+            onClick={() => {
+              const el = document.getElementById('catalog-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer"
+          >
+            <span className="relative">
+              <span>
+                <svg width="26" height="26" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
+                  <path d="M23.64 20.376l-4.083-4.082a7.185 7.185 0 10-.922.922l4.082 4.083a.652.652 0 10.923-.923zM8.174 11.705a5.871 5.871 0 115.871 5.87 5.877 5.877 0 01-5.87-5.87z" fill="#737373"></path>
+                  <path d="M2.169 15.222h1.68M2.169 18.222H5.04M2.169 21.222h7.033" stroke="#737373" strokeLinecap="round"></path>
+                </svg>
+              </span>
+            </span>
+            <span className="relative text-[10px] leading-3 font-normal text-zinc-500">
+              Kategori
+            </span>
+          </button>
+
+          {/* 3. Tas / Order */}
+          <button 
+            type="button"
+            onClick={() => {
+              const el = document.getElementById('catalog-section');
+              if (el) el.scrollIntoView({ behavior: 'smooth' });
+            }}
+            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer"
+          >
+            <span className="relative">
+              <span>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M20.5 10.866v.975c0 .27-.224.488-.5.488a.494.494 0 01-.5-.488v-.975h-6v.975c0 .27-.224.488-.5.488a.494.494 0 01-.5-.488v-.975h-2.17L9.007 23.337a.987.987 0 00.986 1.076l12.999.111a.982.982 0 001.003-1.082l-1.411-12.576H20.5zm0-.976h2.083c.51 0 .938.375.994.87l1.41 12.577c.12 1.07-.672 2.034-1.77 2.151a2.072 2.072 0 01-.235.012l-13-.111c-1.104-.01-1.991-.89-1.982-1.968.001-.062.005-.123.011-.184l1.325-12.472a.991.991 0 01.995-.875H12.5v-.319c0-2.243 1.785-4.071 4-4.071 1.922 0 3.555 1.387 3.923 3.275.051.26.077.527.077.796v.32zm-1 0v-.319c0-.208-.02-.413-.059-.614-.28-1.437-1.51-2.481-2.941-2.481-1.651 0-3 1.38-3 3.095v.32h6z" fill="#737373"></path>
+                </svg>
+              </span>
+            </span>
+            <span className="relative text-[10px] leading-3 font-normal text-zinc-500">
+              Tas ({products.length})
+            </span>
+          </button>
+
+          {/* 4. Wishlist / QRIS */}
+          <button 
+            type="button"
+            onClick={() => setShowGlobalQris(true)}
+            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer"
+          >
+            <span className="relative">
+              <span>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M16.308 8.335c1.68-1.666 3.691-2.219 5.9-1.571 2.168.635 3.57 2.147 4.13 4.394.058.229.082.409.122.802l.012.127.028.279c-.039 1.496-.545 2.874-1.502 4.4-1.454 2.318-3.335 4.298-6.147 6.683-.362.306-.666.549-1.317 1.058l-.031.025c-.454.356-.665.522-.916.727-.375.305-.767.329-1.162.027-3.318-2.532-5.666-4.724-7.574-7.255-1.107-1.467-1.826-2.832-2.196-4.323-.805-3.25 1.625-6.761 4.946-7.141 1.989-.228 3.692.368 5.086 1.786.16.163.228.246.296.248.072 0 .145-.087.325-.266zm9.196 4.083a10.708 10.708 0 01-.04-.361 4.378 4.378 0 00-.095-.658c-.477-1.907-1.621-3.142-3.441-3.676-1.853-.543-3.49-.093-4.915 1.322-.74.735-1.317.744-2.04.01-1.176-1.199-2.574-1.688-4.258-1.495-2.721.312-4.75 3.243-4.09 5.907.334 1.345.993 2.594 2.024 3.962 1.836 2.435 4.11 4.56 7.339 7.028.244-.198.459-.368.898-.712l.032-.025c.64-.502.938-.74 1.287-1.034 2.74-2.324 4.557-4.237 5.946-6.451.87-1.387 1.316-2.602 1.353-3.817z" fill="#737373"></path>
+                </svg>
+              </span>
+            </span>
+            <span className="relative text-[10px] leading-3 font-normal text-zinc-500">
+              QRIS
+            </span>
+          </button>
+
+          {/* 5. Akun Saya / WhatsApp */}
+          <a 
+            href="https://wa.me/6281230112240"
+            target="_blank"
+            rel="noopener noreferrer"
+            className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5"
+          >
+            <span className="relative">
+              <span>
+                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M21.5 11a5.5 5.5 0 11-11 0 5.5 5.5 0 1111 0zm-1 0a4.5 4.5 0 10-8.999-.001A4.5 4.5 0 0020.5 11zm4 13.605c0 .512-.068 1.02-.2 1.522a.5.5 0 01-.966-.254c.11-.42.166-.843.166-1.268 0-3.349-3.339-6.105-7.5-6.105s-7.5 2.756-7.5 6.105c0 .281.074.964.137 1.304a.5.5 0 11-.984.182 10.96 10.96 0 01-.153-1.486c0-3.948 3.824-7.105 8.5-7.105s8.5 3.157 8.5 7.105z" fill="#737373"></path>
+                </svg>
+              </span>
+            </span>
+            <span className="relative text-[10px] leading-3 font-normal text-zinc-500">
+              Akun Saya
+            </span>
+          </a>
+
+        </div>
+      </nav>
+
     </div>
   );
 }

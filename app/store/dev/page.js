@@ -875,10 +875,10 @@ export default function StoreDevPreview() {
       ========================================================= */}
       <div 
         id="mobile_bottom_nav" 
-        className="fixed bottom-4 sm:bottom-6 left-1/2 -translate-x-1/2 z-50 w-[94%] max-w-[400px] md:hidden"
-        style={{ transform: 'translateX(-50%) translateZ(0)' }}
+        className="fixed bottom-4 sm:bottom-6 inset-x-0 mx-auto z-50 w-[92%] max-w-[390px] md:hidden pointer-events-none"
+        style={{ left: 0, right: 0, marginLeft: 'auto', marginRight: 'auto' }}
       >
-        <div className="rounded-full bg-white/80 backdrop-blur-2xl border border-white/70 shadow-[0_10px_35px_rgba(0,0,0,0.14),0_2px_10px_rgba(0,0,0,0.06)] px-1.5 py-1">
+        <div className="rounded-full bg-white/85 backdrop-blur-2xl border border-white/80 shadow-[0_10px_35px_rgba(0,0,0,0.15),0_2px_10px_rgba(0,0,0,0.06)] px-2 py-1 pointer-events-auto">
           <div className="relative flex items-center justify-between">
             
             {/* 1. Home */}
@@ -891,7 +891,7 @@ export default function StoreDevPreview() {
               className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none"
             >
               {selectedCategory === 'all' && (
-                <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/[0.06] backdrop-blur-[2px]"></span>
+                <span aria-hidden="true" className="absolute inset-x-1 inset-y-1 rounded-full bg-black/[0.06] -z-10"></span>
               )}
               <span className="relative">
                 <span>
@@ -914,7 +914,7 @@ export default function StoreDevPreview() {
               className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none"
             >
               {selectedCategory !== 'all' && (
-                <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full bg-black/[0.06] backdrop-blur-[2px]"></span>
+                <span aria-hidden="true" className="absolute inset-x-1 inset-y-1 rounded-full bg-black/[0.06] -z-10"></span>
               )}
               <span className="relative">
                 <span>
@@ -940,7 +940,6 @@ export default function StoreDevPreview() {
               }}
               className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none"
             >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
               <span className="relative">
                 <span>
                   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
@@ -961,7 +960,6 @@ export default function StoreDevPreview() {
               onClick={() => setShowGlobalQris(true)}
               className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none"
             >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
               <span className="relative">
                 <span>
                   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
@@ -983,7 +981,6 @@ export default function StoreDevPreview() {
               rel="noopener noreferrer"
               className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none"
             >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
               <span className="relative">
                 <span>
                   <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">

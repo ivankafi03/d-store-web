@@ -220,6 +220,8 @@ export default function ZaloraMenDevPage() {
   const [selectedSize, setSelectedSize] = useState('42 / L');
   const [showQuickAlert, setShowQuickAlert] = useState(null);
   const [showSearchModal, setShowSearchModal] = useState(false);
+  const [trendSlideIndex, setTrendSlideIndex] = useState(0);
+  const [stealsSlideIndex, setStealsSlideIndex] = useState(0);
 
   // Hero mini-card carousel state
   const heroSliderRef = useRef(null);
@@ -366,6 +368,66 @@ export default function ZaloraMenDevPage() {
 
   const onTopTierPointerUp = () => {
     isDraggingTopTier.current = false;
+  };
+
+  // Trending Now slider drag support
+  const trendSliderRef = useRef(null);
+  const isDraggingTrend = useRef(false);
+  const startXTrend = useRef(0);
+  const dragDistTrend = useRef(0);
+
+  const onTrendPointerDown = (e) => {
+    isDraggingTrend.current = true;
+    startXTrend.current = e.pageX || e.clientX;
+    dragDistTrend.current = 0;
+  };
+
+  const onTrendPointerMove = (e) => {
+    if (!isDraggingTrend.current) return;
+    const x = e.pageX || e.clientX;
+    dragDistTrend.current = Math.abs(x - startXTrend.current);
+  };
+
+  const onTrendPointerUp = (e) => {
+    if (!isDraggingTrend.current) return;
+    isDraggingTrend.current = false;
+    const x = e.pageX || e.clientX;
+    const diff = x - startXTrend.current;
+    if (diff < -40 && trendSlideIndex < 4) {
+      setTrendSlideIndex(prev => Math.min(4, prev + 1));
+    } else if (diff > 40 && trendSlideIndex > 0) {
+      setTrendSlideIndex(prev => Math.max(0, prev - 1));
+    }
+  };
+
+  // Steals You Can't Miss slider drag support
+  const stealsSliderRef = useRef(null);
+  const isDraggingSteals = useRef(false);
+  const startXSteals = useRef(0);
+  const dragDistSteals = useRef(0);
+
+  const onStealsPointerDown = (e) => {
+    isDraggingSteals.current = true;
+    startXSteals.current = e.pageX || e.clientX;
+    dragDistSteals.current = 0;
+  };
+
+  const onStealsPointerMove = (e) => {
+    if (!isDraggingSteals.current) return;
+    const x = e.pageX || e.clientX;
+    dragDistSteals.current = Math.abs(x - startXSteals.current);
+  };
+
+  const onStealsPointerUp = (e) => {
+    if (!isDraggingSteals.current) return;
+    isDraggingSteals.current = false;
+    const x = e.pageX || e.clientX;
+    const diff = x - startXSteals.current;
+    if (diff < -40 && stealsSlideIndex < 1) {
+      setStealsSlideIndex(prev => Math.min(1, prev + 1));
+    } else if (diff > 40 && stealsSlideIndex > 0) {
+      setStealsSlideIndex(prev => Math.max(0, prev - 1));
+    }
   };
 
   // Speed deals auto rotation
@@ -1422,123 +1484,385 @@ export default function ZaloraMenDevPage() {
       </section>
 
       {/* =========================================================
-          8. TRENDING NOW, YOUR STYLE INSPO (Tall 700x1200 Cards)
+          8. TRENDING NOW, YOUR STYLE INSPO (Zalora Extended Carousel)
       ========================================================= */}
-      <section className="max-w-[1240px] mx-auto px-4 py-8">
-        <div className="mb-5">
-          <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-black">
-            Trending Now, Your Style Inspo
-          </h2>
-          <p className="text-xs text-[#777] mt-0.5">Inspirasi tren gaya berpakaian pria terbaru musim ini</p>
+      <section className="banner__details-wrapper max-w-[1240px] mx-auto px-4 py-6">
+        <div className="post-type__title truncated truncated--two-lines margin-bottom text-lg md:text-xl font-bold text-[#262626] mb-3">
+          Trending Now, Your Style Inspo
         </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-3 sm:gap-4">
-          {ZALORA_TRENDING.map((trend, idx) => (
-            <div
-              key={idx}
-              onClick={() => {
-                setSearchQuery(trend.title);
-                const el = document.getElementById('products-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                showNotification(`Melihat inspirasi gaya: ${trend.title}`);
-              }}
-              className="group relative rounded-xl overflow-hidden bg-zinc-900 shadow-sm hover:shadow-lg transition duration-300 cursor-pointer"
-            >
-              <div className="aspect-[700/1200] w-full overflow-hidden">
-                <img
-                  src={trend.img}
-                  alt={trend.title}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                  loading="lazy"
-                />
+        <div className="post-type__content banner__hero-extended-wrapper">
+          <div style={{ paddingBottom: '0px' }}>
+            <div className="slider-container relative select-none">
+              <div aria-live="polite" aria-atomic="true" tabIndex={-1} style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', padding: '0px', margin: '-1px', clip: 'rect(0px, 0px, 0px, 0px)', whiteSpace: 'nowrap', border: '0px' }}>
+                {`Slide ${trendSlideIndex + 1} of 5`}
               </div>
-              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-transparent to-transparent flex flex-col justify-end p-3.5 text-white">
-                <span className="font-extrabold text-xs sm:text-sm uppercase tracking-wider leading-tight">
-                  {trend.title}
-                </span>
-                <span className="text-[10px] text-zinc-300 mt-0.5 line-clamp-1">
-                  {trend.label}
-                </span>
+
+              {/* Prev Button */}
+              <div className="slider-control-centerleft absolute z-10 top-1/2 left-0 -translate-y-1/2">
+                <button
+                  className="banner__carousel-prev-button--hide"
+                  disabled={trendSlideIndex === 0}
+                  aria-label="previous"
+                  type="button"
+                  onClick={() => {
+                    if (trendSlideIndex > 0) {
+                      setTrendSlideIndex(prev => prev - 1);
+                    }
+                  }}
+                  style={{
+                    border: '0px',
+                    background: 'rgba(0, 0, 0, 0.4)',
+                    color: 'white',
+                    padding: '10px',
+                    textTransform: 'uppercase',
+                    opacity: trendSlideIndex === 0 ? 0.3 : 1,
+                    cursor: trendSlideIndex === 0 ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Prev
+                </button>
+              </div>
+
+              {/* Next Button */}
+              <div className="slider-control-centerright absolute z-10 top-1/2 right-0 -translate-y-1/2">
+                <button
+                  className="banner__carousel-next-button--hide"
+                  disabled={trendSlideIndex >= 4}
+                  aria-label="next"
+                  type="button"
+                  onClick={() => {
+                    if (trendSlideIndex < 4) {
+                      setTrendSlideIndex(prev => prev + 1);
+                    }
+                  }}
+                  style={{
+                    border: '0px',
+                    background: 'rgba(0, 0, 0, 0.4)',
+                    color: 'white',
+                    padding: '10px',
+                    textTransform: 'uppercase',
+                    opacity: trendSlideIndex >= 4 ? 0.3 : 1,
+                    cursor: trendSlideIndex >= 4 ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Next
+                </button>
+              </div>
+
+              {/* Bullet Dots */}
+              <div className="slider-control-bottomcenter absolute z-10 bottom-0 left-1/2 -translate-x-1/2">
+                <ul style={{ position: 'relative', top: '-10px', display: 'flex', margin: '0px', padding: '0px', listStyleType: 'none' }}>
+                  {[0, 1, 2, 3, 4].map((dotIdx) => {
+                    const isActive = trendSlideIndex === dotIdx;
+                    return (
+                      <li key={dotIdx} className={`paging-item ${isActive ? 'active' : ''}`} style={{ outline: 'none', padding: '0 6px' }}>
+                        <button
+                          className="banner__carousel-paging-dots--hide"
+                          type="button"
+                          aria-label={`slide ${dotIdx + 1} bullet`}
+                          aria-selected={isActive}
+                          onClick={() => setTrendSlideIndex(dotIdx)}
+                          style={{
+                            cursor: 'pointer',
+                            opacity: isActive ? 1 : 0.5,
+                            background: 'transparent',
+                            border: 'none',
+                            fill: 'black',
+                            padding: 0
+                          }}
+                        >
+                          <svg className="paging-dot" width="6" height="6" aria-hidden="true" focusable="false">
+                            <circle cx="3" cy="3" r="3" fill="#000" />
+                          </svg>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+
+              {/* Slider Frame */}
+              <div
+                ref={trendSliderRef}
+                onMouseDown={onTrendPointerDown}
+                onMouseMove={onTrendPointerMove}
+                onMouseUp={onTrendPointerUp}
+                onMouseLeave={onTrendPointerUp}
+                className="slider-frame overflow-hidden w-full relative outline-none h-auto cursor-grab active:cursor-grabbing"
+                aria-label="carousel-slider"
+                role="region"
+                tabIndex={0}
+              >
+                <div
+                  className="slider-list flex text-left transition-transform duration-300 ease-in-out"
+                  style={{
+                    width: '333.333%',
+                    transform: `translate3d(-${trendSlideIndex * 20}%, 0px, 0px)`
+                  }}
+                >
+                  {ZALORA_TRENDING.map((slide, idx) => (
+                    <div
+                      key={idx}
+                      className={`slide ${idx === trendSlideIndex ? 'slide-current' : ''} slide-visible`}
+                      style={{
+                        width: '20%',
+                        flex: '1 1 0%',
+                        height: 'auto',
+                        padding: '0px 8px',
+                        opacity: 1
+                      }}
+                    >
+                      <a
+                        className="no-decoration banner__media-link block"
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (dragDistTrend.current > 10) return;
+                          setSearchQuery(slide.title);
+                          document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+                          showNotification(`Melihat inspirasi gaya: ${slide.title}`);
+                        }}
+                        data-placement-id="static"
+                        data-entry-id={`trend-slide-${idx}`}
+                      >
+                        <div className="banner__media-item-wrapper rounded-xl overflow-hidden shadow-xs hover:shadow-md transition">
+                          <div className="image-container aspect-[700/1200] w-full overflow-hidden">
+                            <img
+                              className="unit-element__media-image banner__media-image w-full h-full object-cover pointer-events-none"
+                              fetchPriority={idx === 0 ? "high" : "auto"}
+                              src={slide.img}
+                              alt={slide.title}
+                              draggable="false"
+                            />
+                          </div>
+                          <div className="unit-element__media-description"></div>
+                        </div>
+                      </a>
+                    </div>
+                  ))}
+                </div>
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
       {/* =========================================================
-          9. STEALS YOU CAN'T MISS (Wide Split Banners)
+          9. STEALS YOU CAN'T MISS (Zalora Hero Banner Carousel)
       ========================================================= */}
-      <section className="max-w-[1240px] mx-auto px-4 py-6">
-        <div className="mb-5">
-          <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-black">
-            Steals You Can&apos;t Miss
-          </h2>
+      <section className="banner__details-wrapper max-w-[1240px] mx-auto px-4 py-6">
+        <div className="post-type__title truncated truncated--two-lines margin-bottom text-lg md:text-xl font-bold text-[#262626] mb-3">
+          Steals You Can&apos;t Miss
         </div>
+        <div className="post-type__content banner__hero-wrapper">
+          <div style={{ paddingBottom: '0px' }}>
+            <div className="slider-container relative select-none">
+              <div aria-live="off" aria-atomic="true" tabIndex={-1} style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', padding: '0px', margin: '-1px', clip: 'rect(0px, 0px, 0px, 0px)', whiteSpace: 'nowrap', border: '0px' }}>
+                {`Slide ${stealsSlideIndex + 1} of 2`}
+              </div>
 
-        <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
-          {ZALORA_STEALS.map((steal, idx) => (
-            <div
-              key={idx}
-              onClick={() => {
-                setSearchQuery(steal.title);
-                const el = document.getElementById('products-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                showNotification(`Penawaran Steals: ${steal.title}`);
-              }}
-              className="block relative rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition duration-300 group cursor-pointer"
-            >
-              <img
-                src={steal.img}
-                alt={steal.title}
-                className="w-full h-auto object-cover group-hover:scale-[1.02] transition duration-500"
-                loading="lazy"
-              />
+              {/* Prev Button */}
+              <div className="slider-control-centerleft absolute z-10 top-1/2 left-0 -translate-y-1/2">
+                <button
+                  className="banner__carousel-prev-button--hide"
+                  disabled={stealsSlideIndex === 0}
+                  aria-label="previous"
+                  type="button"
+                  onClick={() => {
+                    if (stealsSlideIndex > 0) {
+                      setStealsSlideIndex(prev => prev - 1);
+                    }
+                  }}
+                  style={{
+                    border: '0px',
+                    background: 'rgba(0, 0, 0, 0.4)',
+                    color: 'white',
+                    padding: '10px',
+                    textTransform: 'uppercase',
+                    opacity: stealsSlideIndex === 0 ? 0.3 : 1,
+                    cursor: stealsSlideIndex === 0 ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Prev
+                </button>
+              </div>
+
+              {/* Next Button */}
+              <div className="slider-control-centerright absolute z-10 top-1/2 right-0 -translate-y-1/2">
+                <button
+                  className="banner__carousel-next-button--hide"
+                  disabled={stealsSlideIndex >= 1}
+                  aria-label="next"
+                  type="button"
+                  onClick={() => {
+                    if (stealsSlideIndex < 1) {
+                      setStealsSlideIndex(prev => prev + 1);
+                    }
+                  }}
+                  style={{
+                    border: '0px',
+                    background: 'rgba(0, 0, 0, 0.4)',
+                    color: 'white',
+                    padding: '10px',
+                    textTransform: 'uppercase',
+                    opacity: stealsSlideIndex >= 1 ? 0.3 : 1,
+                    cursor: stealsSlideIndex >= 1 ? 'not-allowed' : 'pointer'
+                  }}
+                >
+                  Next
+                </button>
+              </div>
+
+              {/* Bullet Dots */}
+              <div className="slider-control-bottomcenter absolute z-10 bottom-0 left-1/2 -translate-x-1/2">
+                <ul style={{ position: 'relative', top: '-10px', display: 'flex', margin: '0px', padding: '0px', listStyleType: 'none' }}>
+                  {[0, 1].map((dotIdx) => {
+                    const isActive = stealsSlideIndex === dotIdx;
+                    return (
+                      <li key={dotIdx} className={`paging-item ${isActive ? 'active' : ''}`} style={{ outline: 'none', padding: '0 6px' }}>
+                        <button
+                          className="banner__carousel-paging-dots--hide"
+                          type="button"
+                          aria-label={`slide ${dotIdx + 1} bullet`}
+                          aria-selected={isActive}
+                          onClick={() => setStealsSlideIndex(dotIdx)}
+                          style={{
+                            cursor: 'pointer',
+                            opacity: isActive ? 1 : 0.5,
+                            background: 'transparent',
+                            border: 'none',
+                            fill: 'black',
+                            padding: 0
+                          }}
+                        >
+                          <svg className="paging-dot" width="6" height="6" aria-hidden="true" focusable="false">
+                            <circle cx="3" cy="3" r="3" fill="#000" />
+                          </svg>
+                        </button>
+                      </li>
+                    );
+                  })}
+                </ul>
+              </div>
+
+              {/* Slider Frame */}
+              <div
+                ref={stealsSliderRef}
+                onMouseDown={onStealsPointerDown}
+                onMouseMove={onStealsPointerMove}
+                onMouseUp={onStealsPointerUp}
+                onMouseLeave={onStealsPointerUp}
+                className="slider-frame overflow-hidden w-full relative outline-none h-auto cursor-grab active:cursor-grabbing"
+                aria-label="carousel-slider"
+                role="region"
+                tabIndex={0}
+              >
+                <div
+                  className="slider-list flex text-left transition-transform duration-300 ease-in-out"
+                  style={{
+                    width: '200%',
+                    transform: `translate3d(-${stealsSlideIndex * 50}%, 0px, 0px)`
+                  }}
+                >
+                  {ZALORA_STEALS.map((slide, idx) => (
+                    <div
+                      key={idx}
+                      className={`slide ${idx === stealsSlideIndex ? 'slide-current' : ''} slide-visible`}
+                      style={{
+                        width: '50%',
+                        flex: '1 1 0%',
+                        height: 'auto',
+                        padding: '0px 8px',
+                        opacity: 1
+                      }}
+                    >
+                      <a
+                        className="no-decoration banner__media-link block"
+                        href="#"
+                        onClick={(e) => {
+                          e.preventDefault();
+                          if (dragDistSteals.current > 10) return;
+                          setSearchQuery(slide.title);
+                          document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+                          showNotification(`Penawaran Steals: ${slide.title}`);
+                        }}
+                        data-placement-id="static"
+                        data-entry-id={`steals-slide-${idx}`}
+                      >
+                        <div className="banner__media-item-wrapper rounded-xl overflow-hidden shadow-xs hover:shadow-md transition">
+                          <div className="image-container aspect-[1280/720] w-full overflow-hidden">
+                            <img
+                              className="unit-element__media-image banner__media-image w-full h-full object-cover pointer-events-none"
+                              fetchPriority={idx === 0 ? "high" : "auto"}
+                              src={slide.img}
+                              alt={slide.title}
+                              draggable="false"
+                            />
+                          </div>
+                          <div className="unit-element__media-description"></div>
+                        </div>
+                      </a>
+                    </div>
+                  ))}
+                </div>
+              </div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 
       {/* =========================================================
-          10. BRANDS THAT GOT YOU LOOKING (Round 2)
+          10. BRANDS THAT GOT YOU LOOKING (Round 2 - Exact Zalora Grid)
       ========================================================= */}
-      <section className="max-w-[1240px] mx-auto px-4 py-8">
-        <div className="mb-5">
-          <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-black">
-            More Brands To Love
-          </h2>
-          <p className="text-xs text-[#777] mt-0.5">Pilihan sepatu kasual, sneakers, dan pakaian santai</p>
-        </div>
-
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-3 sm:gap-4">
-          {ZALORA_BRANDS_2.map((item, idx) => (
-            <div
-              key={idx}
-              onClick={() => {
-                setSelectedBrandFilter(item.brand);
-                const el = document.getElementById('products-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                showNotification(`Memfilter brand: ${item.brand}`);
-              }}
-              className="group relative rounded-xl overflow-hidden bg-zinc-100 shadow-2xs hover:shadow-md transition duration-300 cursor-pointer"
-            >
-              <div className="aspect-[280/404] w-full overflow-hidden">
-                <img
-                  src={item.img}
-                  alt={item.brand}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                  loading="lazy"
-                />
-              </div>
-              <div className="p-2.5 bg-white border-t border-zinc-100 flex flex-col justify-between">
-                <span className="font-bold text-[11px] sm:text-xs uppercase tracking-wider text-black group-hover:underline">
-                  {item.brand}
-                </span>
-                <span className="text-[10px] text-[#777] truncate mt-0.5">
-                  {item.label}
-                </span>
+      <section className="post-type-wrapper grid-wrapper max-w-[1240px] mx-auto px-4 py-8">
+        <div className="grid__inner-wrapper">
+          <div className="post-type__title truncated truncated--two-lines text-lg md:text-xl font-bold text-[#262626]">
+            Brands That Got You Looking
+          </div>
+          <div className="post-type__description truncated truncated--two-lines text-xs text-[#737373] mt-0.5 mb-3">
+            Selected items only. T&amp;Cs apply.
+          </div>
+          <div className="post-type__content">
+            <div className="cls-relative">
+              <div
+                className="grid__contents-wrapper"
+                id="grid"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: '1fr 1fr 1fr',
+                  gridTemplateRows: 'auto auto',
+                  gridAutoFlow: 'row',
+                  justifyContent: 'center',
+                  gap: '8px'
+                }}
+              >
+                {ZALORA_BRANDS_2.map((item, idx) => (
+                  <a
+                    key={idx}
+                    className="no-decoration grid__item block rounded-lg overflow-hidden cursor-pointer select-none active:scale-95 transition"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      setSelectedBrandFilter(item.brand);
+                      document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+                      showNotification(`Memfilter brand: ${item.brand}`);
+                    }}
+                    data-placement-id="static"
+                    data-entry-id={`brand2-item-${idx}`}
+                  >
+                    <div className="grid__media-item-wrapper aspect-[280/404] w-full overflow-hidden rounded-lg bg-gray-50">
+                      <img
+                        fetchPriority={idx === 0 ? "high" : "auto"}
+                        className="grid__media-image w-full h-full object-cover pointer-events-none"
+                        src={item.img}
+                        alt={item.brand}
+                        loading={idx === 0 ? "eager" : "lazy"}
+                      />
+                    </div>
+                  </a>
+                ))}
               </div>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 

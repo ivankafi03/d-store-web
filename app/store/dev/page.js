@@ -315,6 +315,32 @@ export default function ZaloraMenDevPage() {
     action();
   };
 
+  // Brands That Got You Looking grid pointer drag & scroll support
+  const brandsGridRef = useRef(null);
+  const isDraggingBrands = useRef(false);
+  const startXBrands = useRef(0);
+  const scrollStartBrands = useRef(0);
+  const dragDistBrands = useRef(0);
+
+  const onBrandsPointerDown = (e) => {
+    isDraggingBrands.current = true;
+    startXBrands.current = e.pageX || e.clientX;
+    scrollStartBrands.current = brandsGridRef.current?.scrollLeft || 0;
+    dragDistBrands.current = 0;
+  };
+
+  const onBrandsPointerMove = (e) => {
+    if (!isDraggingBrands.current || !brandsGridRef.current) return;
+    const x = e.pageX || e.clientX;
+    const walk = x - startXBrands.current;
+    dragDistBrands.current = Math.abs(walk);
+    brandsGridRef.current.scrollLeft = scrollStartBrands.current - walk;
+  };
+
+  const onBrandsPointerUp = () => {
+    isDraggingBrands.current = false;
+  };
+
   // Speed deals auto rotation
   useEffect(() => {
     const timer = setInterval(() => {
@@ -1074,59 +1100,95 @@ export default function ZaloraMenDevPage() {
       </section>
 
       {/* =========================================================
-          6. BRANDS THAT GOT YOU LOOKING (Round 1)
+          6. BRANDS THAT GOT YOU LOOKING (Exact Zalora Grid Structure)
       ========================================================= */}
-      <section className="max-w-[1240px] mx-auto px-4 py-8">
-        <div className="flex items-center justify-between mb-5">
-          <div>
-            <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-black">
-              Brands That Got You Looking
-            </h2>
-            <p className="text-xs text-[#777] mt-0.5">Koleksi brand pria terfavorit dengan penawaran spesial</p>
+      <section className="max-w-[1240px] mx-auto px-4 py-4 md:py-8">
+        <div className="grid__inner-wrapper">
+          <div className="post-type__title truncated truncated--two-lines font-bold text-lg md:text-xl text-[#262626]">
+            Brands That Got You Looking
           </div>
-          <button 
-            type="button"
-            onClick={() => {
-              setSelectedBrandFilter(null);
-              const el = document.getElementById('products-section');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-            }}
-            className="text-xs font-bold uppercase underline tracking-wide text-black hover:text-[#555] cursor-pointer"
-          >
-            Lihat Semua Produk &gt;
-          </button>
-        </div>
+          <div className="post-type__description truncated truncated--two-lines text-xs text-[#737373] mt-0.5 mb-3">
+            Selected items only. T&amp;Cs apply.
+          </div>
+          <div className="post-type__content">
+            <div className="cls-relative relative group">
+              <div
+                ref={brandsGridRef}
+                onMouseDown={onBrandsPointerDown}
+                onMouseMove={onBrandsPointerMove}
+                onMouseUp={onBrandsPointerUp}
+                onMouseLeave={onBrandsPointerUp}
+                className="grid__contents-wrapper grid__contents-wrapper--scrollable overflow-x-auto no-scrollbar scroll-smooth cursor-grab active:cursor-grabbing pb-2"
+                id="grid"
+                style={{
+                  display: 'grid',
+                  gridTemplateColumns: 'calc(-6.4px + 40vw) calc(-6.4px + 40vw) calc(-6.4px + 40vw) calc(-6.4px + 40vw)',
+                  gridTemplateRows: 'auto auto',
+                  gridAutoFlow: 'row',
+                  justifyContent: 'unset',
+                  gap: '8px'
+                }}
+              >
+                {ZALORA_BRANDS_1.map((item, idx) => (
+                  <a
+                    key={idx}
+                    className="no-decoration grid__item block rounded-lg overflow-hidden cursor-pointer select-none active:scale-95 transition"
+                    onClick={(e) => {
+                      e.preventDefault();
+                      if (dragDistBrands.current > 10) return;
+                      setSelectedBrandFilter(item.brand);
+                      document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+                      showNotification(`Memfilter brand: ${item.brand}`);
+                    }}
+                    data-placement-id="static"
+                    data-entry-id={`brand-item-${idx}`}
+                  >
+                    <div className="grid__media-item-wrapper aspect-[280/404] w-full overflow-hidden rounded-lg bg-gray-50">
+                      <img
+                        fetchPriority={idx === 0 ? "high" : "auto"}
+                        className="grid__media-image w-full h-full object-cover pointer-events-none"
+                        src={item.img}
+                        alt={item.brand}
+                        loading={idx === 0 ? "eager" : "lazy"}
+                      />
+                    </div>
+                  </a>
+                ))}
+              </div>
 
-        <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-          {ZALORA_BRANDS_1.map((item, idx) => (
-            <div
-              key={idx}
-              onClick={() => {
-                setSelectedBrandFilter(item.brand);
-                const el = document.getElementById('products-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-                showNotification(`Memfilter brand: ${item.brand}`);
-              }}
-              className="group relative rounded-xl overflow-hidden bg-zinc-100 shadow-2xs hover:shadow-md transition duration-300 cursor-pointer"
-            >
-              <div className="aspect-[280/404] w-full overflow-hidden">
-                <img
-                  src={item.img}
-                  alt={item.brand}
-                  className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                  loading="lazy"
-                />
-              </div>
-              <div className="p-3 bg-white border-t border-zinc-100 flex flex-col justify-between">
-                <span className="font-bold text-xs uppercase tracking-wider text-black group-hover:underline">
-                  {item.brand}
-                </span>
-                <span className="text-[11px] text-[#777] truncate mt-0.5">
-                  {item.label}
-                </span>
-              </div>
+              {/* Zalora Right Control Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (brandsGridRef.current) {
+                    brandsGridRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+                  }
+                }}
+                className="post-type__carousel-control-button post-type__carousel-right-button absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-zinc-200 hidden md:flex items-center justify-center cursor-pointer hover:bg-zinc-50 z-10 transition active:scale-95"
+                aria-label="Scroll Brands Right"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block h-6 w-6">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M12.307 6.338c-.34.33-.34.865.003 1.194l3.979 3.821H4.667c-.368 0-.667.336-.667.75s.299.75.667.75h11.37l-3.73 3.618c-.34.33-.34.865.003 1.194a.898.898 0 001.237-.003l5.25-5.091a.824.824 0 00-.003-1.194l-5.25-5.042a.898.898 0 00-1.237.003z" fill="#262626"></path>
+                </svg>
+              </button>
+
+              {/* Zalora Left Control Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (brandsGridRef.current) {
+                    brandsGridRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+                  }
+                }}
+                className="post-type__carousel-control-button post-type__carousel-left-button absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-zinc-200 hidden md:flex items-center justify-center cursor-pointer hover:bg-zinc-50 z-10 transition active:scale-95 rotate-180"
+                aria-label="Scroll Brands Left"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block h-6 w-6">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M12.307 6.338c-.34.33-.34.865.003 1.194l3.979 3.821H4.667c-.368 0-.667.336-.667.75s.299.75.667.75h11.37l-3.73 3.618c-.34.33-.34.865.003 1.194a.898.898 0 001.237-.003l5.25-5.091a.824.824 0 00-.003-1.194l-5.25-5.042a.898.898 0 00-1.237.003z" fill="#262626"></path>
+                </svg>
+              </button>
             </div>
-          ))}
+          </div>
         </div>
       </section>
 

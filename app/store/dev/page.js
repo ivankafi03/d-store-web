@@ -41,100 +41,169 @@ import {
 
 const HERO_CAROUSEL_ITEMS = [
   {
-    id: 'hero-socks-1',
-    cardImg: '/images/hero-card-1.png',
-    name: 'Adidas Cushioned Ankle Socks 3 Pairs Black',
-    brand: 'ADIDAS',
-    price: 121500,
-    originalPrice: 199000,
-    discount: '39% OFF',
-    badge: 'FLASH SALE',
+    id: 'mcm-1',
+    name: 'MCM Stark Backpack in Visetos Cognac',
+    brand: 'MCM',
+    price: 23529600,
+    originalPrice: 28500000,
+    discount: '17% OFF',
+    badge: 'LUXURY',
+    category: 'Tas & Aksesoris',
+    image: 'https://dynamic.zacdn.com/DYfZKIsvSdTEor843nvuHqS3ws8=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-9852-9609835-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-2',
+    name: 'MCM Aren Crossbody Bag in Visetos',
+    brand: 'MCM',
+    price: 7218200,
+    originalPrice: 9500000,
+    discount: '24% OFF',
+    badge: 'LUXURY',
+    category: 'Tas & Aksesoris',
+    image: 'https://dynamic.zacdn.com/pq37__os3h9tBlGxLRYwp0wBNvQ=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-7864-9854135-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-3',
+    name: 'MCM Aren Bifold Wallet in Visetos Cognac',
+    brand: 'MCM',
+    price: 4491840,
+    originalPrice: 5800000,
+    discount: '22% OFF',
+    badge: 'LUXURY',
+    category: 'Dompet & Aksesoris',
+    image: 'https://dynamic.zacdn.com/iMltLzOX6aae5wEM4K1z1LsA0x8=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-9770-2609835-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-4',
+    name: 'MCM Fursten Belt Bag in Visetos',
+    brand: 'MCM',
+    price: 5212800,
+    originalPrice: 6900000,
+    discount: '24% OFF',
+    badge: 'LUXURY',
+    category: 'Tas & Aksesoris',
+    image: 'https://dynamic.zacdn.com/02QdE3-6W_P6zAMxB9MvOU4cg7E=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-5096-6342335-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-5',
+    name: 'MCM Toni Shopper Medium in Visetos',
+    brand: 'MCM',
+    price: 17001600,
+    originalPrice: 21000000,
+    discount: '19% OFF',
+    badge: 'LUXURY',
+    category: 'Tas & Aksesoris',
+    image: 'https://dynamic.zacdn.com/HT_fMeQEIp6gZJ1MmQbtwjy4BFA=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-7134-5759445-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-6',
+    name: 'MCM Aren Leather Card Case Cognac',
+    brand: 'MCM',
+    price: 4588800,
+    originalPrice: 5600000,
+    discount: '18% OFF',
+    badge: 'LUXURY',
+    category: 'Dompet & Aksesoris',
+    image: 'https://dynamic.zacdn.com/uSxof6DHGR3vGGSN0g1pcrMaU9E=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-4929-2242335-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-7',
+    name: 'MCM Klassik Card Case in Visetos',
+    brand: 'MCM',
+    price: 3379200,
+    originalPrice: 4200000,
+    discount: '20% OFF',
+    badge: 'LUXURY',
+    category: 'Dompet & Aksesoris',
+    image: 'https://dynamic.zacdn.com/9I19UUORaZEt_kcvT6ByTZsBO-Y=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-7127-4959445-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-8',
+    name: 'MCM Delmy Boston Bag in Visetos',
+    brand: 'MCM',
+    price: 17640000,
+    originalPrice: 22000000,
+    discount: '20% OFF',
+    badge: 'LUXURY',
+    category: 'Tas & Aksesoris',
+    image: 'https://dynamic.zacdn.com/tkyzSgCd1QIAph5COE53mQ24MEU=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-3269-2265925-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-9',
+    name: 'MCM Ottomar Travel Wallet in Visetos',
+    brand: 'MCM',
+    price: 5971200,
+    originalPrice: 7500000,
+    discount: '20% OFF',
+    badge: 'LUXURY',
+    category: 'Dompet & Aksesoris',
+    image: 'https://dynamic.zacdn.com/OFDKkr-epBf0ZoI0x4UrZybeR0Y=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-4719-7342335-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-10',
+    name: 'MCM Aren Bifold Coin Wallet Black',
+    brand: 'MCM',
+    price: 4588800,
+    originalPrice: 5600000,
+    discount: '18% OFF',
+    badge: 'LUXURY',
+    category: 'Dompet & Aksesoris',
+    image: 'https://dynamic.zacdn.com/7DRjA_9MzA9XrTPNgKa1GgbuWdI=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-4927-7242335-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-11',
+    name: 'MCM Aren Shoulder Bag in Embossed Leather',
+    brand: 'MCM',
+    price: 10902100,
+    originalPrice: 14000000,
+    discount: '22% OFF',
+    badge: 'LUXURY',
+    category: 'Tas & Aksesoris',
+    image: 'https://dynamic.zacdn.com/HLSV9HsSIVvEMlQYOjVnXd9-4ac=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-7892-9954135-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-12',
+    name: 'MCM Toni Mini Shopper in Visetos',
+    brand: 'MCM',
+    price: 13008000,
+    originalPrice: 16500000,
+    discount: '21% OFF',
+    badge: 'LUXURY',
+    category: 'Tas & Aksesoris',
+    image: 'https://dynamic.zacdn.com/e_JhvDvkYp6_gvvyW02mQVk-KEo=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-7128-4859445-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-13',
+    name: 'MCM Aren Pouch with Strap in Visetos',
+    brand: 'MCM',
+    price: 5212800,
+    originalPrice: 6800000,
+    discount: '23% OFF',
+    badge: 'LUXURY',
+    category: 'Tas & Aksesoris',
+    image: 'https://dynamic.zacdn.com/lIcHnHYL3RN5xG7oUZNvQGKyqQ4=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-5033-9242335-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-14',
+    name: 'MCM Aren Medium Hobo Bag in Visetos',
+    brand: 'MCM',
+    price: 16137600,
+    originalPrice: 20000000,
+    discount: '19% OFF',
+    badge: 'LUXURY',
+    category: 'Tas & Aksesoris',
+    image: 'https://dynamic.zacdn.com/ECyxzFOOGdRAiSmnVSI7H0o4Cv4=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-7133-7859445-1.jpg?fm=webp'
+  },
+  {
+    id: 'mcm-15',
+    name: 'MCM Logo Socks in Cotton Blend',
+    brand: 'MCM',
+    price: 987840,
+    originalPrice: 1400000,
+    discount: '29% OFF',
+    badge: 'LUXURY',
     category: 'Aksesoris Olahraga',
-    image: 'https://images.ctfassets.net/9q8du028z7sn/3Y4VKiawE07XtOXiOFThxp/b7ea3c13c4034daf55858a71101d06ef/280x404_BRANDGRID_NEWREGBRAND___3_.jpg'
-  },
-  {
-    id: 'hero-adizero-1',
-    cardImg: '/images/hero-card-2.png',
-    name: 'Adidas Adizero Boston 12 Running Shoes White',
-    brand: 'ADIDAS',
-    price: 1603125,
-    originalPrice: 2499000,
-    discount: '36% OFF',
-    badge: 'FLASH SALE',
-    category: 'Sepatu Olahraga',
-    image: 'https://images.ctfassets.net/9q8du028z7sn/dZsQELYBUpUV8b0192XBY/210ef9d476ee53bb02af154c10417f85/225x225_BB2026_ADIDAS.png'
-  },
-  {
-    id: 'hero-response-1',
-    cardImg: '/images/hero-card-3.png',
-    name: 'Adidas Response CL Sneakers Off-White / Beige',
-    brand: 'ADIDAS',
-    price: 1093500,
-    originalPrice: 1800000,
-    discount: '39% OFF',
-    badge: 'FLASH SALE',
-    category: 'Sepatu Sneakers',
-    image: 'https://images.ctfassets.net/9q8du028z7sn/7wxipMmzcMa3uNwS7fk6m8/ab52d548583c95cfe151b4e9df070dc5/APP_HEROSECONDARY_1280x720_1010CD_FSBRAND_ADIDAS.jpg'
-  },
-  {
-    id: 'hero-loafer-1',
-    cardImg: '/images/hero-card-4.png',
-    name: 'Clarks Torhill Lo Suede Loafers Brown Moccasin',
-    brand: 'CLARKS',
-    price: 1485000,
-    originalPrice: 2399000,
-    discount: '38% OFF',
-    badge: 'FLASH SALE',
-    category: 'Sepatu Kasual',
-    image: 'https://images.ctfassets.net/9q8du028z7sn/7dI83E7t2hB/BRANDGRID_280x404_1010CD_FBB_JIMJOKER.jpg'
-  },
-  {
-    id: 'hero-socks-2',
-    cardImg: '/images/hero-card-1.png',
-    name: 'Adidas Cushioned Ankle Socks 3 Pairs White/Grey',
-    brand: 'ADIDAS',
-    price: 121500,
-    originalPrice: 199000,
-    discount: '39% OFF',
-    badge: 'FLASH SALE',
-    category: 'Aksesoris Olahraga',
-    image: 'https://images.ctfassets.net/9q8du028z7sn/3Y4VKiawE07XtOXiOFThxp/b7ea3c13c4034daf55858a71101d06ef/280x404_BRANDGRID_NEWREGBRAND___3_.jpg'
-  },
-  {
-    id: 'hero-adizero-2',
-    cardImg: '/images/hero-card-2.png',
-    name: 'Adidas Adizero Boston 12 Core Black / Lucid Lemon',
-    brand: 'ADIDAS',
-    price: 1603125,
-    originalPrice: 2499000,
-    discount: '36% OFF',
-    badge: 'FLASH SALE',
-    category: 'Sepatu Olahraga',
-    image: 'https://images.ctfassets.net/9q8du028z7sn/dZsQELYBUpUV8b0192XBY/210ef9d476ee53bb02af154c10417f85/225x225_BB2026_ADIDAS.png'
-  },
-  {
-    id: 'hero-response-2',
-    cardImg: '/images/hero-card-3.png',
-    name: 'Adidas Response CL Triple Black Edition',
-    brand: 'ADIDAS',
-    price: 1093500,
-    originalPrice: 1800000,
-    discount: '39% OFF',
-    badge: 'FLASH SALE',
-    category: 'Sepatu Sneakers',
-    image: 'https://images.ctfassets.net/9q8du028z7sn/7wxipMmzcMa3uNwS7fk6m8/ab52d548583c95cfe151b4e9df070dc5/APP_HEROSECONDARY_1280x720_1010CD_FSBRAND_ADIDAS.jpg'
-  },
-  {
-    id: 'hero-loafer-2',
-    cardImg: '/images/hero-card-4.png',
-    name: 'Clarks Wallabee Suede Maple Moccasin',
-    brand: 'CLARKS',
-    price: 1485000,
-    originalPrice: 2399000,
-    discount: '38% OFF',
-    badge: 'FLASH SALE',
-    category: 'Sepatu Kasual',
-    image: 'https://images.ctfassets.net/9q8du028z7sn/7dI83E7t2hB/BRANDGRID_280x404_1010CD_FBB_JIMJOKER.jpg'
+    image: 'https://dynamic.zacdn.com/ZxtjgT69OtxCo4iiioHS03iIC2U=/0x440/filters:quality(70):format(webp)/https://static-id.zacdn.com/p/mcm-9671-1609835-1.jpg?fm=webp'
   }
 ];
 
@@ -559,7 +628,7 @@ export default function ZaloraMenDevPage() {
 
             {/* Bottom region: Mini product cards directly inside the dark hero base */}
             <div className="absolute bottom-0 inset-x-0 z-30 pb-3 pt-1 bg-gradient-to-t from-black via-black/95 to-transparent">
-              {/* Horizontal mini card slider with mouse drag */}
+              {/* Horizontal mini card slider with exact Zalora markup */}
               <div
                 ref={heroSliderRef}
                 onScroll={handleHeroScroll}
@@ -567,33 +636,39 @@ export default function ZaloraMenDevPage() {
                 onMouseMove={onMiniPointerMove}
                 onMouseUp={onMiniPointerUp}
                 onMouseLeave={onMiniPointerUp}
-                className="flex items-end gap-2 overflow-x-auto snap-x snap-mandatory px-3 no-scrollbar cursor-grab active:cursor-grabbing"
+                className="flex w-auto gap-2 overflow-x-auto pb-2 px-3 scrollbar-thin scrollbar-track-transparent no-scrollbar cursor-grab active:cursor-grabbing"
                 style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
               >
                 {HERO_CAROUSEL_ITEMS.map((item) => (
-                  <div
+                  <a
                     key={item.id}
-                    onClick={() => {
+                    className="flex-none rounded-lg w-[24vw] tablet:w-[14vw] bg-white cursor-pointer select-none active:scale-95 transition"
+                    onClick={(e) => {
+                      e.preventDefault();
                       if (dragDistMini.current > 10) return;
                       setActiveProductModal(item);
                     }}
-                    className="shrink-0 snap-start w-[88px] bg-white rounded-lg overflow-hidden border border-zinc-200 shadow-md cursor-pointer active:scale-95 transition"
                   >
-                    <div className="w-full bg-white flex items-center justify-center" style={{ height: '88px' }}>
+                    <div className="relative">
                       <img
-                        src={item.image}
                         alt={item.name}
-                        className="w-full h-full object-contain p-1 pointer-events-none"
+                        src={item.image}
+                        className="aspect-[75/103] w-full rounded-lg border-white bg-gray-50 object-cover pointer-events-none"
                         onError={(e) => { e.target.src = '/images/hero-card-1.png'; }}
                       />
+                      <div className="absolute bottom-1 left-1">
+                        <span className="flex w-fit items-center justify-center truncate rounded bg-white bg-opacity-90 px-0.5 text-xxs font-bold text-red-60 shadow-[0px_4px_8px_0px_rgba(0,0,0,0.08)] tablet:text-sm">
+                          <svg width="20" height="20" viewBox="0 0 20 20" fill="#fff" xmlns="http://www.w3.org/2000/svg" className="inline-block size-4">
+                            <path fillRule="evenodd" clipRule="evenodd" d="M18 7.278V5.556a.658.658 0 00-.123-.393A.376.376 0 0017.58 5H2.42a.376.376 0 00-.297.163.658.658 0 00-.123.393v8.888c0 .148.044.29.123.393A.376.376 0 002.42 15h15.16a.376.376 0 00.297-.163.658.658 0 00.123-.393v-1.723a.674.674 0 00-.095-.35.418.418 0 00-.24-.193c-.38-.103-.72-.376-.965-.772A2.7 2.7 0 0116.32 10a2.7 2.7 0 01.379-1.406c.244-.396.585-.67.964-.772a.418.418 0 00.241-.192.674.674 0 00.095-.352zM3 14h14v-1.006a2.779 2.779 0 01-1.152-1.063A3.7 3.7 0 0115.321 10a3.7 3.7 0 01.527-1.93A2.78 2.78 0 0117 7.005V6H3v8z" fill="#297E84" className="fill-red-60"></path>
+                            <path fillRule="evenodd" clipRule="evenodd" d="M7 5.5a.5.5 0 01.5.5v.8a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm0 3.2a.5.5 0 01.5.5v1.6a.5.5 0 01-1 0V9.2a.5.5 0 01.5-.5zm0 4a.5.5 0 01.5.5v.8a.5.5 0 01-1 0v-.8a.5.5 0 01.5-.5z" fill="#297E84" className="fill-red-60"></path>
+                            <rect x="12" y="10" width="8" height="8" rx="4" fill="#297E84" className="fill-red-60"></rect>
+                            <path fillRule="evenodd" clipRule="evenodd" d="M15.34 15.233l-1.468-1.478a.314.314 0 00-.446 0 .32.32 0 000 .45l1.69 1.702a.314.314 0 00.447 0l3.011-3.031a.32.32 0 000-.45.314.314 0 00-.446 0l-2.788 2.807z"></path>
+                          </svg>
+                          <span>Rp&nbsp;{Number(item.price).toLocaleString('id-ID')}</span>
+                        </span>
+                      </div>
                     </div>
-                    <div className="flex items-center gap-1 px-1.5 py-1 border-t border-zinc-100 bg-white">
-                      <Heart className="w-2.5 h-2.5 text-red-500 shrink-0" fill="currentColor" />
-                      <span className="text-[9px] font-bold text-zinc-900 truncate leading-none">
-                        Rp {Number(item.price).toLocaleString('id-ID')}
-                      </span>
-                    </div>
-                  </div>
+                  </a>
                 ))}
               </div>
 

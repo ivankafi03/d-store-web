@@ -43,6 +43,18 @@ body {
   scrollbar-width: none;
 }
 
+/* Zalora specific utility classes */
+.text-red-60 {
+  color: #d92534;
+}
+.fill-red-60 {
+  fill: #d92534;
+}
+.text-xxs {
+  font-size: 0.625rem;
+  line-height: 0.75rem;
+}
+
 /* Authentic Neo Brutalism (matching laju.asia style) */
 .neo-card {
   background-color: #ffffff;

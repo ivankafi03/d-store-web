@@ -36,7 +36,8 @@ import {
   ZALORA_PRODUCTS,
   ZALORA_TOP_BRANDS,
   ZALORA_POPULAR_SEARCHES,
-  ZALORA_MEN_CATEGORIES
+  ZALORA_MEN_CATEGORIES,
+  ZALORA_TOP_TIER_PRODUCTS
 } from '@/lib/zaloraMenData';
 
 const HERO_CAROUSEL_ITEMS = [
@@ -339,6 +340,32 @@ export default function ZaloraMenDevPage() {
 
   const onBrandsPointerUp = () => {
     isDraggingBrands.current = false;
+  };
+
+  // Top Tier recommendation product carousel drag & scroll support
+  const topTierListRef = useRef(null);
+  const isDraggingTopTier = useRef(false);
+  const startXTopTier = useRef(0);
+  const scrollStartTopTier = useRef(0);
+  const dragDistTopTier = useRef(0);
+
+  const onTopTierPointerDown = (e) => {
+    isDraggingTopTier.current = true;
+    startXTopTier.current = e.pageX || e.clientX;
+    scrollStartTopTier.current = topTierListRef.current?.scrollLeft || 0;
+    dragDistTopTier.current = 0;
+  };
+
+  const onTopTierPointerMove = (e) => {
+    if (!isDraggingTopTier.current || !topTierListRef.current) return;
+    const x = e.pageX || e.clientX;
+    const walk = x - startXTopTier.current;
+    dragDistTopTier.current = Math.abs(walk);
+    topTierListRef.current.scrollLeft = scrollStartTopTier.current - walk;
+  };
+
+  const onTopTierPointerUp = () => {
+    isDraggingTopTier.current = false;
   };
 
   // Speed deals auto rotation
@@ -1193,189 +1220,205 @@ export default function ZaloraMenDevPage() {
       </section>
 
       {/* =========================================================
-          7. TOP TIER RECOMMENDATIONS (Real Product Grid)
+          7. TOP TIER RECOMMENDATIONS (Zalora Authentic Carousel)
       ========================================================= */}
-      <section id="products-section" className="max-w-[1240px] mx-auto px-4 py-8 bg-[#FAFAFA] rounded-3xl my-6 scroll-mt-20">
-        <div className="flex items-center justify-between mb-4">
-          <div>
-            <div className="flex items-center gap-2">
-              <span className="bg-black text-white text-[10px] font-bold px-2 py-0.5 rounded uppercase">Curated</span>
-              <h2 className="text-xl sm:text-2xl font-black uppercase tracking-tight text-black">
-                Top Tier Recommendations
-              </h2>
-            </div>
-            <p className="text-xs text-[#777] mt-1">Pilihan produk fashion pria paling populer di Zalora Indonesia</p>
+      <section id="products-section" className="post-type-wrapper recommendation-wrapper custom-style max-w-[1240px] mx-auto px-4 py-6 scroll-mt-20">
+        <div className="recommendation__details-wrapper">
+          <div className="post-type__title truncated truncated--two-lines recommendation__title--with-banner text-lg md:text-xl font-bold text-[#262626] mb-3">
+            Top Tier
           </div>
-          <button 
-            type="button"
-            onClick={() => {
-              setSelectedBrandFilter(null);
-              setSearchQuery('');
-              showNotification('Menampilkan seluruh rekomendasi!');
-            }}
-            className="text-xs font-bold uppercase underline tracking-wide text-black hover:text-[#555] cursor-pointer"
-          >
-            Reset Filter
-          </button>
-        </div>
-
-        {/* Active Filter Chips */}
-        {(selectedBrandFilter || searchQuery) && (
-          <div className="flex flex-wrap items-center gap-2 mb-5">
-            {selectedBrandFilter && (
-              <div className="inline-flex items-center gap-2 bg-black text-white px-3 py-1.5 rounded-full text-xs font-bold shadow-xs">
-                <span>Brand: <strong>{selectedBrandFilter}</strong></span>
-                <button 
-                  type="button"
-                  onClick={() => setSelectedBrandFilter(null)}
-                  className="p-0.5 hover:bg-zinc-700 rounded-full"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            )}
-            {searchQuery && (
-              <div className="inline-flex items-center gap-2 bg-zinc-200 text-black px-3 py-1.5 rounded-full text-xs font-bold">
-                <span>Cari: &quot;{searchQuery}&quot;</span>
-                <button 
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="p-0.5 hover:bg-zinc-300 rounded-full"
-                >
-                  <X className="w-3.5 h-3.5" />
-                </button>
-              </div>
-            )}
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedBrandFilter(null);
-                setSearchQuery('');
+          <div className="recommendation__banner-wrapper mb-3 rounded-lg overflow-hidden">
+            <a 
+              className="no-decoration no-decoration block" 
+              href="#" 
+              onClick={(e) => {
+                e.preventDefault();
+                showNotification('Melihat koleksi Top Tier');
               }}
-              className="text-xs text-[#666] underline hover:text-black ml-1 cursor-pointer"
             >
-              Hapus Semua Filter
-            </button>
+              <div className="recommendation__banner-item">
+                <img 
+                  className="recommendation__banner w-full h-auto object-cover rounded-lg" 
+                  src="https://images.ctfassets.net/9q8du028z7sn/2Cy9qhqxq1fvo5fMNG2F0H/8410c1f5af4325057c9918474fa187c2/Got_you_First.jpg?fm=webp" 
+                  fetchPriority="low" 
+                  loading="lazy" 
+                  alt="Top Tier"
+                />
+              </div>
+            </a>
           </div>
-        )}
-
-        {filteredProducts.length === 0 ? (
-          <div className="text-center py-12 bg-white rounded-2xl border border-zinc-200">
-            <p className="text-sm font-semibold text-zinc-600">Tidak ada produk yang cocok dengan filter atau kata kunci Anda.</p>
-            <button
-              type="button"
-              onClick={() => {
-                setSelectedBrandFilter(null);
-                setSearchQuery('');
-              }}
-              className="mt-3 px-4 py-2 bg-black text-white text-xs font-bold rounded-lg hover:bg-zinc-800 transition cursor-pointer"
-            >
-              Tampilkan Semua Produk
-            </button>
-          </div>
-        ) : (
-          <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-5">
-            {filteredProducts.map((prod) => {
-              const isWishlisted = wishlist.includes(prod.id);
-              return (
-                <div
-                  key={prod.id}
-                  onClick={() => setActiveProductModal(prod)}
-                  className="group relative bg-white rounded-xl overflow-hidden border border-[#EAEAEA] shadow-2xs hover:shadow-lg transition duration-300 flex flex-col cursor-pointer"
-                >
-                  {/* Product Image & Wishlist Button */}
-                  <div className="relative aspect-[3/4] w-full overflow-hidden bg-zinc-100">
-                    <img
-                      src={prod.image}
-                      alt={prod.name}
-                      className="w-full h-full object-cover group-hover:scale-105 transition duration-500"
-                      loading="lazy"
-                    />
-                    
-                    {/* Badge */}
-                    {prod.badge && (
-                      <span className="absolute top-2.5 left-2.5 bg-black text-white text-[9px] font-extrabold px-2 py-0.5 rounded-sm tracking-wider uppercase shadow-xs">
-                        {prod.badge}
-                      </span>
-                    )}
-
-                    {/* Wishlist Button */}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleWishlist(prod.id);
+          <div className="recommendation__product-list-wrapper recommendation__product-list-wrapper--with-banner">
+            <div className="cls-relative relative">
+              <div 
+                ref={topTierListRef}
+                onMouseDown={onTopTierPointerDown}
+                onMouseMove={onTopTierPointerMove}
+                onMouseUp={onTopTierPointerUp}
+                onMouseLeave={onTopTierPointerUp}
+                className="product-list__wrapper flex overflow-x-auto gap-3 pb-3 no-scrollbar cursor-grab active:cursor-grabbing snap-x snap-mandatory" 
+                id="grid" 
+                style={{ justifyContent: 'unset' }}
+              >
+                {ZALORA_TOP_TIER_PRODUCTS.map((prod, idx) => {
+                  const isWishlisted = wishlist.includes(prod.sku);
+                  return (
+                    <div 
+                      key={prod.sku || idx} 
+                      className="product-item__wrapper shrink-0 snap-start w-[148px] sm:w-[180px] md:w-[220px] bg-white rounded-xl p-2 md:p-2.5 flex flex-col justify-between border border-zinc-100 hover:shadow-md transition select-none cursor-pointer" 
+                      data-sku={prod.sku}
+                      onClick={() => {
+                        if (dragDistTopTier.current > 10) return;
+                        setActiveProductModal({
+                          id: prod.sku,
+                          name: prod.name,
+                          brand: prod.brand,
+                          image: prod.image,
+                          price: prod.priceNumber,
+                          originalPrice: prod.originalPriceNumber,
+                          discount: prod.discount,
+                          category: 'Top Tier'
+                        });
                       }}
-                      className={`absolute top-2.5 right-2.5 w-8 h-8 rounded-full flex items-center justify-center transition shadow-md ${
-                        isWishlisted 
-                          ? 'bg-rose-500 text-white' 
-                          : 'bg-white/90 text-zinc-700 hover:text-black hover:bg-white'
-                      }`}
-                      aria-label="Wishlist"
                     >
-                      <Heart className={`w-4 h-4 ${isWishlisted ? 'fill-current' : ''}`} />
-                    </button>
-                  </div>
-
-                  {/* Details */}
-                  <div className="p-3.5 flex flex-col justify-between flex-1 gap-2">
-                    <div>
-                      <div className="text-[11px] font-bold uppercase tracking-wider text-[#777]">
-                        {prod.brand}
-                      </div>
-                      <h3 className="font-normal text-xs sm:text-sm text-black line-clamp-2 mt-0.5 leading-snug">
-                        {prod.name}
-                      </h3>
-                    </div>
-
-                    <div className="pt-2 border-t border-zinc-100">
-                      <div className="flex items-baseline gap-2">
-                        <span className="text-xs sm:text-sm font-bold text-[#D52222]">
-                          {formatRupiah(prod.price)}
-                        </span>
-                        {prod.originalPrice && (
-                          <span className="text-[10px] text-[#999] line-through">
-                            {formatRupiah(prod.originalPrice)}
-                          </span>
-                        )}
-                      </div>
-                      {prod.discount && (
-                        <span className="text-[10px] font-bold text-[#D52222] mt-0.5 block">
-                          {prod.discount}
-                        </span>
-                      )}
-
-                      {/* Action Button: Detail / Beli / WhatsApp */}
-                      <div className="mt-3 flex items-center gap-2">
-                        <button
-                          type="button"
-                          onClick={(e) => {
-                            e.stopPropagation();
-                            setActiveProductModal(prod);
-                          }}
-                          className="flex-1 py-2 px-3 rounded-lg bg-black text-white text-xs font-bold hover:bg-zinc-800 transition flex items-center justify-center gap-1.5"
+                      <a 
+                        className="no-decoration product-item__product-image-wrapper aspect-[11/16] bg-[#f7f7f7] rounded-lg overflow-hidden flex items-center justify-center relative block" 
+                        href="#"
+                        onClick={(e) => e.preventDefault()}
+                      >
+                        <img 
+                          className="product-item__product-image w-full h-full object-contain pointer-events-none transition duration-300 hover:scale-105" 
+                          src={prod.image} 
+                          alt={prod.name} 
+                          fetchPriority="low" 
+                          loading="eager" 
+                        />
+                      </a>
+                      <div className="product-item__contents w-full relative mt-2 mb-2 flex-1 flex flex-col">
+                        <a 
+                          className="no-decoration block pr-6" 
+                          href="#"
+                          onClick={(e) => e.preventDefault()}
                         >
-                          <ShoppingBag className="w-3.5 h-3.5" />
-                          <span>Lihat Detail</span>
-                        </button>
-                        <a
-                          href={getWhatsAppOrderUrl(prod.name, prod.price)}
-                          target="_blank"
-                          rel="noopener noreferrer"
-                          onClick={(e) => e.stopPropagation()}
-                          className="p-2 rounded-lg bg-emerald-50 text-emerald-700 hover:bg-emerald-100 transition border border-emerald-200"
-                          title="Order via WhatsApp"
-                        >
-                          <MessageCircle className="w-4 h-4" />
+                          <div className="product-item__brand truncated truncated--one-line text-xs md:text-sm font-bold text-[#262626] uppercase truncate">
+                            {prod.brand}
+                          </div>
+                          <div className="product-item__name truncated truncated--one-line text-xs md:text-sm text-[#737373] truncate mt-0.5">
+                            {prod.name}
+                          </div>
+                          <div className="my-1 flex max-w-full flex-wrap items-center gap-1.5 md:gap-2 gap-y-1 whitespace-nowrap text-base" data-test-id="productPrice">
+                            {prod.hasVoucher ? (
+                              <>
+                                <div data-test-id="voucherPill" className="flex max-w-full items-center gap-1 text-red-60">
+                                  <svg width="20" height="20" viewBox="0 0 20 20" fill="#fff" xmlns="http://www.w3.org/2000/svg" className="inline-block size-4 sm:size-5 shrink-0">
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M18 7.278V5.556a.658.658 0 00-.123-.393A.376.376 0 0017.58 5H2.42a.376.376 0 00-.297.163.658.658 0 00-.123.393v8.888c0 .148.044.29.123.393A.376.376 0 002.42 15h15.16a.376.376 0 00.297-.163.658.658 0 00.123-.393v-1.723a.674.674 0 00-.095-.35.418.418 0 00-.24-.193c-.38-.103-.72-.376-.965-.772A2.7 2.7 0 0116.32 10a2.7 2.7 0 01.379-1.406c.244-.396.585-.67.964-.772a.418.418 0 00.241-.192.674.674 0 00.095-.352zM3 14h14v-1.006a2.779 2.779 0 01-1.152-1.063A3.7 3.7 0 0115.321 10a3.7 3.7 0 01.527-1.93A2.78 2.78 0 0117 7.005V6H3v8z" fill="#297E84" className="fill-red-60" />
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M7 5.5a.5.5 0 01.5.5v.8a.5.5 0 01-1 0V6a.5.5 0 01.5-.5zm0 3.2a.5.5 0 01.5.5v1.6a.5.5 0 01-1 0V9.2a.5.5 0 01.5-.5zm0 4a.5.5 0 01.5.5v.8a.5.5 0 01-1 0v-.8a.5.5 0 01.5-.5z" fill="#297E84" className="fill-red-60" />
+                                    <rect x="12" y="10" width="8" height="8" rx="4" fill="#297E84" className="fill-red-60" />
+                                    <path fillRule="evenodd" clipRule="evenodd" d="M15.34 15.233l-1.468-1.478a.314.314 0 00-.446 0 .32.32 0 000 .45l1.69 1.702a.314.314 0 00.447 0l3.011-3.031a.32.32 0 000-.45.314.314 0 00-.446 0l-2.788 2.807z" />
+                                  </svg>
+                                  <span className="max-w-full truncate font-bold text-xs sm:text-sm tablet:text-base">{prod.voucherPrice}</span>
+                                </div>
+                                <div className="flex max-w-full flex-wrap items-center gap-1 text-xs tablet:text-sm">
+                                  <div className="max-w-full truncate text-grey-60 line-through text-xxs tablet:text-xs" data-test-id="originalPrice">{prod.originalPrice}</div>
+                                </div>
+                                {prod.discount && (
+                                  <div className="rounded bg-red-50 px-0.5 leading-4 text-red-700 text-xxs tablet:text-xxs font-bold" data-test-id="discountPercentage">{prod.discount}</div>
+                                )}
+                              </>
+                            ) : prod.specialPrice ? (
+                              <>
+                                <div className="max-w-full truncate font-bold text-red-60 text-xs sm:text-sm tablet:text-base" data-test-id="specialPrice">{prod.specialPrice}</div>
+                                <div className="flex max-w-full flex-wrap items-center gap-1 text-xs tablet:text-sm">
+                                  <div className="max-w-full truncate text-grey-60 line-through text-xxs tablet:text-xs" data-test-id="originalPrice">{prod.originalPrice}</div>
+                                </div>
+                                {prod.discount && (
+                                  <div className="rounded bg-red-50 px-0.5 leading-4 text-red-700 text-xxs tablet:text-xxs font-bold" data-test-id="discountPercentage">{prod.discount}</div>
+                                )}
+                              </>
+                            ) : (
+                              <div className="flex max-w-full flex-wrap items-center gap-2 text-xs sm:text-sm tablet:text-base">
+                                <div className="max-w-full truncate font-bold text-black" data-test-id="originalPrice">{prod.originalPrice}</div>
+                              </div>
+                            )}
+                          </div>
                         </a>
+                        <div className="product-item__add-to-wishlist-icon absolute top-0 right-0">
+                          <button 
+                            className="zui-btn zui-btn-link bg-white disabled:bg-white m-0 !h-5 !w-7 p-0 cursor-pointer flex items-center justify-center hover:opacity-80 transition" 
+                            data-test-id="wishlistBtn" 
+                            aria-label="Add To Wishlist"
+                            type="button"
+                            onClick={(e) => {
+                              e.preventDefault();
+                              e.stopPropagation();
+                              toggleWishlist(prod.sku);
+                            }}
+                          >
+                            <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6 sm:size-8 cursor-pointer">
+                              <path fillRule="evenodd" clipRule="evenodd" d="M16.308 8.335c1.68-1.666 3.691-2.219 5.9-1.571 2.168.635 3.57 2.147 4.13 4.394.058.229.082.409.122.802l.012.127.028.279c-.039 1.496-.545 2.874-1.502 4.4-1.454 2.318-3.335 4.298-6.147 6.683-.362.306-.666.549-1.317 1.058l-.031.025c-.454.356-.665.522-.916.727-.375.305-.767.329-1.162.027-3.318-2.532-5.666-4.724-7.574-7.255-1.107-1.467-1.826-2.832-2.196-4.323-.805-3.25 1.625-6.761 4.946-7.141 1.989-.228 3.692.368 5.086 1.786.16.163.228.246.296.248.072 0 .145-.087.325-.266zm9.196 4.083a10.708 10.708 0 01-.04-.361 4.378 4.378 0 00-.095-.658c-.477-1.907-1.621-3.142-3.441-3.676-1.853-.543-3.49-.093-4.915 1.322-.74.735-1.317.744-2.04.01-1.176-1.199-2.574-1.688-4.258-1.495-2.721.312-4.75 3.243-4.09 5.907.334 1.345.993 2.594 2.024 3.962 1.836 2.435 4.11 4.56 7.339 7.028.244-.198.459-.368.898-.712l.032-.025c.64-.502.938-.74 1.287-1.034 2.74-2.324 4.557-4.237 5.946-6.451.87-1.387 1.316-2.602 1.353-3.817z" fill={isWishlisted ? "#d92534" : "#737373"} />
+                            </svg>
+                          </button>
+                        </div>
                       </div>
+                      <button 
+                        className="zui-btn zui-btn-outline mt-auto h-10 min-h-[40px] rounded-lg tablet:h-12 w-full text-xs sm:text-sm font-bold border border-[#474747] text-[#262626] hover:bg-[#262626] hover:text-white transition active:scale-95 cursor-pointer flex items-center justify-center" 
+                        aria-label="Masukkan ke Tas" 
+                        data-test-id="addToBagButton"
+                        type="button"
+                        onClick={(e) => {
+                          e.stopPropagation();
+                          setActiveProductModal({
+                            id: prod.sku,
+                            name: prod.name,
+                            brand: prod.brand,
+                            image: prod.image,
+                            price: prod.priceNumber,
+                            originalPrice: prod.originalPriceNumber,
+                            discount: prod.discount,
+                            category: 'Top Tier'
+                          });
+                        }}
+                      >
+                        Pesan
+                      </button>
                     </div>
-                  </div>
-                </div>
-              );
-            })}
+                  );
+                })}
+              </div>
+
+              {/* Zalora Right Control Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (topTierListRef.current) {
+                    topTierListRef.current.scrollBy({ left: 320, behavior: 'smooth' });
+                  }
+                }}
+                className="post-type__carousel-control-button post-type__carousel-right-button absolute right-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-zinc-200 hidden md:flex items-center justify-center cursor-pointer hover:bg-zinc-50 z-10 transition active:scale-95"
+                aria-label="Scroll Top Tier Right"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block h-6 w-6">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M12.307 6.338c-.34.33-.34.865.003 1.194l3.979 3.821H4.667c-.368 0-.667.336-.667.75s.299.75.667.75h11.37l-3.73 3.618c-.34.33-.34.865.003 1.194a.898.898 0 001.237-.003l5.25-5.091a.824.824 0 00-.003-1.194l-5.25-5.042a.898.898 0 00-1.237.003z" fill="#262626" />
+                </svg>
+              </button>
+
+              {/* Zalora Left Control Button */}
+              <button
+                type="button"
+                onClick={() => {
+                  if (topTierListRef.current) {
+                    topTierListRef.current.scrollBy({ left: -320, behavior: 'smooth' });
+                  }
+                }}
+                className="post-type__carousel-control-button post-type__carousel-left-button absolute left-2 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white shadow-md border border-zinc-200 hidden md:flex items-center justify-center cursor-pointer hover:bg-zinc-50 z-10 transition active:scale-95 rotate-180"
+                aria-label="Scroll Top Tier Left"
+              >
+                <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block h-6 w-6">
+                  <path fillRule="evenodd" clipRule="evenodd" d="M12.307 6.338c-.34.33-.34.865.003 1.194l3.979 3.821H4.667c-.368 0-.667.336-.667.75s.299.75.667.75h11.37l-3.73 3.618c-.34.33-.34.865.003 1.194a.898.898 0 001.237-.003l5.25-5.091a.824.824 0 00-.003-1.194l-5.25-5.042a.898.898 0 00-1.237.003z" fill="#262626" />
+                </svg>
+              </button>
+            </div>
           </div>
-        )}
+        </div>
       </section>
 
       {/* =========================================================

@@ -151,7 +151,7 @@ export default function ZaloraMenDevPage() {
   const [showQuickAlert, setShowQuickAlert] = useState(null);
   const [showSearchModal, setShowSearchModal] = useState(false);
 
-  // Hero carousel state
+  // Hero mini-card carousel state
   const heroSliderRef = useRef(null);
   const [heroSlideIndex, setHeroSlideIndex] = useState(0);
 
@@ -162,6 +162,88 @@ export default function ZaloraMenDevPage() {
     if (maxScroll <= 0) return;
     const index = Math.round((scrollLeft / maxScroll) * 4);
     setHeroSlideIndex(Math.min(4, Math.max(0, index)));
+  };
+
+  // Mini cards pointer drag support
+  const isDraggingMini = useRef(false);
+  const startXMini = useRef(0);
+  const scrollStartMini = useRef(0);
+  const dragDistMini = useRef(0);
+
+  const onMiniPointerDown = (e) => {
+    isDraggingMini.current = true;
+    startXMini.current = e.pageX || e.clientX;
+    scrollStartMini.current = heroSliderRef.current?.scrollLeft || 0;
+    dragDistMini.current = 0;
+  };
+
+  const onMiniPointerMove = (e) => {
+    if (!isDraggingMini.current || !heroSliderRef.current) return;
+    const x = e.pageX || e.clientX;
+    const walk = x - startXMini.current;
+    dragDistMini.current = Math.abs(walk);
+    heroSliderRef.current.scrollLeft = scrollStartMini.current - walk;
+  };
+
+  const onMiniPointerUp = () => {
+    isDraggingMini.current = false;
+  };
+
+  // Hero BIG slide (swipe the whole hero banner) state
+  const heroBigRef = useRef(null);
+  const [heroBigIndex, setHeroBigIndex] = useState(0);
+
+  const handleHeroBigScroll = () => {
+    if (!heroBigRef.current) return;
+    const { scrollLeft, clientWidth } = heroBigRef.current;
+    if (clientWidth <= 0) return;
+    const idx = Math.round(scrollLeft / clientWidth);
+    setHeroBigIndex(Math.max(0, Math.min(2, idx)));
+  };
+
+  // Big Banner pointer drag support (desktop mouse drag + mobile swipe)
+  const isDraggingBig = useRef(false);
+  const startXBig = useRef(0);
+  const scrollStartBig = useRef(0);
+  const dragDistBig = useRef(0);
+
+  const onHeroBigPointerDown = (e) => {
+    isDraggingBig.current = true;
+    startXBig.current = e.pageX || e.clientX;
+    scrollStartBig.current = heroBigRef.current?.scrollLeft || 0;
+    dragDistBig.current = 0;
+  };
+
+  const onHeroBigPointerMove = (e) => {
+    if (!isDraggingBig.current || !heroBigRef.current) return;
+    const x = e.pageX || e.clientX;
+    const walk = x - startXBig.current;
+    dragDistBig.current = Math.abs(walk);
+    heroBigRef.current.scrollLeft = scrollStartBig.current - walk;
+  };
+
+  const onHeroBigPointerUp = () => {
+    if (!isDraggingBig.current || !heroBigRef.current) return;
+    isDraggingBig.current = false;
+    const clientWidth = heroBigRef.current.clientWidth;
+    if (clientWidth > 0) {
+      const idx = Math.round(heroBigRef.current.scrollLeft / clientWidth);
+      const clamped = Math.max(0, Math.min(2, idx));
+      heroBigRef.current.scrollTo({ left: clamped * clientWidth, behavior: 'smooth' });
+      setHeroBigIndex(clamped);
+    }
+  };
+
+  const goToHeroBigSlide = (index) => {
+    if (!heroBigRef.current) return;
+    const clientWidth = heroBigRef.current.clientWidth;
+    heroBigRef.current.scrollTo({ left: index * clientWidth, behavior: 'smooth' });
+    setHeroBigIndex(index);
+  };
+
+  const handleSlideClick = (action) => {
+    if (dragDistBig.current > 10) return; // User was dragging to slide
+    action();
   };
 
   // Speed deals auto rotation
@@ -205,7 +287,7 @@ export default function ZaloraMenDevPage() {
   };
 
   const getWhatsAppOrderUrl = (pName, price) => {
-    const text = encodeURIComponent(`Halo Admin D Store, saya ingin order:\n• Produk: ${pName}\n• Harga: ${formatRupiah(price)}`);
+    const text = encodeURIComponent(`Halo Admin D Store, saya ingin order:\nâ€¢ Produk: ${pName}\nâ€¢ Harga: ${formatRupiah(price)}`);
     return `https://wa.me/6281230112240?text=${text}`;
   };
 
@@ -227,14 +309,14 @@ export default function ZaloraMenDevPage() {
         <div className="max-w-[1240px] mx-auto flex items-center justify-between gap-4">
           <div className="flex items-center gap-6 overflow-x-auto no-scrollbar whitespace-nowrap">
             <span className="flex items-center gap-1">
-              <span className="text-[#888]">↺</span> 30 Hari Pengembalian Gratis | S&amp;K Berlaku &gt;
+              <span className="text-[#888]">â†º</span> 30 Hari Pengembalian Gratis | S&amp;K Berlaku &gt;
             </span>
             <span className="flex items-center gap-1 font-semibold text-black">
               <span className="bg-black text-white text-[9px] px-1.5 py-0.2 rounded font-bold">VIP</span>
               ZALORA VIP: Gratis Ongkir Setahun Tanpa Min. Pembelian &gt;
             </span>
             <span className="hidden lg:inline-flex items-center gap-1 text-[#555]">
-              ✓ Original 100% Brand Lokal &amp; Internasional
+              âœ“ Original 100% Brand Lokal &amp; Internasional
             </span>
           </div>
 
@@ -242,11 +324,11 @@ export default function ZaloraMenDevPage() {
             <a href="https://wa.me/6281230112240" target="_blank" rel="noopener noreferrer" className="hover:text-black transition">
               Bantuan
             </a>
-            <span className="text-zinc-300">•</span>
+            <span className="text-zinc-300">â€¢</span>
             <a href="https://wa.me/6281230112240" target="_blank" rel="noopener noreferrer" className="hover:text-black transition">
               Kontak
             </a>
-            <span className="text-zinc-300">•</span>
+            <span className="text-zinc-300">â€¢</span>
             <span className="hidden sm:inline hover:text-black cursor-pointer">Download App</span>
           </div>
         </div>
@@ -353,38 +435,30 @@ export default function ZaloraMenDevPage() {
       </header>
 
       {/* =========================================================
-          2B. MOBILE ULTRA-CLEAN TOP BAR (100% PERSIS SCREENSHOT ZALORA)
+          2B. MOBILE TOP BAR â€” Search only
       ========================================================= */}
-      <div className="md:hidden sticky top-0 z-40 bg-white/95 backdrop-blur-md px-3 py-2 flex items-center gap-2 border-b border-zinc-100 shadow-2xs">
-        {/* Search Square Button */}
+      <div className="md:hidden sticky top-0 z-40 bg-white px-4 py-2.5 flex items-center gap-3 border-b border-zinc-200">
+        {/* Search pill â€” full width like Zalora */}
         <button
           type="button"
           onClick={() => setShowSearchModal(true)}
-          className="w-10 h-10 shrink-0 rounded-xl border border-zinc-200 bg-white flex items-center justify-center text-zinc-900 shadow-2xs active:scale-95 transition cursor-pointer"
+          className="flex-1 flex items-center gap-2 bg-[#F2F2F2] rounded-full px-4 py-2.5 text-zinc-500 text-sm cursor-pointer active:bg-zinc-200 transition"
           aria-label="Cari Produk"
         >
-          <Search className="w-5 h-5 stroke-[2.2]" />
+          <Search className="w-4 h-4 shrink-0 stroke-[2]" />
+          <span className="text-[13px] font-normal">Cari produk, merek...</span>
         </button>
-
-        {/* Category Pills: Wanita, Pria, Sports, Anak, Luxury, Beauty */}
-        <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar scroll-smooth py-0.5">
-          {ZALORA_SEGMENTS.map((seg) => {
-            const isActive = seg.id === activeSegment;
-            return (
-              <button
-                key={seg.id}
-                type="button"
-                onClick={() => setActiveSegment(seg.id)}
-                className={`px-4 py-2 rounded-xl text-xs font-bold whitespace-nowrap transition-all shrink-0 cursor-pointer ${
-                  isActive
-                    ? 'bg-[#222222] text-white shadow-xs'
-                    : 'bg-[#F2F2F2] text-[#444] hover:bg-[#E5E5E5]'
-                }`}
-              >
-                {seg.name}
-              </button>
-            );
-          })}
+        {/* Cart icon */}
+        <div
+          onClick={() => showNotification(`Tas belanja: ${cart.length} item`)}
+          className="relative cursor-pointer"
+        >
+          <ShoppingBag className="w-6 h-6 text-zinc-800" />
+          {cart.length > 0 && (
+            <span className="absolute -top-1 -right-1 bg-black text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+              {cart.length}
+            </span>
+          )}
         </div>
       </div>
 
@@ -441,84 +515,267 @@ export default function ZaloraMenDevPage() {
       )}
 
       {/* =========================================================
-          3A. HERO POSTER MOBILE (100% FULL-BLEED DENGAN SLIDER NYATA)
+          3A. HERO MOBILE — ZALORA-STYLE DRAGGABLE CAROUSEL (3 SLIDES)
       ========================================================= */}
-      <div className="md:hidden w-full px-0 pt-0 pb-0">
-        <div className="relative w-full overflow-hidden bg-[#1A1A1A]">
-          {/* Main Hero Background (Clean background dengan models & SHOP NOW) */}
-          <img
-            src="/images/zalora-hero-clean-bg.png"
-            alt="ZALORA 10.10 Super Flash Sale Adidas"
-            className="w-full h-auto object-cover block select-none pointer-events-none"
-          />
+      <div className="md:hidden w-full relative select-none">
 
-          {/* Clickable Hotspot over "SHOP NOW >" */}
-          <div
-            onClick={() => {
-              setSelectedBrandFilter('ADIDAS');
-              const el = document.getElementById('products-section');
-              if (el) el.scrollIntoView({ behavior: 'smooth' });
-              showNotification('Menampilkan koleksi Adidas Flash Sale!');
-            }}
-            className="absolute top-[52%] left-1/2 -translate-x-1/2 w-40 h-10 rounded-full cursor-pointer z-10"
-            title="Shop Adidas Now"
-          />
+        {/* Carousel Container — snap-x with desktop mouse drag & mobile touch swipe */}
+        <div
+          ref={heroBigRef}
+          onScroll={handleHeroBigScroll}
+          onMouseDown={onHeroBigPointerDown}
+          onMouseMove={onHeroBigPointerMove}
+          onMouseUp={onHeroBigPointerUp}
+          onMouseLeave={onHeroBigPointerUp}
+          className="flex overflow-x-auto snap-x snap-mandatory no-scrollbar cursor-grab active:cursor-grabbing"
+          style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
+        >
 
-          {/* REAL SWIPEABLE CAROUSEL OF MINI PRODUCT CARDS */}
-          <div className="absolute bottom-[2%] inset-x-0 z-20">
-            <div
-              ref={heroSliderRef}
-              onScroll={handleHeroScroll}
-              className="flex items-center gap-2 overflow-x-auto snap-x snap-mandatory px-3 no-scrollbar scroll-smooth cursor-grab active:cursor-grabbing select-none"
-              style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
-            >
-              {HERO_CAROUSEL_ITEMS.map((item) => (
-                <div
-                  key={item.id}
-                  onClick={() => setActiveProductModal(item)}
-                  className="shrink-0 snap-start select-none cursor-pointer active:scale-95 transition"
-                >
-                  <img
-                    src={item.cardImg}
-                    alt={item.name}
-                    className="w-[78px] sm:w-[88px] h-auto rounded-xl shadow-md border border-white/30 block pointer-events-none"
-                    loading="eager"
-                  />
-                </div>
-              ))}
+          {/* === SLIDE 1: Adidas 10.10 Super Flash Sale with Integrated Mini Cards === */}
+          <div className="shrink-0 w-full min-w-full snap-start relative bg-[#141414] overflow-hidden" style={{ height: '520px' }}>
+            {/* Top region: Model Photo & Flash Sale graphic */}
+            <div className="relative w-full h-[360px] overflow-hidden">
+              <img
+                src="/images/zalora-hero-top.png"
+                alt="ZALORA 10.10 Flash Sale Adidas"
+                className="w-full h-full object-cover object-top pointer-events-none"
+                draggable={false}
+              />
+              {/* Overlay link with data-carousel-passthrough */}
+              <a
+                href="#"
+                data-carousel-passthrough="true"
+                className="absolute inset-0 z-20 cursor-pointer"
+                onClick={(e) => {
+                  e.preventDefault();
+                  handleSlideClick(() => {
+                    setSelectedBrandFilter('ADIDAS');
+                    document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+                    showNotification('Koleksi Adidas Flash Sale!');
+                  });
+                }}
+              />
             </div>
 
-            {/* Pagination Indicators (1 Elongated Bar + 4 Dots) */}
-            <div className="flex items-center justify-center gap-1.5 pt-2">
-              {[0, 1, 2, 3, 4].map((dot) => (
-                <button
-                  key={dot}
-                  type="button"
-                  onClick={() => {
-                    if (!heroSliderRef.current) return;
-                    const { scrollWidth, clientWidth } = heroSliderRef.current;
-                    const maxScroll = scrollWidth - clientWidth;
-                    heroSliderRef.current.scrollTo({
-                      left: (dot / 4) * maxScroll,
-                      behavior: 'smooth'
-                    });
-                    setHeroSlideIndex(dot);
-                  }}
-                  className={`h-1 rounded-full transition-all duration-300 cursor-pointer ${
-                    dot === heroSlideIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/40'
-                  }`}
-                  aria-label={`Slide ${dot + 1}`}
-                />
-              ))}
+            {/* Bottom region: Mini product cards directly inside the dark hero base */}
+            <div className="absolute bottom-0 inset-x-0 z-30 pb-3 pt-1 bg-gradient-to-t from-black via-black/95 to-transparent">
+              {/* Horizontal mini card slider with mouse drag */}
+              <div
+                ref={heroSliderRef}
+                onScroll={handleHeroScroll}
+                onMouseDown={onMiniPointerDown}
+                onMouseMove={onMiniPointerMove}
+                onMouseUp={onMiniPointerUp}
+                onMouseLeave={onMiniPointerUp}
+                className="flex items-end gap-2 overflow-x-auto snap-x snap-mandatory px-3 no-scrollbar cursor-grab active:cursor-grabbing"
+                style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
+              >
+                {HERO_CAROUSEL_ITEMS.map((item) => (
+                  <div
+                    key={item.id}
+                    onClick={() => {
+                      if (dragDistMini.current > 10) return;
+                      setActiveProductModal(item);
+                    }}
+                    className="shrink-0 snap-start w-[88px] bg-white rounded-lg overflow-hidden border border-zinc-200 shadow-md cursor-pointer active:scale-95 transition"
+                  >
+                    <div className="w-full bg-white flex items-center justify-center" style={{ height: '88px' }}>
+                      <img
+                        src={item.image}
+                        alt={item.name}
+                        className="w-full h-full object-contain p-1 pointer-events-none"
+                        onError={(e) => { e.target.src = '/images/hero-card-1.png'; }}
+                      />
+                    </div>
+                    <div className="flex items-center gap-1 px-1.5 py-1 border-t border-zinc-100 bg-white">
+                      <Heart className="w-2.5 h-2.5 text-red-500 shrink-0" fill="currentColor" />
+                      <span className="text-[9px] font-bold text-zinc-900 truncate leading-none">
+                        Rp {Number(item.price).toLocaleString('id-ID')}
+                      </span>
+                    </div>
+                  </div>
+                ))}
+              </div>
+
+              {/* Mini cards 5 dots indicator */}
+              <div className="flex items-center justify-center gap-1 pt-2">
+                {[0, 1, 2, 3, 4].map((dot) => (
+                  <button
+                    key={dot}
+                    type="button"
+                    onClick={() => {
+                      if (!heroSliderRef.current) return;
+                      const { scrollWidth, clientWidth } = heroSliderRef.current;
+                      heroSliderRef.current.scrollTo({ left: (dot / 4) * (scrollWidth - clientWidth), behavior: 'smooth' });
+                      setHeroSlideIndex(dot);
+                    }}
+                    className={`h-[3px] rounded-full transition-all duration-300 cursor-pointer ${
+                      dot === heroSlideIndex ? 'w-6 bg-white' : 'w-1.5 bg-white/40'
+                    }`}
+                    aria-label={`Mini card dot ${dot + 1}`}
+                  />
+                ))}
+              </div>
             </div>
           </div>
+
+          {/* === SLIDE 2: Tommy Hilfiger Brand Day (as user requested: csa=26w38herobranddaytommyhilfiger) === */}
+          <div className="shrink-0 w-full min-w-full snap-start relative overflow-hidden flex flex-col justify-between" style={{ height: '520px', backgroundColor: '#071630' }}>
+            {/* Background design accents */}
+            <div className="absolute inset-0 bg-gradient-to-b from-[#071630] via-[#0E2A59] to-[#051024] pointer-events-none" />
+            
+            {/* Tommy Hilfiger Ribbon header */}
+            <div className="relative z-10 w-full flex items-center justify-between px-5 pt-6">
+              <div className="flex items-center gap-2">
+                <div className="flex h-5 w-7 border border-white/20 shadow-xs">
+                  <div className="w-1/2 bg-white" />
+                  <div className="w-1/2 bg-[#C8102E]" />
+                </div>
+                <span className="text-white text-xs font-black tracking-widest uppercase">TOMMY HILFIGER</span>
+              </div>
+              <span className="bg-[#C8102E] text-white text-[9px] font-extrabold uppercase px-2 py-0.5 rounded tracking-wider">
+                BRAND DAY
+              </span>
+            </div>
+
+            {/* Tommy Hilfiger Banner Content */}
+            <div className="relative z-10 px-6 py-4 flex flex-col items-center text-center">
+              <div className="text-zinc-300 text-[11px] font-bold tracking-[0.25em] uppercase mb-1">
+                EXCLUSIVE COLLECTION
+              </div>
+              <h2 className="text-white text-3xl font-black tracking-tight leading-none mb-2">
+                CLASSIC AMERICAN COOL
+              </h2>
+              <div className="inline-block bg-white text-[#071630] text-xs font-black px-3 py-1 rounded-full mb-4 shadow-md">
+                DISKON HINGGA 50% + VOUCHER 15%
+              </div>
+              <div className="w-48 h-48 rounded-2xl overflow-hidden bg-white/5 border border-white/10 p-2 shadow-2xl mb-4 flex items-center justify-center">
+                <img
+                  src="https://images.ctfassets.net/9q8du028z7sn/72LwXOzRKd7j03GjxUBF8B/a0171940ad0d92dee1eeda68e9a6fc06/225x225_BB2026_TOMMYHILFIGER.png"
+                  alt="Tommy Hilfiger Collection"
+                  className="w-full h-full object-contain pointer-events-none"
+                />
+              </div>
+              <span className="bg-white text-black text-xs font-bold px-6 py-2 rounded-full tracking-wider shadow-lg active:scale-95 transition">
+                SHOP NOW &gt;
+              </span>
+            </div>
+
+            <div className="relative z-10 pb-4 text-center text-zinc-400 text-[10px]">
+              S&amp;K Berlaku | Periode Terbatas
+            </div>
+
+            {/* Clickable Overlay link matching Zalora DOM */}
+            <a
+              href="#"
+              data-carousel-passthrough="true"
+              className="absolute inset-0 z-20 cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                handleSlideClick(() => {
+                  setSelectedBrandFilter('TOMMY HILFIGER');
+                  document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+                  showNotification('Koleksi Tommy Hilfiger Brand Day!');
+                });
+              }}
+            />
+          </div>
+
+          {/* === SLIDE 3: On Running Performance Sports === */}
+          <div className="shrink-0 w-full min-w-full snap-start relative overflow-hidden flex flex-col justify-between" style={{ height: '520px', backgroundColor: '#111114' }}>
+            <div className="absolute inset-0 bg-gradient-to-b from-[#18181D] via-[#111114] to-[#09090B] pointer-events-none" />
+
+            <div className="relative z-10 w-full flex items-center justify-between px-5 pt-6">
+              <span className="text-white text-base font-black lowercase tracking-tighter">on</span>
+              <span className="bg-white/15 text-white text-[9px] font-bold uppercase px-2.5 py-0.5 rounded-full tracking-wider border border-white/20">
+                SWISS ENGINEERING
+              </span>
+            </div>
+
+            <div className="relative z-10 px-6 py-4 flex flex-col items-center text-center">
+              <div className="text-zinc-400 text-[11px] font-bold tracking-[0.2em] uppercase mb-1">
+                RUNNING &amp; ALL-DAY SNEAKERS
+              </div>
+              <h2 className="text-white text-3xl font-black tracking-tight leading-tight mb-2">
+                CLOUDMONSTER &amp; CLOUDTILT
+              </h2>
+              <div className="inline-block bg-white/10 text-emerald-400 border border-emerald-500/30 text-xs font-bold px-3 py-1 rounded-full mb-4">
+                EXTRA VOUCHER 10% OFF
+              </div>
+              <div className="w-48 h-48 rounded-2xl overflow-hidden bg-white/5 border border-white/10 p-3 shadow-2xl mb-4 flex items-center justify-center">
+                <img
+                  src="https://images.ctfassets.net/9q8du028z7sn/6JllWuRECk8AXKnFvPKoyM/4ed51d752d605cce34ebe6a2d9db6a2a/225x225_BB2026_ON.png"
+                  alt="On Running Shoes"
+                  className="w-full h-full object-contain pointer-events-none"
+                />
+              </div>
+              <span className="bg-white text-black text-xs font-bold px-6 py-2 rounded-full tracking-wider shadow-lg active:scale-95 transition">
+                SHOP ON RUNNING &gt;
+              </span>
+            </div>
+
+            <div className="relative z-10 pb-4 text-center text-zinc-400 text-[10px]">
+              Original 100% Guaranteed | Free Shipping
+            </div>
+
+            {/* Clickable Overlay link */}
+            <a
+              href="#"
+              data-carousel-passthrough="true"
+              className="absolute inset-0 z-20 cursor-pointer"
+              onClick={(e) => {
+                e.preventDefault();
+                handleSlideClick(() => {
+                  setSelectedBrandFilter('ON');
+                  document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
+                  showNotification('Koleksi On Running Swiss Performance!');
+                });
+              }}
+            />
+          </div>
+
         </div>
+
+        {/* Carousel Slide Dots Indicator (floating at bottom center of hero) */}
+        <div className="absolute bottom-1.5 inset-x-0 z-40 flex items-center justify-center gap-1.5 pointer-events-none">
+          {[0, 1, 2].map((i) => (
+            <button
+              key={i}
+              type="button"
+              onClick={() => goToHeroBigSlide(i)}
+              className={`h-1 rounded-full transition-all duration-300 pointer-events-auto cursor-pointer ${
+                i === heroBigIndex ? 'w-6 bg-white shadow-sm' : 'w-1.5 bg-white/40'
+              }`}
+              aria-label={`Slide ${i + 1}`}
+            />
+          ))}
+        </div>
+
+        {/* Left & Right Arrow buttons for quick desktop/tablet sliding */}
+        {heroBigIndex > 0 && (
+          <button
+            type="button"
+            onClick={() => goToHeroBigSlide(heroBigIndex - 1)}
+            className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-xs transition cursor-pointer"
+            aria-label="Previous slide"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+        )}
+        {heroBigIndex < 2 && (
+          <button
+            type="button"
+            onClick={() => goToHeroBigSlide(heroBigIndex + 1)}
+            className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-xs transition cursor-pointer"
+            aria-label="Next slide"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
+        )}
       </div>
 
-      {/* =========================================================
-          3B. MOBILE SOLID BLACK BRAND CIRCLES (100% PERSIS SCREENSHOT ZALORA)
-      ========================================================= */}
-      <section className="md:hidden px-3 py-2">
+
+      <section className="md:hidden px-4 py-3">
         <div className="flex items-center gap-3 overflow-x-auto no-scrollbar py-1">
           {/* 1. Zalora 10.10 Sale Countdown */}
           <div
@@ -526,12 +783,12 @@ export default function ZaloraMenDevPage() {
               showNotification('ZALORA 10.10 Sale Countdown Aktif!');
               document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
             }}
-            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex flex-col items-center justify-center p-1 text-center cursor-pointer shadow-xs active:scale-95 transition"
+            className="w-16 h-16 shrink-0 rounded-full bg-black text-white flex flex-col items-center justify-center p-1 text-center cursor-pointer active:scale-95 transition"
           >
-            <span className="text-[7px] leading-[8px] font-bold tracking-tight uppercase">ZALORA</span>
-            <span className="text-[10px] leading-[11px] font-black tracking-tight text-white">10.10</span>
-            <span className="text-[7px] leading-[8px] font-extrabold uppercase">SALE</span>
-            <span className="text-[5px] leading-[6px] tracking-tighter text-zinc-300 uppercase">COUNTDOWN</span>
+            <span className="text-[7px] leading-[9px] font-bold tracking-tight uppercase">ZALORA</span>
+            <span className="text-[12px] leading-[13px] font-black tracking-tight text-white">10.10</span>
+            <span className="text-[7px] leading-[9px] font-extrabold uppercase">SALE</span>
+            <span className="text-[5px] leading-[6px] tracking-tight text-zinc-400 uppercase">COUNTDOWN</span>
           </div>
 
           {/* 2. Adidas */}
@@ -541,10 +798,10 @@ export default function ZaloraMenDevPage() {
               document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
               showNotification('Brand: Adidas');
             }}
-            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition"
+            className="w-16 h-16 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer active:scale-95 transition"
           >
-            <svg width="28" height="20" viewBox="0 0 28 20" fill="currentColor">
-              <path d="M4.5 18L1.5 13H5L8 18H4.5ZM12.5 18L7.5 9.5H11L16 18H12.5ZM20.5 18L13.5 6H17L24 18H20.5Z"/>
+            <svg width="32" height="24" viewBox="0 0 32 24" fill="currentColor">
+              <path d="M5 22L1.5 15H6L9 22H5ZM14 22L8 11H12.5L18.5 22H14ZM23 22L15 0H19.5L27 22H23Z"/>
             </svg>
           </div>
 
@@ -555,9 +812,9 @@ export default function ZaloraMenDevPage() {
               document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
               showNotification('Brand: On Running');
             }}
-            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition"
+            className="w-16 h-16 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer active:scale-95 transition"
           >
-            <span className="font-bold text-xl lowercase tracking-tighter leading-none">on</span>
+            <span className="font-black text-2xl lowercase tracking-tighter leading-none">on</span>
           </div>
 
           {/* 4. COACH */}
@@ -567,9 +824,9 @@ export default function ZaloraMenDevPage() {
               document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
               showNotification('Brand: COACH');
             }}
-            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition px-1"
+            className="w-16 h-16 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer active:scale-95 transition px-1"
           >
-            <span className="font-serif font-black text-[10px] tracking-widest uppercase">COACH</span>
+            <span className="font-serif font-black text-[11px] tracking-[0.2em] uppercase">COACH</span>
           </div>
 
           {/* 5. trendyol */}
@@ -579,9 +836,9 @@ export default function ZaloraMenDevPage() {
               document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
               showNotification('Koleksi: trendyol');
             }}
-            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition px-1"
+            className="w-16 h-16 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer active:scale-95 transition px-1"
           >
-            <span className="font-sans font-extrabold text-[10px] tracking-tight lowercase">trendyol</span>
+            <span className="font-sans font-extrabold text-[11px] tracking-tight lowercase">trendyol</span>
           </div>
 
           {/* 6. Tommy Hilfiger */}
@@ -591,10 +848,10 @@ export default function ZaloraMenDevPage() {
               document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
               showNotification('Brand: Tommy Hilfiger');
             }}
-            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex flex-col items-center justify-center cursor-pointer shadow-xs active:scale-95 transition p-1"
+            className="w-16 h-16 shrink-0 rounded-full bg-black text-white flex flex-col items-center justify-center cursor-pointer active:scale-95 transition p-1"
           >
-            <span className="text-[7px] leading-[8px] font-black uppercase tracking-wider">TOMMY</span>
-            <span className="text-[6px] leading-[7px] font-bold uppercase tracking-tight text-zinc-300">HILFIGER</span>
+            <span className="text-[8px] leading-[10px] font-black uppercase tracking-wider">TOMMY</span>
+            <span className="text-[6.5px] leading-[8px] font-bold uppercase tracking-tight text-zinc-300">HILFIGER</span>
           </div>
 
           {/* 7. BOSS */}
@@ -604,9 +861,9 @@ export default function ZaloraMenDevPage() {
               document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
               showNotification('Brand: Hugo Boss');
             }}
-            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition"
+            className="w-16 h-16 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer active:scale-95 transition"
           >
-            <span className="font-black text-xs uppercase tracking-wider">BOSS</span>
+            <span className="font-black text-[13px] uppercase tracking-wider">BOSS</span>
           </div>
 
           {/* 8. H&M */}
@@ -616,9 +873,9 @@ export default function ZaloraMenDevPage() {
               document.getElementById('products-section')?.scrollIntoView({ behavior: 'smooth' });
               showNotification('Brand: H&M');
             }}
-            className="w-14 h-14 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer shadow-xs active:scale-95 transition"
+            className="w-16 h-16 shrink-0 rounded-full bg-black text-white flex items-center justify-center cursor-pointer active:scale-95 transition"
           >
-            <span className="font-black text-xs uppercase tracking-tight">H&amp;M</span>
+            <span className="font-black text-[13px] uppercase tracking-tight">H&amp;M</span>
           </div>
         </div>
       </section>
@@ -1354,7 +1611,7 @@ export default function ZaloraMenDevPage() {
         </div>
 
         <div className="max-w-[1240px] mx-auto px-4 pt-6 flex flex-col sm:flex-row items-center justify-between text-xs text-zinc-500 gap-2">
-          <p>© 2026 ZALORA Indonesia ®. Seluruh Hak Cipta Dilindungi.</p>
+          <p>Â© 2026 ZALORA Indonesia Â®. Seluruh Hak Cipta Dilindungi.</p>
           <p className="text-[11px]">Replicated in Pixel-Perfect Zalora /s/men Standard.</p>
         </div>
       </footer>
@@ -1521,7 +1778,8 @@ export default function ZaloraMenDevPage() {
               <span className="relative">
                 <span>
                   <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
-                    <path d="M4.278 3H21L5.555 19.875h14.682V21H3L18.443 4.125H4.278V3z" fill="#111827"></path>
+                    <rect width="24" height="24" rx="2" fill="#000"/>
+                    <path d="M4.278 3H21L5.555 19.875h14.682V21H3L18.443 4.125H4.278V3z" fill="#fff"/>
                   </svg>
                 </span>
               </span>

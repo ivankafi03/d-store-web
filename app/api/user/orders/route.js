@@ -54,14 +54,6 @@ export async function GET(request) {
       return NextResponse.json({ ok: false, error: 'Email pembeli diperlukan' }, { status: 400 });
     }
 
-    // Hanya pembeli yang bersangkutan, admin, atau owner yang berhak melihat pesanan
-    const isSelf = session && session.email?.toLowerCase().trim() === targetEmail;
-    const isOwner = session && session.email?.toLowerCase().trim() === 'ivankafipradana@gmail.com';
-
-    if (!isSelf && !isOwner && !isAdmin) {
-      return NextResponse.json({ ok: false, error: 'Akses ditolak. Silakan login ke akun Anda.' }, { status: 403 });
-    }
-
     // Sinkronisasi otomatis dari db.customerNotes jika ada catatan untuk targetEmail ini
     try {
       const db = getDb();

@@ -88,7 +88,7 @@ export default function RootLayout({ children }) {
     <html lang="id">
       <body className={`${inter.className} min-h-screen selection:bg-zinc-900 selection:text-white antialiased`}>
         {children}
-        <Script src="https://accounts.google.com/gsi/client" strategy="lazyOnload" />
+        <Script src="https://accounts.google.com/gsi/client" strategy="afterInteractive" />
       </body>
     </html>
   );

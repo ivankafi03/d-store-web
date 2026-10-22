@@ -121,13 +121,13 @@ export default function AccountModal({
           if (googleBtnContainerRef.current) {
             googleBtnContainerRef.current.innerHTML = '';
             window.google.accounts.id.renderButton(googleBtnContainerRef.current, {
-              theme: 'outline',
+              theme: 'filled_black',
               size: 'large',
               type: 'standard',
-              shape: 'rectangular',
+              shape: 'pill',
               text: 'continue_with',
               logo_alignment: 'left',
-              width: 300,
+              width: 320,
               locale: 'id'
             });
           }
@@ -692,154 +692,41 @@ export default function AccountModal({
             </>
           ) : (
             /* =========================================================
-                KONDISI B: PENGGUNA BELUM LOGIN (TAMPILAN MINIMALIS & RAPI)
+                KONDISI B: PENGGUNA BELUM LOGIN (LANGSUNG SATU KLIK GOOGLE)
             ========================================================= */
-            <div className="space-y-4">
-              {/* Tombol Utama: Masuk dengan Google */}
-              <div className="space-y-2.5">
-                {/* Google Identity Services Official Button Mount */}
+            <div className="py-4 space-y-5 text-center">
+              <div className="max-w-[280px] mx-auto space-y-1.5">
+                <h3 className="text-base font-bold text-zinc-950">Masuk Akun D Store</h3>
+                <p className="text-xs text-zinc-500 leading-relaxed">
+                  Pilih akun Google Anda untuk aktivasi instan &amp; pantau riwayat garansi aplikasi.
+                </p>
+              </div>
+
+              {/* Mount Tombol Resmi Google Identity Services (One-Click Account Picker) */}
+              <div className="flex flex-col items-center justify-center min-h-[50px] w-full pt-1">
                 <div 
                   ref={googleBtnContainerRef} 
-                  className="w-full flex items-center justify-center min-h-[44px]"
+                  className="w-full flex items-center justify-center"
                 />
 
-                {/* Tombol Cadangan jika GIS belum render */}
                 {!gisLoaded && (
                   <button
                     type="button"
                     disabled={isLoggingIn}
                     onClick={handleGoogleButtonClick}
-                    className="w-full flex items-center justify-center gap-3 py-3 px-4 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 active:scale-[0.99] text-zinc-900 font-bold text-sm shadow-xs transition cursor-pointer hover:border-zinc-300"
+                    className="w-full max-w-[320px] flex items-center justify-center gap-3 py-3 px-5 rounded-full bg-zinc-950 hover:bg-zinc-900 active:scale-[0.99] text-white font-semibold text-xs shadow-md transition cursor-pointer"
                   >
-                    <GoogleLogoSvg className="w-5 h-5 shrink-0" />
+                    <GoogleLogoSvg className="w-4 h-4 shrink-0" />
                     <span>
-                      {isLoggingIn ? 'Menghubungkan ke Google...' : 'Lanjutkan dengan Google'}
+                      {isLoggingIn ? 'Membuka Google...' : 'Lanjutkan dengan Google'}
                     </span>
                   </button>
                 )}
-
-                <div className="text-center">
-                  <span className="text-[11px] text-zinc-400 font-medium">
-                    Aktivasi instan tanpa perlu repot buat password baru
-                  </span>
-                </div>
               </div>
 
-              {/* Card Ringkasan Keuntungan Akun Resmi */}
-              <div className="rounded-2xl border border-zinc-200/80 bg-zinc-50/70 p-4 space-y-3">
-                <div className="flex items-center gap-2">
-                  <div className="w-6 h-6 rounded-md bg-zinc-900 text-white flex items-center justify-center shadow-2xs">
-                    <ShieldCheck className="w-3.5 h-3.5" />
-                  </div>
-                  <span className="text-xs font-bold text-zinc-900">
-                    Keuntungan Akun Pelanggan Resmi
-                  </span>
-                </div>
-
-                <div className="grid grid-cols-1 gap-2.5 pt-1 text-xs text-zinc-600">
-                  <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-zinc-900">Garansi &amp; Riwayat Otomatis: </span>
-                      <span>Semua kredensial dan masa aktif lisensi aplikasi tersimpan rapi di akun Anda.</span>
-                    </div>
-                  </div>
-                  <div className="flex items-start gap-2.5">
-                    <CheckCircle2 className="w-4 h-4 text-emerald-600 shrink-0 mt-0.5" />
-                    <div>
-                      <span className="font-semibold text-zinc-900">Bonus 500 Poin Member: </span>
-                      <span>Kumpulkan poin reward pada setiap transaksi untuk diskon pembelian berikutnya.</span>
-                    </div>
-                  </div>
-                </div>
-              </div>
-
-              {/* Masuk Cepat dengan Email Pribadi (Expandable & Bersih) */}
-              <div className="pt-1">
-                {!showFastLoginDialog ? (
-                  <button
-                    type="button"
-                    onClick={() => setShowFastLoginDialog(true)}
-                    className="w-full text-center text-xs font-semibold text-zinc-500 hover:text-zinc-900 transition cursor-pointer py-1"
-                  >
-                    Atau masuk menggunakan alamat email &rarr;
-                  </button>
-                ) : (
-                  <div className="p-4 rounded-2xl border border-zinc-200 bg-white shadow-xs space-y-3 animate-in fade-in">
-                    <div className="flex items-center justify-between">
-                      <span className="text-xs font-bold text-zinc-900">Masuk dengan Email</span>
-                      <button
-                        type="button"
-                        onClick={() => setShowFastLoginDialog(false)}
-                        className="text-[11px] font-semibold text-zinc-400 hover:text-black cursor-pointer"
-                      >
-                        Batal
-                      </button>
-                    </div>
-
-                    <div className="space-y-2">
-                      <div>
-                        <label className="block text-[11px] font-medium text-zinc-600 mb-1">
-                          Alamat Email
-                        </label>
-                        <input
-                          type="email"
-                          value={customEmail}
-                          onChange={(e) => setCustomEmail(e.target.value)}
-                          placeholder="nama.anda@gmail.com"
-                          className="w-full bg-zinc-50 text-xs px-3.5 py-2.5 rounded-xl border border-zinc-200 focus:border-black focus:bg-white outline-none transition text-zinc-900"
-                          autoFocus
-                        />
-                      </div>
-
-                      <div>
-                        <label className="block text-[11px] font-medium text-zinc-600 mb-1">
-                          Nama Panggilan
-                        </label>
-                        <input
-                          type="text"
-                          value={customName}
-                          onChange={(e) => setCustomName(e.target.value)}
-                          placeholder="Nama Anda"
-                          className="w-full bg-zinc-50 text-xs px-3.5 py-2.5 rounded-xl border border-zinc-200 focus:border-black focus:bg-white outline-none transition text-zinc-900"
-                        />
-                      </div>
-
-                      <button
-                        type="button"
-                        disabled={!customEmail || !customEmail.includes('@') || isLoggingIn}
-                        onClick={() => handleDoGoogleLogin(customEmail, customName)}
-                        className="w-full py-2.5 bg-black hover:bg-zinc-800 disabled:bg-zinc-200 disabled:text-zinc-400 text-white text-xs font-bold rounded-xl transition cursor-pointer shadow-xs mt-1"
-                      >
-                        {isLoggingIn ? 'Memproses...' : 'Masuk Sekarang'}
-                      </button>
-                    </div>
-                  </div>
-                )}
-              </div>
-
-              {/* Bantuan WhatsApp CS */}
-              <div className="pt-2 border-t border-zinc-100">
-                <button
-                  type="button"
-                  onClick={() => handleWhatsAppCS('Halo Admin D Store, saya ingin konsultasi/tanya produk aplikasi:')}
-                  className="w-full flex items-center justify-between p-3 rounded-xl border border-zinc-200/80 bg-white hover:bg-zinc-50 hover:border-zinc-300 transition text-left cursor-pointer group"
-                >
-                  <div className="flex items-center gap-3">
-                    <div className="w-8 h-8 rounded-lg bg-zinc-100 text-zinc-700 flex items-center justify-center shrink-0 group-hover:bg-zinc-900 group-hover:text-white transition">
-                      <MessageCircle className="w-4 h-4" />
-                    </div>
-                    <div>
-                      <div className="text-xs font-bold text-zinc-900 group-hover:text-black">
-                        Butuh Bantuan? Chat WhatsApp CS
-                      </div>
-                      <div className="text-[11px] text-zinc-500">
-                        Layanan responsif siap membantu kendala akun Anda
-                      </div>
-                    </div>
-                  </div>
-                  <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-black transition" />
-                </button>
+              <div className="flex items-center justify-center gap-1.5 text-[11px] text-zinc-400">
+                <ShieldCheck className="w-3.5 h-3.5 text-emerald-600" />
+                <span>Otorisasi Resmi &bull; Aman &amp; Terenkripsi</span>
               </div>
             </div>
           )}

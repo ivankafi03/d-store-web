@@ -1,0 +1,191 @@
+[
+  {
+    "id": "104397103776045647741",
+    "googleSub": "104397103776045647741",
+    "email": "ivankafi7@gmail.com",
+    "name": "ivan kafi",
+    "picture": "https://lh3.googleusercontent.com/a/ACg8ocLBKS6-arcf2B5nO_b43AunPbEzuMAG9wgjtxNoRao6-UYOMnIS=s96-c",
+    "role": "customer",
+    "tier": "Member VIP",
+    "memberId": "DST-12198",
+    "phone": "08123456789",
+    "points": 700,
+    "orders": [
+      {
+        "id": "DST-ORD-912834",
+        "noteId": "note_1792680900000_canva",
+        "orderTime": "22 Okt 2026, 21:00 WIB",
+        "createdAt": "2026-10-22T14:00:00.000Z",
+        "items": [
+          {
+            "id": "item_note_1792680900000_canva",
+            "name": "Canva Pro Desain Brand Kit & AI Unlock Lifetime",
+            "variantName": "canva pro head 1m [ 100 user ]",
+            "quantity": 1,
+            "price": 9000,
+            "subtotal": 9000,
+            "durationDays": 30,
+            "warrantyDays": 30,
+            "startDate": "2026-10-22T00:00:00.000Z",
+            "expiredAt": "2026-11-21T23:59:59.000Z",
+            "warrantyExpiredAt": "2026-11-21T23:59:59.000Z",
+            "noteId": "note_1792680900000_canva",
+            "accountDetails": "ivankafi7@gmail.com"
+          }
+        ],
+        "totalAmount": 9000,
+        "status": "Aktif",
+        "customerNotes": "Catatan langganan dari D-Workspace",
+        "phone": "081212121212",
+        "email": "ivankafi7@gmail.com",
+        "name": "ipan",
+        "title": "Canva Pro Desain Brand Kit & AI Unlock Lifetime (canva pro head 1m [ 100 user ])"
+      },
+      {
+        "id": "DST-ORD-444544",
+        "noteId": "note_1792253444545_898",
+        "orderTime": "17 Okt 2026, 23:10 WIB",
+        "createdAt": "2026-10-17T16:10:44.544Z",
+        "items": [
+          {
+            "id": "item_note_1792253444545_898",
+            "name": "Canva Pro",
+            "variantName": "7 Hari Garansi Penuh",
+            "quantity": 1,
+            "price": 15000,
+            "subtotal": 15000,
+            "durationDays": 7,
+            "warrantyDays": 7,
+            "startDate": "2026-10-17T16:10:44.544Z",
+            "expiredAt": "2026-10-24T16:10:44.544Z",
+            "warrantyExpiredAt": "2026-10-24T16:10:44.544Z",
+            "noteId": "note_1792253444545_898",
+            "accountDetails": "Menunggu pengiriman kredensial akun oleh Seller"
+          }
+        ],
+        "totalAmount": 15000,
+        "status": "Aktif",
+        "customerNotes": "Catatan Pembeli: Canva 7 hari ya min",
+        "phone": "08123456789",
+        "email": "ivankafi7@gmail.com",
+        "name": "ivan kafi",
+        "title": "Canva Pro (7 Hari Garansi Penuh)"
+      },
+      {
+        "id": "DST-ORD-424926",
+        "noteId": "note_1792252424928_439",
+        "orderTime": "17 Okt 2026, 22:53 WIB",
+        "createdAt": "2026-10-17T15:53:44.926Z",
+        "items": [
+          {
+            "id": "item_note_1792252424928_439",
+            "name": "Netflix Premium",
+            "variantName": "1 Bulan 1P1U",
+            "quantity": 1,
+            "price": 35000,
+            "subtotal": 35000,
+            "durationDays": 30,
+            "warrantyDays": 30,
+            "startDate": "2026-10-17T15:53:44.926Z",
+            "expiredAt": "2026-11-16T15:53:44.926Z",
+            "warrantyExpiredAt": "2026-11-16T15:53:44.926Z",
+            "noteId": "note_1792252424928_439",
+            "accountDetails": "Menunggu pengiriman kredensial akun oleh Seller"
+          }
+        ],
+        "totalAmount": 35000,
+        "status": "Aktif",
+        "customerNotes": "Catatan Pembeli: Tolong kirim cepat ya kak",
+        "phone": "08123456789",
+        "email": "ivankafi7@gmail.com",
+        "name": "ivan kafi",
+        "title": "Netflix Premium (1 Bulan 1P1U)"
+      },
+      {
+        "id": "ORD-846271",
+        "title": "Garansi Proteksi Akun D Store Aktif",
+        "status": "Aktif",
+        "date": "17 Okt 2026",
+        "note": "Status akun pembeli resmi terdaftar"
+      }
+    ],
+    "createdAt": "2026-10-17T15:10:46.271Z",
+    "lastLoginAt": "2026-10-17T15:26:49.826Z"
+  },
+  {
+    "id": "111625192314646962837",
+    "googleSub": "111625192314646962837",
+    "email": "ivankafipradana@gmail.com",
+    "name": "ivan Kafi pradana",
+    "picture": "https://lh3.googleusercontent.com/a/ACg8ocJDQzImQHKSZL2_NpVA7jzB90ykhiGw1XWpT1raI67RwabLezRG=s96-c",
+    "role": "owner",
+    "tier": "Owner & Pengelola Toko",
+    "memberId": "DST-OWNER-01",
+    "phone": "",
+    "points": 999999,
+    "orders": [
+      {
+        "id": "DST-ORD-912834",
+        "noteId": "note_1792680900000_canva",
+        "orderTime": "22 Okt 2026, 21:00 WIB",
+        "createdAt": "2026-10-22T14:00:00.000Z",
+        "items": [
+          {
+            "id": "item_note_1792680900000_canva",
+            "name": "Canva Pro Desain Brand Kit & AI Unlock Lifetime",
+            "variantName": "canva pro head 1m [ 100 user ]",
+            "quantity": 1,
+            "price": 9000,
+            "subtotal": 9000,
+            "durationDays": 30,
+            "warrantyDays": 30,
+            "startDate": "2026-10-22T00:00:00.000Z",
+            "expiredAt": "2026-11-21T23:59:59.000Z",
+            "warrantyExpiredAt": "2026-11-21T23:59:59.000Z",
+            "noteId": "note_1792680900000_canva",
+            "accountDetails": "ivankafi7@gmail.com"
+          }
+        ],
+        "totalAmount": 9000,
+        "status": "Aktif",
+        "customerNotes": "Catatan langganan dari D-Workspace",
+        "phone": "081212121212",
+        "email": "ivankafipradana@gmail.com",
+        "name": "ivan Kafi pradana",
+        "title": "Canva Pro Desain Brand Kit & AI Unlock Lifetime (canva pro head 1m [ 100 user ])"
+      },
+      {
+        "id": "ORD-025141",
+        "title": "Garansi Proteksi Akun D Store Aktif",
+        "status": "Aktif",
+        "date": "17 Okt 2026",
+        "note": "Status akun pembeli resmi terdaftar"
+      }
+    ],
+    "createdAt": "2026-10-17T15:30:25.141Z",
+    "lastLoginAt": "2026-10-17T15:30:25.141Z"
+  },
+  {
+    "id": "108426799277299006097",
+    "googleSub": "108426799277299006097",
+    "email": "clarisazahra65@gmail.com",
+    "name": "clarisa zahra",
+    "picture": "https://lh3.googleusercontent.com/a/ACg8ocL1Y5Y9yKzdBtKKAvRm4CJlGlXXYB7fXrQz5stEfnKLRmIQHQ=s96-c",
+    "role": "customer",
+    "tier": "Member VIP",
+    "memberId": "DST-26302",
+    "phone": "",
+    "points": 500,
+    "orders": [
+      {
+        "id": "ORD-827641",
+        "title": "Garansi Proteksi Akun D Store Aktif",
+        "status": "Aktif",
+        "date": "17 Okt 2026",
+        "note": "Status akun pembeli resmi terdaftar"
+      }
+    ],
+    "createdAt": "2026-10-17T16:00:27.641Z",
+    "lastLoginAt": "2026-10-17T16:00:27.641Z"
+  }
+]

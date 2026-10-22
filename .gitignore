@@ -44,10 +44,10 @@ next-env.d.ts
 session.txt
 data/db.json
 data/*.bak
-data/users.json
 .lynk_profile/
-# Tapi public-catalog.json BOLEH di-commit (snapshot statis untuk fallback di Vercel)
+# File database runtime yang wajib di-bundle ke Vercel agar data pengguna & katalog tersedia
 !data/public-catalog.json
+!data/users.json
 
 # Temporary / debug scripts
 *.cjs

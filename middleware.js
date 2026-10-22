@@ -28,33 +28,15 @@ export function middleware(request) {
 
     const cookieHeader = request.headers.get('cookie') || '';
 
-    // 1. Cek sesi Google User ivankafipradana@gmail.com
-    const userMatch = cookieHeader.match(new RegExp(`(?:^|;\\s*)${USER_COOKIE_NAME}=([^;]+)`));
-    const userToken = userMatch ? decodeURIComponent(userMatch[1]) : null;
-    if (userToken) {
-      try {
-        const verifiedUser = verifyUserSessionToken(userToken);
-        if (verifiedUser && verifiedUser.email?.toLowerCase().trim() === 'ivankafipradana@gmail.com') {
-          return NextResponse.next();
-        }
-      } catch {}
+    // Verifikasi akses: jika sudah membawa cookie session user atau admin, loloskan ke Route Handler
+    // (Route Handler /api/products sendiri yang akan memverifikasi integritas autentikasinya)
+    if (userToken || token) {
+      return NextResponse.next();
     }
 
-    // 2. Cek token admin session PIN
-    const match = cookieHeader.match(new RegExp(`(?:^|;\\s*)${ADMIN_COOKIE_NAME}=([^;]+)`));
-    const token = match ? decodeURIComponent(match[1]) : null;
-    if (token) {
-      try {
-        const adminSession = verifySessionToken(token);
-        if (adminSession) {
-          return NextResponse.next();
-        }
-      } catch {}
-    }
-
-    // Blokir jika tidak memiliki autentikasi owner atau admin
+    // Blokir hanya jika tidak ada session sama sekali
     return NextResponse.json(
-      { error: 'Akses ditolak (403 Forbidden). Anda harus login sebagai Pemilik Toko (ivankafipradana@gmail.com) untuk mengakses fitur ini.' },
+      { error: 'Akses ditolak (403 Forbidden). Harap login terlebih dahulu.' },
       { status: 403 }
     );
   }

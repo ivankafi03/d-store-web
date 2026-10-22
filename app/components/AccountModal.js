@@ -245,18 +245,18 @@ export default function AccountModal({
         className="bg-white text-zinc-900 rounded-t-2xl sm:rounded-2xl max-w-md w-full max-h-[90vh] flex flex-col shadow-2xl border border-zinc-200 animate-in slide-in-from-bottom duration-250 overflow-hidden"
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Header Modal */}
-        <div className="px-5 py-4 border-b border-zinc-100 flex items-center justify-between bg-white">
-          <div className="flex items-center gap-3">
-            <div className="w-9 h-9 rounded-xl bg-zinc-900 text-white flex items-center justify-center shadow-xs">
-              <User className="w-4 h-4" />
+        {/* Header Modal - Minimalis, Bersih & Elegan Monokrom */}
+        <div className="px-5 py-4 border-b border-zinc-100 flex items-center justify-between bg-zinc-50/70">
+          <div className="flex items-center gap-2.5">
+            <div className="w-8 h-8 rounded-lg bg-zinc-950 text-white flex items-center justify-center shadow-xs">
+              <User className="w-4 h-4 stroke-[2]" />
             </div>
             <div>
               <h2 className="text-sm sm:text-base font-bold text-zinc-950 tracking-tight">
-                {user ? 'Profil Akun Saya' : 'Akun D Store'}
+                {user ? 'Profil Akun D Store' : 'Akun D Store'}
               </h2>
-              <p className="text-[11px] text-zinc-400 font-medium">
-                {user ? user.email : 'Masuk langsung dengan Akun Google'}
+              <p className="text-[11px] text-zinc-500">
+                {user ? user.email : 'Masuk akun resmi untuk aktivasi & riwayat lisensi'}
               </p>
             </div>
           </div>
@@ -264,7 +264,7 @@ export default function AccountModal({
           <button
             type="button"
             onClick={onClose}
-            className="w-8 h-8 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-500 hover:text-black flex items-center justify-center transition cursor-pointer"
+            className="w-8 h-8 rounded-lg bg-zinc-100 hover:bg-zinc-200 text-zinc-600 flex items-center justify-center transition cursor-pointer"
             aria-label="Tutup"
           >
             <X className="w-4 h-4" />
@@ -279,74 +279,72 @@ export default function AccountModal({
           ========================================================= */}
           {user ? (
             <>
-              {/* Member Profile Card */}
-              <div className="p-4 sm:p-5 rounded-2xl bg-gradient-to-br from-zinc-950 via-zinc-900 to-zinc-800 text-white shadow-xl relative overflow-hidden border border-zinc-800">
-                <div className="absolute top-0 right-0 w-36 h-36 bg-blue-500/10 rounded-full blur-3xl -mr-12 -mt-12 pointer-events-none" />
-
+              {/* Member Profile Card - Matte Black Monokrom Elegan */}
+              <div className="p-4 sm:p-5 rounded-2xl bg-zinc-950 text-white shadow-xl relative overflow-hidden border border-zinc-900">
                 <div className="flex items-start justify-between gap-3 mb-3">
                   <div className="flex items-center gap-3">
                     {/* User Avatar */}
                     <UserAvatar 
                       user={user} 
-                      size={48} 
+                      size={46} 
                       showGoogleBadge={true} 
-                      badgeSize={16} 
+                      badgeSize={15} 
                     />
 
                     <div>
                       <h3 className="text-sm sm:text-base font-bold text-white tracking-tight flex items-center gap-1.5">
                         {user.name}
                       </h3>
-                      <p className="text-xs text-zinc-300 flex items-center gap-1 mt-0.5">
-                        <Mail className="w-3 h-3 text-zinc-400" />
+                      <p className="text-xs text-zinc-400 flex items-center gap-1 mt-0.5">
+                        <Mail className="w-3 h-3 text-zinc-500" />
                         {user.email}
                       </p>
                     </div>
                   </div>
 
-                  <span className="bg-amber-400 text-zinc-950 text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider shrink-0 shadow-xs">
+                  <span className="bg-white text-zinc-950 text-[10px] font-black px-2 py-0.5 rounded uppercase tracking-wider shrink-0 shadow-xs">
                     {user.tier || 'MEMBER VIP'}
                   </span>
                 </div>
 
                 {/* ID Member & Status */}
-                <div className="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-white/10 text-xs">
+                <div className="grid grid-cols-2 gap-2 mt-4 pt-3 border-t border-zinc-800/80 text-xs">
                   <div>
                     <span className="text-[10px] text-zinc-400 block">ID Pelanggan Resmi:</span>
-                    <span className="font-mono font-bold text-amber-300">
+                    <span className="font-mono font-bold text-zinc-200">
                       {user.memberId || 'DST-72819'}
                     </span>
                   </div>
                   <div>
                     <span className="text-[10px] text-zinc-400 block">Status Akun:</span>
-                    <span className="font-bold text-emerald-400 flex items-center gap-1">
-                      <ShieldCheck className="w-3.5 h-3.5" /> Terverifikasi Google
+                    <span className="font-semibold text-zinc-300 flex items-center gap-1">
+                      <ShieldCheck className="w-3.5 h-3.5 text-white" /> Terverifikasi
                     </span>
                   </div>
                 </div>
 
                 {/* Saldo Poin Reward */}
-                <div className="mt-3 pt-3 border-t border-white/10 flex items-center justify-between text-xs bg-white/5 rounded-xl px-3 py-2">
+                <div className="mt-3 pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs bg-zinc-900/60 rounded-xl px-3 py-2 border border-zinc-800">
                   <div className="flex items-center gap-1.5 text-zinc-300">
-                    <Award className="w-4 h-4 text-amber-400" />
+                    <Award className="w-4 h-4 text-white" />
                     <span>D-Reward Points:</span>
                   </div>
-                  <span className="font-bold text-amber-300 text-sm">
+                  <span className="font-bold text-white text-sm">
                     {user.points || 500} Poin
                   </span>
                 </div>
               </div>
 
               {/* Form Nomor WhatsApp Pembeli */}
-              <div className="p-3.5 rounded-xl border border-zinc-200 bg-zinc-50/70">
+              <div className="p-3.5 rounded-xl border border-zinc-200/90 bg-white shadow-2xs">
                 <div className="flex items-center justify-between mb-1.5">
-                  <span className="text-xs font-bold text-zinc-800 flex items-center gap-1.5">
+                  <span className="text-xs font-bold text-zinc-900 flex items-center gap-1.5">
                     <Phone className="w-3.5 h-3.5 text-zinc-500" />
                     Nomor WhatsApp Penerima Lisensi
                   </span>
                   {phoneSavedMessage && (
-                    <span className="text-[11px] font-bold text-emerald-600 flex items-center gap-1 animate-in fade-in">
-                      <CheckCircle2 className="w-3 h-3" /> Tersimpan
+                    <span className="text-[11px] font-bold text-zinc-900 flex items-center gap-1 animate-in fade-in">
+                      <CheckCircle2 className="w-3 h-3 text-zinc-950" /> Tersimpan
                     </span>
                   )}
                 </div>
@@ -356,17 +354,17 @@ export default function AccountModal({
                     value={phoneNumber}
                     onChange={(e) => setPhoneNumber(e.target.value)}
                     placeholder="Contoh: 081234567890"
-                    className="flex-1 bg-white text-xs px-3 py-2 rounded-lg border border-zinc-200 focus:border-black outline-none transition text-zinc-900"
+                    className="flex-1 bg-zinc-50 text-xs px-3 py-2 rounded-lg border border-zinc-200 focus:border-zinc-950 focus:bg-white outline-none transition text-zinc-900"
                   />
                   <button
                     type="submit"
                     disabled={isSavingPhone || phoneNumber === user.phone}
-                    className="px-3 py-2 bg-zinc-900 hover:bg-black disabled:bg-zinc-200 disabled:text-zinc-400 text-white text-xs font-semibold rounded-lg transition cursor-pointer"
+                    className="px-3.5 py-2 bg-zinc-950 hover:bg-zinc-900 disabled:bg-zinc-200 disabled:text-zinc-400 text-white text-xs font-semibold rounded-lg transition cursor-pointer"
                   >
                     {isSavingPhone ? 'Menyimpan...' : 'Simpan'}
                   </button>
                 </form>
-                <p className="text-[10px] text-zinc-500 mt-1">
+                <p className="text-[10px] text-zinc-400 mt-1">
                   Nomor ini digunakan untuk pengiriman kredensial akun dan notifikasi otomatis.
                 </p>
               </div>
@@ -529,14 +527,14 @@ export default function AccountModal({
                 <button
                   type="button"
                   onClick={() => handleWhatsAppCS('Saya ingin mengajukan klaim garansi atau reset akses akun:')}
-                  className="w-full flex items-center justify-between p-3.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 hover:border-zinc-300 transition text-left cursor-pointer group"
+                  className="w-full flex items-center justify-between p-3 rounded-xl border border-zinc-200/90 bg-white hover:bg-zinc-50 hover:border-zinc-950 transition text-left cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-emerald-100 text-emerald-600 flex items-center justify-center shrink-0">
-                      <ShieldCheck className="w-5 h-5" />
+                    <div className="w-10 h-10 rounded-xl bg-zinc-950 text-white flex items-center justify-center shrink-0 shadow-xs group-hover:bg-zinc-900 transition">
+                      <ShieldCheck className="w-4 h-4 stroke-[1.9]" />
                     </div>
                     <div>
-                      <h4 className="text-xs sm:text-sm font-bold text-zinc-950 group-hover:text-emerald-600 transition">
+                      <h4 className="text-xs sm:text-sm font-bold text-zinc-950 transition">
                         Klaim Garansi &amp; Bantuan Akun
                       </h4>
                       <p className="text-[11px] text-zinc-500">
@@ -544,21 +542,21 @@ export default function AccountModal({
                       </p>
                     </div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-zinc-700 transition" />
+                  <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-zinc-950 transition" />
                 </button>
 
                 {/* Chat CS WhatsApp Langsung */}
                 <button
                   type="button"
                   onClick={() => handleWhatsAppCS('Saya butuh bantuan / tanya ketersediaan stok aplikasi:')}
-                  className="w-full flex items-center justify-between p-3.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 hover:border-zinc-300 transition text-left cursor-pointer group"
+                  className="w-full flex items-center justify-between p-3 rounded-xl border border-zinc-200/90 bg-white hover:bg-zinc-50 hover:border-zinc-950 transition text-left cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-blue-100 text-blue-600 flex items-center justify-center shrink-0">
-                      <MessageCircle className="w-5 h-5" />
+                    <div className="w-10 h-10 rounded-xl bg-zinc-950 text-white flex items-center justify-center shrink-0 shadow-xs group-hover:bg-zinc-900 transition">
+                      <MessageCircle className="w-4 h-4 stroke-[1.9]" />
                     </div>
                     <div>
-                      <h4 className="text-xs sm:text-sm font-bold text-zinc-950 group-hover:text-blue-600 transition">
+                      <h4 className="text-xs sm:text-sm font-bold text-zinc-950 transition">
                         Hubungi Customer Service WhatsApp
                       </h4>
                       <p className="text-[11px] text-zinc-500">
@@ -566,7 +564,7 @@ export default function AccountModal({
                       </p>
                     </div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-zinc-700 transition" />
+                  <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-zinc-950 transition" />
                 </button>
 
                 {/* Tas Belanja */}
@@ -576,14 +574,14 @@ export default function AccountModal({
                     onClose();
                     if (onOpenCart) onOpenCart();
                   }}
-                  className="w-full flex items-center justify-between p-3.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 hover:border-zinc-300 transition text-left cursor-pointer group"
+                  className="w-full flex items-center justify-between p-3 rounded-xl border border-zinc-200/90 bg-white hover:bg-zinc-50 hover:border-zinc-950 transition text-left cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-zinc-100 text-zinc-800 flex items-center justify-center shrink-0">
-                      <ShoppingBag className="w-5 h-5" />
+                    <div className="w-10 h-10 rounded-xl bg-zinc-950 text-white flex items-center justify-center shrink-0 shadow-xs group-hover:bg-zinc-900 transition">
+                      <ShoppingBag className="w-4 h-4 stroke-[1.9]" />
                     </div>
                     <div>
-                      <h4 className="text-xs sm:text-sm font-bold text-zinc-950 group-hover:text-black transition">
+                      <h4 className="text-xs sm:text-sm font-bold text-zinc-950 transition">
                         Tas Belanja ({cartCount} item)
                       </h4>
                       <p className="text-[11px] text-zinc-500">
@@ -603,14 +601,14 @@ export default function AccountModal({
                     onClose();
                     if (onOpenWishlist) onOpenWishlist();
                   }}
-                  className="w-full flex items-center justify-between p-3.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 hover:border-zinc-300 transition text-left cursor-pointer group"
+                  className="w-full flex items-center justify-between p-3 rounded-xl border border-zinc-200/90 bg-white hover:bg-zinc-50 hover:border-zinc-950 transition text-left cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-rose-100 text-rose-600 flex items-center justify-center shrink-0">
-                      <Heart className="w-5 h-5" />
+                    <div className="w-10 h-10 rounded-xl bg-zinc-950 text-white flex items-center justify-center shrink-0 shadow-xs group-hover:bg-zinc-900 transition">
+                      <Heart className="w-4 h-4 stroke-[1.9]" />
                     </div>
                     <div>
-                      <h4 className="text-xs sm:text-sm font-bold text-zinc-950 group-hover:text-rose-600 transition">
+                      <h4 className="text-xs sm:text-sm font-bold text-zinc-950 transition">
                         Wishlist Saya ({wishlistCount} item)
                       </h4>
                       <p className="text-[11px] text-zinc-500">
@@ -627,14 +625,14 @@ export default function AccountModal({
                 <button
                   type="button"
                   onClick={() => handleWhatsAppCS('Saya berminat bergabung menjadi Reseller D Store:')}
-                  className="w-full flex items-center justify-between p-3.5 rounded-xl border border-zinc-200 bg-white hover:bg-zinc-50 hover:border-zinc-300 transition text-left cursor-pointer group"
+                  className="w-full flex items-center justify-between p-3 rounded-xl border border-zinc-200/90 bg-white hover:bg-zinc-50 hover:border-zinc-950 transition text-left cursor-pointer group"
                 >
                   <div className="flex items-center gap-3">
-                    <div className="w-9 h-9 rounded-lg bg-amber-100 text-amber-600 flex items-center justify-center shrink-0">
-                      <Zap className="w-5 h-5" />
+                    <div className="w-10 h-10 rounded-xl bg-zinc-950 text-white flex items-center justify-center shrink-0 shadow-xs group-hover:bg-zinc-900 transition">
+                      <Zap className="w-4 h-4 stroke-[1.9]" />
                     </div>
                     <div>
-                      <h4 className="text-xs sm:text-sm font-bold text-zinc-950 group-hover:text-amber-600 transition">
+                      <h4 className="text-xs sm:text-sm font-bold text-zinc-950 transition">
                         Gabung Reseller &amp; Harga Grosir
                       </h4>
                       <p className="text-[11px] text-zinc-500">
@@ -642,7 +640,7 @@ export default function AccountModal({
                       </p>
                     </div>
                   </div>
-                  <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-zinc-700 transition" />
+                  <ChevronRight className="w-4 h-4 text-zinc-400 group-hover:text-zinc-950 transition" />
                 </button>
               </div>
 

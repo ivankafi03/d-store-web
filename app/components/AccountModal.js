@@ -702,26 +702,15 @@ export default function AccountModal({
                 </p>
               </div>
 
-              {/* Mount Tombol Resmi Google Identity Services (One-Click Account Picker) */}
-              <div className="flex flex-col items-center justify-center min-h-[50px] w-full pt-1">
-                <div 
-                  ref={googleBtnContainerRef} 
-                  className="w-full flex items-center justify-center"
-                />
-
-                {!gisLoaded && (
-                  <button
-                    type="button"
-                    disabled={isLoggingIn}
-                    onClick={handleGoogleButtonClick}
-                    className="w-full max-w-[320px] flex items-center justify-center gap-3 py-3 px-5 rounded-full bg-zinc-950 hover:bg-zinc-900 active:scale-[0.99] text-white font-semibold text-xs shadow-md transition cursor-pointer"
-                  >
-                    <GoogleLogoSvg className="w-4 h-4 shrink-0" />
-                    <span>
-                      {isLoggingIn ? 'Membuka Google...' : 'Lanjutkan dengan Google'}
-                    </span>
-                  </button>
-                )}
+              {/* Tombol Utama: Langsung Buka Pilihan Akun Google di Perangkat */}
+              <div className="flex flex-col items-center justify-center w-full pt-1">
+                <a
+                  href={`/api/auth/google?returnTo=${encodeURIComponent(typeof window !== 'undefined' ? window.location.pathname : '/store')}`}
+                  className="w-full max-w-[320px] flex items-center justify-center gap-3 py-3 px-5 rounded-full bg-zinc-950 hover:bg-zinc-900 active:scale-[0.98] text-white font-semibold text-xs shadow-md transition cursor-pointer no-underline"
+                >
+                  <GoogleLogoSvg className="w-4 h-4 shrink-0" />
+                  <span>Lanjutkan dengan Google</span>
+                </a>
               </div>
 
               <div className="flex items-center justify-center gap-1.5 text-[11px] text-zinc-400">

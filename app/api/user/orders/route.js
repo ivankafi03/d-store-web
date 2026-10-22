@@ -6,7 +6,8 @@ import {
   verifyUserSessionToken, 
   getAllUsers, 
   saveAllUsers, 
-  findUserByEmail 
+  findUserByEmail,
+  syncCustomerNoteToUserOrder
 } from '@/lib/userAuth';
 import { getDb, saveDb } from '@/lib/db';
 
@@ -59,6 +60,24 @@ export async function GET(request) {
 
     if (!isSelf && !isOwner && !isAdmin) {
       return NextResponse.json({ ok: false, error: 'Akses ditolak. Silakan login ke akun Anda.' }, { status: 403 });
+    }
+
+    // Sinkronisasi otomatis dari db.customerNotes jika ada catatan untuk targetEmail ini
+    try {
+      const db = getDb();
+      if (Array.isArray(db.customerNotes)) {
+        const matchingNotes = db.customerNotes.filter(n => {
+          const cEmail = (n.customerEmail || '').toLowerCase().trim();
+          if (cEmail && cEmail === targetEmail) return true;
+          if (n.accountDetails && n.accountDetails.toLowerCase().includes(targetEmail)) return true;
+          return false;
+        });
+        for (const note of matchingNotes) {
+          syncCustomerNoteToUserOrder(note, 'upsert');
+        }
+      }
+    } catch (syncErr) {
+      console.warn('[Sync Customer Notes on Orders GET Error]', syncErr.message);
     }
 
     const user = findUserByEmail(targetEmail);

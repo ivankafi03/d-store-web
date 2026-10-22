@@ -1,9 +1,20 @@
 import { NextResponse } from 'next/server';
 import { getDb, saveDb, pushToGoogleSheet, standardizeDuration } from '@/lib/db';
 import { isAuthenticatedRequest } from '@/lib/auth';
+import { getAllUsers, syncCustomerNoteToUserOrder } from '@/lib/userAuth';
 
 export async function GET() {
   const db = getDb(true);
+  const allUsers = getAllUsers();
+  const registeredUsers = allUsers.map(u => ({
+    id: u.id,
+    email: u.email,
+    name: u.name,
+    role: u.role,
+    tier: u.tier,
+    phone: u.phone || ''
+  }));
+
   return NextResponse.json({
     status: 'ok',
     categories: db.categories || [],
@@ -11,6 +22,7 @@ export async function GET() {
     variants: db.variants || [],
     suppliers: db.suppliers || [],
     customerNotes: db.customerNotes || [],
+    registeredUsers,
     blacklistedProducts: db.blacklistedProducts || [],
     blacklistedVariants: db.blacklistedVariants || [],
     categoryOverrides: db.categoryOverrides || {}
@@ -566,6 +578,7 @@ export async function POST(request) {
     if (action === 'add_customer_note') {
       const {
         customerName = '',
+        customerEmail = '',
         contactType = 'whatsapp',
         contact = '',
         productId = '',
@@ -593,9 +606,20 @@ export async function POST(request) {
         exp = new Date(start.getTime() + (Number(durationDays) || 30) * 86400000);
       }
 
+      // Deteksi otomatis email dari accountDetails jika customerEmail belum diisi
+      let finalEmail = (customerEmail || '').trim();
+      if (!finalEmail && accountDetails) {
+        const emailMatch = accountDetails.match(/[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}/);
+        if (emailMatch) {
+          finalEmail = emailMatch[0].trim();
+        }
+      }
+
       const newNote = {
         id: `note_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+        orderId: `DST-NOTE-${Date.now().toString().slice(-6)}`,
         customerName: customerName.trim(),
+        customerEmail: finalEmail,
         contactType: contactType === 'telegram' ? 'telegram' : 'whatsapp',
         contact: contact.trim(),
         productId: productId || '',
@@ -616,6 +640,14 @@ export async function POST(request) {
 
       db.customerNotes.unshift(newNote);
       saveDb(db);
+
+      // Sinkronisasi otomatis ke data/users.json agar langsung muncul di pesanan akun target
+      try {
+        syncCustomerNoteToUserOrder(newNote, 'upsert');
+      } catch (syncErr) {
+        console.warn('[Sync Customer Note Error]', syncErr.message);
+      }
+
       return NextResponse.json({ status: 'ok', note: newNote, customerNotes: db.customerNotes });
     }
 
@@ -626,11 +658,21 @@ export async function POST(request) {
       if (!note) return NextResponse.json({ status: 'error', message: 'Catatan tidak ditemukan' }, { status: 404 });
 
       if (fields.customerName !== undefined) note.customerName = fields.customerName.trim();
+      if (fields.customerEmail !== undefined) note.customerEmail = fields.customerEmail.trim();
       if (fields.contactType !== undefined) note.contactType = fields.contactType;
       if (fields.contact !== undefined) note.contact = fields.contact.trim();
       if (fields.productName !== undefined) note.productName = fields.productName.trim();
       if (fields.variantName !== undefined) note.variantName = fields.variantName.trim();
-      if (fields.accountDetails !== undefined) note.accountDetails = fields.accountDetails.trim();
+      if (fields.accountDetails !== undefined) {
+        note.accountDetails = fields.accountDetails.trim();
+        // Jika customerEmail belum ada, coba deteksi dari accountDetails
+        if (!note.customerEmail) {
+          const emailMatch = note.accountDetails.match(/[\w.-]+@[\w.-]+\.[a-zA-Z]{2,}/);
+          if (emailMatch) {
+            note.customerEmail = emailMatch[0].trim();
+          }
+        }
+      }
       if (fields.supplier !== undefined) note.supplier = fields.supplier.trim();
       if (fields.price !== undefined) note.price = Number(fields.price) || 0;
       if (fields.notes !== undefined) note.notes = fields.notes.trim();
@@ -641,6 +683,14 @@ export async function POST(request) {
       note.updatedAt = new Date().toISOString();
 
       saveDb(db);
+
+      // Sinkronisasi pembaruan ke akun target
+      try {
+        syncCustomerNoteToUserOrder(note, 'upsert');
+      } catch (syncErr) {
+        console.warn('[Sync Customer Note Error]', syncErr.message);
+      }
+
       return NextResponse.json({ status: 'ok', note, customerNotes: db.customerNotes });
     }
 
@@ -657,22 +707,47 @@ export async function POST(request) {
       }
       note.updatedAt = new Date().toISOString();
       saveDb(db);
+      try {
+        syncCustomerNoteToUserOrder(note, 'upsert');
+      } catch (syncErr) {
+        console.warn('[Sync Customer Note Error]', syncErr.message);
+      }
       return NextResponse.json({ status: 'ok', note, customerNotes: db.customerNotes });
     }
 
     if (action === 'delete_customer_note') {
       const { id } = body;
       if (!Array.isArray(db.customerNotes)) db.customerNotes = [];
+      const targetNote = db.customerNotes.find(n => n.id === id);
       db.customerNotes = db.customerNotes.filter(n => n.id !== id);
       saveDb(db);
+
+      if (targetNote) {
+        try {
+          syncCustomerNoteToUserOrder(targetNote, 'delete');
+        } catch (syncErr) {
+          console.warn('[Sync Customer Note Delete Error]', syncErr.message);
+        }
+      }
+
       return NextResponse.json({ status: 'ok', customerNotes: db.customerNotes });
     }
 
     if (action === 'clear_expired_notes') {
       if (!Array.isArray(db.customerNotes)) db.customerNotes = [];
       const now = new Date();
+      const expiredNotes = db.customerNotes.filter(n => new Date(n.expiredAt) <= now);
       db.customerNotes = db.customerNotes.filter(n => new Date(n.expiredAt) > now);
       saveDb(db);
+
+      for (const en of expiredNotes) {
+        try {
+          syncCustomerNoteToUserOrder(en, 'delete');
+        } catch (syncErr) {
+          console.warn('[Sync Customer Note Delete Error]', syncErr.message);
+        }
+      }
+
       return NextResponse.json({ status: 'ok', customerNotes: db.customerNotes });
     }
 

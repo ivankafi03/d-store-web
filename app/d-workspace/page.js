@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { USER_COOKIE_NAME, verifyUserSessionToken, findUserByEmail } from '@/lib/userAuth';
+import { USER_COOKIE_NAME, verifyUserSessionToken, findUserByEmail, getAllUsers } from '@/lib/userAuth';
 import { getDb } from '@/lib/db';
 import WorkspaceClient from './WorkspaceClient';
 
@@ -19,6 +19,16 @@ export default async function WorkspacePage() {
     redirect('/store');
   }
 
+  const allUsers = getAllUsers();
+  const registeredUsers = allUsers.map(u => ({
+    id: u.id,
+    email: u.email,
+    name: u.name,
+    role: u.role,
+    tier: u.tier,
+    phone: u.phone || ''
+  }));
+
   const db = getDb();
   const initialData = {
     products: db.products || [],
@@ -26,6 +36,7 @@ export default async function WorkspacePage() {
     categories: db.categories || [],
     suppliers: db.suppliers || [],
     customerNotes: db.customerNotes || [],
+    registeredUsers,
     banners: db.banners || null,
     visualEditorData: {
       ...(db.banners?.visualEditorData || {}),

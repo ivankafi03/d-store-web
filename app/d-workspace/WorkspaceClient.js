@@ -57,6 +57,7 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
 
   // Buku Catatan Cerdas (Pelanggan, Expired & Garansi)
   const [customerNotes, setCustomerNotes] = useState(initialData.customerNotes || []);
+  const [registeredUsers, setRegisteredUsers] = useState(initialData.registeredUsers || []);
   const [notesFilter, setNotesFilter] = useState('active'); // 'active' | 'expiring' | 'expired' | 'all'
   const [notesSearch, setNotesSearch] = useState('');
   const [autoHideExpired, setAutoHideExpired] = useState(true);
@@ -67,6 +68,8 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
   const [updatingNote, setUpdatingNote] = useState(false);
   const [newNoteForm, setNewNoteForm] = useState({
     customerName: '',
+    customerEmail: '',
+    targetAccountMode: 'registered', // 'registered' | 'manual'
     contactType: 'whatsapp',
     contact: '',
     productId: '',
@@ -288,6 +291,7 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
         setCategories(data.categories || []);
         if (data.suppliers) setSuppliers(data.suppliers);
         if (data.customerNotes) setCustomerNotes(data.customerNotes);
+        if (data.registeredUsers) setRegisteredUsers(data.registeredUsers);
       }
     } catch (err) {
       console.error('Gagal memuat produk:', err);
@@ -835,6 +839,7 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
       list = list.filter(
         (n) =>
           (n.customerName || '').toLowerCase().includes(q) ||
+          (n.customerEmail || '').toLowerCase().includes(q) ||
           (n.contact || '').toLowerCase().includes(q) ||
           (n.productName || '').toLowerCase().includes(q) ||
           (n.variantName || '').toLowerCase().includes(q) ||
@@ -866,6 +871,8 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
         setShowAddNoteModal(false);
         setNewNoteForm({
           customerName: '',
+          customerEmail: '',
+          targetAccountMode: 'registered',
           contactType: 'whatsapp',
           contact: '',
           productId: '',
@@ -2099,8 +2106,9 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
                               {note.customerName || note.contact || 'Tanpa Nama'}
                             </span>
                             {note.customerEmail && (
-                              <span className="text-[11px] text-zinc-400 font-mono">
-                                ({note.customerEmail})
+                              <span className="text-[10px] font-mono text-zinc-300 bg-zinc-800/80 border border-zinc-700/60 px-2 py-0.5 rounded-md inline-flex items-center gap-1">
+                                <User className="w-2.5 h-2.5 text-zinc-400" />
+                                <span>{note.customerEmail}</span>
                               </span>
                             )}
                             {note.orderId && (
@@ -2301,7 +2309,11 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
                           <button
                             type="button"
                             onClick={() => {
-                              setEditingNote({ ...note });
+                              const isRegistered = registeredUsers.some(u => u.email.toLowerCase() === (note.customerEmail || '').toLowerCase());
+                              setEditingNote({
+                                ...note,
+                                targetAccountMode: (note.customerEmail && !isRegistered) ? 'manual' : 'registered'
+                              });
                               setShowEditNoteModal(true);
                             }}
                             className="p-1.5 rounded-xl text-zinc-400 hover:text-white hover:bg-zinc-800 transition cursor-pointer"
@@ -2970,6 +2982,82 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
 
             <form onSubmit={handleAddNewNote} className="space-y-3.5 text-xs">
               
+              {/* Target Akun Pembeli */}
+              <div className="p-3 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="text-zinc-300 font-semibold text-xs flex items-center gap-1.5">
+                    <User className="w-3.5 h-3.5 text-zinc-400" />
+                    Target Akun Pembeli
+                  </label>
+                  <div className="flex items-center gap-1 bg-zinc-900 p-0.5 rounded-lg border border-zinc-800">
+                    <button
+                      type="button"
+                      onClick={() => setNewNoteForm(prev => ({ ...prev, targetAccountMode: 'registered' }))}
+                      className={`px-2 py-0.5 rounded text-[10px] font-semibold transition cursor-pointer ${
+                        newNoteForm.targetAccountMode !== 'manual'
+                          ? 'bg-zinc-200 text-zinc-950 font-bold shadow-xs'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      Pilih Akun
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setNewNoteForm(prev => ({ ...prev, targetAccountMode: 'manual' }))}
+                      className={`px-2 py-0.5 rounded text-[10px] font-semibold transition cursor-pointer ${
+                        newNoteForm.targetAccountMode === 'manual'
+                          ? 'bg-zinc-200 text-zinc-950 font-bold shadow-xs'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      + Input Manual
+                    </button>
+                  </div>
+                </div>
+
+                {newNoteForm.targetAccountMode !== 'manual' ? (
+                  <div className="space-y-1">
+                    <select
+                      value={newNoteForm.customerEmail || ''}
+                      onChange={(e) => {
+                        const emailVal = e.target.value;
+                        const matchedUser = registeredUsers.find(u => u.email.toLowerCase() === emailVal.toLowerCase());
+                        setNewNoteForm(prev => ({
+                          ...prev,
+                          customerEmail: emailVal,
+                          customerName: prev.customerName || matchedUser?.name || '',
+                          contact: prev.contact || matchedUser?.phone || ''
+                        }));
+                      }}
+                      className="w-full bg-zinc-900 border border-zinc-700/80 rounded-xl px-2.5 py-2 text-white outline-none cursor-pointer text-xs focus:border-zinc-500"
+                    >
+                      <option value="">-- Pilih Akun Pembeli Terdaftar ({registeredUsers.length}) --</option>
+                      {registeredUsers.map(u => (
+                        <option key={u.id || u.email} value={u.email}>
+                          {u.name ? `${u.name} - ${u.email}` : u.email} {u.role === 'owner' ? '[Owner]' : ''}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-[10px] text-zinc-400">
+                      Pesanan akan otomatis langsung tercatat di profil &amp; menu Pesanan akun ini.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    <input
+                      type="email"
+                      placeholder="Email akun pembeli (cth: pembeli@gmail.com)"
+                      value={newNoteForm.customerEmail || ''}
+                      onChange={(e) => setNewNoteForm(prev => ({ ...prev, customerEmail: e.target.value }))}
+                      className="w-full bg-zinc-900 border border-zinc-700/80 rounded-xl px-3 py-2 text-white outline-none text-xs focus:border-zinc-500"
+                    />
+                    <p className="text-[10px] text-zinc-400">
+                      Jika pembeli belum punya akun, data tetap tersimpan dan otomatis tersambung saat pembeli login/daftar.
+                    </p>
+                  </div>
+                )}
+              </div>
+
               {/* Nama */}
               <div>
                 <label className="text-zinc-400 block mb-1">Nama</label>
@@ -3133,7 +3221,7 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
 
               {/* Akun / Login */}
               <div>
-                <label className="text-zinc-400 block mb-1">Akun / Login</label>
+                <label className="text-zinc-400 block mb-1">Kredensial / Login Akun (Email, Password, Profil/PIN)</label>
                 <input
                   type="text"
                   placeholder="Email, Password, Profil/PIN"
@@ -3290,6 +3378,79 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
 
             <form onSubmit={handleUpdateNote} className="space-y-3.5 text-xs">
               
+              {/* Target Akun Pembeli */}
+              <div className="p-3 rounded-2xl bg-zinc-950 border border-zinc-800 space-y-2">
+                <div className="flex items-center justify-between">
+                  <label className="text-zinc-300 font-semibold text-xs flex items-center gap-1.5">
+                    <User className="w-3.5 h-3.5 text-zinc-400" />
+                    Target Akun Pembeli
+                  </label>
+                  <div className="flex items-center gap-1 bg-zinc-900 p-0.5 rounded-lg border border-zinc-800">
+                    <button
+                      type="button"
+                      onClick={() => setEditingNote(prev => ({ ...prev, targetAccountMode: 'registered' }))}
+                      className={`px-2 py-0.5 rounded text-[10px] font-semibold transition cursor-pointer ${
+                        editingNote.targetAccountMode !== 'manual'
+                          ? 'bg-zinc-200 text-zinc-950 font-bold shadow-xs'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      Pilih Akun
+                    </button>
+                    <button
+                      type="button"
+                      onClick={() => setEditingNote(prev => ({ ...prev, targetAccountMode: 'manual' }))}
+                      className={`px-2 py-0.5 rounded text-[10px] font-semibold transition cursor-pointer ${
+                        editingNote.targetAccountMode === 'manual'
+                          ? 'bg-zinc-200 text-zinc-950 font-bold shadow-xs'
+                          : 'text-zinc-400 hover:text-white'
+                      }`}
+                    >
+                      + Input Manual
+                    </button>
+                  </div>
+                </div>
+
+                {editingNote.targetAccountMode !== 'manual' ? (
+                  <div className="space-y-1">
+                    <select
+                      value={editingNote.customerEmail || ''}
+                      onChange={(e) => {
+                        const emailVal = e.target.value;
+                        const matchedUser = registeredUsers.find(u => u.email.toLowerCase() === emailVal.toLowerCase());
+                        setEditingNote(prev => ({
+                          ...prev,
+                          customerEmail: emailVal,
+                          customerName: prev.customerName || matchedUser?.name || '',
+                          contact: prev.contact || matchedUser?.phone || ''
+                        }));
+                      }}
+                      className="w-full bg-zinc-900 border border-zinc-700/80 rounded-xl px-2.5 py-2 text-white outline-none cursor-pointer text-xs focus:border-zinc-500"
+                    >
+                      <option value="">-- Pilih Akun Pembeli Terdaftar ({registeredUsers.length}) --</option>
+                      {registeredUsers.map(u => (
+                        <option key={u.id || u.email} value={u.email}>
+                          {u.name ? `${u.name} - ${u.email}` : u.email} {u.role === 'owner' ? '[Owner]' : ''}
+                        </option>
+                      ))}
+                    </select>
+                    <p className="text-[10px] text-zinc-400">
+                      Pesanan tersambung ke profil &amp; menu Pesanan akun ini.
+                    </p>
+                  </div>
+                ) : (
+                  <div className="space-y-1">
+                    <input
+                      type="email"
+                      placeholder="Email akun pembeli (opsional)"
+                      value={editingNote.customerEmail || ''}
+                      onChange={(e) => setEditingNote(prev => ({ ...prev, customerEmail: e.target.value }))}
+                      className="w-full bg-zinc-900 border border-zinc-700/80 rounded-xl px-3 py-2 text-white outline-none text-xs focus:border-zinc-500"
+                    />
+                  </div>
+                )}
+              </div>
+
               {/* Nama */}
               <div>
                 <label className="text-zinc-400 block mb-1">Nama</label>
@@ -3368,7 +3529,7 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
 
               {/* Detail Akun / Kredensial */}
               <div>
-                <label className="text-zinc-400 block mb-1">Akun / Login</label>
+                <label className="text-zinc-400 block mb-1">Kredensial / Login Akun (Email, Password, Profil/PIN)</label>
                 <input
                   type="text"
                   value={editingNote.accountDetails || ''}

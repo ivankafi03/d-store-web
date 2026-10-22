@@ -1,4 +1,6 @@
 import { NextResponse } from 'next/server';
+import { USER_COOKIE_NAME, verifyUserSessionToken } from './lib/userAuth';
+import { COOKIE_NAME as ADMIN_COOKIE_NAME, verifySessionToken } from './lib/auth';
 
 export function middleware(request) {
   const { pathname } = request.nextUrl;
@@ -7,27 +9,54 @@ export function middleware(request) {
   const isProduction = process.env.VERCEL === '1';
   if (!isProduction) return NextResponse.next();
 
-  // Blokir akses ke admin dashboard dari internet
-  // Admin hanya boleh diakses di localhost
-  if (pathname === '/' || pathname.startsWith('/api/scraper') || pathname.startsWith('/api/products') || pathname.startsWith('/api/sales') || pathname.startsWith('/api/vault') || pathname.startsWith('/api/sync')) {
-    const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '';
-    const host = request.headers.get('host') || '';
+  if (pathname === '/') {
+    return NextResponse.redirect(new URL('/store', request.url));
+  }
 
-    // Izinkan jika akses dari Vercel internal (preview/build checks)
-    const isVercelInternal = request.headers.get('x-vercel-id') && !ip;
-
-    if (!isVercelInternal && pathname === '/') {
-      // Redirect root ke /store
-      return NextResponse.redirect(new URL('/store', request.url));
+  // Cek apakah request ke API sensitif / internal
+  if (
+    pathname.startsWith('/api/scraper') || 
+    pathname.startsWith('/api/products') || 
+    pathname.startsWith('/api/sales') || 
+    pathname.startsWith('/api/vault') || 
+    pathname.startsWith('/api/sync')
+  ) {
+    // GET ke /api/products selalu diizinkan untuk toko online publik membaca katalog
+    if (pathname === '/api/products' && request.method === 'GET') {
+      return NextResponse.next();
     }
 
-    if (!isVercelInternal && pathname !== '/') {
-      // Blokir API admin di production
-      return NextResponse.json(
-        { error: 'Endpoint ini hanya tersedia di environment lokal.' },
-        { status: 403 }
-      );
+    const cookieHeader = request.headers.get('cookie') || '';
+
+    // 1. Cek sesi Google User ivankafipradana@gmail.com
+    const userMatch = cookieHeader.match(new RegExp(`(?:^|;\\s*)${USER_COOKIE_NAME}=([^;]+)`));
+    const userToken = userMatch ? decodeURIComponent(userMatch[1]) : null;
+    if (userToken) {
+      try {
+        const verifiedUser = verifyUserSessionToken(userToken);
+        if (verifiedUser && verifiedUser.email?.toLowerCase().trim() === 'ivankafipradana@gmail.com') {
+          return NextResponse.next();
+        }
+      } catch {}
     }
+
+    // 2. Cek token admin session PIN
+    const match = cookieHeader.match(new RegExp(`(?:^|;\\s*)${ADMIN_COOKIE_NAME}=([^;]+)`));
+    const token = match ? decodeURIComponent(match[1]) : null;
+    if (token) {
+      try {
+        const adminSession = verifySessionToken(token);
+        if (adminSession) {
+          return NextResponse.next();
+        }
+      } catch {}
+    }
+
+    // Blokir jika tidak memiliki autentikasi owner atau admin
+    return NextResponse.json(
+      { error: 'Akses ditolak (403 Forbidden). Anda harus login sebagai Pemilik Toko (ivankafipradana@gmail.com) untuk mengakses fitur ini.' },
+      { status: 403 }
+    );
   }
 
   return NextResponse.next();

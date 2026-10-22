@@ -1,4 +1,11 @@
 import "./globals.css";
+import { Inter } from "next/font/google";
+import Script from "next/script";
+
+const inter = Inter({
+  subsets: ["latin"],
+  display: "swap",
+});
 
 export const metadata = {
   metadataBase: new URL("https://dstore.sbs"),
@@ -79,8 +86,9 @@ export const viewport = {
 export default function RootLayout({ children }) {
   return (
     <html lang="id">
-      <body className="min-h-screen selection:bg-yellow-400 selection:text-black">
+      <body className={`${inter.className} min-h-screen selection:bg-zinc-900 selection:text-white antialiased`}>
         {children}
+        <Script src="https://accounts.google.com/gsi/client" strategy="lazyOnload" />
       </body>
     </html>
   );

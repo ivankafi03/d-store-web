@@ -1,6 +1,7 @@
 import { NextResponse } from 'next/server';
 import fs from 'fs';
 import path from 'path';
+import { isAuthenticatedRequest } from '@/lib/auth';
 import { 
   pullFromGoogleSheet, 
   pushToGoogleSheet, 
@@ -12,6 +13,10 @@ import {
 } from '@/lib/db';
 
 export async function GET(request) {
+  if (!isAuthenticatedRequest(request)) {
+    return NextResponse.json({ success: false, error: 'Akses ditolak. Sesi tidak sah.' }, { status: 401 });
+  }
+
   const { searchParams } = new URL(request.url);
   const action = searchParams.get('action');
 
@@ -49,6 +54,10 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  if (!isAuthenticatedRequest(request)) {
+    return NextResponse.json({ success: false, error: 'Akses ditolak. Sesi tidak sah.' }, { status: 401 });
+  }
+
   try {
     const body = await request.json().catch(() => ({}));
     const action = body.action || 'pull';

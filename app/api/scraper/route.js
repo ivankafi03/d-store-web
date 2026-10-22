@@ -1,4 +1,5 @@
 import { NextResponse } from 'next/server';
+import { isAuthenticatedRequest } from '@/lib/auth';
 import { 
   scrapeTelegramSupplier, 
   parseSupplierTextWithAI, 
@@ -19,6 +20,10 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  if (!isAuthenticatedRequest(request)) {
+    return NextResponse.json({ success: false, error: 'Akses ditolak. Sesi tidak sah.' }, { status: 401 });
+  }
+
   try {
     const body = await request.json().catch(() => ({}));
     const { action } = body;

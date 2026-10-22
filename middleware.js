@@ -9,7 +9,7 @@ export function middleware(request) {
 
   // Blokir akses ke admin dashboard dari internet
   // Admin hanya boleh diakses di localhost
-  if (pathname === '/' || pathname.startsWith('/api/scraper') || pathname.startsWith('/api/products') || pathname.startsWith('/api/sales') || pathname.startsWith('/api/vault') || pathname.startsWith('/api/sync') || pathname.startsWith('/api/chat') || pathname.startsWith('/api/promo')) {
+  if (pathname === '/' || pathname.startsWith('/api/scraper') || pathname.startsWith('/api/products') || pathname.startsWith('/api/sales') || pathname.startsWith('/api/vault') || pathname.startsWith('/api/sync')) {
     const ip = request.headers.get('x-forwarded-for') || request.headers.get('x-real-ip') || '';
     const host = request.headers.get('host') || '';
 
@@ -41,7 +41,5 @@ export const config = {
     '/api/sales/:path*',
     '/api/vault/:path*',
     '/api/sync/:path*',
-    '/api/chat/:path*',
-    '/api/promo/:path*',
   ]
 };

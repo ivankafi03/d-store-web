@@ -44,9 +44,15 @@ next-env.d.ts
 session.txt
 data/db.json
 data/*.bak
+data/users.json
 .lynk_profile/
 # Tapi public-catalog.json BOLEH di-commit (snapshot statis untuk fallback di Vercel)
 !data/public-catalog.json
+
+# Temporary / debug scripts
+*.cjs
+extract_segment_js.py
+search_chunks.py
 
 # D Store - internal scripts (berisi credential/session logic)
 scripts/

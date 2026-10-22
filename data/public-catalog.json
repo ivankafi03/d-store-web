@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-05T07:03:48.655Z",
+  "updatedAt": "2026-10-22T12:44:52.795Z",
   "categories": [
     {
       "id": "cat_1",
@@ -33,7 +33,7 @@
   "products": [
     {
       "id": "prod_prabu_1",
-      "name": "Gmail Fresh",
+      "name": "Gmail Fresh Verifikasi No Phone Siap Pakai",
       "categoryId": "cat_7",
       "variants": [
         {
@@ -65,7 +65,7 @@
     },
     {
       "id": "prod_7",
-      "name": "Canva Pro",
+      "name": "Canva Pro Desain Brand Kit & AI Unlock Lifetime",
       "categoryId": "cat_3",
       "variants": [
         {
@@ -160,7 +160,7 @@
     },
     {
       "id": "prod_looviie_1789898664903_385",
-      "name": "Surfshark VPN",
+      "name": "Surfshark VPN Unlimited Devices High Speed",
       "categoryId": "cat_6",
       "variants": [
         {
@@ -370,7 +370,7 @@
     },
     {
       "id": "prod_75",
-      "name": "Zoom",
+      "name": "Zoom Pro 30 Jam Meeting 100 Peserta Private",
       "categoryId": "cat_7",
       "variants": [
         {
@@ -395,7 +395,7 @@
     },
     {
       "id": "prod_23",
-      "name": "Gemini AI",
+      "name": "Gemini",
       "categoryId": "cat_1",
       "variants": [
         {
@@ -506,7 +506,7 @@
     },
     {
       "id": "prod_8",
-      "name": "Capcut",
+      "name": "CapCut Pro Cloud & Preset Ekspor 4K 60fps",
       "categoryId": "cat_3",
       "variants": [
         {
@@ -544,7 +544,7 @@
     },
     {
       "id": "prod_10",
-      "name": "Chatgpt",
+      "name": "ChatGPT Plus",
       "categoryId": "cat_1",
       "variants": [
         {
@@ -581,19 +581,6 @@
       ]
     },
     {
-      "id": "prod_13",
-      "name": "Creaa AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_13_2",
-          "name": "Creaa AI Basic Plan 1m",
-          "price": 40000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
       "id": "prod_14",
       "name": "Domo AI",
       "categoryId": "cat_1",
@@ -608,8 +595,8 @@
     },
     {
       "id": "prod_15",
-      "name": "Duolingo",
-      "categoryId": "cat_5",
+      "name": "Duolingo Super Family Unlimited Hearts",
+      "categoryId": "cat_7",
       "variants": [
         {
           "id": "var_15_2",
@@ -671,19 +658,6 @@
       ]
     },
     {
-      "id": "prod_21",
-      "name": "FreedomGPT AI",
-      "categoryId": "cat_1",
-      "variants": [
-        {
-          "id": "var_hp_20_1",
-          "name": "FreedomGPT AI Pro 1m",
-          "price": 23000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
       "id": "prod_24",
       "name": "Genmotions AI",
       "categoryId": "cat_1",
@@ -711,7 +685,7 @@
     },
     {
       "id": "prod_26",
-      "name": "Google Colab",
+      "name": "Google Colab Pro",
       "categoryId": "cat_1",
       "variants": [
         {
@@ -1047,7 +1021,7 @@
     },
     {
       "id": "prod_69",
-      "name": "VPN",
+      "name": "Express VPN Server Cepat 94 Negara Ultra Aman",
       "categoryId": "cat_6",
       "variants": [
         {
@@ -1144,7 +1118,7 @@
     },
     {
       "id": "prod_29",
-      "name": "Hbo Max",
+      "name": "HBO Max Ultimate 4K Ad-Free Cinema Streaming",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1169,7 +1143,7 @@
     },
     {
       "id": "prod_46",
-      "name": "Netflix",
+      "name": "Netflix Premium 4K UHD Anti-On Hold 1 Bulan",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1248,7 +1222,7 @@
     },
     {
       "id": "prod_52",
-      "name": "Picsart",
+      "name": "Picsart Gold All AI Tool & Filter Unlocked",
       "categoryId": "cat_3",
       "variants": [
         {
@@ -1267,7 +1241,7 @@
     },
     {
       "id": "prod_53",
-      "name": "Prime Video",
+      "name": "Amazon Prime Video 4K UHD Anti Checkpoint",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1298,7 +1272,7 @@
     },
     {
       "id": "prod_60",
-      "name": "Spotify",
+      "name": "Spotify Premium Individual Garansi Penuh",
       "categoryId": "cat_4",
       "variants": [
         {
@@ -1335,7 +1309,7 @@
     },
     {
       "id": "prod_looviie_1789898664902_827",
-      "name": "Deezer",
+      "name": "Deezer HiFi Audio Streaming Musik Premium",
       "categoryId": "cat_4",
       "variants": [
         {
@@ -1354,7 +1328,7 @@
     },
     {
       "id": "prod_74",
-      "name": "YouTube Premium",
+      "name": "YouTube Premium No Ads + YouTube Music HiFi",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1385,7 +1359,7 @@
     },
     {
       "id": "prod_looviie_1789898664900_917",
-      "name": "Disney+",
+      "name": "Disney+ Hotstar 4K Ultra HD & Dolby Atmos",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1464,7 +1438,7 @@
     },
     {
       "id": "prod_looviie_1789898664901_23",
-      "name": "IQIYI",
+      "name": "iQIYI VIP Nonton Drama China & Anime Sub Indo",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1513,7 +1487,7 @@
     },
     {
       "id": "prod_looviie_1789898664901_973",
-      "name": "Youku",
+      "name": "Youku VIP Drama Asia & Donghua HD Tanpa Iklan",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1625,7 +1599,7 @@
     },
     {
       "id": "prod_looviie_1789898664901_465",
-      "name": "Loklok",
+      "name": "Loklok VIP Film & Series HD Sub Indo No Ads",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1699,7 +1673,7 @@
     },
     {
       "id": "prod_looviie_1789898664902_594",
-      "name": "Catchplay",
+      "name": "Catchplay+ Film Blockbuster & Serial Terbaru",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1712,7 +1686,7 @@
     },
     {
       "id": "prod_looviie_1789898664902_211",
-      "name": "Dramabox",
+      "name": "Dramabox Koin Kumpulan Short Drama Populer",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1868,7 +1842,7 @@
     },
     {
       "id": "prod_looviie_1789898664902_474",
-      "name": "Apple TV",
+      "name": "Apple TV+ 4K HDR Original Series & Movies",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1944,7 +1918,7 @@
     },
     {
       "id": "prod_looviie_1789898664902_739",
-      "name": "Crunchyroll",
+      "name": "Crunchyroll Mega Fan Streaming Anime Simulcast",
       "categoryId": "cat_2",
       "variants": [
         {
@@ -1957,37 +1931,6 @@
           "id": "var_looviie_1789898664902_739_2",
           "name": "1y Sharing",
           "price": 13000,
-          "isAvailable": true
-        }
-      ]
-    },
-    {
-      "id": "prod_looviie_1789898664902_17",
-      "name": "Dramaku",
-      "categoryId": "cat_2",
-      "variants": [
-        {
-          "id": "var_looviie_1789898664902_17_1",
-          "name": "1d Private",
-          "price": 16000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_looviie_1789898664902_17_2",
-          "name": "14d Private",
-          "price": 60000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_looviie_1789898664902_17_3",
-          "name": "1m Private",
-          "price": 90000,
-          "isAvailable": true
-        },
-        {
-          "id": "var_looviie_1789898664902_17_4",
-          "name": "1m Sharing 3u",
-          "price": 38000,
           "isAvailable": true
         }
       ]
@@ -2019,7 +1962,7 @@
     },
     {
       "id": "prod_looviie_1789898664902_879",
-      "name": "Ibis Paint X",
+      "name": "Ibis Paint X Pro Prime Membership Tanpa Iklan",
       "categoryId": "cat_3",
       "variants": [
         {
@@ -2070,7 +2013,7 @@
     },
     {
       "id": "prod_looviie_1789898664903_883",
-      "name": "VSCO",
+      "name": "VSCO X Full Preset & Video Color Grading",
       "categoryId": "cat_3",
       "variants": [
         {
@@ -2148,7 +2091,7 @@
     {
       "id": "prod_looviie_1789898664903_431",
       "name": "Grammarly",
-      "categoryId": "cat_5",
+      "categoryId": "cat_1",
       "variants": [
         {
           "id": "var_looviie_1789898664903_431_1",
@@ -2166,7 +2109,7 @@
     },
     {
       "id": "prod_looviie_1789898664903_308",
-      "name": "Microsoft 365",
+      "name": "Microsoft 365 Office Original + 1TB OneDrive",
       "categoryId": "cat_7",
       "variants": [
         {
@@ -2185,8 +2128,8 @@
     },
     {
       "id": "prod_looviie_1789898664903_831",
-      "name": "Scribd",
-      "categoryId": "cat_5",
+      "name": "Scribd Premium Akses Buku, Audio & Dokumen",
+      "categoryId": "cat_7",
       "variants": [
         {
           "id": "var_looviie_1789898664903_831_1",

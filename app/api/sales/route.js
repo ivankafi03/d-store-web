@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb, saveDb, getMonthlyAccountingReports } from '@/lib/db';
+import { isAuthenticatedRequest } from '@/lib/auth';
 
 function calculateExpiry(durationStr) {
   const now = new Date();
@@ -27,7 +28,11 @@ function getDaysRemaining(expiryStr) {
   return Math.ceil(diffMs / (1000 * 60 * 60 * 24));
 }
 
-export async function GET() {
+export async function GET(request) {
+  if (!isAuthenticatedRequest(request)) {
+    return NextResponse.json({ status: 'error', message: 'Akses ditolak. Sesi tidak sah.' }, { status: 401 });
+  }
+
   const db = getDb();
   if (!Array.isArray(db.sales)) db.sales = [];
   if (!Array.isArray(db.warranties)) db.warranties = [];
@@ -111,6 +116,10 @@ export async function GET() {
 }
 
 export async function POST(request) {
+  if (!isAuthenticatedRequest(request)) {
+    return NextResponse.json({ status: 'error', message: 'Akses ditolak. Sesi tidak sah.' }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const { action } = body;

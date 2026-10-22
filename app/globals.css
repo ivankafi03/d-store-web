@@ -20,7 +20,10 @@ html {
 body {
   background-color: #ffffff;
   color: #111111;
-  font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+  font-family: inherit;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
   overflow-x: hidden;
   min-height: 100%;
   margin: 0;
@@ -112,6 +115,125 @@ body {
 }
 .product-list__wrapper::-webkit-scrollbar {
   display: none;
+}
+/* Zalora Carousel Control Buttons (Exact Zalora Indonesia CSS) */
+.post-type__carousel-control-button {
+  cursor: pointer;
+  border: none;
+  width: 45px;
+  height: 36px;
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 0;
+  z-index: 10;
+  outline: none;
+}
+.post-type__carousel-left-button {
+  background: linear-gradient(90deg, #c1c1c1 0.03%, #dedede00 99.97%);
+  left: 0;
+}
+.post-type__carousel-right-button {
+  background: linear-gradient(270.03deg, #c1c1c1 0.03%, #dedede00 99.97%);
+  right: 0;
+}
+.post-type__carousel-right-button,
+.post-type__carousel-left-button {
+  z-index: 10;
+}
+.post-type__carousel-left-button--hide,
+.post-type__carousel-right-button--hide {
+  display: none;
+}
+
+/* Zalora Segment Tab Bar with Search (Exact Zalora UI) */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none !important;
+}
+.scrollbar-hide {
+  -ms-overflow-style: none !important;
+  scrollbar-width: none !important;
+}
+.js-active-segment {
+  background-color: #222222 !important;
+  color: #ffffff !important;
+  font-weight: 700 !important;
+  cursor: default !important;
+  border-radius: 0.75rem !important;
+}
+.segment-tab-inactive {
+  background-color: #F5F5F5 !important;
+  border: 1px solid #EAEAEA !important;
+  color: #222222 !important;
+  font-weight: 500 !important;
+  border-radius: 0.75rem !important;
+  transition: background-color 0.15s ease;
+}
+.segment-tab-inactive:hover {
+  background-color: #EAEAEA !important;
+}
+
+/* Authentic Apple iPhone Frosted Glass */
+.iphone-glass-header,
+.ios-glass-bar {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(25px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(190%) !important;
+  border-bottom: 0.5px solid rgba(0, 0, 0, 0.08) !important;
+  box-shadow: 0 1px 0 0 rgba(255, 255, 255, 0.5) inset !important;
+}
+
+/* GPU-Accelerated Morphing Capsule (120 FPS, Zero Layout Reflow, Zero Jitter) */
+.gpu-morph-bar {
+  background: rgba(255, 255, 255, 0.78) !important;
+  backdrop-filter: blur(25px) saturate(190%) !important;
+  -webkit-backdrop-filter: blur(25px) saturate(190%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.75) !important;
+  box-shadow: 
+    0 8px 24px -2px rgba(0, 0, 0, 0.08),
+    0 2px 6px -1px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.95) !important;
+  transition: clip-path 0.28s cubic-bezier(0.16, 1, 0.3, 1), box-shadow 0.28s ease !important;
+  will-change: clip-path;
+  box-sizing: border-box;
+}
+
+/* State 1: Collapsed to Search Icon (first 46px only, rounded-2xl) */
+.gpu-morph-bar--collapsed {
+  clip-path: inset(0 calc(100% - 46px) 0 0 round 16px) !important;
+}
+
+/* State 2: Expanded to Full Width (reveals entire bar with rounded-2xl) */
+.gpu-morph-bar--expanded {
+  clip-path: inset(0 0 0 0 round 20px) !important;
+  box-shadow: 
+    0 12px 32px -4px rgba(0, 0, 0, 0.1),
+    0 4px 12px -2px rgba(0, 0, 0, 0.05),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.95) !important;
+}
+
+.iphone-glass-pill {
+  background-color: rgba(255, 255, 255, 0.85) !important;
+  backdrop-filter: blur(12px) !important;
+  -webkit-backdrop-filter: blur(12px) !important;
+  border: 1px solid rgba(255, 255, 255, 0.6) !important;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.04) !important;
+  border-radius: 1rem !important;
+}
+
+.iphone-glass-bottom-card,
+.ios-glass-bottom-card {
+  background: rgba(255, 255, 255, 0.72) !important;
+  backdrop-filter: blur(30px) saturate(200%) !important;
+  -webkit-backdrop-filter: blur(30px) saturate(200%) !important;
+  border: 1px solid rgba(255, 255, 255, 0.7) !important;
+  box-shadow: 
+    0 16px 40px -8px rgba(0, 0, 0, 0.14),
+    0 4px 16px -2px rgba(0, 0, 0, 0.04),
+    inset 0 1px 1px 0 rgba(255, 255, 255, 0.9) !important;
 }
 .product-item__wrapper {
   text-align: left;
@@ -269,3 +391,45 @@ body {
   animation-play-state: paused;
 }
 
+/* Zero stroke, zero focus border on all sliders & banner wrappers */
+.slider-frame,
+.slider-frame:focus,
+.slider-frame:active,
+.slider-frame:focus-visible,
+.slider-container,
+.slider-list,
+.slide {
+  outline: none !important;
+  box-shadow: none !important;
+  border: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  touch-action: pan-x pan-y !important;
+}
+
+.banner__media-item-wrapper,
+.banner__media-link,
+.banner__media-link:focus,
+.banner__media-link:active,
+.banner__media-link:focus-visible {
+  outline: none !important;
+  border: none !important;
+  -webkit-tap-highlight-color: transparent !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+  -webkit-touch-callout: none !important;
+}
+
+.banner__media-image {
+  -webkit-user-drag: none !important;
+  user-select: none !important;
+  -webkit-user-select: none !important;
+}
+
+
+
+/* Universal Touch & Click Enablement for Mobile Devices */
+button, a, [role="button"], .cursor-pointer {
+  touch-action: manipulation !important;
+  cursor: pointer !important;
+  -webkit-tap-highlight-color: rgba(0,0,0,0.05) !important;
+}

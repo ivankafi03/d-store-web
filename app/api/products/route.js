@@ -1,23 +1,63 @@
 import { NextResponse } from 'next/server';
 import { getDb, saveDb, pushToGoogleSheet, standardizeDuration } from '@/lib/db';
+import { isAuthenticatedRequest } from '@/lib/auth';
 
 export async function GET() {
-  const db = getDb();
+  const db = getDb(true);
   return NextResponse.json({
     status: 'ok',
     categories: db.categories || [],
     products: db.products || [],
     variants: db.variants || [],
+    suppliers: db.suppliers || [],
+    customerNotes: db.customerNotes || [],
     blacklistedProducts: db.blacklistedProducts || [],
-    blacklistedVariants: db.blacklistedVariants || []
+    blacklistedVariants: db.blacklistedVariants || [],
+    categoryOverrides: db.categoryOverrides || {}
+  }, {
+    headers: {
+      'Cache-Control': 'no-store, no-cache, must-revalidate, proxy-revalidate, max-age=0',
+      'Pragma': 'no-cache',
+      'Expires': '0'
+    }
   });
 }
 
 export async function POST(request) {
+  const isAuth = isAuthenticatedRequest(request);
+  const host = request.headers.get('host') || '';
+  const isLocalOrDev = process.env.NODE_ENV !== 'production' && (host.includes('localhost') || host.includes('192.168.') || host.includes('127.0.0.1'));
+
+  if (!isAuth && !isLocalOrDev) {
+    return NextResponse.json({ status: 'error', message: 'Akses ditolak. Sesi tidak sah.' }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const { action } = body;
-    const db = getDb();
+    const db = getDb(true);
+
+    if (action === 'sync_category_overrides') {
+      const { overrides } = body;
+      if (overrides && typeof overrides === 'object') {
+        db.categoryOverrides = {
+          ...(db.categoryOverrides || {}),
+          ...overrides
+        };
+        for (const [prodId, data] of Object.entries(overrides)) {
+          const p = (db.products || []).find(item => item.id === prodId || item.sku === prodId);
+          if (p) {
+            if (data.image) p.image = data.image;
+            if (data.name) p.name = data.name;
+            if (data.brand) p.brand = data.brand;
+            if (data.price) p.price = Number(data.price);
+          }
+        }
+        saveDb(db);
+        return NextResponse.json({ status: 'ok', categoryOverrides: db.categoryOverrides });
+      }
+      return NextResponse.json({ status: 'ok', categoryOverrides: db.categoryOverrides || {} });
+    }
 
     if (action === 'toggle_stock') {
       const { variantId, isAvailable } = body;
@@ -38,8 +78,58 @@ export async function POST(request) {
       return NextResponse.json({ status: 'ok', variant: v });
     }
 
-    if (action === 'update_price') {
-      const { variantId, sellingPrice, costPrice, supplier, variantName, name } = body;
+    if (action === 'toggle_product_stock') {
+      const { productId, isAvailable } = body;
+      const prod = (db.products || []).find(p => p.id === productId);
+      if (!prod) return NextResponse.json({ status: 'error', message: 'Produk tidak ditemukan' }, { status: 404 });
+
+      const avail = !!isAvailable;
+      const prodVariants = (db.variants || []).filter(v => v.productId === productId);
+      for (const v of prodVariants) {
+        v.isAvailable = avail;
+        if (Array.isArray(v.supplierOffers)) {
+          const currentSupp = v.supplier ? v.supplier.toLowerCase() : '';
+          const match = v.supplierOffers.find(o => o.supplier.toLowerCase() === currentSupp);
+          if (match) match.isAvailable = avail;
+        }
+      }
+
+      saveDb(db);
+      pushToGoogleSheet().catch(err => console.warn('Background sync failed:', err.message));
+      return NextResponse.json({ status: 'ok', variants: db.variants });
+    }
+
+    if (action === 'update_product') {
+      const { productId, name, description, categoryId, image, brand, price } = body;
+      let prod = (db.products || []).find(p => p.id === productId);
+      if (!prod) {
+        // Jika belum ada di list products (misalnya produk bawaan curated SKU), buat entri baru
+        prod = {
+          id: productId || `prod_${Date.now()}`,
+          name: name ? name.trim() : 'Produk',
+          categoryId: categoryId || 'cat_1',
+          image: image || null,
+          brand: brand || null,
+          price: price ? Number(price) : null
+        };
+        db.products = db.products || [];
+        db.products.push(prod);
+      } else {
+        if (name) prod.name = name.trim();
+        if (description !== undefined) prod.description = description.trim();
+        if (categoryId) prod.categoryId = categoryId;
+        if (image !== undefined) prod.image = image;
+        if (brand !== undefined) prod.brand = brand;
+        if (price !== undefined) prod.price = Number(price);
+      }
+
+      saveDb(db);
+      pushToGoogleSheet().catch(err => console.warn('Background sync failed:', err.message));
+      return NextResponse.json({ status: 'ok', product: prod });
+    }
+
+    if (action === 'update_price' || action === 'update_variant') {
+      const { variantId, sellingPrice, price, costPrice, supplier, variantName, name } = body;
       const v = (db.variants || []).find(item => item.id === variantId);
       if (!v) return NextResponse.json({ status: 'error', message: 'Varian tidak ditemukan' }, { status: 404 });
 
@@ -47,9 +137,10 @@ export async function POST(request) {
       if (newName) {
         v.name = standardizeDuration(newName);
       }
-      if (sellingPrice !== undefined) v.price = Number(sellingPrice);
-      if (costPrice !== undefined) v.costPrice = Number(costPrice);
-      if (supplier) v.supplier = String(supplier).trim();
+      const newSell = sellingPrice !== undefined ? Number(sellingPrice) : (price !== undefined ? Number(price) : undefined);
+      if (newSell !== undefined && !isNaN(newSell)) v.price = newSell;
+      if (costPrice !== undefined && !isNaN(Number(costPrice))) v.costPrice = Number(costPrice);
+      if (supplier !== undefined && String(supplier).trim()) v.supplier = String(supplier).trim();
 
       if (!Array.isArray(v.supplierOffers)) v.supplierOffers = [];
       const cleanSupp = (v.supplier || 'heavenprem').toLowerCase();
@@ -70,6 +161,49 @@ export async function POST(request) {
       pushToGoogleSheet().catch(err => console.warn('Background sync failed:', err.message));
 
       return NextResponse.json({ status: 'ok', variant: v });
+    }
+
+    if (action === 'add_supplier') {
+      const { name, code, contact, type, link, note } = body;
+      if (!name || !name.trim()) {
+        return NextResponse.json({ status: 'error', message: 'Nama toko kulak wajib diisi' }, { status: 400 });
+      }
+      if (!Array.isArray(db.suppliers)) db.suppliers = [];
+      const cleanCode = (code || name).toLowerCase().replace(/[^a-z0-9]/g, '');
+      const newSupp = {
+        id: `supp_${Date.now()}`,
+        name: name.trim(),
+        code: cleanCode || `supp_${Date.now()}`,
+        contact: contact ? contact.trim() : '',
+        type: type || 'bot',
+        link: link ? link.trim() : (contact?.startsWith('@') ? `https://t.me/${contact.replace('@','')}` : ''),
+        note: note ? note.trim() : ''
+      };
+      db.suppliers.push(newSupp);
+      saveDb(db);
+      return NextResponse.json({ status: 'ok', supplier: newSupp, suppliers: db.suppliers });
+    }
+
+    if (action === 'update_supplier') {
+      const { id, name, code, contact, type, link, note } = body;
+      if (!Array.isArray(db.suppliers)) db.suppliers = [];
+      const supp = db.suppliers.find(s => s.id === id || s.code === code);
+      if (!supp) return NextResponse.json({ status: 'error', message: 'Toko kulak tidak ditemukan' }, { status: 404 });
+      if (name) supp.name = name.trim();
+      if (contact !== undefined) supp.contact = contact.trim();
+      if (type) supp.type = type;
+      if (link !== undefined) supp.link = link.trim();
+      if (note !== undefined) supp.note = note.trim();
+      saveDb(db);
+      return NextResponse.json({ status: 'ok', supplier: supp, suppliers: db.suppliers });
+    }
+
+    if (action === 'delete_supplier') {
+      const { id, code } = body;
+      if (!Array.isArray(db.suppliers)) db.suppliers = [];
+      db.suppliers = db.suppliers.filter(s => s.id !== id && s.code !== code);
+      saveDb(db);
+      return NextResponse.json({ status: 'ok', suppliers: db.suppliers });
     }
 
     if (action === 'add_variant') {
@@ -424,6 +558,122 @@ export async function POST(request) {
       db.blacklistedVariants = [];
       saveDb(db);
       return NextResponse.json({ status: 'ok' });
+    }
+
+    // -------------------------------------------------------------
+    // FITUR: BUKU CATATAN CERDAS (ORDER / CUSTOMER SUBSCRIPTION NOTEBOOK)
+    // -------------------------------------------------------------
+    if (action === 'add_customer_note') {
+      const {
+        customerName = '',
+        contactType = 'whatsapp',
+        contact = '',
+        productId = '',
+        productName = '',
+        variantName = '',
+        accountDetails = '',
+        supplier = '',
+        price = 0,
+        durationDays = 30,
+        startDate,
+        expiredDate,
+        notes = '',
+        warrantyCount = 0,
+        warrantyMax = 1
+      } = body;
+
+      if (!Array.isArray(db.customerNotes)) db.customerNotes = [];
+
+      const now = new Date();
+      const start = startDate ? new Date(startDate) : now;
+      let exp;
+      if (expiredDate) {
+        exp = new Date(expiredDate);
+      } else {
+        exp = new Date(start.getTime() + (Number(durationDays) || 30) * 86400000);
+      }
+
+      const newNote = {
+        id: `note_${Date.now()}_${Math.floor(Math.random() * 1000)}`,
+        customerName: customerName.trim(),
+        contactType: contactType === 'telegram' ? 'telegram' : 'whatsapp',
+        contact: contact.trim(),
+        productId: productId || '',
+        productName: productName.trim() || 'Aplikasi Premium',
+        variantName: variantName.trim() || '',
+        accountDetails: accountDetails.trim(),
+        supplier: supplier.trim(),
+        price: Number(price) || 0,
+        durationDays: Number(durationDays) || 30,
+        startDate: start.toISOString(),
+        expiredAt: exp.toISOString(),
+        warrantyCount: Math.max(0, Number(warrantyCount) || 0),
+        warrantyMax: Number(warrantyMax) || 1,
+        notes: notes.trim(),
+        createdAt: now.toISOString(),
+        updatedAt: now.toISOString()
+      };
+
+      db.customerNotes.unshift(newNote);
+      saveDb(db);
+      return NextResponse.json({ status: 'ok', note: newNote, customerNotes: db.customerNotes });
+    }
+
+    if (action === 'update_customer_note') {
+      const { id, ...fields } = body;
+      if (!Array.isArray(db.customerNotes)) db.customerNotes = [];
+      const note = db.customerNotes.find(n => n.id === id);
+      if (!note) return NextResponse.json({ status: 'error', message: 'Catatan tidak ditemukan' }, { status: 404 });
+
+      if (fields.customerName !== undefined) note.customerName = fields.customerName.trim();
+      if (fields.contactType !== undefined) note.contactType = fields.contactType;
+      if (fields.contact !== undefined) note.contact = fields.contact.trim();
+      if (fields.productName !== undefined) note.productName = fields.productName.trim();
+      if (fields.variantName !== undefined) note.variantName = fields.variantName.trim();
+      if (fields.accountDetails !== undefined) note.accountDetails = fields.accountDetails.trim();
+      if (fields.supplier !== undefined) note.supplier = fields.supplier.trim();
+      if (fields.price !== undefined) note.price = Number(fields.price) || 0;
+      if (fields.notes !== undefined) note.notes = fields.notes.trim();
+      if (fields.warrantyCount !== undefined) note.warrantyCount = Math.max(0, Number(fields.warrantyCount) || 0);
+      if (fields.warrantyMax !== undefined) note.warrantyMax = Number(fields.warrantyMax) || 1;
+      if (fields.expiredAt !== undefined) note.expiredAt = new Date(fields.expiredAt).toISOString();
+      if (fields.durationDays !== undefined) note.durationDays = Number(fields.durationDays) || 30;
+      note.updatedAt = new Date().toISOString();
+
+      saveDb(db);
+      return NextResponse.json({ status: 'ok', note, customerNotes: db.customerNotes });
+    }
+
+    if (action === 'update_warranty_count') {
+      const { id, delta = 0, count } = body;
+      if (!Array.isArray(db.customerNotes)) db.customerNotes = [];
+      const note = db.customerNotes.find(n => n.id === id);
+      if (!note) return NextResponse.json({ status: 'error', message: 'Catatan tidak ditemukan' }, { status: 404 });
+
+      if (count !== undefined) {
+        note.warrantyCount = Math.max(0, Number(count) || 0);
+      } else {
+        note.warrantyCount = Math.max(0, (Number(note.warrantyCount) || 0) + Number(delta));
+      }
+      note.updatedAt = new Date().toISOString();
+      saveDb(db);
+      return NextResponse.json({ status: 'ok', note, customerNotes: db.customerNotes });
+    }
+
+    if (action === 'delete_customer_note') {
+      const { id } = body;
+      if (!Array.isArray(db.customerNotes)) db.customerNotes = [];
+      db.customerNotes = db.customerNotes.filter(n => n.id !== id);
+      saveDb(db);
+      return NextResponse.json({ status: 'ok', customerNotes: db.customerNotes });
+    }
+
+    if (action === 'clear_expired_notes') {
+      if (!Array.isArray(db.customerNotes)) db.customerNotes = [];
+      const now = new Date();
+      db.customerNotes = db.customerNotes.filter(n => new Date(n.expiredAt) > now);
+      saveDb(db);
+      return NextResponse.json({ status: 'ok', customerNotes: db.customerNotes });
     }
 
     return NextResponse.json({ status: 'error', message: 'Aksi tidak dikenali' }, { status: 400 });

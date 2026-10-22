@@ -1,5 +1,6 @@
 import { NextResponse } from 'next/server';
 import { getDb, saveDb } from '@/lib/db';
+import { isAuthenticatedRequest } from '@/lib/auth';
 
 /**
  * API untuk Gudang Akun Siap Pakai (Stock Vault)
@@ -8,6 +9,10 @@ import { getDb, saveDb } from '@/lib/db';
  */
 
 export async function GET(request) {
+  if (!isAuthenticatedRequest(request)) {
+    return NextResponse.json({ status: 'error', message: 'Akses ditolak. Sesi tidak sah.' }, { status: 401 });
+  }
+
   try {
     const { searchParams } = new URL(request.url);
     const variantId = searchParams.get('variantId');
@@ -40,6 +45,10 @@ export async function GET(request) {
 }
 
 export async function POST(request) {
+  if (!isAuthenticatedRequest(request)) {
+    return NextResponse.json({ status: 'error', message: 'Akses ditolak. Sesi tidak sah.' }, { status: 401 });
+  }
+
   try {
     const body = await request.json();
     const { action } = body;

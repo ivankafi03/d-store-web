@@ -322,17 +322,6 @@ export default function AccountModal({
                     </span>
                   </div>
                 </div>
-
-                {/* Saldo Poin Reward */}
-                <div className="mt-3 pt-3 border-t border-zinc-800/80 flex items-center justify-between text-xs bg-zinc-900/60 rounded-xl px-3 py-2 border border-zinc-800">
-                  <div className="flex items-center gap-1.5 text-zinc-300">
-                    <Award className="w-4 h-4 text-white" />
-                    <span>D-Reward Points:</span>
-                  </div>
-                  <span className="font-bold text-white text-sm">
-                    {user.points || 500} Poin
-                  </span>
-                </div>
               </div>
 
               {/* Form Nomor WhatsApp Pembeli */}

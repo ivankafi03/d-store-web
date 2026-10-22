@@ -3042,27 +3042,44 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
                 </div>
 
                 {newNoteForm.productId === '__custom__' ? (
-                  <div className="grid grid-cols-2 gap-2">
-                    <div>
-                      <label className="text-zinc-400 block mb-0.5 text-[10px]">Nama Produk</label>
-                      <input
-                        type="text"
-                        placeholder="Nama produk"
-                        value={newNoteForm.productName}
-                        onChange={(e) => setNewNoteForm({ ...newNoteForm, productName: e.target.value })}
-                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-white outline-none"
-                        required
-                      />
+                  <div className="space-y-2">
+                    <div className="grid grid-cols-2 gap-2">
+                      <div>
+                        <label className="text-zinc-400 block mb-0.5 text-[10px]">Nama Produk</label>
+                        <input
+                          type="text"
+                          placeholder="Nama produk"
+                          value={newNoteForm.productName}
+                          onChange={(e) => setNewNoteForm({ ...newNoteForm, productName: e.target.value })}
+                          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-white outline-none"
+                          required
+                        />
+                      </div>
+                      <div>
+                        <label className="text-zinc-400 block mb-0.5 text-[10px]">Varian</label>
+                        <input
+                          type="text"
+                          placeholder="Paket / varian"
+                          value={newNoteForm.variantName}
+                          onChange={(e) => setNewNoteForm({ ...newNoteForm, variantName: e.target.value })}
+                          className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-white outline-none"
+                        />
+                      </div>
                     </div>
                     <div>
-                      <label className="text-zinc-400 block mb-0.5 text-[10px]">Varian</label>
-                      <input
-                        type="text"
-                        placeholder="Paket / varian"
-                        value={newNoteForm.variantName}
-                        onChange={(e) => setNewNoteForm({ ...newNoteForm, variantName: e.target.value })}
-                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-white outline-none"
-                      />
+                      <label className="text-zinc-400 block mb-0.5 text-[10px]">Supplier</label>
+                      <select
+                        value={newNoteForm.supplier}
+                        onChange={(e) => setNewNoteForm({ ...newNoteForm, supplier: e.target.value })}
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-white outline-none cursor-pointer"
+                      >
+                        <option value="">-- Pilih Supplier --</option>
+                        {suppliers.map((s) => (
+                          <option key={s.id || s.code} value={s.code || s.id}>
+                            {s.name} ({s.code || s.type || 'Supplier'})
+                          </option>
+                        ))}
+                      </select>
                     </div>
                   </div>
                 ) : newNoteForm.productId ? (
@@ -3336,13 +3353,14 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
               <div>
                 <label className="text-zinc-400 block mb-1">Supplier</label>
                 <select
-                  value={editingNote.supplier || 'heavenprem'}
+                  value={editingNote.supplier || ''}
                   onChange={(e) => setEditingNote({ ...editingNote, supplier: e.target.value })}
-                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-white outline-none"
+                  className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-3 py-2 text-white outline-none cursor-pointer"
                 >
+                  <option value="">-- Pilih Supplier --</option>
                   {suppliers.map((s) => (
-                    <option key={s.id || s.code} value={s.code}>
-                      {s.name}
+                    <option key={s.id || s.code} value={s.code || s.id}>
+                      {s.name} ({s.code || s.type || 'Supplier'})
                     </option>
                   ))}
                 </select>

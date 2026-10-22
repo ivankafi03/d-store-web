@@ -230,6 +230,18 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
     checkSession();
   }, []);
 
+  // Selalu sinkronisasi data produk, catatan, dan pengguna terdaftar saat awal & modal dibuka
+  useEffect(() => {
+    loadProducts();
+    loadBanners();
+  }, []);
+
+  useEffect(() => {
+    if (showAddNoteModal || showEditNoteModal) {
+      loadProducts();
+    }
+  }, [showAddNoteModal, showEditNoteModal]);
+
   // Handler Submit PIN Login
   const handlePinSubmit = async (e) => {
     if (e) e.preventDefault();

@@ -8860,5 +8860,106 @@
         }
       ]
     }
+  ],
+  "suppliers": [
+    {
+      "id": "supp_heavenprem",
+      "name": "Heaven Premium",
+      "code": "heavenprem",
+      "contact": "@heavenprem_bot",
+      "type": "bot",
+      "link": "https://t.me/heavenprem_bot",
+      "note": "Bot Telegram kulakan otomatis"
+    },
+    {
+      "id": "supp_ziem7",
+      "name": "Ziem Store",
+      "code": "ziem7",
+      "contact": "@Ziem7_bot",
+      "type": "bot",
+      "link": "https://t.me/Ziem7_bot",
+      "note": "Bot Telegram streaming & tools"
+    },
+    {
+      "id": "supp_buatprem",
+      "name": "Buat Prem",
+      "code": "buatprem",
+      "contact": "@buatprem_bot",
+      "type": "bot",
+      "link": "https://t.me/buatprem_bot",
+      "note": "Bot Telegram kulakan premium"
+    },
+    {
+      "id": "supp_bagah",
+      "name": "Bagah Store",
+      "code": "bagahstore",
+      "contact": "@bagahstorebot",
+      "type": "bot",
+      "link": "https://t.me/bagahstorebot",
+      "note": "Bot Telegram kulakan aplikasi"
+    },
+    {
+      "id": "supp_prabumail",
+      "name": "Prabu Mail",
+      "code": "prabumail",
+      "contact": "@prabumail_bot",
+      "type": "bot",
+      "link": "https://t.me/prabumail_bot",
+      "note": "Kulakan akun Gmail fresh"
+    },
+    {
+      "id": "supp_chiraa",
+      "name": "Chiraa Store",
+      "code": "chiraastore",
+      "contact": "Telegram",
+      "type": "manual",
+      "link": "https://t.me",
+      "note": "Supplier manual aplikasi"
+    },
+    {
+      "id": "supp_looviie",
+      "name": "Looviie Store",
+      "code": "looviiestore",
+      "contact": "Telegram",
+      "type": "manual",
+      "link": "https://t.me",
+      "note": "Supplier manual aplikasi"
+    },
+    {
+      "id": "supp_hafah",
+      "name": "Hafah Store",
+      "code": "hafahstore",
+      "contact": "Telegram",
+      "type": "manual",
+      "link": "https://t.me",
+      "note": "Supplier manual aplikasi"
+    },
+    {
+      "id": "supp_teleajie",
+      "name": "Tele Ajie",
+      "code": "teleajie",
+      "contact": "@teleajie",
+      "type": "manual",
+      "link": "https://t.me/teleajie",
+      "note": "Supplier Telegram"
+    },
+    {
+      "id": "supp_wa_0859",
+      "name": "Supplier WA",
+      "code": "0859194775460",
+      "contact": "0859194775460",
+      "type": "whatsapp",
+      "link": "https://wa.me/62859194775460",
+      "note": "Supplier via WhatsApp"
+    },
+    {
+      "id": "supp_dstore",
+      "name": "Stok D Store (Internal)",
+      "code": "dstore",
+      "contact": "Internal",
+      "type": "internal",
+      "link": "",
+      "note": "Stok buatan sendiri"
+    }
   ]
 }

@@ -3100,11 +3100,12 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
                       <select
                         value={newNoteForm.supplier}
                         onChange={(e) => setNewNoteForm({ ...newNoteForm, supplier: e.target.value })}
-                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-white outline-none"
+                        className="w-full bg-zinc-950 border border-zinc-800 rounded-xl px-2.5 py-1.5 text-white outline-none cursor-pointer"
                       >
+                        <option value="">-- Pilih Supplier --</option>
                         {suppliers.map((s) => (
-                          <option key={s.id || s.code} value={s.code}>
-                            {s.name}
+                          <option key={s.id || s.code} value={s.code || s.id}>
+                            {s.name} ({s.code || s.type || 'Supplier'})
                           </option>
                         ))}
                       </select>

@@ -873,6 +873,33 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
     setTimeout(() => { dragDistBrands.current = 0; }, 50);
   };
 
+  // Bubble list pointer drag & scroll support
+  const bubblesListRef = useRef(null);
+  const isDraggingBubbles = useRef(false);
+  const startXBubbles = useRef(0);
+  const scrollStartBubbles = useRef(0);
+  const dragDistBubbles = useRef(0);
+
+  const onBubblesPointerDown = (e) => {
+    isDraggingBubbles.current = true;
+    startXBubbles.current = e.pageX || e.clientX;
+    scrollStartBubbles.current = bubblesListRef.current?.scrollLeft || 0;
+    dragDistBubbles.current = 0;
+  };
+
+  const onBubblesPointerMove = (e) => {
+    if (!isDraggingBubbles.current || !bubblesListRef.current) return;
+    const x = e.pageX || e.clientX;
+    const walk = (x - startXBubbles.current) * 1.4;
+    dragDistBubbles.current = Math.abs(walk);
+    bubblesListRef.current.scrollLeft = scrollStartBubbles.current - walk;
+  };
+
+  const onBubblesPointerUp = () => {
+    isDraggingBubbles.current = false;
+    setTimeout(() => { dragDistBubbles.current = 0; }, 60);
+  };
+
   // Top Tier recommendation product carousel drag & scroll support
   const topTierListRef = useRef(null);
   const isDraggingTopTier = useRef(false);
@@ -2216,11 +2243,21 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           4. BUBBLE LIST / KATEGORI APLIKASI CEPAT (RESPONSIF SEMUA LAYAR)
       ========================================================= */}
       <section className="max-w-[1240px] mx-auto px-4 py-3 sm:py-5">
-        <div className="flex items-center gap-3 sm:gap-5 overflow-x-auto no-scrollbar py-1">
+        <div 
+          ref={bubblesListRef}
+          onTouchStart={() => { dragDistBubbles.current = 0; }}
+          onMouseDown={onBubblesPointerDown}
+          onMouseMove={onBubblesPointerMove}
+          onMouseUp={onBubblesPointerUp}
+          onMouseLeave={onBubblesPointerUp}
+          className="flex items-center gap-3 sm:gap-5 overflow-x-auto no-scrollbar py-1 cursor-grab active:cursor-grabbing select-none"
+        >
           {bubbleList.map((bubble, i) => (
             <div
               key={i}
               onClick={() => {
+                if (dragDistBubbles.current > 5) return;
+                dragDistBubbles.current = 0;
                 if (isEditMode) {
                   setVisualEditingItem({
                     type: 'bubble',
@@ -2513,7 +2550,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                 onMouseMove={onTopTierPointerMove}
                 onMouseUp={onTopTierPointerUp}
                 onMouseLeave={onTopTierPointerUp}
-                className="product-list__wrapper flex overflow-x-auto gap-2 sm:gap-2.5 pb-3 no-scrollbar cursor-grab active:cursor-grabbing snap-x snap-mandatory" 
+                className="product-list__wrapper flex overflow-x-auto gap-2 sm:gap-2.5 pb-3 no-scrollbar cursor-grab active:cursor-grabbing" 
                 id="grid" 
                 style={{ justifyContent: 'unset' }}
               >
@@ -2522,11 +2559,12 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                   return (
                     <div 
                       key={prod.sku || idx} 
-                      className={`product-item__wrapper shrink-0 snap-start w-[145px] sm:w-[175px] md:w-[210px] bg-white rounded-lg p-2 md:p-2.5 flex flex-col justify-between border border-zinc-100 hover:shadow-xs transition select-none cursor-pointer relative ${
+                      className={`product-item__wrapper shrink-0 w-[145px] sm:w-[175px] md:w-[210px] bg-white rounded-lg p-2 md:p-2.5 flex flex-col justify-between border border-zinc-100 hover:shadow-xs transition select-none cursor-pointer relative ${
                         isEditMode ? 'ring-2 ring-blue-500/80 hover:ring-blue-400' : ''
                       }`}
                       data-sku={prod.sku}
                       onClick={() => {
+                        if (dragDistTopTier.current > 5) return;
                         dragDistTopTier.current = 0;
                         if (isEditMode) {
                           setVisualEditingItem({
@@ -3119,7 +3157,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                 onMouseMove={onJustForYouPointerMove}
                 onMouseUp={onJustForYouPointerUp}
                 onMouseLeave={onJustForYouPointerUp}
-                className="product-list__wrapper flex gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar scroll-smooth cursor-grab active:cursor-grabbing pb-4"
+                className="product-list__wrapper flex gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing pb-4"
                 id="grid"
                 style={{
                   justifyContent: 'unset',
@@ -3147,6 +3185,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                         href="#"
                         onClick={(e) => {
                           e.preventDefault();
+                          if (dragDistJustForYou.current > 5) return;
                           dragDistJustForYou.current = 0;
                           if (isEditMode) {
                             setVisualEditingItem({

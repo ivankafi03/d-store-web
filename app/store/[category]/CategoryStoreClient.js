@@ -57,7 +57,23 @@ export default function CategoryStoreClient({ initialSlug, initialProducts = [],
   const [cart, setCart] = useState([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [wishlist, setWishlist] = useState([]);
+  const [wishlist, setWishlist] = useState(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        const saved = localStorage.getItem('d_store_wishlist');
+        if (saved) return JSON.parse(saved);
+      } catch (e) {}
+    }
+    return [];
+  });
+
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      try {
+        localStorage.setItem('d_store_wishlist', JSON.stringify(wishlist));
+      } catch (e) {}
+    }
+  }, [wishlist]);
   const [toastMessage, setToastMessage] = useState(null);
 
   // Mode Admin Visual Editor State (Hanya aktif jika diakses via route admin/dev)
@@ -648,18 +664,18 @@ export default function CategoryStoreClient({ initialSlug, initialProducts = [],
               <span className="hidden lg:inline">Bantuan CS</span>
             </a>
 
-            <div 
-              onClick={() => showToast(`Anda memiliki ${wishlist.length} produk di Wishlist`)}
-              className="relative cursor-pointer hover:opacity-75 transition select-none p-1"
+            <Link 
+              href="/store/wishlist"
+              className="relative cursor-pointer hover:opacity-75 transition select-none p-1 text-[#222]"
               title="Wishlist"
             >
               <Heart className="w-5 h-5 sm:w-6 sm:h-6" />
               {wishlist.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-black text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
+                <span className="absolute -top-1 -right-1 bg-[#d92534] text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
                   {wishlist.length}
                 </span>
               )}
-            </div>
+            </Link>
 
             <div 
               onClick={() => setIsCartOpen(true)}

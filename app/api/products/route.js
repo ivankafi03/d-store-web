@@ -1,10 +1,27 @@
 import { NextResponse } from 'next/server';
-import { getDb, saveDb, pushToGoogleSheet, standardizeDuration } from '@/lib/db';
+import { getDb, saveDb, pushToGoogleSheet, pushNotesToGoogleSheet, pullNotesFromGoogleSheet, standardizeDuration } from '@/lib/db';
 import { isAuthenticatedRequest } from '@/lib/auth';
-import { getAllUsers, syncCustomerNoteToUserOrder, deleteUserByEmail } from '@/lib/userAuth';
+import { getAllUsers, syncCustomerNoteToUserOrder, deleteUserByEmail, pushUsersToGoogleSheet, pullUsersFromGoogleSheet } from '@/lib/userAuth';
 
-export async function GET() {
-  const db = getDb(true);
+export async function GET(request) {
+  let db = getDb(true);
+
+  // Jika customerNotes kosong (misal baru deploy di Vercel) atau ada parameter pull_cloud=1,
+  // coba sinkronkan data dari cloud Google Sheets
+  try {
+    const url = request ? new URL(request.url) : null;
+    const forcePull = url?.searchParams?.get('pull_cloud') === '1';
+    if (forcePull || (!db.customerNotes || db.customerNotes.length === 0)) {
+      await Promise.allSettled([
+        pullNotesFromGoogleSheet(),
+        pullUsersFromGoogleSheet()
+      ]);
+      db = getDb(true);
+    }
+  } catch (err) {
+    // abaikan jika jaringan cloud lambat/gagal
+  }
+
   const allUsers = getAllUsers();
   const registeredUsers = allUsers.map(u => ({
     id: u.id,
@@ -648,6 +665,10 @@ export async function POST(request) {
         console.warn('[Sync Customer Note Error]', syncErr.message);
       }
 
+      // Backup otomatis ke Google Spreadsheet Cloud
+      pushNotesToGoogleSheet(db.customerNotes).catch(() => {});
+      pushUsersToGoogleSheet().catch(() => {});
+
       return NextResponse.json({ status: 'ok', note: newNote, customerNotes: db.customerNotes });
     }
 
@@ -691,6 +712,10 @@ export async function POST(request) {
         console.warn('[Sync Customer Note Error]', syncErr.message);
       }
 
+      // Backup otomatis ke Google Spreadsheet Cloud
+      pushNotesToGoogleSheet(db.customerNotes).catch(() => {});
+      pushUsersToGoogleSheet().catch(() => {});
+
       return NextResponse.json({ status: 'ok', note, customerNotes: db.customerNotes });
     }
 
@@ -712,6 +737,7 @@ export async function POST(request) {
       } catch (syncErr) {
         console.warn('[Sync Customer Note Error]', syncErr.message);
       }
+      pushNotesToGoogleSheet(db.customerNotes).catch(() => {});
       return NextResponse.json({ status: 'ok', note, customerNotes: db.customerNotes });
     }
 
@@ -737,6 +763,9 @@ export async function POST(request) {
         console.warn('[Sync Customer Note Delete Error]', syncErr.message);
       }
 
+      pushNotesToGoogleSheet(db.customerNotes).catch(() => {});
+      pushUsersToGoogleSheet().catch(() => {});
+
       return NextResponse.json({ 
         status: 'ok', 
         customerNotes: db.customerNotes,
@@ -756,6 +785,7 @@ export async function POST(request) {
 
       const success = deleteUserByEmail(cleanEmail);
       const remainingUsers = getAllUsers(true);
+      pushUsersToGoogleSheet(remainingUsers).catch(() => {});
       return NextResponse.json({
         status: 'ok',
         success,
@@ -786,7 +816,31 @@ export async function POST(request) {
         }
       }
 
+      pushNotesToGoogleSheet(db.customerNotes).catch(() => {});
+      pushUsersToGoogleSheet().catch(() => {});
+
       return NextResponse.json({ status: 'ok', customerNotes: db.customerNotes });
+    }
+
+    if (action === 'sync_cloud_notes') {
+      const { direction = 'both' } = body;
+      let pushRes = null;
+      let pullRes = null;
+      if (direction === 'push' || direction === 'both') {
+        pushRes = await pushNotesToGoogleSheet(db.customerNotes);
+        await pushUsersToGoogleSheet();
+      }
+      if (direction === 'pull' || direction === 'both') {
+        pullRes = await pullNotesFromGoogleSheet();
+        await pullUsersFromGoogleSheet();
+      }
+      const updatedDb = getDb(true);
+      return NextResponse.json({
+        status: 'ok',
+        customerNotes: updatedDb.customerNotes || [],
+        push: pushRes,
+        pull: pullRes
+      });
     }
 
     return NextResponse.json({ status: 'error', message: 'Aksi tidak dikenali' }, { status: 400 });

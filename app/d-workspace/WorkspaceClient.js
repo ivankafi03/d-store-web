@@ -39,7 +39,12 @@ import {
   FileText,
   ShieldAlert,
   Minus,
-  Send
+  Send,
+  Cloud,
+  CloudDownload,
+  CloudUpload,
+  Database,
+  Code
 } from 'lucide-react';
 import UserAvatar from '@/app/components/UserAvatar';
 
@@ -1068,6 +1073,32 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
     }
   };
 
+  // Sinkronisasi Catatan & Akun ke Cloud (Google Sheet)
+  const [syncingCloud, setSyncingCloud] = useState(false);
+  const [showAppsScriptModal, setShowAppsScriptModal] = useState(false);
+
+  const handleSyncCloudNotes = async (direction = 'both') => {
+    setSyncingCloud(true);
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({ action: 'sync_cloud_notes', direction })
+      });
+      const data = await res.json();
+      if (data.status === 'ok') {
+        if (data.customerNotes) setCustomerNotes(data.customerNotes);
+        showToast('Catatan berhasil disinkronkan dengan Google Sheet Cloud!');
+      } else {
+        showToast(data.message || 'Gagal sinkron cloud', 'error');
+      }
+    } catch (err) {
+      showToast('Gagal sinkron dengan cloud', 'error');
+    } finally {
+      setSyncingCloud(false);
+    }
+  };
+
   // Helper Template Chat WA & Telegram
   const getFollowUpLink = (note) => {
     const customer = note.customerName ? `kak ${note.customerName}` : 'kak';
@@ -2016,6 +2047,38 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
         {activeTab === 'notes' && (
           <div className="space-y-3 sm:space-y-4">
             
+            {/* Bar Sinkronisasi Cloud Google Sheet */}
+            <div className="flex items-center justify-between gap-2 p-3 rounded-2xl bg-zinc-900 border border-zinc-800 text-xs flex-wrap">
+              <div className="flex items-center gap-2">
+                <div className="w-2.5 h-2.5 rounded-full bg-emerald-400 animate-pulse shrink-0"></div>
+                <div>
+                  <span className="font-bold text-white">Database Cloud Google Sheet</span>
+                  <span className="text-[11px] text-zinc-400 ml-2">({notesStats.total} catatan tersimpan)</span>
+                </div>
+              </div>
+              <div className="flex items-center gap-2">
+                <button
+                  type="button"
+                  onClick={() => handleSyncCloudNotes('both')}
+                  disabled={syncingCloud}
+                  className="px-3 py-1.5 rounded-xl bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700 font-semibold inline-flex items-center gap-1.5 transition disabled:opacity-50 cursor-pointer text-xs"
+                  title="Sinkronkan catatan dengan Google Sheet"
+                >
+                  <RefreshCw className={`w-3.5 h-3.5 ${syncingCloud ? 'animate-spin' : ''}`} />
+                  <span>{syncingCloud ? 'Sinkron...' : 'Sinkron Cloud'}</span>
+                </button>
+                <button
+                  type="button"
+                  onClick={() => setShowAppsScriptModal(true)}
+                  className="px-3 py-1.5 rounded-xl bg-sky-950/70 hover:bg-sky-900 text-sky-300 border border-sky-800/80 font-semibold inline-flex items-center gap-1.5 transition cursor-pointer text-xs"
+                  title="Lihat kode Google Apps Script"
+                >
+                  <Code className="w-3.5 h-3.5" />
+                  <span>Kode Script Cloud</span>
+                </button>
+              </div>
+            </div>
+
             {/* Filter Berbasis Warna (Hijau = Aktif, Kuning = Hampir Habis, Merah = Habis, Netral = Semua) */}
             <div className="flex items-center gap-1.5 bg-zinc-900/90 p-1 rounded-2xl border border-zinc-800/80 text-xs">
               {/* Hijau = Aktif */}
@@ -3702,6 +3765,201 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
                 </button>
               </div>
             </form>
+          </div>
+        </div>
+      )}
+      {/* =========================================================================
+          MODAL: KODE GOOGLE APPS SCRIPT DATABASE CLOUD
+      ========================================================================= */}
+      {showAppsScriptModal && (
+        <div className="fixed inset-0 z-50 bg-black/80 backdrop-blur-xs flex items-center justify-center p-4 overflow-y-auto">
+          <div className="bg-zinc-900 border border-zinc-800 rounded-3xl w-full max-w-xl p-5 space-y-4 shadow-2xl my-auto text-xs">
+            <div className="flex items-center justify-between pb-2 border-b border-zinc-800">
+              <div className="flex items-center gap-2">
+                <Code className="w-4 h-4 text-sky-400" />
+                <h3 className="font-bold text-sm text-white">Kode Google Apps Script Cloud</h3>
+              </div>
+              <button
+                type="button"
+                onClick={() => setShowAppsScriptModal(false)}
+                className="text-zinc-500 hover:text-white"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="space-y-2 text-zinc-300 leading-relaxed">
+              <p>
+                Agar semua <strong>Catatan Pelanggan</strong> dan <strong>Akun Pembeli</strong> tersimpan permanen di cloud (tidak hilang saat web di-update atau re-deploy Vercel):
+              </p>
+              <ol className="list-decimal list-inside space-y-1 text-zinc-400 font-mono text-[11px] bg-zinc-950 p-3 rounded-xl border border-zinc-800">
+                <li>Buka Spreadsheet Google Anda</li>
+                <li>Klik menu <strong>Ekstensi</strong> &gt; <strong>Apps Script</strong></li>
+                <li>Ganti seluruh isi kode dengan kode di bawah ini</li>
+                <li>Klik <strong>Deploy</strong> &gt; <strong>Kelola deployment</strong> &gt; <strong>Edit (Versi Baru)</strong> &gt; <strong>Deploy</strong></li>
+              </ol>
+            </div>
+
+            <div className="relative">
+              <pre className="p-3 bg-black border border-zinc-800 rounded-xl overflow-x-auto text-[10px] text-emerald-400 font-mono max-h-56 leading-relaxed select-all">
+{`function doPost(e) {
+  try {
+    var data = JSON.parse(e.postData.contents);
+    var ss = SpreadsheetApp.getActiveSpreadsheet();
+
+    // 1. KATALOG PRODUK
+    if (data.action === "sync_all") {
+      var sheet = ss.getSheetByName("Katalog Produk") || ss.getSheets()[0];
+      sheet.clearContents();
+      var headers = ["ID Produk", "Kategori", "Nama Produk", "ID Varian", "Nama Varian / Paket", "Supplier", "Modal (Rp)", "Harga Jual (Rp)", "Status Stok", "Tawaran Toko"];
+      var rows = [headers];
+      var items = data.items || [];
+      for (var i = 0; i < items.length; i++) {
+        var it = items[i];
+        rows.push([it.productId || "", it.category || "", it.productName || "", it.variantId || "", it.variantName || "", it.supplier || "", Number(it.costPrice) || 0, Number(it.sellingPrice) || 0, it.isAvailable ? "Ready" : "Kosong", it.supplierOffers || ""]);
+      }
+      if (rows.length > 0) {
+        sheet.getRange(1, 1, rows.length, headers.length).setValues(rows);
+        sheet.getRange(1, 1, 1, headers.length).setFontWeight("bold").setBackground("#FFE600");
+      }
+      return ContentService.createTextOutput(JSON.stringify({ status: "ok", count: items.length })).setMimeType(ContentService.MimeType.JSON);
+    }
+    if (data.action === "read_all") {
+      var sheet = ss.getSheetByName("Katalog Produk") || ss.getSheets()[0];
+      var values = sheet.getDataRange().getValues();
+      var items = [];
+      if (values.length > 1) {
+        for (var i = 1; i < values.length; i++) {
+          var r = values[i];
+          items.push({ productId: r[0], category: r[1], productName: r[2], variantId: r[3], variantName: r[4], supplier: r[5], costPrice: Number(r[6]) || 0, sellingPrice: Number(r[7]) || 0, isAvailable: String(r[8]).toLowerCase() === "ready", supplierOffers: r[9] });
+        }
+      }
+      return ContentService.createTextOutput(JSON.stringify({ status: "ok", items: items })).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // 2. BUKU CATATAN PELANGGAN
+    if (data.action === "sync_notes") {
+      var sheet = ss.getSheetByName("Buku Catatan");
+      if (!sheet) { sheet = ss.insertSheet("Buku Catatan"); }
+      sheet.clearContents();
+      var headers = ["ID", "Order ID", "Nama Pelanggan", "Email", "Kontak", "Tipe Kontak", "Produk", "Varian", "Detail Akun", "Supplier", "Harga", "Durasi (Hari)", "Mulai", "Kadaluarsa", "Garansi Terpakai", "Maks Garansi", "Catatan Admin", "Diperbarui"];
+      var rows = [headers];
+      var notes = data.notes || [];
+      for (var i = 0; i < notes.length; i++) {
+        var n = notes[i];
+        rows.push([
+          n.id || "", n.orderId || "", n.customerName || "", n.customerEmail || "",
+          n.contact || "", n.contactType || "whatsapp", n.productName || "",
+          n.variantName || "", n.accountDetails || "", n.supplier || "",
+          Number(n.price) || 0, Number(n.durationDays) || 30, n.startDate || "",
+          n.expiredAt || "", Number(n.warrantyCount) || 0, Number(n.warrantyMax) || 1,
+          n.notes || "", n.updatedAt || ""
+        ]);
+      }
+      if (rows.length > 0) {
+        sheet.getRange(1, 1, rows.length, headers.length).setValues(rows);
+        sheet.getRange(1, 1, 1, headers.length).setFontWeight("bold").setBackground("#38BDF8").setFontColor("#000000");
+      }
+      return ContentService.createTextOutput(JSON.stringify({ status: "ok", count: notes.length })).setMimeType(ContentService.MimeType.JSON);
+    }
+    if (data.action === "read_notes") {
+      var sheet = ss.getSheetByName("Buku Catatan");
+      if (!sheet) {
+        return ContentService.createTextOutput(JSON.stringify({ status: "ok", notes: [] })).setMimeType(ContentService.MimeType.JSON);
+      }
+      var values = sheet.getDataRange().getValues();
+      var notes = [];
+      if (values.length > 1) {
+        for (var i = 1; i < values.length; i++) {
+          var r = values[i];
+          if (!r[0]) continue;
+          notes.push({
+            id: String(r[0]), orderId: String(r[1] || ""), customerName: String(r[2] || ""),
+            customerEmail: String(r[3] || ""), contact: String(r[4] || ""), contactType: String(r[5] || "whatsapp"),
+            productName: String(r[6] || ""), variantName: String(r[7] || ""), accountDetails: String(r[8] || ""),
+            supplier: String(r[9] || ""), price: Number(r[10]) || 0, durationDays: Number(r[11]) || 30,
+            startDate: String(r[12] || ""), expiredAt: String(r[13] || ""), warrantyCount: Number(r[14]) || 0,
+            warrantyMax: Number(r[15]) || 1, notes: String(r[16] || ""), updatedAt: String(r[17] || "")
+          });
+        }
+      }
+      return ContentService.createTextOutput(JSON.stringify({ status: "ok", notes: notes })).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    // 3. PENGGUNA TERDAFTAR
+    if (data.action === "sync_users") {
+      var sheet = ss.getSheetByName("Pengguna");
+      if (!sheet) { sheet = ss.insertSheet("Pengguna"); }
+      sheet.clearContents();
+      var headers = ["Email", "Nama", "Telepon", "Foto", "Pesanan (JSON)", "Terdaftar"];
+      var rows = [headers];
+      var users = data.users || [];
+      for (var i = 0; i < users.length; i++) {
+        var u = users[i];
+        rows.push([u.email || "", u.name || "", u.phone || "", u.picture || "", JSON.stringify(u.orders || []), u.createdAt || ""]);
+      }
+      if (rows.length > 0) {
+        sheet.getRange(1, 1, rows.length, headers.length).setValues(rows);
+        sheet.getRange(1, 1, 1, headers.length).setFontWeight("bold").setBackground("#4ADE80").setFontColor("#000000");
+      }
+      return ContentService.createTextOutput(JSON.stringify({ status: "ok", count: users.length })).setMimeType(ContentService.MimeType.JSON);
+    }
+    if (data.action === "read_users") {
+      var sheet = ss.getSheetByName("Pengguna");
+      if (!sheet) {
+        return ContentService.createTextOutput(JSON.stringify({ status: "ok", users: [] })).setMimeType(ContentService.MimeType.JSON);
+      }
+      var values = sheet.getDataRange().getValues();
+      var users = [];
+      if (values.length > 1) {
+        for (var i = 1; i < values.length; i++) {
+          var r = values[i];
+          if (!r[0]) continue;
+          var orders = [];
+          try { orders = JSON.parse(r[4] || "[]"); } catch (e) {}
+          users.push({ email: String(r[0]), name: String(r[1] || ""), phone: String(r[2] || ""), picture: String(r[3] || ""), orders: orders, createdAt: String(r[5] || "") });
+        }
+      }
+      return ContentService.createTextOutput(JSON.stringify({ status: "ok", users: users })).setMimeType(ContentService.MimeType.JSON);
+    }
+
+    if (data.action === "create_sheet") {
+      var s = ss.getSheetByName(data.sheetName);
+      if (!s) { s = ss.insertSheet(data.sheetName); if (data.headers) s.appendRow(data.headers); }
+      return ContentService.createTextOutput(JSON.stringify({ status: "ok" })).setMimeType(ContentService.MimeType.JSON);
+    }
+    return ContentService.createTextOutput(JSON.stringify({ status: "ok" })).setMimeType(ContentService.MimeType.JSON);
+  } catch (err) {
+    return ContentService.createTextOutput(JSON.stringify({ status: "error", message: err.toString() })).setMimeType(ContentService.MimeType.JSON);
+  }
+}`}
+              </pre>
+            </div>
+
+            <div className="pt-2 flex justify-between items-center gap-2">
+              <button
+                type="button"
+                onClick={() => {
+                  const codeEl = document.querySelector('pre');
+                  if (codeEl) {
+                    navigator.clipboard.writeText(codeEl.innerText);
+                    showToast('Kode Google Apps Script disalin ke clipboard!');
+                  }
+                }}
+                className="px-4 py-2 rounded-xl bg-sky-500 hover:bg-sky-400 text-black font-bold inline-flex items-center gap-1.5 transition"
+              >
+                <Copy className="w-3.5 h-3.5" />
+                <span>Salin Seluruh Kode</span>
+              </button>
+
+              <button
+                type="button"
+                onClick={() => setShowAppsScriptModal(false)}
+                className="px-4 py-2 rounded-xl bg-zinc-800 text-zinc-300 font-semibold hover:bg-zinc-700"
+              >
+                Tutup
+              </button>
+            </div>
           </div>
         </div>
       )}

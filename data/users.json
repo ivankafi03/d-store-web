@@ -12,6 +12,36 @@
     "points": 700,
     "orders": [
       {
+        "id": "DST-NOTE-221026",
+        "noteId": "note_1729665600000_101",
+        "orderTime": "22 Okt 2026, 00:00 WIB",
+        "createdAt": "2026-10-22T00:00:00.000Z",
+        "items": [
+          {
+            "id": "item_note_1729665600000_101",
+            "name": "Canva Pro Desain Brand Kit & AI Unlock Lifetime",
+            "variantName": "canva pro head 1m [ 100 user ]",
+            "quantity": 1,
+            "price": 9000,
+            "subtotal": 9000,
+            "durationDays": 30,
+            "warrantyDays": 30,
+            "startDate": "2026-10-22T00:00:00.000Z",
+            "expiredAt": "2026-11-21T00:00:00.000Z",
+            "warrantyExpiredAt": "2026-11-21T00:00:00.000Z",
+            "noteId": "note_1729665600000_101",
+            "accountDetails": "ivankafi7@gmail.com"
+          }
+        ],
+        "totalAmount": 9000,
+        "status": "Aktif",
+        "customerNotes": "canva pro head 1m [ 100 user ]",
+        "phone": "081212121212",
+        "email": "ivankafi7@gmail.com",
+        "name": "ipan",
+        "title": "Canva Pro Desain Brand Kit & AI Unlock Lifetime (canva pro head 1m [ 100 user ])"
+      },
+      {
         "id": "ORD-846271",
         "title": "Garansi Proteksi Akun D Store Aktif",
         "status": "Aktif",

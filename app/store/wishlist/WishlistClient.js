@@ -832,26 +832,32 @@ export default function WishlistClient({ initialProducts = [], initialVariants =
       </section>
 
       {/* =========================================================
-          14. MOBILE BOTTOM NAVIGATION (Identik 100% Beranda)
+          14. MOBILE BOTTOM NAVIGATION (Identik 100% Beranda Floating Pill)
       ========================================================= */}
-      <div className="fixed bottom-0 left-0 right-0 z-[100] md:hidden bg-white/95 backdrop-blur-md border-t border-zinc-200 shadow-[0_-4px_16px_rgba(0,0,0,0.06)]">
-        <div className="relative border-b-0 border-t border-solid border-grey-30 border-t-[#DEDEDE] bg-white">
-          <div className="flex flex-row items-center justify-between">
-            {/* 1. Beranda */}
+      <div 
+        id="mobile_bottom_nav" 
+        className="fixed bottom-3 sm:bottom-4 inset-x-0 mx-auto z-50 w-[92%] max-w-[370px] md:hidden pointer-events-none"
+        style={{ left: 0, right: 0, marginLeft: 'auto', marginRight: 'auto' }}
+      >
+        <div className="rounded-full iphone-glass-bottom-card px-1.5 py-0.5 pointer-events-auto shadow-[0_8px_25px_rgba(0,0,0,0.1)]">
+          <div className="relative flex items-center justify-center px-1">
+            {/* 1. Home */}
             <Link 
               rel="noindex,nofollow" 
               aria-label="Beranda" 
               data-test-id="bottomNavHomeIcon" 
-              className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
               href="/store"
             >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-20 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
+              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
               <span className="relative">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M15.352 6.307a1 1 0 011.296 0l9 7.714a1 1 0 01.352.76v9.22a2 2 0 01-2 2H8a2 2 0 01-2-2v-9.22a1 1 0 01.352-.76l9-7.714zm1.944 1.514L8 15.65v7.35a1 1 0 001 1h4v-7a1 1 0 011-1h4a1 1 0 011 1v7h4a1 1 0 001-1v-7.35l-7.296-6.255zM17 17h-2v7h2v-7z" fill="#737373"></path>
-                </svg>
+                <span>
+                  <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-5">
+                    <path d="M8.656 7v1.463H21.95L8 24.416V25h17v-1.464H10.965L24.907 7.693 24.9 7H8.656z" fill="#737373"></path>
+                  </svg>
+                </span>
               </span>
-              <span className="relative text-[10px] leading-3 font-normal text-[#737373]">Beranda</span>
+              <span className="relative text-[9.5px] leading-tight font-normal text-grey-60 text-[#737373]">Home</span>
             </Link>
 
             {/* 2. Kategori */}
@@ -859,20 +865,23 @@ export default function WishlistClient({ initialProducts = [], initialVariants =
               rel="noindex,nofollow" 
               aria-label="Kategori" 
               data-test-id="categoryLink" 
-              className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
               href="#"
               onClick={(e) => {
                 e.preventDefault();
                 setIsCategoriesOpen(true);
               }}
             >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-20 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
+              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
               <span className="relative">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M7 8a1 1 0 011-1h16a1 1 0 110 2H8a1 1 0 01-1-1zm0 8a1 1 0 011-1h16a1 1 0 110 2H8a1 1 0 01-1-1zm0 8a1 1 0 011-1h16a1 1 0 110 2H8a1 1 0 01-1-1z" fill="#737373"></path>
-                </svg>
+                <span>
+                  <svg width="22" height="22" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-5">
+                    <path d="M23.64 20.376l-4.083-4.082a7.185 7.185 0 10-.922.922l4.082 4.083a.652.652 0 10.923-.923zM8.174 11.705a5.871 5.871 0 115.871 5.87 5.877 5.877 0 01-5.87-5.87z" fill="#737373"></path>
+                    <path d="M2.169 15.222h1.68M2.169 18.222H5.04M2.169 21.222h7.033" stroke="#737373" strokeLinecap="round"></path>
+                  </svg>
+                </span>
               </span>
-              <span className="relative text-[10px] leading-3 font-normal text-[#737373]">Kategori</span>
+              <span className="relative text-[9.5px] leading-tight font-normal text-grey-60 text-[#737373]">Kategori</span>
             </a>
 
             {/* 3. Tas */}
@@ -880,25 +889,27 @@ export default function WishlistClient({ initialProducts = [], initialVariants =
               rel="noindex,nofollow" 
               aria-label="Tas" 
               data-test-id="cartLink" 
-              className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
               href="#"
               onClick={(e) => {
                 e.preventDefault();
                 setIsCartOpen(true);
               }}
             >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-20 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
+              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
               <span className="relative">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
-                  <path fillRule="evenodd" clipRule="evenodd" d="M20.5 10.866v.975c0 .27-.224.488-.5.488a.494.494 0 01-.5-.488v-.975h-6v.975c0 .27-.224.488-.5.488a.494.494 0 01-.5-.488v-.975h-2.17L9.007 23.337a.987.987 0 00.986 1.076l12.999.111a.982.982 0 001.003-1.082l-1.411-12.576H20.5zm0-.976h2.083c.51 0 .938.375.994.87l1.41 12.577c.12 1.07-.672 2.034-1.77 2.151a2.072 2.072 0 01-.235.012l-13-.111c-1.104-.01-1.991-.89-1.982-1.968.001-.062.005-.123.011-.184l1.325-12.472a.991.991 0 01.995-.875H12.5v-.319c0-2.243 1.785-4.071 4-4.071 1.922 0 3.555 1.387 3.923 3.275.051.26.077.527.077.796v.32zm-1 0v-.319c0-.208-.02-.413-.059-.614-.28-1.437-1.51-2.481-2.941-2.481-1.651 0-3 1.38-3 3.095v.32h6z" fill="#737373"></path>
-                </svg>
+                <span>
+                  <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-5">
+                    <path fillRule="evenodd" clipRule="evenodd" d="M20.5 10.866v.975c0 .27-.224.488-.5.488a.494.494 0 01-.5-.488v-.975h-6v.975c0 .27-.224.488-.5.488a.494.494 0 01-.5-.488v-.975h-2.17L9.007 23.337a.987.987 0 00.986 1.076l12.999.111a.982.982 0 001.003-1.082l-1.411-12.576H20.5zm0-.976h2.083c.51 0 .938.375.994.87l1.41 12.577c.12 1.07-.672 2.034-1.77 2.151a2.072 2.072 0 01-.235.012l-13-.111c-1.104-.01-1.991-.89-1.982-1.968.001-.062.005-.123.011-.184l1.325-12.472a.991.991 0 01.995-.875H12.5v-.319c0-2.243 1.785-4.071 4-4.071 1.922 0 3.555 1.387 3.923 3.275.051.26.077.527.077.796v.32zm-1 0v-.319c0-.208-.02-.413-.059-.614-.28-1.437-1.51-2.481-2.941-2.481-1.651 0-3 1.38-3 3.095v.32h6z" fill="#737373"></path>
+                  </svg>
+                </span>
                 {cart.length > 0 && (
-                  <span className="absolute -top-1 -right-2 bg-black text-white text-[9px] font-bold min-w-4 h-4 px-1 rounded-full flex items-center justify-center shadow-xs">
+                  <span className="absolute -top-1 -right-2 bg-black text-white text-[9px] font-bold min-w-3.5 h-3.5 px-0.5 rounded-full flex items-center justify-center shadow-xs">
                     {cart.reduce((acc, item) => acc + (item.quantity || 1), 0)}
                   </span>
                 )}
               </span>
-              <span className="relative text-[10px] leading-3 font-normal text-[#737373]">Tas</span>
+              <span className="relative text-[9.5px] leading-tight font-normal text-grey-60 text-[#737373]">Tas</span>
             </a>
 
             {/* 4. Wishlist (Halaman Aktif!) */}
@@ -906,48 +917,52 @@ export default function WishlistClient({ initialProducts = [], initialVariants =
               rel="noindex,nofollow" 
               aria-label="Wishlist" 
               data-test-id="wishlistLink" 
-              className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
               href="/store/wishlist"
             >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-20 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
+              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
               <span className="relative">
-                <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
-                  <path d="M16.308 8.335c1.68-1.666 3.691-2.219 5.9-1.571 2.168.635 3.57 2.147 4.13 4.394.058.229.082.409.122.802l.012.127.028.279c-.039 1.496-.545 2.874-1.502 4.4-1.454 2.318-3.335 4.298-6.147 6.683-.362.306-.666.549-1.317 1.058l-.031.025c-.454.356-.665.522-.916.727-.375.305-.767.329-1.162.027-3.318-2.532-5.666-4.724-7.574-7.255-1.107-1.467-1.826-2.832-2.196-4.323-.805-3.25 1.625-6.761 4.946-7.141 1.989-.228 3.692.368 5.086 1.786.16.163.228.246.296.248.072 0 .145-.087.325-.266z" fill="#d92534"></path>
-                </svg>
+                <span>
+                  <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-5">
+                    <path d="M16.308 8.335c1.68-1.666 3.691-2.219 5.9-1.571 2.168.635 3.57 2.147 4.13 4.394.058.229.082.409.122.802l.012.127.028.279c-.039 1.496-.545 2.874-1.502 4.4-1.454 2.318-3.335 4.298-6.147 6.683-.362.306-.666.549-1.317 1.058l-.031.025c-.454.356-.665.522-.916.727-.375.305-.767.329-1.162.027-3.318-2.532-5.666-4.724-7.574-7.255-1.107-1.467-1.826-2.832-2.196-4.323-.805-3.25 1.625-6.761 4.946-7.141 1.989-.228 3.692.368 5.086 1.786.16.163.228.246.296.248.072 0 .145-.087.325-.266z" fill="#d92534"></path>
+                  </svg>
+                </span>
                 {wishlist.length > 0 && (
-                  <span className="absolute -top-1 -right-1.5 bg-[#d92534] text-white text-[9px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
+                  <span className="absolute -top-1 -right-1.5 bg-[#d92534] text-white text-[8.5px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
                     {wishlist.length}
                   </span>
                 )}
               </span>
-              <span className="relative text-[10px] leading-3 font-semibold text-[#d92534]">Wishlist</span>
+              <span className="relative text-[9.5px] leading-tight font-semibold text-[#d92534]">Wishlist</span>
             </Link>
 
             {/* 5. Akun Saya */}
             <a 
               rel="noindex,nofollow" 
               data-test-id="bottomNavAccountIcon" 
-              className="relative flex h-[54px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
               href="#"
               onClick={(e) => {
                 e.preventDefault();
                 setIsAccountOpen(true);
               }}
             >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-20 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
+              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
               <span className="relative">
-                {user ? (
-                  <UserAvatar user={user} size={24} />
-                ) : (
-                  <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M21.5 11a5.5 5.5 0 11-11 0 5.5 5.5 0 1111 0zm-1 0a4.5 4.5 0 10-8.999-.001A4.5 4.5 0 0020.5 11zm4 13.605c0 .512-.068 1.02-.2 1.522a.5.5 0 01-.966-.254c.11-.42.166-.843.166-1.268 0-3.349-3.339-6.105-7.5-6.105s-7.5 2.756-7.5 6.105c0 .281.074.964.137 1.304a.5.5 0 11-.984.182 10.96 10.96 0 01-.153-1.486c0-3.948 3.824-7.105 8.5-7.105s8.5 3.157 8.5 7.105z" fill="#737373"></path>
-                  </svg>
-                )}
-                {user && (
-                  <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border border-white" />
-                )}
+                <span>
+                  {user ? (
+                    <UserAvatar user={user} size={20} />
+                  ) : (
+                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-5">
+                      <path fillRule="evenodd" clipRule="evenodd" d="M21.5 11a5.5 5.5 0 11-11 0 5.5 5.5 0 1111 0zm-1 0a4.5 4.5 0 10-8.999-.001A4.5 4.5 0 0020.5 11zm4 13.605c0 .512-.068 1.02-.2 1.522a.5.5 0 01-.966-.254c.11-.42.166-.843.166-1.268 0-3.349-3.339-6.105-7.5-6.105s-7.5 2.756-7.5 6.105c0 .281.074.964.137 1.304a.5.5 0 11-.984.182 10.96 10.96 0 01-.153-1.486c0-3.948 3.824-7.105 8.5-7.105s8.5 3.157 8.5 7.105z" fill="#737373"></path>
+                    </svg>
+                  )}
+                  {user && (
+                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border border-white" />
+                  )}
+                </span>
               </span>
-              <span className={`relative text-[10px] leading-3 font-normal ${user ? 'text-blue-600 font-semibold' : 'text-[#737373]'}`}>
+              <span className={`relative text-[9.5px] leading-tight font-normal ${user ? 'text-blue-600 font-semibold' : 'text-[#737373]'}`}>
                 {user ? (user.name ? user.name.split(' ')[0] : 'Akun') : 'Akun Saya'}
               </span>
             </a>

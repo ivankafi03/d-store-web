@@ -873,86 +873,54 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
     setTimeout(() => { dragDistBrands.current = 0; }, 50);
   };
 
-  // Bubble list pointer drag & scroll support
+  // Reusable window-level drag-to-scroll handler for carousels & bubbles
+  const startDragScroll = (e, targetRef, distRef) => {
+    if (e.button !== 0) return; // Only primary mouse button
+    const container = targetRef.current;
+    if (!container) return;
+
+    distRef.current = 0;
+    const startX = e.pageX;
+    const startScrollLeft = container.scrollLeft;
+    let isMoving = false;
+
+    const onMouseMove = (moveEvent) => {
+      const deltaX = moveEvent.pageX - startX;
+      distRef.current = Math.abs(deltaX);
+
+      // Once moved beyond 3px, engage drag mode and stop text selection/native drag
+      if (distRef.current > 3) {
+        isMoving = true;
+        moveEvent.preventDefault();
+        container.scrollLeft = startScrollLeft - deltaX;
+      }
+    };
+
+    const onMouseUp = () => {
+      window.removeEventListener('mousemove', onMouseMove);
+      window.removeEventListener('mouseup', onMouseUp);
+      if (isMoving) {
+        setTimeout(() => {
+          distRef.current = 0;
+        }, 120);
+      } else {
+        distRef.current = 0;
+      }
+    };
+
+    window.addEventListener('mousemove', onMouseMove, { passive: false });
+    window.addEventListener('mouseup', onMouseUp);
+  };
+
+  // Drag refs
   const bubblesListRef = useRef(null);
-  const isDraggingBubbles = useRef(false);
-  const startXBubbles = useRef(0);
-  const scrollStartBubbles = useRef(0);
   const dragDistBubbles = useRef(0);
 
-  const onBubblesPointerDown = (e) => {
-    isDraggingBubbles.current = true;
-    startXBubbles.current = e.pageX || e.clientX;
-    scrollStartBubbles.current = bubblesListRef.current?.scrollLeft || 0;
-    dragDistBubbles.current = 0;
-  };
-
-  const onBubblesPointerMove = (e) => {
-    if (!isDraggingBubbles.current || !bubblesListRef.current) return;
-    const x = e.pageX || e.clientX;
-    const walk = (x - startXBubbles.current) * 1.4;
-    dragDistBubbles.current = Math.abs(walk);
-    bubblesListRef.current.scrollLeft = scrollStartBubbles.current - walk;
-  };
-
-  const onBubblesPointerUp = () => {
-    isDraggingBubbles.current = false;
-    setTimeout(() => { dragDistBubbles.current = 0; }, 60);
-  };
-
-  // Top Tier recommendation product carousel drag & scroll support
   const topTierListRef = useRef(null);
-  const isDraggingTopTier = useRef(false);
-  const startXTopTier = useRef(0);
-  const scrollStartTopTier = useRef(0);
   const dragDistTopTier = useRef(0);
 
-  const onTopTierPointerDown = (e) => {
-    isDraggingTopTier.current = true;
-    startXTopTier.current = e.pageX || e.clientX;
-    scrollStartTopTier.current = topTierListRef.current?.scrollLeft || 0;
-    dragDistTopTier.current = 0;
-  };
-
-  const onTopTierPointerMove = (e) => {
-    if (!isDraggingTopTier.current || !topTierListRef.current) return;
-    const x = e.pageX || e.clientX;
-    const walk = x - startXTopTier.current;
-    dragDistTopTier.current = Math.abs(walk);
-    topTierListRef.current.scrollLeft = scrollStartTopTier.current - walk;
-  };
-
-  const onTopTierPointerUp = () => {
-    isDraggingTopTier.current = false;
-    setTimeout(() => { dragDistTopTier.current = 0; }, 50);
-  };
-
-  // Just For You recommendation product carousel drag & scroll support
   const justForYouListRef = useRef(null);
-  const isDraggingJustForYou = useRef(false);
-  const startXJustForYou = useRef(0);
-  const scrollStartJustForYou = useRef(0);
   const dragDistJustForYou = useRef(0);
-
-  const onJustForYouPointerDown = (e) => {
-    isDraggingJustForYou.current = true;
-    startXJustForYou.current = e.pageX || e.clientX;
-    scrollStartJustForYou.current = justForYouListRef.current?.scrollLeft || 0;
-    dragDistJustForYou.current = 0;
-  };
-
-  const onJustForYouPointerMove = (e) => {
-    if (!isDraggingJustForYou.current || !justForYouListRef.current) return;
-    const x = e.pageX || e.clientX;
-    const walk = x - startXJustForYou.current;
-    dragDistJustForYou.current = Math.abs(walk);
-    justForYouListRef.current.scrollLeft = scrollStartJustForYou.current - walk;
-  };
-
-  const onJustForYouPointerUp = () => {
-    isDraggingJustForYou.current = false;
-    setTimeout(() => { dragDistJustForYou.current = 0; }, 50);
-  };
 
   const formatRupiah = (num) => 'Rp ' + Number(num || 0).toLocaleString('id-ID');
 
@@ -2245,12 +2213,10 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       <section className="max-w-[1240px] mx-auto px-4 py-3 sm:py-5">
         <div 
           ref={bubblesListRef}
-          onTouchStart={() => { dragDistBubbles.current = 0; }}
-          onMouseDown={onBubblesPointerDown}
-          onMouseMove={onBubblesPointerMove}
-          onMouseUp={onBubblesPointerUp}
-          onMouseLeave={onBubblesPointerUp}
+          onMouseDown={(e) => startDragScroll(e, bubblesListRef, dragDistBubbles)}
+          onDragStart={(e) => e.preventDefault()}
           className="flex items-center gap-3 sm:gap-5 overflow-x-auto no-scrollbar py-1 cursor-grab active:cursor-grabbing select-none"
+          style={{ touchAction: 'pan-y' }}
         >
           {bubbleList.map((bubble, i) => (
             <div
@@ -2288,7 +2254,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                   <img
                     src={bubble.img}
                     alt={bubble.label}
-                    className="w-full h-full object-contain group-hover:scale-105 transition duration-300"
+                    draggable={false}
+                    className="w-full h-full object-contain pointer-events-none group-hover:scale-105 transition duration-300"
                     loading="lazy"
                   />
                 </div>
@@ -2545,14 +2512,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             <div className="cls-relative relative">
               <div 
                 ref={topTierListRef}
-                onTouchStart={() => { dragDistTopTier.current = 0; }}
-                onMouseDown={onTopTierPointerDown}
-                onMouseMove={onTopTierPointerMove}
-                onMouseUp={onTopTierPointerUp}
-                onMouseLeave={onTopTierPointerUp}
-                className="product-list__wrapper flex overflow-x-auto gap-2 sm:gap-2.5 pb-3 no-scrollbar cursor-grab active:cursor-grabbing" 
+                onMouseDown={(e) => startDragScroll(e, topTierListRef, dragDistTopTier)}
+                onDragStart={(e) => e.preventDefault()}
+                className="product-list__wrapper flex overflow-x-auto gap-2 sm:gap-2.5 pb-3 no-scrollbar cursor-grab active:cursor-grabbing select-none" 
                 id="grid" 
-                style={{ justifyContent: 'unset' }}
+                style={{ justifyContent: 'unset', touchAction: 'pan-y' }}
               >
                 {topTierProducts.map((prod, idx) => {
                   const isWishlisted = wishlist.includes(prod.sku || prod.id);
@@ -3152,17 +3116,15 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             <div className="cls-relative relative">
               <div
                 ref={justForYouListRef}
-                onTouchStart={() => { dragDistJustForYou.current = 0; }}
-                onMouseDown={onJustForYouPointerDown}
-                onMouseMove={onJustForYouPointerMove}
-                onMouseUp={onJustForYouPointerUp}
-                onMouseLeave={onJustForYouPointerUp}
-                className="product-list__wrapper flex gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing pb-4"
+                onMouseDown={(e) => startDragScroll(e, justForYouListRef, dragDistJustForYou)}
+                onDragStart={(e) => e.preventDefault()}
+                className="product-list__wrapper flex gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing pb-4 select-none"
                 id="grid"
                 style={{
                   justifyContent: 'unset',
                   WebkitOverflowScrolling: 'touch',
-                  scrollbarWidth: 'none'
+                  scrollbarWidth: 'none',
+                  touchAction: 'pan-y'
                 }}
               >
                 {justForYouProducts.map((prod, idx) => {

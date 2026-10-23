@@ -109,9 +109,16 @@ body {
   overflow-x: auto;
   -ms-overflow-style: none;
   scrollbar-width: none;
-  scroll-snap-type: x mandatory;
+  scroll-snap-type: none !important;
+  scroll-behavior: auto;
+  touch-action: pan-y;
+  -webkit-overflow-scrolling: touch;
   gap: 12px;
   padding-bottom: 8px;
+}
+.product-list__wrapper * {
+  -webkit-user-drag: none;
+  user-drag: none;
 }
 .product-list__wrapper::-webkit-scrollbar {
   display: none;
@@ -237,7 +244,7 @@ body {
 }
 .product-item__wrapper {
   text-align: left;
-  scroll-snap-align: start;
+  scroll-snap-align: none !important;
   background-color: #ffffff;
   border-radius: 12px;
   flex-direction: column;

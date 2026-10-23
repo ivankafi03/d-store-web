@@ -873,6 +873,32 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
     setTimeout(() => { dragDistBrands.current = 0; }, 50);
   };
 
+  // Handle touch events on mobile to cleanly differentiate between swipe/scroll vs tap/click
+  const onTouchStartCapture = (e, distRef) => {
+    if (!e.touches || !e.touches[0]) return;
+    distRef.startX = e.touches[0].clientX;
+    distRef.startY = e.touches[0].clientY;
+    distRef.current = 0;
+  };
+
+  const onTouchMoveCapture = (e, distRef) => {
+    if (!e.touches || !e.touches[0] || distRef.startX === undefined) return;
+    const deltaX = Math.abs(e.touches[0].clientX - distRef.startX);
+    distRef.current = deltaX;
+  };
+
+  const onTouchEndCapture = (distRef) => {
+    distRef.startX = undefined;
+    distRef.startY = undefined;
+    if (distRef.current > 6) {
+      setTimeout(() => {
+        distRef.current = 0;
+      }, 150);
+    } else {
+      distRef.current = 0;
+    }
+  };
+
   // Handle mouse wheel over horizontal lists (mouse desktop support)
   const handleHorizontalWheel = (e, targetRef) => {
     const container = targetRef.current;
@@ -2232,14 +2258,17 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       {/* =========================================================
           4. BUBBLE LIST / KATEGORI APLIKASI CEPAT (RESPONSIF SEMUA LAYAR)
       ========================================================= */}
-      <section className="max-w-[1240px] mx-auto px-4 py-3 sm:py-5">
-        <div className="relative group">
+      <section className="max-w-[1240px] mx-auto px-4 py-3 sm:py-5 w-full overflow-hidden">
+        <div className="relative group w-full">
           <div 
             ref={bubblesListRef}
             onPointerDown={(e) => startDragScroll(e, bubblesListRef, dragDistBubbles)}
+            onTouchStart={(e) => onTouchStartCapture(e, dragDistBubbles)}
+            onTouchMove={(e) => onTouchMoveCapture(e, dragDistBubbles)}
+            onTouchEnd={() => onTouchEndCapture(dragDistBubbles)}
             onWheel={(e) => handleHorizontalWheel(e, bubblesListRef)}
             onDragStart={(e) => e.preventDefault()}
-            className="flex items-center gap-3 sm:gap-5 overflow-x-auto no-scrollbar py-1 cursor-grab active:cursor-grabbing select-none"
+            className="bubble-list__wrapper flex items-center gap-3 sm:gap-5 overflow-x-auto no-scrollbar py-1 pr-8 sm:pr-12 cursor-grab active:cursor-grabbing select-none w-full max-w-full min-w-0"
             style={{ touchAction: 'pan-x pan-y', WebkitOverflowScrolling: 'touch' }}
           >
             {bubbleList.map((bubble, i) => (
@@ -2272,9 +2301,10 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                 className={`flex flex-col items-center gap-1.5 shrink-0 group cursor-pointer w-[64px] sm:w-[76px] md:w-[84px] text-center select-none relative ${
                   isEditMode ? 'ring-2 ring-blue-500/80 rounded-full' : ''
                 }`}
+                style={{ touchAction: 'pan-x pan-y' }}
               >
-                <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-[72px] md:h-[72px] rounded-full p-0.5 bg-gradient-to-tr from-zinc-200 via-zinc-300 to-zinc-400 group-hover:from-black group-hover:to-zinc-600 transition shadow-xs">
-                  <div className="w-full h-full rounded-full bg-white p-1 overflow-hidden flex items-center justify-center">
+                <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-[72px] md:h-[72px] rounded-full p-0.5 bg-gradient-to-tr from-zinc-200 via-zinc-300 to-zinc-400 group-hover:from-black group-hover:to-zinc-600 transition shadow-xs pointer-events-none">
+                  <div className="w-full h-full rounded-full bg-white p-1 overflow-hidden flex items-center justify-center pointer-events-none">
                     <img
                       src={bubble.img}
                       alt={bubble.label}
@@ -2284,11 +2314,13 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     />
                   </div>
                 </div>
-                <span className="text-[10px] sm:text-[11px] font-semibold text-[#262626] group-hover:text-black line-clamp-1 leading-tight">
+                <span className="text-[10px] sm:text-[11px] font-semibold text-[#262626] group-hover:text-black line-clamp-1 leading-tight pointer-events-none">
                   {bubble.label}
                 </span>
               </div>
             ))}
+            {/* Spacer trailing agar scroll kategori bubble di HP bisa sampai mentok dengan leluasa */}
+            <div className="shrink-0 w-12 sm:w-20 h-1 pointer-events-none" aria-hidden="true" />
           </div>
 
           {/* Tombol Geser Kiri (Desktop) */}
@@ -2566,9 +2598,12 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
               <div 
                 ref={topTierListRef}
                 onPointerDown={(e) => startDragScroll(e, topTierListRef, dragDistTopTier)}
+                onTouchStart={(e) => onTouchStartCapture(e, dragDistTopTier)}
+                onTouchMove={(e) => onTouchMoveCapture(e, dragDistTopTier)}
+                onTouchEnd={() => onTouchEndCapture(dragDistTopTier)}
                 onWheel={(e) => handleHorizontalWheel(e, topTierListRef)}
                 onDragStart={(e) => e.preventDefault()}
-                className="product-list__wrapper flex overflow-x-auto gap-2 sm:gap-2.5 pb-3 no-scrollbar cursor-grab active:cursor-grabbing select-none" 
+                className="product-list__wrapper flex overflow-x-auto gap-2 sm:gap-2.5 pb-3 pr-8 sm:pr-12 no-scrollbar cursor-grab active:cursor-grabbing select-none w-full max-w-full min-w-0" 
                 id="grid" 
                 style={{ justifyContent: 'unset', touchAction: 'pan-x pan-y', WebkitOverflowScrolling: 'touch' }}
               >
@@ -2580,6 +2615,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                       className={`product-item__wrapper shrink-0 w-[145px] sm:w-[175px] md:w-[210px] bg-white rounded-lg p-2 md:p-2.5 flex flex-col justify-between border border-zinc-100 hover:shadow-xs transition select-none cursor-pointer relative ${
                         isEditMode ? 'ring-2 ring-blue-500/80 hover:ring-blue-400' : ''
                       }`}
+                      style={{ touchAction: 'pan-x pan-y' }}
                       data-sku={prod.sku}
                       onClick={() => {
                         if (dragDistTopTier.current > 5) return;
@@ -2724,6 +2760,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     </div>
                   );
                 })}
+                {/* Spacer trailing agar carousel Just For You di HP bisa di-slide sampai mentok */}
+                <div className="shrink-0 w-12 sm:w-20 h-1 pointer-events-none" aria-hidden="true" />
               </div>
 
               {/* Zalora Right Control Button */}
@@ -3171,9 +3209,12 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
               <div
                 ref={justForYouListRef}
                 onPointerDown={(e) => startDragScroll(e, justForYouListRef, dragDistJustForYou)}
+                onTouchStart={(e) => onTouchStartCapture(e, dragDistJustForYou)}
+                onTouchMove={(e) => onTouchMoveCapture(e, dragDistJustForYou)}
+                onTouchEnd={() => onTouchEndCapture(dragDistJustForYou)}
                 onWheel={(e) => handleHorizontalWheel(e, justForYouListRef)}
                 onDragStart={(e) => e.preventDefault()}
-                className="product-list__wrapper flex gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing pb-4 select-none"
+                className="product-list__wrapper flex gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing pb-4 pr-8 sm:pr-12 select-none w-full max-w-full min-w-0"
                 id="grid"
                 style={{
                   justifyContent: 'unset',
@@ -3190,6 +3231,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                       className={`product-item__wrapper shrink-0 w-[140px] sm:w-[170px] md:w-[200px] flex flex-col bg-white rounded-lg select-none relative ${
                         isEditMode ? 'ring-2 ring-blue-500/80 hover:ring-blue-400' : ''
                       }`}
+                      style={{ touchAction: 'pan-x pan-y' }}
                       data-sku={prod.sku}
                     >
                       {isEditMode && (
@@ -3252,6 +3294,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                           href="#"
                           onClick={(e) => {
                             e.preventDefault();
+                            if (dragDistJustForYou.current > 5) return;
                             dragDistJustForYou.current = 0;
                             if (isEditMode) {
                               setVisualEditingItem({
@@ -3393,6 +3436,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     </div>
                   );
                 })}
+                {/* Spacer trailing agar carousel Just For You di HP bisa di-slide sampai mentok */}
+                <div className="shrink-0 w-12 sm:w-20 h-1 pointer-events-none" aria-hidden="true" />
               </div>
 
               {/* Zalora Right Control Button */}

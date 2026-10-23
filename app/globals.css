@@ -117,10 +117,33 @@ body {
   padding-bottom: 8px;
 }
 .product-list__wrapper * {
+  touch-action: pan-x pan-y !important;
   -webkit-user-drag: none;
   user-drag: none;
 }
 .product-list__wrapper::-webkit-scrollbar {
+  display: none;
+}
+
+/* Kategori bubble horizontal list mobile touch scrolling */
+.bubble-list__wrapper {
+  display: flex;
+  overflow-x: auto;
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+  scroll-snap-type: none !important;
+  scroll-behavior: auto;
+  touch-action: pan-x pan-y !important;
+  -webkit-overflow-scrolling: touch;
+  -webkit-user-select: none;
+  user-select: none;
+}
+.bubble-list__wrapper * {
+  touch-action: pan-x pan-y !important;
+  -webkit-user-drag: none;
+  user-drag: none;
+}
+.bubble-list__wrapper::-webkit-scrollbar {
   display: none;
 }
 /* Zalora Carousel Control Buttons (Exact Zalora Indonesia CSS) */

@@ -5,6 +5,16 @@ import {
   createUserSessionToken 
 } from '@/lib/userAuth';
 
+function sanitizeReturnTo(url) {
+  if (!url || typeof url !== 'string') return '/store';
+  const trimmed = url.trim();
+  // Hanya izinkan path relatif internal lokal, cegah protocol-relative (//) atau skema luar (http:, javascript:, dll)
+  if (trimmed.startsWith('/') && !trimmed.startsWith('//') && !trimmed.includes('://')) {
+    return trimmed;
+  }
+  return '/store';
+}
+
 export async function GET(request) {
   const { searchParams } = new URL(request.url);
   const code = searchParams.get('code');
@@ -15,7 +25,7 @@ export async function GET(request) {
   if (stateRaw) {
     try {
       const parsed = JSON.parse(Buffer.from(stateRaw, 'base64url').toString('utf-8'));
-      if (parsed?.returnTo) returnTo = parsed.returnTo;
+      if (parsed?.returnTo) returnTo = sanitizeReturnTo(parsed.returnTo);
     } catch (e) {}
   }
 

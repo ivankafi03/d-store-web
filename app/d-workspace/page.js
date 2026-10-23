@@ -1,7 +1,7 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { USER_COOKIE_NAME, verifyUserSessionToken, findUserByEmail, getAllUsers } from '@/lib/userAuth';
-import { getDb } from '@/lib/db';
+import { USER_COOKIE_NAME, verifyUserSessionToken, findUserByEmail, getAllUsers, pullUsersFromGoogleSheet } from '@/lib/userAuth';
+import { getDb, pullNotesFromGoogleSheet } from '@/lib/db';
 import WorkspaceClient from './WorkspaceClient';
 
 export const dynamic = 'force-dynamic';
@@ -21,17 +21,21 @@ export default async function WorkspacePage() {
     redirect('/store');
   }
 
-  const allUsers = getAllUsers();
-  const registeredUsers = allUsers.map(u => ({
-    id: u.id,
-    email: u.email,
-    name: u.name,
-    role: u.role,
-    tier: u.tier,
-    phone: u.phone || ''
-  }));
+  let db = getDb();
+  // Jika catatan pelanggan kosong (misal baru deploy atau cold-start Vercel), pulihkan otomatis dari cloud Google Sheets
+  if (!db.customerNotes || db.customerNotes.length === 0) {
+    try {
+      await Promise.allSettled([
+        pullNotesFromGoogleSheet(),
+        pullUsersFromGoogleSheet()
+      ]);
+      db = getDb(true);
+    } catch (e) {
+      console.warn('[WorkspacePage Cloud Sync Error]', e);
+    }
+  }
 
-  const db = getDb();
+  const allUsers = getAllUsers();
   const initialData = {
     products: db.products || [],
     variants: db.variants || [],

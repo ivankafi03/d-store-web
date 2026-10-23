@@ -7,9 +7,10 @@ import {
   getAllUsers, 
   saveAllUsers, 
   findUserByEmail,
-  syncCustomerNoteToUserOrder
+  syncCustomerNoteToUserOrder,
+  pushUsersToGoogleSheet
 } from '@/lib/userAuth';
-import { getDb, saveDb } from '@/lib/db';
+import { getDb, saveDb, pushNotesToGoogleSheet } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
 
@@ -47,7 +48,20 @@ export async function GET(request) {
     const isAdmin = isAuthenticatedRequest(request);
 
     const { searchParams } = new URL(request.url);
-    const emailQuery = searchParams.get('email');
+    const emailQuery = (searchParams.get('email') || '').toLowerCase().trim();
+
+    // Proteksi Keamanan (Cegah IDOR):
+    // Pengguna biasa HANYA bisa mengakses pesanannya sendiri dan WAJIB memiliki sesi login yang sah.
+    if (!isAdmin) {
+      if (!session || !session.email) {
+        return NextResponse.json({ ok: false, error: 'Silakan login terlebih dahulu untuk melihat pesanan Anda.' }, { status: 401 });
+      }
+      const sessionEmail = session.email.toLowerCase().trim();
+      if (emailQuery && emailQuery !== sessionEmail) {
+        return NextResponse.json({ ok: false, error: 'Akses ditolak. Anda tidak berhak melihat pesanan akun lain.' }, { status: 403 });
+      }
+    }
+
     const targetEmail = (emailQuery || session?.email || '').toLowerCase().trim();
 
     if (!targetEmail) {
@@ -212,8 +226,9 @@ export async function POST(request) {
       });
     }
 
-    // Simpan ke Buku Catatan Seller
+    // Simpan ke Buku Catatan Seller & sync ke Google Sheets permanen
     saveDb(db);
+    pushNotesToGoogleSheet(db.customerNotes).catch(() => {});
 
     // 3. Catat ke Profil Pembeli (data/users.json)
     const newOrder = {
@@ -244,6 +259,7 @@ export async function POST(request) {
         }
         users[userIndex].points = (users[userIndex].points || 0) + 100;
         saveAllUsers(users);
+        pushUsersToGoogleSheet(users).catch(() => {});
       }
     }
 

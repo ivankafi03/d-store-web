@@ -4,6 +4,14 @@ import { isAuthenticatedRequest } from '@/lib/auth';
 import { getAllUsers, syncCustomerNoteToUserOrder, deleteUserByEmail, pushUsersToGoogleSheet, pullUsersFromGoogleSheet } from '@/lib/userAuth';
 
 export async function GET(request) {
+  const isAuth = isAuthenticatedRequest(request);
+  const host = request?.headers?.get('host') || '';
+  const isLocalOrDev = process.env.NODE_ENV !== 'production' && (host.includes('localhost') || host.includes('192.168.') || host.includes('127.0.0.1'));
+
+  if (!isAuth && !isLocalOrDev) {
+    return NextResponse.json({ status: 'error', message: 'Akses ditolak. Sesi admin diperlukan.' }, { status: 401 });
+  }
+
   let db = getDb(true);
 
   // Jika customerNotes kosong (misal baru deploy di Vercel) atau ada parameter pull_cloud=1,

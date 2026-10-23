@@ -1,7 +1,7 @@
 import { NextResponse } from 'next/server';
 import { getDb, saveDb, pushToGoogleSheet, standardizeDuration } from '@/lib/db';
 import { isAuthenticatedRequest } from '@/lib/auth';
-import { getAllUsers, syncCustomerNoteToUserOrder } from '@/lib/userAuth';
+import { getAllUsers, syncCustomerNoteToUserOrder, deleteUserByEmail } from '@/lib/userAuth';
 
 export async function GET() {
   const db = getDb(true);
@@ -718,19 +718,57 @@ export async function POST(request) {
     if (action === 'delete_customer_note') {
       const { id } = body;
       if (!Array.isArray(db.customerNotes)) db.customerNotes = [];
+      if (!Array.isArray(db.deletedNoteIds)) db.deletedNoteIds = [];
       const targetNote = db.customerNotes.find(n => n.id === id);
+
+      if (id && !db.deletedNoteIds.includes(id)) {
+        db.deletedNoteIds.push(id);
+      }
+      if (targetNote?.orderId && !db.deletedNoteIds.includes(targetNote.orderId)) {
+        db.deletedNoteIds.push(targetNote.orderId);
+      }
+
       db.customerNotes = db.customerNotes.filter(n => n.id !== id);
       saveDb(db);
 
-      if (targetNote) {
-        try {
-          syncCustomerNoteToUserOrder(targetNote, 'delete');
-        } catch (syncErr) {
-          console.warn('[Sync Customer Note Delete Error]', syncErr.message);
-        }
+      try {
+        syncCustomerNoteToUserOrder(targetNote || { id }, 'delete');
+      } catch (syncErr) {
+        console.warn('[Sync Customer Note Delete Error]', syncErr.message);
       }
 
-      return NextResponse.json({ status: 'ok', customerNotes: db.customerNotes });
+      return NextResponse.json({ 
+        status: 'ok', 
+        customerNotes: db.customerNotes,
+        deletedNoteIds: db.deletedNoteIds 
+      });
+    }
+
+    if (action === 'delete_user') {
+      const { email } = body;
+      const cleanEmail = (email || '').toLowerCase().trim();
+      if (!cleanEmail) {
+        return NextResponse.json({ status: 'error', message: 'Email pengguna diperlukan' }, { status: 400 });
+      }
+      if (cleanEmail === 'ivankafipradana@gmail.com') {
+        return NextResponse.json({ status: 'error', message: 'Akun Owner tidak dapat dihapus' }, { status: 403 });
+      }
+
+      const success = deleteUserByEmail(cleanEmail);
+      const remainingUsers = getAllUsers(true);
+      return NextResponse.json({
+        status: 'ok',
+        success,
+        registeredUsers: remainingUsers.map(u => ({
+          id: u.id,
+          email: u.email,
+          name: u.name,
+          role: u.role,
+          tier: u.tier,
+          phone: u.phone || ''
+        })),
+        customerNotes: db.customerNotes || []
+      });
     }
 
     if (action === 'clear_expired_notes') {

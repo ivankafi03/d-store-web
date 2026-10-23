@@ -1004,11 +1004,48 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
       });
       const data = await res.json();
       if (data.status === 'ok') {
-        if (data.customerNotes) setCustomerNotes(data.customerNotes);
+        if (data.customerNotes) {
+          setCustomerNotes(data.customerNotes);
+        } else {
+          setCustomerNotes(prev => prev.filter(n => n.id !== noteId));
+        }
         showToast('Catatan dihapus.');
+      } else {
+        showToast(data.message || 'Gagal menghapus catatan', 'error');
       }
     } catch (err) {
       showToast('Gagal menghapus catatan', 'error');
+    }
+  };
+
+  // Hapus Akun Pembeli Terdaftar
+  const handleDeleteUser = async (email, name) => {
+    if (!email) return;
+    if (email.toLowerCase().trim() === 'ivankafipradana@gmail.com') {
+      showToast('Akun Owner tidak dapat dihapus', 'error');
+      return;
+    }
+    if (!confirm(`Hapus akun pembeli "${name || email}" beserta seluruh catatan pesanannya secara permanen?`)) return;
+
+    try {
+      const res = await fetch('/api/products', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          action: 'delete_user',
+          email
+        })
+      });
+      const data = await res.json();
+      if (data.status === 'ok') {
+        if (data.registeredUsers) setRegisteredUsers(data.registeredUsers);
+        if (data.customerNotes) setCustomerNotes(data.customerNotes);
+        showToast(`Akun ${email} berhasil dihapus.`);
+      } else {
+        showToast(data.message || 'Gagal menghapus akun', 'error');
+      }
+    } catch (err) {
+      showToast('Gagal menghapus akun', 'error');
     }
   };
 
@@ -3050,9 +3087,24 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
                         </option>
                       ))}
                     </select>
-                    <p className="text-[10px] text-zinc-400">
-                      Pesanan akan otomatis langsung tercatat di profil &amp; menu Pesanan akun ini.
-                    </p>
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="text-[10px] text-zinc-400">
+                        Pesanan akan otomatis langsung tercatat di profil &amp; menu Pesanan akun ini.
+                      </p>
+                      {newNoteForm.customerEmail && newNoteForm.customerEmail !== 'ivankafipradana@gmail.com' && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const u = registeredUsers.find(x => x.email.toLowerCase() === newNoteForm.customerEmail.toLowerCase());
+                            handleDeleteUser(newNoteForm.customerEmail, u?.name);
+                            setNewNoteForm(prev => ({ ...prev, customerEmail: '' }));
+                          }}
+                          className="text-[10px] text-rose-400 hover:text-rose-300 hover:underline flex items-center gap-1 cursor-pointer shrink-0"
+                        >
+                          <Trash2 className="w-3 h-3" /> Hapus Akun Ini
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ) : (
                   <div className="space-y-1">
@@ -3446,9 +3498,24 @@ export default function WorkspaceClient({ initialAuth = false, initialData = {} 
                         </option>
                       ))}
                     </select>
-                    <p className="text-[10px] text-zinc-400">
-                      Pesanan tersambung ke profil &amp; menu Pesanan akun ini.
-                    </p>
+                    <div className="flex items-center justify-between gap-2">
+                      <p className="text-[10px] text-zinc-400">
+                        Pesanan tersambung ke profil &amp; menu Pesanan akun ini.
+                      </p>
+                      {editingNote.customerEmail && editingNote.customerEmail !== 'ivankafipradana@gmail.com' && (
+                        <button
+                          type="button"
+                          onClick={() => {
+                            const u = registeredUsers.find(x => x.email.toLowerCase() === editingNote.customerEmail.toLowerCase());
+                            handleDeleteUser(editingNote.customerEmail, u?.name);
+                            setEditingNote(prev => ({ ...prev, customerEmail: '' }));
+                          }}
+                          className="text-[10px] text-rose-400 hover:text-rose-300 hover:underline flex items-center gap-1 cursor-pointer shrink-0"
+                        >
+                          <Trash2 className="w-3 h-3" /> Hapus Akun Ini
+                        </button>
+                      )}
+                    </div>
                   </div>
                 ) : (
                   <div className="space-y-1">

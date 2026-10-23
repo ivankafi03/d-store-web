@@ -54,11 +54,19 @@ export async function GET(request) {
       return NextResponse.json({ ok: false, error: 'Email pembeli diperlukan' }, { status: 400 });
     }
 
-    // Sinkronisasi otomatis dari db.customerNotes jika ada catatan untuk targetEmail ini
+    const db = getDb();
+    const deletedNoteIds = Array.isArray(db?.deletedNoteIds) ? db.deletedNoteIds : [];
+    const deletedUserEmails = Array.isArray(db?.deletedUserEmails) ? db.deletedUserEmails : [];
+
+    if (deletedUserEmails.includes(targetEmail)) {
+      return NextResponse.json({ ok: true, orders: [] });
+    }
+
+    // Sinkronisasi otomatis dari db.customerNotes jika ada catatan untuk targetEmail ini (kecuali yang sudah dihapus)
     try {
-      const db = getDb();
-      if (Array.isArray(db.customerNotes)) {
+      if (Array.isArray(db?.customerNotes)) {
         const matchingNotes = db.customerNotes.filter(n => {
+          if (deletedNoteIds.includes(n.id) || deletedNoteIds.includes(n.orderId)) return false;
           const cEmail = (n.customerEmail || '').toLowerCase().trim();
           if (cEmail && cEmail === targetEmail) return true;
           if (n.accountDetails && n.accountDetails.toLowerCase().includes(targetEmail)) return true;
@@ -72,14 +80,33 @@ export async function GET(request) {
       console.warn('[Sync Customer Notes on Orders GET Error]', syncErr.message);
     }
 
-    const user = findUserByEmail(targetEmail);
-    if (!user) {
+    const allUsers = getAllUsers(true);
+    const userIndex = allUsers.findIndex(u => u.email.toLowerCase() === targetEmail);
+    if (userIndex === -1) {
       return NextResponse.json({ ok: true, orders: [] });
+    }
+
+    const user = allUsers[userIndex];
+    let userOrders = Array.isArray(user.orders) ? user.orders : [];
+
+    // Filter keluar setiap pesanan yang ID atau noteId-nya ada di deletedNoteIds
+    if (deletedNoteIds.length > 0) {
+      const initialCount = userOrders.length;
+      userOrders = userOrders.filter(o => 
+        !deletedNoteIds.includes(o.id) && 
+        !deletedNoteIds.includes(o.noteId) &&
+        !o.items?.some(it => deletedNoteIds.includes(it.noteId) || deletedNoteIds.includes(it.id))
+      );
+      if (userOrders.length !== initialCount) {
+        user.orders = userOrders;
+        allUsers[userIndex] = user;
+        saveAllUsers(allUsers);
+      }
     }
 
     return NextResponse.json({
       ok: true,
-      orders: user.orders || []
+      orders: userOrders
     });
   } catch (err) {
     console.error('[API Orders GET Error]', err);

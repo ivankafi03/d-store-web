@@ -1893,9 +1893,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       )}
 
       {/* =========================================================
-          3A. HERO MOBILE — ZALORA-STYLE DRAGGABLE CAROUSEL (3 SLIDES)
+          3. HERO UNIVERSAL (DESKTOP & MOBILE) — 3 SLIDES DRAGGABLE CAROUSEL
       ========================================================= */}
-      <div className="md:hidden w-full relative select-none">
+      <div className="w-full relative select-none bg-[#141414]">
 
         {/* Carousel Container — snap-x with desktop mouse drag & mobile touch swipe */}
         <div
@@ -1910,7 +1910,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
         >
 
           {/* === SLIDE 1: Hero Banner Utama (Boss with Open Briefcase & Product Slider) === */}
-          <div className="shrink-0 w-full min-w-full snap-start relative bg-[#141414] overflow-hidden" style={{ height: '480px' }}>
+          <div className="shrink-0 w-full min-w-full snap-start relative bg-[#141414] overflow-hidden h-[460px] sm:h-[520px] md:h-[580px] lg:h-[620px]">
             {/* Top region: Model Photo & Flash Sale graphic */}
             <div 
               className={`relative w-full h-full overflow-hidden ${
@@ -1961,20 +1961,20 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             </div>
 
             {/* Bottom region: Mini product cards directly inside the dark hero base */}
-            <div className="absolute bottom-0 inset-x-0 z-30 pb-3.5 pt-1 bg-gradient-to-t from-black via-black/85 to-transparent">
+            <div className="absolute bottom-0 inset-x-0 z-30 pb-3.5 pt-4 bg-gradient-to-t from-black via-black/85 to-transparent">
               <div
                 ref={heroSliderRef}
                 onMouseDown={onMiniPointerDown}
                 onMouseMove={onMiniPointerMove}
                 onMouseUp={onMiniPointerUp}
                 onMouseLeave={onMiniPointerUp}
-                className="flex w-auto gap-2 overflow-x-auto pb-1 px-3 scrollbar-thin scrollbar-track-transparent no-scrollbar cursor-grab active:cursor-grabbing"
+                className="flex w-auto gap-2.5 sm:gap-3.5 overflow-x-auto pb-1 px-3 sm:px-6 max-w-[1240px] mx-auto scrollbar-thin scrollbar-track-transparent no-scrollbar cursor-grab active:cursor-grabbing"
                 style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none' }}
               >
                 {heroCarouselItems.map((item) => (
                   <div
                     key={item.id}
-                    className={`flex-none rounded-lg w-[24vw] tablet:w-[14vw] bg-white cursor-pointer select-none active:scale-95 transition relative ${
+                    className={`flex-none rounded-xl w-[26vw] sm:w-[130px] md:w-[145px] lg:w-[160px] bg-white cursor-pointer select-none active:scale-95 transition relative shadow-md ${
                       isEditMode ? 'ring-2 ring-blue-500/80 hover:ring-blue-400' : ''
                     }`}
                     onClick={(e) => {
@@ -2039,7 +2039,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           </div>
 
           {/* === SLIDE 2: Netflix Premium Hero Banner (Full Banner Utuh) === */}
-          <div className="shrink-0 w-full min-w-full snap-start relative bg-[#141414] overflow-hidden" style={{ height: '480px' }}>
+          <div className="shrink-0 w-full min-w-full snap-start relative bg-[#141414] overflow-hidden h-[460px] sm:h-[520px] md:h-[580px] lg:h-[620px]">
             <div 
               className={`relative w-full h-full overflow-hidden ${
                 isEditMode ? 'ring-2 ring-blue-500/80 cursor-pointer' : ''
@@ -2098,7 +2098,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           </div>
 
           {/* === SLIDE 3: YouTube Premium Hero Banner (Full Banner Utuh) === */}
-          <div className="shrink-0 w-full min-w-full snap-start relative bg-[#141414] overflow-hidden" style={{ height: '480px' }}>
+          <div className="shrink-0 w-full min-w-full snap-start relative bg-[#141414] overflow-hidden h-[460px] sm:h-[520px] md:h-[580px] lg:h-[620px]">
             <div 
               className={`relative w-full h-full overflow-hidden ${
                 isEditMode ? 'ring-2 ring-blue-500/80 cursor-pointer' : ''
@@ -2178,28 +2178,30 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           <button
             type="button"
             onClick={() => goToHeroBigSlide(heroBigIndex - 1)}
-            className="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-xs transition cursor-pointer"
+            className="absolute left-2 md:left-4 top-1/2 -translate-y-1/2 z-30 w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-xs transition cursor-pointer shadow-md"
             aria-label="Previous slide"
           >
-            <ChevronLeft className="w-4 h-4" />
+            <ChevronLeft className="w-4 h-4 md:w-5 md:h-5" />
           </button>
         )}
         {heroBigIndex < 2 && (
           <button
             type="button"
             onClick={() => goToHeroBigSlide(heroBigIndex + 1)}
-            className="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-7 h-7 rounded-full bg-black/40 hover:bg-black/70 text-white flex items-center justify-center backdrop-blur-xs transition cursor-pointer"
+            className="absolute right-2 md:right-4 top-1/2 -translate-y-1/2 z-30 w-8 h-8 md:w-10 md:h-10 rounded-full bg-black/50 hover:bg-black/80 text-white flex items-center justify-center backdrop-blur-xs transition cursor-pointer shadow-md"
             aria-label="Next slide"
           >
-            <ChevronRight className="w-4 h-4" />
+            <ChevronRight className="w-4 h-4 md:w-5 md:h-5" />
           </button>
         )}
       </div>
 
-
-      <section className="md:hidden px-4 py-3">
-        <div className="flex items-center gap-3 overflow-x-auto no-scrollbar py-1">
-          {bubbleList.slice(0, 10).map((bubble, i) => (
+      {/* =========================================================
+          4. BUBBLE LIST / KATEGORI APLIKASI CEPAT (RESPONSIF SEMUA LAYAR)
+      ========================================================= */}
+      <section className="max-w-[1240px] mx-auto px-4 py-3 sm:py-5">
+        <div className="flex items-center gap-3 sm:gap-5 overflow-x-auto no-scrollbar py-1">
+          {bubbleList.map((bubble, i) => (
             <div
               key={i}
               onClick={() => {
@@ -2224,134 +2226,27 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                   });
                 }
               }}
-              className={`flex flex-col items-center gap-1 shrink-0 cursor-pointer active:scale-95 transition w-[62px] text-center select-none relative ${
+              className={`flex flex-col items-center gap-1.5 shrink-0 group cursor-pointer w-[64px] sm:w-[76px] md:w-[84px] text-center select-none relative ${
                 isEditMode ? 'ring-2 ring-blue-500/80 rounded-full' : ''
               }`}
             >
-              <div className="w-14 h-14 rounded-full p-0.5 bg-gradient-to-tr from-zinc-200 via-zinc-400 to-zinc-600 shadow-xs">
+              <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-[72px] md:h-[72px] rounded-full p-0.5 bg-gradient-to-tr from-zinc-200 via-zinc-300 to-zinc-400 group-hover:from-black group-hover:to-zinc-600 transition shadow-xs">
                 <div className="w-full h-full rounded-full bg-white p-1 overflow-hidden flex items-center justify-center">
                   <img
                     src={bubble.img}
                     alt={bubble.label}
-                    className="w-full h-full object-contain"
+                    className="w-full h-full object-contain group-hover:scale-105 transition duration-300"
                     loading="lazy"
                   />
                 </div>
               </div>
-              <span className="text-[10px] font-semibold text-[#262626] line-clamp-1 leading-tight">
+              <span className="text-[10px] sm:text-[11px] font-semibold text-[#262626] group-hover:text-black line-clamp-1 leading-tight">
                 {bubble.label}
               </span>
             </div>
           ))}
         </div>
       </section>
-
-      {/* =========================================================
-          4A. DESKTOP HERO & TOP BRAND DEALS (Hidden on Mobile)
-      ========================================================= */}
-      <div className="hidden md:block">
-        {/* Desktop Top Brand Deals Bubbles */}
-        <section className="max-w-[1240px] mx-auto px-4 pt-6 pb-4">
-          <div className="flex items-start gap-4 sm:gap-6 overflow-x-auto no-scrollbar py-2">
-            {bubbleList.map((bubble, i) => (
-              <div
-                key={i}
-                onClick={() => {
-                  if (isEditMode) {
-                    setVisualEditingItem({
-                      type: 'bubble',
-                      index: i,
-                      id: `bubble-${i}`,
-                      name: bubble.label,
-                      brand: bubble.label,
-                      image: bubble.img,
-                      recommendation: {
-                        dimensions: '200 x 200 px (Rasio 1:1)',
-                        aspectRatio: '1:1',
-                        tips: 'Logo atau ikon aplikasi dengan background bersih.'
-                      }
-                    });
-                  } else {
-                    handleProductOrAppClick({
-                      brand: bubble.label,
-                      name: bubble.label
-                    });
-                  }
-                }}
-                className={`flex flex-col items-center gap-1.5 shrink-0 group cursor-pointer w-[68px] sm:w-[84px] text-center select-none relative ${
-                  isEditMode ? 'ring-2 ring-blue-500/80 rounded-full' : ''
-                }`}
-              >
-                <div className="w-[62px] h-[62px] sm:w-[76px] sm:h-[76px] rounded-full p-0.5 bg-gradient-to-tr from-zinc-200 via-zinc-300 to-zinc-400 group-hover:from-black group-hover:to-zinc-600 transition shadow-xs">
-                  <div className="w-full h-full rounded-full bg-white p-1 overflow-hidden flex items-center justify-center">
-                    <img
-                      src={bubble.img}
-                      alt={bubble.label}
-                      className="w-full h-full object-contain group-hover:scale-105 transition duration-300"
-                      loading="lazy"
-                    />
-                  </div>
-                </div>
-                <span className="text-[10px] sm:text-[11px] font-medium text-[#444] group-hover:text-black line-clamp-1 leading-tight">
-                  {bubble.label}
-                </span>
-              </div>
-            ))}
-          </div>
-        </section>
-
-        {/* Desktop Main Hero Banner — Clean Edge-to-Edge Responsive Cover */}
-        {mainHeroBanner && (
-          <section className="max-w-[1240px] mx-auto px-4 py-3">
-            <div
-              onClick={() => {
-                if (isEditMode) {
-                  setVisualEditingItem({
-                    type: 'main-hero',
-                    id: 'main-hero',
-                    name: mainHeroBanner.title || 'Main Hero Banner',
-                    brand: mainHeroBanner.brand || 'D STORE',
-                    image: mainHeroBanner.desktopImg,
-                    link: mainHeroBanner.link || '',
-                    recommendation: {
-                      dimensions: '1240 x 420 px',
-                      aspectRatio: '21:9',
-                      tips: 'Banner utama tengah halaman. Pastikan resolusi tajam minimal 1240px lebar.'
-                    }
-                  });
-                } else {
-                  handleProductOrAppClick({
-                    brand: mainHeroBanner.brand,
-                    name: mainHeroBanner.title || mainHeroBanner.name,
-                    title: mainHeroBanner.title,
-                    link: mainHeroBanner.link,
-                    image: mainHeroBanner.desktopImg
-                  });
-                }
-              }}
-              className={`block relative rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition duration-300 group cursor-pointer w-full h-[260px] sm:h-[320px] md:h-[380px] lg:h-[420px] bg-transparent border-0 outline-none ${
-                isEditMode ? 'ring-2 ring-blue-500/80 hover:ring-blue-400' : ''
-              }`}
-            >
-              {isEditMode && (
-                <div className="absolute top-3 right-3 z-30 bg-blue-600 text-white text-xs font-bold px-2.5 py-1 rounded shadow-md">
-                  Edit Banner Utama
-                </div>
-              )}
-              <img
-                src={mainHeroBanner.desktopImg}
-                alt={mainHeroBanner.title}
-                className="w-full h-full object-cover object-center group-hover:scale-[1.01] transition duration-500"
-              />
-
-              {/* Flash Sale Badge */}
-              <div className="absolute top-3 left-3 sm:top-5 sm:left-5 z-20 bg-black/85 backdrop-blur-md text-white text-[10px] sm:text-xs font-semibold px-3.5 py-1.5 rounded-full shadow-md border border-white/10">
-                <span>FLASH SALE: 05:42:19</span>
-              </div>
-            </div>
-          </section>
-        )}
-      </div>
 
       {/* =========================================================
           5. SECONDARY APP SLIDER (FATSKINNY 1920x480 - Exact Zalora Structure)

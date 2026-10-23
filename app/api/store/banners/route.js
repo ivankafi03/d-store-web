@@ -13,27 +13,27 @@ import {
 const DEFAULT_HERO = [
   {
     id: 'hero-1',
-    title: 'ZALORA 10.10 Flash Sale Adidas',
-    subtitle: 'Flash Sale Berakhir Dalam 05:42:19',
-    image: '/images/zalora-hero-top.png',
+    title: 'D STORE VIP Executive Access',
+    subtitle: 'Ekosistem Akun Digital & AI Premium Bergaransi',
+    image: '/uploads/dstore_boss_hero_high_chest.jpg',
     link: '#',
-    brand: 'ADIDAS'
+    brand: 'D STORE'
   },
   {
     id: 'hero-2',
-    title: 'Tommy Hilfiger Brand Day',
-    subtitle: 'Diskon Hingga 50% + Voucher 15%',
-    image: 'https://images.ctfassets.net/9q8du028z7sn/72LwXOzRKd7j03GjxUBF8B/a0171940ad0d92dee1eeda68e9a6fc06/225x225_BB2026_TOMMYHILFIGER.png',
-    link: '#',
-    brand: 'TOMMY HILFIGER'
+    title: 'Netflix Premium 4K UHD VIP',
+    subtitle: 'Streaming Bioskop Eksklusif Garansi Penuh',
+    image: '/uploads/netflix_vip_hero_banner.jpg',
+    link: '/store/app/netflix',
+    brand: 'NETFLIX'
   },
   {
     id: 'hero-3',
-    title: 'On Running Swiss Engineering',
-    subtitle: 'Extra Voucher 10% OFF',
-    image: 'https://images.ctfassets.net/9q8du028z7sn/6JllWuRECk8AXKnFvPKoyM/4ed51d752d605cce34ebe6a2d9db6a2a/225x225_BB2026_ON.png',
-    link: '#',
-    brand: 'ON'
+    title: 'YouTube Premium & Music Hi-Fi',
+    subtitle: 'Bebas Iklan & Kualitas Audio Tertinggi',
+    image: '/uploads/youtube_vip_boss.jpg',
+    link: '/store/app/youtube',
+    brand: 'YOUTUBE'
   }
 ];
 

@@ -873,32 +873,51 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
     setTimeout(() => { dragDistBrands.current = 0; }, 50);
   };
 
+  // Handle mouse wheel over horizontal lists (mouse desktop support)
+  const handleHorizontalWheel = (e, targetRef) => {
+    const container = targetRef.current;
+    if (!container) return;
+    if (Math.abs(e.deltaY) > Math.abs(e.deltaX) && e.deltaY !== 0) {
+      const atStart = container.scrollLeft <= 0;
+      const atEnd = container.scrollLeft >= (container.scrollWidth - container.clientWidth - 2);
+      if ((e.deltaY > 0 && !atEnd) || (e.deltaY < 0 && !atStart)) {
+        container.scrollLeft += e.deltaY * 0.9;
+      }
+    }
+  };
+
   // Reusable window-level drag-to-scroll handler for carousels & bubbles
   const startDragScroll = (e, targetRef, distRef) => {
-    if (e.button !== 0) return; // Only primary mouse button
+    // Biarkan layar sentuh (touch) menggunakan native 120Hz smooth panning browser
+    if (e.pointerType === 'touch') return;
+    if (e.button !== 0) return; // Hanya klik kiri mouse
+
     const container = targetRef.current;
     if (!container) return;
 
     distRef.current = 0;
-    const startX = e.pageX;
+    const startX = e.clientX || e.pageX;
     const startScrollLeft = container.scrollLeft;
     let isMoving = false;
 
-    const onMouseMove = (moveEvent) => {
-      const deltaX = moveEvent.pageX - startX;
+    const onMove = (moveEvent) => {
+      const currentX = moveEvent.clientX || moveEvent.pageX;
+      const deltaX = currentX - startX;
       distRef.current = Math.abs(deltaX);
 
-      // Once moved beyond 3px, engage drag mode and stop text selection/native drag
-      if (distRef.current > 3) {
+      if (distRef.current > 4) {
         isMoving = true;
         moveEvent.preventDefault();
         container.scrollLeft = startScrollLeft - deltaX;
       }
     };
 
-    const onMouseUp = () => {
-      window.removeEventListener('mousemove', onMouseMove);
-      window.removeEventListener('mouseup', onMouseUp);
+    const onUp = () => {
+      window.removeEventListener('pointermove', onMove);
+      window.removeEventListener('pointerup', onUp);
+      window.removeEventListener('pointercancel', onUp);
+      window.removeEventListener('mousemove', onMove);
+      window.removeEventListener('mouseup', onUp);
       if (isMoving) {
         setTimeout(() => {
           distRef.current = 0;
@@ -908,8 +927,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       }
     };
 
-    window.addEventListener('mousemove', onMouseMove, { passive: false });
-    window.addEventListener('mouseup', onMouseUp);
+    window.addEventListener('pointermove', onMove, { passive: false });
+    window.addEventListener('pointerup', onUp);
+    window.addEventListener('pointercancel', onUp);
+    window.addEventListener('mousemove', onMove, { passive: false });
+    window.addEventListener('mouseup', onUp);
   };
 
   // Drag refs
@@ -2211,60 +2233,91 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           4. BUBBLE LIST / KATEGORI APLIKASI CEPAT (RESPONSIF SEMUA LAYAR)
       ========================================================= */}
       <section className="max-w-[1240px] mx-auto px-4 py-3 sm:py-5">
-        <div 
-          ref={bubblesListRef}
-          onMouseDown={(e) => startDragScroll(e, bubblesListRef, dragDistBubbles)}
-          onDragStart={(e) => e.preventDefault()}
-          className="flex items-center gap-3 sm:gap-5 overflow-x-auto no-scrollbar py-1 cursor-grab active:cursor-grabbing select-none"
-          style={{ touchAction: 'pan-y' }}
-        >
-          {bubbleList.map((bubble, i) => (
-            <div
-              key={i}
-              onClick={() => {
-                if (dragDistBubbles.current > 5) return;
-                dragDistBubbles.current = 0;
-                if (isEditMode) {
-                  setVisualEditingItem({
-                    type: 'bubble',
-                    index: i,
-                    id: `bubble-${i}`,
-                    name: bubble.label,
-                    brand: bubble.label,
-                    image: bubble.img,
-                    recommendation: {
-                      dimensions: '200 x 200 px (Rasio 1:1)',
-                      aspectRatio: '1:1',
-                      tips: 'Logo atau ikon aplikasi dengan background bersih.'
-                    }
-                  });
-                } else {
-                  handleProductOrAppClick({
-                    brand: bubble.label,
-                    name: bubble.label
-                  });
-                }
-              }}
-              className={`flex flex-col items-center gap-1.5 shrink-0 group cursor-pointer w-[64px] sm:w-[76px] md:w-[84px] text-center select-none relative ${
-                isEditMode ? 'ring-2 ring-blue-500/80 rounded-full' : ''
-              }`}
-            >
-              <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-[72px] md:h-[72px] rounded-full p-0.5 bg-gradient-to-tr from-zinc-200 via-zinc-300 to-zinc-400 group-hover:from-black group-hover:to-zinc-600 transition shadow-xs">
-                <div className="w-full h-full rounded-full bg-white p-1 overflow-hidden flex items-center justify-center">
-                  <img
-                    src={bubble.img}
-                    alt={bubble.label}
-                    draggable={false}
-                    className="w-full h-full object-contain pointer-events-none group-hover:scale-105 transition duration-300"
-                    loading="lazy"
-                  />
+        <div className="relative group">
+          <div 
+            ref={bubblesListRef}
+            onPointerDown={(e) => startDragScroll(e, bubblesListRef, dragDistBubbles)}
+            onWheel={(e) => handleHorizontalWheel(e, bubblesListRef)}
+            onDragStart={(e) => e.preventDefault()}
+            className="flex items-center gap-3 sm:gap-5 overflow-x-auto no-scrollbar py-1 cursor-grab active:cursor-grabbing select-none"
+            style={{ touchAction: 'pan-x pan-y', WebkitOverflowScrolling: 'touch' }}
+          >
+            {bubbleList.map((bubble, i) => (
+              <div
+                key={i}
+                onClick={() => {
+                  if (dragDistBubbles.current > 5) return;
+                  dragDistBubbles.current = 0;
+                  if (isEditMode) {
+                    setVisualEditingItem({
+                      type: 'bubble',
+                      index: i,
+                      id: `bubble-${i}`,
+                      name: bubble.label,
+                      brand: bubble.label,
+                      image: bubble.img,
+                      recommendation: {
+                        dimensions: '200 x 200 px (Rasio 1:1)',
+                        aspectRatio: '1:1',
+                        tips: 'Logo atau ikon aplikasi dengan background bersih.'
+                      }
+                    });
+                  } else {
+                    handleProductOrAppClick({
+                      brand: bubble.label,
+                      name: bubble.label
+                    });
+                  }
+                }}
+                className={`flex flex-col items-center gap-1.5 shrink-0 group cursor-pointer w-[64px] sm:w-[76px] md:w-[84px] text-center select-none relative ${
+                  isEditMode ? 'ring-2 ring-blue-500/80 rounded-full' : ''
+                }`}
+              >
+                <div className="w-14 h-14 sm:w-16 sm:h-16 md:w-[72px] md:h-[72px] rounded-full p-0.5 bg-gradient-to-tr from-zinc-200 via-zinc-300 to-zinc-400 group-hover:from-black group-hover:to-zinc-600 transition shadow-xs">
+                  <div className="w-full h-full rounded-full bg-white p-1 overflow-hidden flex items-center justify-center">
+                    <img
+                      src={bubble.img}
+                      alt={bubble.label}
+                      draggable={false}
+                      className="w-full h-full object-contain pointer-events-none group-hover:scale-105 transition duration-300"
+                      loading="lazy"
+                    />
+                  </div>
                 </div>
+                <span className="text-[10px] sm:text-[11px] font-semibold text-[#262626] group-hover:text-black line-clamp-1 leading-tight">
+                  {bubble.label}
+                </span>
               </div>
-              <span className="text-[10px] sm:text-[11px] font-semibold text-[#262626] group-hover:text-black line-clamp-1 leading-tight">
-                {bubble.label}
-              </span>
-            </div>
-          ))}
+            ))}
+          </div>
+
+          {/* Tombol Geser Kiri (Desktop) */}
+          <button
+            type="button"
+            onClick={() => {
+              if (bubblesListRef.current) {
+                bubblesListRef.current.scrollBy({ left: -280, behavior: 'smooth' });
+              }
+            }}
+            className="hidden md:flex absolute -left-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/95 border border-zinc-200 shadow-md items-center justify-center text-zinc-700 hover:bg-black hover:text-white transition active:scale-95 z-20 cursor-pointer"
+            aria-label="Geser Kategori Kiri"
+          >
+            <ChevronLeft className="w-4 h-4" />
+          </button>
+
+          {/* Tombol Geser Kanan (Desktop) */}
+          <button
+            type="button"
+            onClick={() => {
+              if (bubblesListRef.current) {
+                bubblesListRef.current.scrollBy({ left: 280, behavior: 'smooth' });
+              }
+            }}
+            className="hidden md:flex absolute -right-3 top-1/2 -translate-y-1/2 w-8 h-8 rounded-full bg-white/95 border border-zinc-200 shadow-md items-center justify-center text-zinc-700 hover:bg-black hover:text-white transition active:scale-95 z-20 cursor-pointer"
+            aria-label="Geser Kategori Kanan"
+          >
+            <ChevronRight className="w-4 h-4" />
+          </button>
         </div>
       </section>
 
@@ -2512,11 +2565,12 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             <div className="cls-relative relative">
               <div 
                 ref={topTierListRef}
-                onMouseDown={(e) => startDragScroll(e, topTierListRef, dragDistTopTier)}
+                onPointerDown={(e) => startDragScroll(e, topTierListRef, dragDistTopTier)}
+                onWheel={(e) => handleHorizontalWheel(e, topTierListRef)}
                 onDragStart={(e) => e.preventDefault()}
                 className="product-list__wrapper flex overflow-x-auto gap-2 sm:gap-2.5 pb-3 no-scrollbar cursor-grab active:cursor-grabbing select-none" 
                 id="grid" 
-                style={{ justifyContent: 'unset', touchAction: 'pan-y' }}
+                style={{ justifyContent: 'unset', touchAction: 'pan-x pan-y', WebkitOverflowScrolling: 'touch' }}
               >
                 {topTierProducts.map((prod, idx) => {
                   const isWishlisted = wishlist.includes(prod.sku || prod.id);
@@ -3116,7 +3170,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             <div className="cls-relative relative">
               <div
                 ref={justForYouListRef}
-                onMouseDown={(e) => startDragScroll(e, justForYouListRef, dragDistJustForYou)}
+                onPointerDown={(e) => startDragScroll(e, justForYouListRef, dragDistJustForYou)}
+                onWheel={(e) => handleHorizontalWheel(e, justForYouListRef)}
                 onDragStart={(e) => e.preventDefault()}
                 className="product-list__wrapper flex gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing pb-4 select-none"
                 id="grid"
@@ -3124,7 +3179,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                   justifyContent: 'unset',
                   WebkitOverflowScrolling: 'touch',
                   scrollbarWidth: 'none',
-                  touchAction: 'pan-y'
+                  touchAction: 'pan-x pan-y'
                 }}
               >
                 {justForYouProducts.map((prod, idx) => {

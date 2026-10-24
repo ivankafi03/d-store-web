@@ -619,7 +619,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           const vData = data.banners.visualEditorData;
           if (vData && typeof window !== "undefined" && !localStorage.getItem("d_store_visual_editor_data")) {
             if (Array.isArray(vData.heroCarouselItems)) setHeroCarouselItems(vData.heroCarouselItems);
-            if (Array.isArray(vData.bubbleList)) setBubbleList(vData.bubbleList);
+            if (Array.isArray(vData.bubbleList)) {
+              const allowed = ['netflix', 'chatgpt', 'spotify', 'canva pro', 'youtube', 'capcut pro', 'disney+', 'duolingo', 'bstation'];
+              const filtered = vData.bubbleList.filter(b => b && b.label && allowed.includes(b.label.toLowerCase()));
+              setBubbleList(filtered.length > 0 ? filtered : ZALORA_BUBBLES);
+            }
             if (Array.isArray(vData.topTierProducts)) setTopTierProducts(vData.topTierProducts);
             if (Array.isArray(vData.justForYouProducts)) setJustForYouProducts(vData.justForYouProducts);
             if (Array.isArray(vData.brands1List)) setBrands1List(vData.brands1List);
@@ -1073,8 +1077,15 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           setHeroSlide3(parsed.heroSlide3);
         }
         if (Array.isArray(parsed.bubbleList)) {
-          // Pure restore: render exactly what user saved
-          setBubbleList(parsed.bubbleList);
+          const allowed = ['netflix', 'chatgpt', 'spotify', 'canva pro', 'youtube', 'capcut pro', 'disney+', 'duolingo', 'bstation'];
+          const filtered = parsed.bubbleList.filter(b => b && b.label && allowed.includes(b.label.toLowerCase()));
+          if (filtered.length > 0) {
+            parsed.bubbleList = filtered;
+            setBubbleList(filtered);
+            try { localStorage.setItem('d_store_visual_editor_data', JSON.stringify(parsed)); } catch (e) {}
+          } else {
+            setBubbleList(ZALORA_BUBBLES);
+          }
         }
         if (Array.isArray(parsed.brands1List) && parsed.brands1List.length > 0) {
           setBrands1List(parsed.brands1List);

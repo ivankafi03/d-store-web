@@ -338,113 +338,6 @@ const FALLBACK_CATEGORY_PRODUCTS = {
   ]
 };
 
-function MorphingTopBar({ onOpenSearch, activeSegment, onSelectSegment, onOpenCart, cartCount = 0 }) {
-  const [isScrolled, setIsScrolled] = useState(false);
-
-  useEffect(() => {
-    let ticking = false;
-    const handleScroll = () => {
-      if (!ticking) {
-        window.requestAnimationFrame(() => {
-          const scrolled = (window.scrollY || document.documentElement.scrollTop) > 30;
-          setIsScrolled((prev) => (prev !== scrolled ? scrolled : prev));
-          ticking = false;
-        });
-        ticking = true;
-      }
-    };
-
-    window.addEventListener('scroll', handleScroll, { passive: true });
-    handleScroll();
-
-    return () => window.removeEventListener('scroll', handleScroll);
-  }, []);
-
-  return (
-    <div className="fixed top-2.5 sm:top-3 inset-x-0 z-50 pointer-events-none">
-      <div className="max-w-[1240px] mx-auto px-3 sm:px-4">
-        <div 
-          className={`gpu-morph-bar flex items-center h-[48px] pointer-events-auto transition-[width] duration-200 ${
-            isScrolled ? 'w-full gpu-morph-bar--expanded' : 'w-[46px] gpu-morph-bar--collapsed'
-          }`}
-        >
-          {/* 1. Search Icon Button (Fixed 46px, anchored on left) */}
-          <button 
-            type="button"
-            onClick={onOpenSearch}
-            className="w-[46px] h-[46px] shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-transform text-[#262626]" 
-            aria-label="Open search" 
-            data-test-id="segment-tab-search-icon"
-          >
-            <svg width="22" height="22" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block">
-              <path fillRule="evenodd" clipRule="evenodd" d="M10.5 19a8.5 8.5 0 116.342-2.84l5.017 5.017a.482.482 0 11-.683.682l-5.016-5.017A8.469 8.469 0 0110.5 19zm0-.944a7.556 7.556 0 100-15.112 7.556 7.556 0 000 15.112z" fill="#262626"></path>
-            </svg>
-          </button>
-
-          {/* 2. Segment Tabs (Revealed by GPU clip-path, instant 60/120fps) */}
-          <div 
-            id="segmentTabWithSearch" 
-            className={`flex items-center flex-row overflow-x-auto no-scrollbar scrollbar-hide py-1 pr-1 transition-opacity duration-200 flex-1 min-w-0 ${
-              isScrolled ? 'opacity-100' : 'opacity-0 pointer-events-none'
-            }`}
-          >
-            {[
-              { id: 'all', name: 'Semua App', href: '/store/all' },
-              { id: 'ai', name: 'AI & Tools', href: '/store/ai-tools' },
-              { id: 'stream', name: 'Streaming', href: '/store/streaming' },
-              { id: 'design', name: 'Desain', href: '/store/graphic-design' },
-              { id: 'music', name: 'Musik', href: '/store/music-audio' },
-              { id: 'vpn', name: 'VPN', href: '/store/vpn-security' },
-              { id: 'office', name: 'Office & Akun', href: '/store/office-tools' }
-            ].map((seg) => {
-              const isActive = activeSegment === seg.id;
-              if (isActive) {
-                return (
-                  <span 
-                    key={seg.id}
-                    data-test-id={`segment-tab-${seg.id}`} 
-                    className="cursor-default bg-[#222222] text-white font-bold mr-2 whitespace-nowrap rounded-xl px-4 py-2 no-underline select-none inline-flex items-center justify-center text-sm shadow-[0_2px_8px_rgba(0,0,0,0.15)] shrink-0"
-                  >
-                    {seg.name}
-                  </span>
-                );
-              }
-              return (
-                <Link 
-                  key={seg.id}
-                  data-test-id={`segment-tab-${seg.id}`} 
-                  href={seg.href}
-                  onClick={() => {
-                    if (onSelectSegment) onSelectSegment(seg.id);
-                  }}
-                  className="bg-white/85 text-[#222222] font-medium mr-2 whitespace-nowrap rounded-xl px-4 py-2 no-underline cursor-pointer select-none inline-flex items-center justify-center text-sm border border-white/60 shadow-[0_1px_4px_rgba(0,0,0,0.04)] hover:bg-white active:scale-95 transition shrink-0" 
-                >
-                  {seg.name}
-                </Link>
-              );
-            })}
-          </div>
-
-          {/* 3. Cart Icon Button (Anchored on right) */}
-          <button 
-            type="button"
-            onClick={onOpenCart}
-            className="w-[46px] h-[46px] shrink-0 flex items-center justify-center cursor-pointer active:scale-95 transition-transform text-[#262626] relative ml-auto" 
-            aria-label="Buka Tas Belanja"
-          >
-            <ShoppingBag className="w-5 h-5" />
-            {cartCount > 0 && (
-              <span className="absolute top-1.5 right-1.5 bg-black text-white text-[9px] font-bold min-w-4 h-4 px-1 rounded-full flex items-center justify-center shadow-xs">
-                {cartCount}
-              </span>
-            )}
-          </button>
-        </div>
-      </div>
-    </div>
-  );
-}
-
 function useDraggableCarousel({ totalSlides, interval = 4500, loop = true }) {
   const [currentIndex, setCurrentIndex] = useState(0);
   const containerRef = useRef(null);
@@ -600,7 +493,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
   const [selectedAppModal, setSelectedAppModal] = useState(null);
   const [selectedSize, setSelectedSize] = useState('1 Bulan (Private)');
   const [showQuickAlert, setShowQuickAlert] = useState(null);
-  const [showSearchModal, setShowSearchModal] = useState(false);
   const [isSearchFocused, setIsSearchFocused] = useState(false);
   const desktopSearchRef = useRef(null);
 
@@ -627,7 +519,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       }
     };
     document.addEventListener('mousedown', handleDocClick);
-    return () => document.removeEventListener('mousedown', handleDocClick);
+    document.addEventListener('touchstart', handleDocClick, { passive: true });
+    return () => {
+      document.removeEventListener('mousedown', handleDocClick);
+      document.removeEventListener('touchstart', handleDocClick);
+    };
   }, []);
 
   const [selectedTrendCategory, setSelectedTrendCategory] = useState('ai');
@@ -1578,22 +1474,23 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       </div>
 
       {/* =========================================================
-          2. MAIN DESKTOP HEADER (Hidden on Mobile)
+          2. SIMPLE UNIFIED NAVBAR & SEARCH (ALL DEVICES)
       ========================================================= */}
-      <header className="hidden md:block relative z-30 zalora-header">
-        <div className="max-w-[1240px] mx-auto px-4 py-3 flex items-center justify-between gap-4 sm:gap-8">
+      <header className="sticky top-0 z-40 bg-white border-b border-zinc-200/80 shadow-2xs">
+        {/* Main Bar: Logo, Simple Search Bar, Action Icons */}
+        <div className="max-w-[1240px] mx-auto px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-2.5 sm:gap-6">
           
-          {/* D Store Wordmark Logo */}
-          <Link href="/store/dev" className="shrink-0 flex items-center gap-1">
-            <span className="text-2xl sm:text-[28px] font-black tracking-[0.18em] uppercase text-black hover:opacity-90 transition">
+          {/* Logo D STORE */}
+          <Link href="/store" className="shrink-0 flex items-center">
+            <span className="text-xl sm:text-2xl md:text-[26px] font-black tracking-[0.14em] sm:tracking-[0.18em] uppercase text-black hover:opacity-90 transition">
               D STORE
             </span>
           </Link>
 
-          {/* Search Bar Pill with Live Floating Dropdown */}
-          <div className="flex-1 max-w-2xl relative" ref={desktopSearchRef}>
-            <div className="relative flex items-center">
-              <Search className="absolute left-4 w-4 h-4 text-[#888888] pointer-events-none" />
+          {/* Simple Search Bar on All Devices */}
+          <div className="flex-1 max-w-xl relative" ref={desktopSearchRef}>
+            <div className="relative flex items-center w-full">
+              <Search className="absolute left-3 sm:left-3.5 w-4 h-4 text-[#888888] pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
@@ -1608,8 +1505,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     handleProductOrAppClick(searchResults[0]);
                   }
                 }}
-                placeholder="Cari aplikasi, AI tools, Netflix, ChatGPT, Canva..."
-                className="w-full bg-[#F4F4F4] hover:bg-[#EFEFEF] focus:bg-white text-xs sm:text-sm pl-11 pr-10 py-2.5 rounded-full border border-transparent focus:border-black outline-none transition placeholder:text-[#888]"
+                placeholder="Cari aplikasi, AI tools, Netflix, Canva..."
+                className="w-full bg-[#F4F4F4] hover:bg-[#EFEFEF] focus:bg-white text-xs sm:text-sm pl-9 sm:pl-10 pr-8 sm:pr-9 py-1.5 sm:py-2 rounded-full border border-transparent focus:border-black outline-none transition placeholder:text-[#888]"
               />
               {searchQuery && (
                 <button 
@@ -1618,29 +1515,54 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     setSearchQuery('');
                     setIsSearchFocused(false);
                   }}
-                  className="absolute right-3.5 text-[#888] hover:text-black cursor-pointer"
+                  className="absolute right-2.5 sm:right-3 text-[#888] hover:text-black cursor-pointer p-0.5"
+                  aria-label="Hapus pencarian"
                 >
                   <X className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
 
-            {/* Desktop Live Floating Results Dropdown */}
+            {/* Quick Popular Tags Dropdown when focused & empty */}
+            {isSearchFocused && searchQuery.trim().length === 0 && (
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-zinc-200 p-3 sm:p-4 z-[100] animate-in fade-in slide-in-from-top-1 duration-150">
+                <div className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2">
+                  Pencarian Populer
+                </div>
+                <div className="flex flex-wrap gap-1.5 sm:gap-2">
+                  {['Canva Pro', 'ChatGPT Plus', 'Netflix 4K', 'Spotify Family', 'YouTube Premium', 'CapCut Pro', 'Gemini AI', 'Surfshark VPN'].map((tag, idx) => (
+                    <button
+                      key={idx}
+                      type="button"
+                      onClick={() => {
+                        setSearchQuery(tag);
+                        setIsSearchFocused(true);
+                      }}
+                      className="px-2.5 py-1 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-800 text-[11px] sm:text-xs font-medium cursor-pointer transition select-none"
+                    >
+                      {tag}
+                    </button>
+                  ))}
+                </div>
+              </div>
+            )}
+
+            {/* Live Search Results Dropdown when typing */}
             {isSearchFocused && searchQuery.trim().length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-zinc-200 overflow-hidden z-[100] animate-in fade-in slide-in-from-top-2 duration-150">
-                <div className="p-3 bg-zinc-50 border-b border-zinc-100 flex items-center justify-between">
+              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-zinc-200 overflow-hidden z-[100] max-h-[60vh] sm:max-h-[380px] flex flex-col animate-in fade-in slide-in-from-top-1 duration-150">
+                <div className="p-2.5 sm:p-3 bg-zinc-50 border-b border-zinc-100 flex items-center justify-between shrink-0">
                   <div className="text-[11px] font-bold uppercase tracking-wider text-zinc-500">
                     Hasil Pencarian ({searchResults.length})
                   </div>
                   {searchResults.length > 0 && (
-                    <span className="text-[11px] text-zinc-400 font-medium">
-                      Tekan Enter untuk melihat semua
+                    <span className="text-[10px] sm:text-[11px] text-zinc-400 font-medium">
+                      Pilih aplikasi untuk pesan
                     </span>
                   )}
                 </div>
 
                 {searchResults.length > 0 ? (
-                  <div className="max-h-[380px] overflow-y-auto divide-y divide-zinc-100">
+                  <div className="overflow-y-auto divide-y divide-zinc-100 p-1">
                     {searchResults.map((item) => (
                       <div
                         key={item.id}
@@ -1648,10 +1570,10 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                           setIsSearchFocused(false);
                           handleProductOrAppClick(item);
                         }}
-                        className="p-3 hover:bg-zinc-50 flex items-center justify-between gap-3 cursor-pointer transition select-none group"
+                        className="p-2.5 sm:p-3 hover:bg-zinc-50 active:bg-zinc-100 rounded-xl flex items-center justify-between gap-3 cursor-pointer transition select-none group"
                       >
-                        <div className="flex items-center gap-3 min-w-0">
-                          <div className="w-11 h-11 shrink-0 rounded-lg overflow-hidden bg-zinc-100 border border-zinc-200 flex items-center justify-center">
+                        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
+                          <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-lg overflow-hidden bg-zinc-100 border border-zinc-200 flex items-center justify-center">
                             <img
                               src={item.image}
                               alt={item.name}
@@ -1659,11 +1581,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             />
                           </div>
                           <div className="min-w-0">
-                            <div className="flex items-center gap-2">
-                              <span className="text-[10px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-800">
+                            <div className="flex items-center gap-1.5">
+                              <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-800">
                                 {item.brand}
                               </span>
-                              <span className="text-[11px] text-zinc-400 truncate">
+                              <span className="text-[10px] text-zinc-400 truncate">
                                 {item.categoryName}
                               </span>
                             </div>
@@ -1685,7 +1607,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     ))}
                   </div>
                 ) : (
-                  <div className="p-6 text-center">
+                  <div className="p-5 text-center">
                     <p className="text-xs text-zinc-500 font-medium">
                       Tidak ada aplikasi yang cocok dengan &quot;{searchQuery}&quot;.
                     </p>
@@ -1698,12 +1620,14 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             )}
           </div>
 
-          {/* Desktop Header Action Icons */}
-          <div className="flex items-center gap-4 sm:gap-6 shrink-0 text-[#222]">
+          {/* Action Icons */}
+          <div className="flex items-center gap-2 sm:gap-5 shrink-0 text-[#222]">
+            {/* User Account (Desktop) */}
             <button 
               type="button"
               onClick={() => setIsAccountOpen(true)}
-              className="flex items-center gap-2 cursor-pointer hover:opacity-75 transition select-none bg-transparent border-0 p-0 text-[#222]"
+              className="hidden md:flex items-center gap-2 cursor-pointer hover:opacity-75 transition select-none bg-transparent border-0 p-0 text-[#222]"
+              title="Akun Saya"
             >
               {user ? (
                 <UserAvatar user={user} size={24} />
@@ -1715,9 +1639,10 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
               </span>
             </button>
 
+            {/* Wishlist (Desktop) */}
             <Link 
               href="/store/wishlist"
-              className="relative cursor-pointer hover:opacity-75 transition select-none flex items-center justify-center text-[#222]"
+              className="hidden md:flex relative cursor-pointer hover:opacity-75 transition select-none items-center justify-center text-[#222]"
               title="Wishlist"
             >
               <Heart className="w-5 h-5 sm:w-6 sm:h-6" />
@@ -1728,25 +1653,28 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
               )}
             </Link>
 
-            <div 
+            {/* Shopping Bag / Cart (All Devices) */}
+            <button 
+              type="button"
               onClick={() => setIsCartOpen(true)}
-              className="relative cursor-pointer hover:opacity-75 transition select-none"
+              className="relative cursor-pointer hover:opacity-75 transition select-none flex items-center justify-center p-1.5 -mr-1 text-[#222]"
               title="Tas Belanja"
+              aria-label="Buka Tas Belanja"
             >
               <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
               {cart.length > 0 && (
-                <span className="absolute -top-1.5 -right-2 bg-black text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                  {cart.length}
+                <span className="absolute -top-0.5 -right-1 bg-black text-white text-[9px] sm:text-[10px] font-bold min-w-4 h-4 px-1 rounded-full flex items-center justify-center">
+                  {cart.reduce((acc, item) => acc + (item.quantity || 1), 0)}
                 </span>
               )}
-            </div>
+            </button>
           </div>
         </div>
 
-        {/* Desktop Segment Tabs - Unified Pill Style */}
-        <div className="max-w-[1240px] mx-auto px-4 py-2 hidden md:block">
-          <div className="flex items-center gap-2">
-            <div className="flex flex-1 flex-row overflow-x-auto no-scrollbar scrollbar-hide py-0.5">
+        {/* Category Tabs Strip (Semua Perangkat) */}
+        <div className="border-t border-zinc-100 bg-white">
+          <div className="max-w-[1240px] mx-auto px-3 sm:px-4 py-1.5 flex items-center overflow-x-auto no-scrollbar scrollbar-hide">
+            <div className="flex items-center gap-1.5 sm:gap-2">
               {[
                 { id: 'all', name: 'Semua App', href: '/store/all' },
                 { id: 'ai', name: 'AI & Tools', href: '/store/ai-tools' },
@@ -1761,8 +1689,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                   return (
                     <span 
                       key={seg.id}
-                      data-test-id={`segment-tab-${seg.id}`} 
-                      className="cursor-default bg-[#222222] text-white font-bold mr-2 whitespace-nowrap rounded-2xl px-4 py-2.5 no-underline select-none inline-flex items-center justify-center text-sm shadow-[0_4px_12px_rgba(0,0,0,0.15)]"
+                      data-test-id={`segment-tab-${seg.id}`}
+                      className="cursor-default bg-[#222222] text-white font-bold whitespace-nowrap rounded-full px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm select-none"
                     >
                       {seg.name}
                     </span>
@@ -1771,12 +1699,10 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                 return (
                   <Link 
                     key={seg.id}
-                    data-test-id={`segment-tab-${seg.id}`} 
+                    data-test-id={`segment-tab-${seg.id}`}
                     href={seg.href}
-                    onClick={() => {
-                      setActiveSegment(seg.id);
-                    }}
-                    className="bg-white/95 text-[#222222] font-medium mr-2 whitespace-nowrap rounded-2xl px-4 py-2.5 no-underline cursor-pointer select-none inline-flex items-center justify-center text-sm border border-black/5 shadow-[0_2px_8px_rgba(0,0,0,0.04)] hover:bg-white active:scale-95 transition" 
+                    onClick={() => setActiveSegment(seg.id)}
+                    className="bg-zinc-100 hover:bg-zinc-200 text-[#444] hover:text-black font-medium whitespace-nowrap rounded-full px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm select-none transition"
                   >
                     {seg.name}
                   </Link>
@@ -1786,170 +1712,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           </div>
         </div>
       </header>
-
-      {/* =========================================================
-          2B. MORPHING SEARCH BAR — GPU Accelerated, Isolated Component
-      ========================================================= */}
-      <MorphingTopBar 
-        onOpenSearch={() => setShowSearchModal(true)} 
-        activeSegment={activeSegment} 
-        onSelectSegment={setActiveSegment}
-        onOpenCart={() => setIsCartOpen(true)}
-        cartCount={cart.reduce((acc, item) => acc + (item.quantity || 1), 0)}
-      />
-
-      {/* Mobile Search Modal */}
-      {showSearchModal && (
-        <div className="fixed inset-0 z-[150] bg-white flex flex-col p-4 animate-in fade-in duration-150">
-          <div className="flex items-center gap-3 pb-3 border-b border-zinc-200 shrink-0">
-            <div className="flex-1 relative flex items-center">
-              <Search className="absolute left-3 w-4 h-4 text-zinc-500 pointer-events-none" />
-              <input
-                type="text"
-                autoFocus
-                value={searchQuery}
-                onChange={(e) => setSearchQuery(e.target.value)}
-                placeholder="Cari aplikasi, AI tools, Netflix, ChatGPT, Canva..."
-                className="w-full bg-zinc-100 pl-10 pr-10 py-2.5 rounded-xl text-sm outline-none border border-transparent focus:border-black"
-                onKeyDown={(e) => {
-                  if (e.key === 'Enter' && searchResults.length > 0) {
-                    setShowSearchModal(false);
-                    handleProductOrAppClick(searchResults[0]);
-                  }
-                }}
-              />
-              {searchQuery && (
-                <button
-                  type="button"
-                  onClick={() => setSearchQuery('')}
-                  className="absolute right-2.5 text-zinc-400 hover:text-black p-1 cursor-pointer"
-                >
-                  <X className="w-4 h-4" />
-                </button>
-              )}
-            </div>
-            <button
-              type="button"
-              onClick={() => {
-                setShowSearchModal(false);
-                setSearchQuery('');
-              }}
-              className="text-sm font-bold text-zinc-700 hover:text-black p-1 cursor-pointer"
-            >
-              Tutup
-            </button>
-          </div>
-
-          <div className="flex-1 overflow-y-auto pt-3">
-            {searchQuery.trim().length > 0 ? (
-              <div>
-                <div className="mb-3 px-1">
-                  <div className="text-xs font-bold uppercase tracking-wider text-zinc-400">
-                    Hasil Pencarian ({searchResults.length})
-                  </div>
-                </div>
-
-                {searchResults.length > 0 ? (
-                  <div className="space-y-2 pb-6">
-                    {searchResults.map((item) => (
-                      <div
-                        key={item.id}
-                        onClick={() => {
-                          setShowSearchModal(false);
-                          handleProductOrAppClick(item);
-                        }}
-                        className="flex items-center justify-between p-2.5 bg-zinc-50 hover:bg-zinc-100 active:bg-zinc-200 rounded-xl cursor-pointer transition border border-zinc-100 select-none"
-                      >
-                        <div className="flex items-center gap-3 min-w-0">
-                          <div className="w-12 h-12 shrink-0 rounded-lg overflow-hidden bg-white border border-zinc-200">
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="w-full h-full object-cover"
-                            />
-                          </div>
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-1.5">
-                              <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-zinc-200 text-zinc-800">
-                                {item.brand}
-                              </span>
-                              <span className="text-[10px] text-zinc-400 truncate">
-                                {item.categoryName}
-                              </span>
-                            </div>
-                            <div className="text-xs font-bold text-zinc-900 truncate mt-0.5">
-                              {item.name}
-                            </div>
-                            <div className="text-xs font-black text-black mt-0.5">
-                              {formatRupiah(item.price)}
-                            </div>
-                          </div>
-                        </div>
-
-                        <div className="shrink-0 pl-2">
-                          <span className="text-[11px] font-bold px-2.5 py-1.5 rounded-lg bg-black text-white">
-                            Pilih
-                          </span>
-                        </div>
-                      </div>
-                    ))}
-                  </div>
-                ) : (
-                  <div className="py-12 text-center">
-                    <p className="text-sm font-bold text-zinc-700">Tidak ada produk ditemukan</p>
-                    <p className="text-xs text-zinc-400 mt-1 max-w-xs mx-auto">
-                      Coba cari dengan kata kunci lain seperti Canva, Netflix, ChatGPT, Spotify, dll.
-                    </p>
-                    <div className="flex flex-wrap justify-center gap-2 mt-4">
-                      {['Canva Pro', 'ChatGPT Plus', 'Netflix 4K', 'Spotify Family'].map((s, idx) => (
-                        <button
-                          key={idx}
-                          type="button"
-                          onClick={() => setSearchQuery(s)}
-                          className="px-3 py-1.5 rounded-lg bg-zinc-100 text-xs font-semibold text-zinc-700"
-                        >
-                          {s}
-                        </button>
-                      ))}
-                    </div>
-                  </div>
-                )}
-              </div>
-            ) : (
-              <div>
-                <div className="text-xs font-bold uppercase text-zinc-400 mb-2">Pencarian Populer</div>
-                <div className="flex flex-wrap gap-2 mb-6">
-                  {['Canva Pro', 'ChatGPT Plus', 'Netflix 4K', 'Spotify Family', 'YouTube Premium', 'CapCut Pro', 'Gemini AI', 'Microsoft 365', 'Surfshark VPN', 'Gmail Fresh'].map((s, idx) => (
-                    <button
-                      key={idx}
-                      type="button"
-                      onClick={() => setSearchQuery(s)}
-                      className="px-3 py-1.5 rounded-lg bg-zinc-100 text-xs font-medium hover:bg-zinc-200 text-zinc-800 cursor-pointer"
-                    >
-                      {s}
-                    </button>
-                  ))}
-                </div>
-
-                <div className="text-xs font-bold uppercase text-zinc-400 mb-2">Jelajahi Berdasarkan Kategori</div>
-                <div className="grid grid-cols-2 gap-2">
-                  {ZALORA_MEN_CATEGORIES.map((cat, idx) => (
-                    <Link
-                      key={idx}
-                      href={cat.href || '/store'}
-                      onClick={() => setShowSearchModal(false)}
-                      className="p-2.5 rounded-xl bg-zinc-50 hover:bg-zinc-100 text-left border border-zinc-100 transition cursor-pointer block"
-                    >
-                      <div className="text-xs font-bold text-zinc-900">{cat.name}</div>
-                      <div className="text-[10px] text-zinc-400">Lihat semua akun &rarr;</div>
-                    </Link>
-                  ))}
-                </div>
-              </div>
-            )}
-          </div>
-        </div>
-      )}
 
       {/* =========================================================
           3. HERO UNIVERSAL (DESKTOP & MOBILE) — 3 SLIDES DRAGGABLE CAROUSEL

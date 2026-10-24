@@ -46,25 +46,30 @@ export async function POST(request) {
     }
 
     const buffer = Buffer.from(await file.arrayBuffer());
-
-    // Pastikan direktori public/uploads ada
-    const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
-    if (!fs.existsSync(uploadsDir)) {
-      fs.mkdirSync(uploadsDir, { recursive: true });
-    }
-
     const baseName = path.parse(originalName).name.replace(/[^a-zA-Z0-9_-]/g, '_').toLowerCase();
     const timestamp = Date.now();
 
     // Khusus file SVG: Simpan langsung sebagai .svg tanpa rasterize
     if (file.type === 'image/svg+xml' || originalName.endsWith('.svg')) {
       const fileName = `${baseName}-${timestamp}.svg`;
-      const filePath = path.join(uploadsDir, fileName);
-      fs.writeFileSync(filePath, buffer);
+      let finalUrl = null;
+
+      try {
+        const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+        if (!fs.existsSync(uploadsDir)) {
+          fs.mkdirSync(uploadsDir, { recursive: true });
+        }
+        const filePath = path.join(uploadsDir, fileName);
+        fs.writeFileSync(filePath, buffer);
+        finalUrl = `/uploads/${fileName}`;
+      } catch (fsErr) {
+        // Filesystem read-only (misal di serverless Vercel / AWS Lambda): fallback ke Data URI
+        finalUrl = `data:image/svg+xml;base64,${buffer.toString('base64')}`;
+      }
 
       return NextResponse.json({
         status: 'ok',
-        url: `/uploads/${fileName}`,
+        url: finalUrl,
         fileName,
         format: 'svg',
         originalSize,
@@ -73,10 +78,9 @@ export async function POST(request) {
       });
     }
 
-    // Untuk semua file gambar (PNG Canva, JPG Canva, JPEG, WEBP, dll):
+    // Untuk semua file gambar (PNG, JPG, WEBP, dll):
     // Otomatis ubah & kompresi ke format WebP berkualitas tinggi
     const fileName = `${baseName}-${timestamp}.webp`;
-    const filePath = path.join(uploadsDir, fileName);
 
     const convertedBuffer = await sharp(buffer)
       .rotate() // Memperbaiki orientasi EXIF kamera otomatis
@@ -92,7 +96,19 @@ export async function POST(request) {
       })
       .toBuffer();
 
-    fs.writeFileSync(filePath, convertedBuffer);
+    let finalUrl = null;
+    try {
+      const uploadsDir = path.join(process.cwd(), 'public', 'uploads');
+      if (!fs.existsSync(uploadsDir)) {
+        fs.mkdirSync(uploadsDir, { recursive: true });
+      }
+      const filePath = path.join(uploadsDir, fileName);
+      fs.writeFileSync(filePath, convertedBuffer);
+      finalUrl = `/uploads/${fileName}`;
+    } catch (fsErr) {
+      // Filesystem read-only (misal di serverless Vercel / AWS Lambda): fallback ke Data URI WebP
+      finalUrl = `data:image/webp;base64,${convertedBuffer.toString('base64')}`;
+    }
 
     const convertedSize = convertedBuffer.length;
     const savedPercent = originalSize > 0 
@@ -101,7 +117,7 @@ export async function POST(request) {
 
     return NextResponse.json({
       status: 'ok',
-      url: `/uploads/${fileName}`,
+      url: finalUrl,
       fileName,
       format: 'webp',
       originalSize,

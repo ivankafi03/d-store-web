@@ -8,17 +8,29 @@ export const fetchCache = 'force-no-store';
 export const revalidate = 0;
 
 export default function StoreFront() {
-  const db = getDb(true); // force reload from disk
-  const initialData = {
-    banners: db.banners || null,
-    visualEditorData: {
-      ...(db.banners?.visualEditorData || {}),
-      ...(db.visualEditorData || {})
-    },
-    products: db.products || [],
-    variants: db.variants || [],
-    categoryOverrides: db.categoryOverrides || {}
+  let initialData = {
+    banners: null,
+    visualEditorData: {},
+    products: [],
+    variants: [],
+    categoryOverrides: {}
   };
+
+  try {
+    const db = getDb(true) || {};
+    initialData = {
+      banners: db.banners || null,
+      visualEditorData: {
+        ...(db.banners?.visualEditorData || {}),
+        ...(db.visualEditorData || {})
+      },
+      products: Array.isArray(db.products) ? db.products : [],
+      variants: Array.isArray(db.variants) ? db.variants : [],
+      categoryOverrides: db.categoryOverrides || {}
+    };
+  } catch (err) {
+    console.error('[StoreFront Error]', err);
+  }
 
   return <StoreDevClient isAdminMode={false} initialData={initialData} />;
 }

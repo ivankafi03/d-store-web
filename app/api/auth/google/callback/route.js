@@ -6,8 +6,9 @@ import {
 } from '@/lib/userAuth';
 
 function sanitizeReturnTo(url) {
-  if (!url || typeof url !== 'string') return '/store';
+  if (!url || typeof url !== 'string' || url === '/') return '/store';
   const trimmed = url.trim();
+  if (trimmed === '/' || !trimmed) return '/store';
   // Hanya izinkan path relatif internal lokal, cegah protocol-relative (//) atau skema luar
   if (trimmed.startsWith('/') && !trimmed.startsWith('//') && !trimmed.includes('://')) {
     return trimmed;

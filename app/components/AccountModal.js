@@ -692,7 +692,7 @@ export default function AccountModal({
               {/* Tombol Utama: Langsung Buka Pilihan Akun Google di Perangkat */}
               <div className="flex flex-col items-center justify-center w-full pt-1">
                 <a
-                  href={`/api/auth/google?returnTo=${encodeURIComponent(typeof window !== 'undefined' ? window.location.pathname : '/store')}`}
+                  href={`/api/auth/google?returnTo=${encodeURIComponent(typeof window !== 'undefined' && window.location.pathname !== '/' ? window.location.pathname : '/store')}`}
                   className="w-full max-w-[320px] flex items-center justify-center gap-3 py-3 px-5 rounded-full bg-zinc-950 hover:bg-zinc-900 active:scale-[0.98] text-white font-semibold text-xs shadow-md transition cursor-pointer no-underline"
                 >
                   <GoogleLogoSvg className="w-4 h-4 shrink-0" />

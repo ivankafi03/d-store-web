@@ -862,9 +862,18 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
 
   const topTierListRef = useRef(null);
   const dragDistTopTier = useRef(0);
+  const [topTierScrollState, setTopTierScrollState] = useState({ canLeft: false, canRight: true });
 
   const justForYouListRef = useRef(null);
   const dragDistJustForYou = useRef(0);
+  const [jfyScrollState, setJfyScrollState] = useState({ canLeft: false, canRight: true });
+
+  const updateScrollState = (container, setter) => {
+    if (!container) return;
+    const canLeft = container.scrollLeft > 10;
+    const canRight = container.scrollLeft < (container.scrollWidth - container.clientWidth - 10);
+    setter({ canLeft, canRight });
+  };
 
   const formatRupiah = (num) => 'Rp ' + Number(num || 0).toLocaleString('id-ID');
 
@@ -2350,22 +2359,23 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       {/* =========================================================
           7. TOP TIER RECOMMENDATIONS (Zalora Authentic Carousel)
       ========================================================= */}
-      <section id="products-section" className="post-type-wrapper recommendation-wrapper custom-style max-w-[1240px] mx-auto px-4 py-6 scroll-mt-20">
-        <div className="recommendation__details-wrapper">
+      <section id="products-section" className="post-type-wrapper recommendation-wrapper custom-style w-full min-w-0 max-w-[1240px] mx-auto px-4 py-6 scroll-mt-20 overflow-hidden">
+        <div className="recommendation__details-wrapper w-full min-w-0 max-w-full">
           <div className="post-type__title truncated truncated--two-lines recommendation__title--with-banner text-lg md:text-xl font-bold text-[#262626] mb-3">
             Aplikasi Terlaris (Top Tier)
           </div>
-          <div className="recommendation__product-list-wrapper">
-            <div className="cls-relative relative">
+          <div className="recommendation__product-list-wrapper w-full min-w-0 max-w-full">
+            <div className="cls-relative relative w-full min-w-0 max-w-full">
               <div 
                 ref={topTierListRef}
+                onScroll={(e) => updateScrollState(e.currentTarget, setTopTierScrollState)}
                 onPointerDown={(e) => startDragScroll(e, topTierListRef, dragDistTopTier)}
                 onTouchStart={(e) => onTouchStartCapture(e, dragDistTopTier)}
                 onTouchMove={(e) => onTouchMoveCapture(e, dragDistTopTier)}
                 onTouchEnd={() => onTouchEndCapture(dragDistTopTier)}
                 onWheel={(e) => handleHorizontalWheel(e, topTierListRef)}
                 onDragStart={(e) => e.preventDefault()}
-                className="product-list__wrapper flex overflow-x-auto gap-2 sm:gap-2.5 pb-3 pr-8 sm:pr-12 no-scrollbar cursor-grab active:cursor-grabbing select-none w-full max-w-full min-w-0" 
+                className="product-list__wrapper flex overflow-x-auto gap-2 sm:gap-2.5 pb-3 no-scrollbar cursor-grab active:cursor-grabbing select-none w-full max-w-full min-w-0" 
                 id="grid" 
                 style={{ justifyContent: 'unset', touchAction: 'pan-x pan-y', WebkitOverflowScrolling: 'touch' }}
               >
@@ -2522,11 +2532,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     </div>
                   );
                 })}
-                {/* Spacer trailing agar carousel Just For You di HP bisa di-slide sampai mentok */}
-                <div className="shrink-0 w-12 sm:w-20 h-1 pointer-events-none" aria-hidden="true" />
+                {/* Spacer trailing agar carousel Top Tier di HP bisa di-slide sampai mentok dengan leluasa */}
+                <div className="shrink-0 w-8 sm:w-16 h-1 pointer-events-none" aria-hidden="true" />
               </div>
 
-              {/* Zalora Right Control Button */}
+              {/* Zalora Right Control Button (Desktop) */}
               <button
                 type="button"
                 onClick={() => {
@@ -2534,7 +2544,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     topTierListRef.current.scrollBy({ left: 320, behavior: 'smooth' });
                   }
                 }}
-                className="post-type__carousel-control-button post-type__carousel-right-button"
+                className={`post-type__carousel-control-button post-type__carousel-right-button ${!topTierScrollState.canRight ? 'post-type__carousel-right-button--hide' : ''}`}
                 aria-label="Scroll Top Tier Right"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block h-6 w-6">
@@ -2542,7 +2552,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                 </svg>
               </button>
 
-              {/* Zalora Left Control Button */}
+              {/* Zalora Left Control Button (Desktop) */}
               <button
                 type="button"
                 onClick={() => {
@@ -2550,7 +2560,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     topTierListRef.current.scrollBy({ left: -320, behavior: 'smooth' });
                   }
                 }}
-                className="post-type__carousel-control-button post-type__carousel-left-button"
+                className={`post-type__carousel-control-button post-type__carousel-left-button ${!topTierScrollState.canLeft ? 'post-type__carousel-left-button--hide' : ''}`}
                 aria-label="Scroll Top Tier Left"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block h-6 w-6 rotate-180">
@@ -2960,23 +2970,24 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       {/* =========================================================
           13. JUST FOR YOU (Zalora Recommendation Product Carousel)
       ========================================================= */}
-      <section className="post-type-wrapper recommendation-wrapper custom-style max-w-[1240px] mx-auto px-4 py-8">
-        <div className="recommendation__details-wrapper">
+      <section className="post-type-wrapper recommendation-wrapper custom-style w-full min-w-0 max-w-[1240px] mx-auto px-4 py-8 overflow-hidden">
+        <div className="recommendation__details-wrapper w-full min-w-0 max-w-full">
           <div className="post-type__title truncated truncated--two-lines text-lg md:text-xl font-bold text-[#262626] mb-3">
             Rekomendasi Spesial Untuk Anda
           </div>
 
-          <div className="recommendation__product-list-wrapper">
-            <div className="cls-relative relative">
+          <div className="recommendation__product-list-wrapper w-full min-w-0 max-w-full">
+            <div className="cls-relative relative w-full min-w-0 max-w-full">
               <div
                 ref={justForYouListRef}
+                onScroll={(e) => updateScrollState(e.currentTarget, setJfyScrollState)}
                 onPointerDown={(e) => startDragScroll(e, justForYouListRef, dragDistJustForYou)}
                 onTouchStart={(e) => onTouchStartCapture(e, dragDistJustForYou)}
                 onTouchMove={(e) => onTouchMoveCapture(e, dragDistJustForYou)}
                 onTouchEnd={() => onTouchEndCapture(dragDistJustForYou)}
                 onWheel={(e) => handleHorizontalWheel(e, justForYouListRef)}
                 onDragStart={(e) => e.preventDefault()}
-                className="product-list__wrapper flex gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing pb-4 pr-8 sm:pr-12 select-none w-full max-w-full min-w-0"
+                className="product-list__wrapper flex gap-2 sm:gap-2.5 overflow-x-auto no-scrollbar cursor-grab active:cursor-grabbing pb-4 select-none w-full max-w-full min-w-0"
                 id="grid"
                 style={{
                   justifyContent: 'unset',
@@ -3198,11 +3209,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     </div>
                   );
                 })}
-                {/* Spacer trailing agar carousel Just For You di HP bisa di-slide sampai mentok */}
-                <div className="shrink-0 w-12 sm:w-20 h-1 pointer-events-none" aria-hidden="true" />
+                {/* Spacer trailing agar carousel Just For You di HP bisa di-slide sampai mentok dengan leluasa */}
+                <div className="shrink-0 w-8 sm:w-16 h-1 pointer-events-none" aria-hidden="true" />
               </div>
 
-              {/* Zalora Right Control Button */}
+              {/* Zalora Right Control Button (Desktop) */}
               <button
                 type="button"
                 onClick={() => {
@@ -3210,7 +3221,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     justForYouListRef.current.scrollBy({ left: 320, behavior: 'smooth' });
                   }
                 }}
-                className="post-type__carousel-control-button post-type__carousel-right-button"
+                className={`post-type__carousel-control-button post-type__carousel-right-button ${!jfyScrollState.canRight ? 'post-type__carousel-right-button--hide' : ''}`}
                 aria-label="Scroll Just For You Right"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block h-6 w-6">
@@ -3218,7 +3229,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                 </svg>
               </button>
 
-              {/* Zalora Left Control Button */}
+              {/* Zalora Left Control Button (Desktop) */}
               <button
                 type="button"
                 onClick={() => {
@@ -3226,7 +3237,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     justForYouListRef.current.scrollBy({ left: -320, behavior: 'smooth' });
                   }
                 }}
-                className="post-type__carousel-control-button post-type__carousel-left-button"
+                className={`post-type__carousel-control-button post-type__carousel-left-button ${!jfyScrollState.canLeft ? 'post-type__carousel-left-button--hide' : ''}`}
                 aria-label="Scroll Just For You Left"
               >
                 <svg width="24" height="24" viewBox="0 0 24 24" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block h-6 w-6 rotate-180">

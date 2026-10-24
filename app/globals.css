@@ -63,13 +63,21 @@ body {
 
 /* Zalora Recommendation Carousel & Product Items */
 .recommendation-wrapper {
+  width: 100%;
   max-width: 1240px;
   margin-left: auto;
   margin-right: auto;
   padding: 16px 16px 24px;
+  min-width: 0;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .recommendation__details-wrapper {
   width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .post-type__title.recommendation__title--with-banner {
   font-size: 1.125rem;
@@ -100,9 +108,18 @@ body {
 .recommendation__product-list-wrapper {
   position: relative;
   margin-top: 12px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  overflow: hidden;
+  box-sizing: border-box;
 }
 .cls-relative {
   position: relative;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .product-list__wrapper {
   display: flex;
@@ -115,6 +132,10 @@ body {
   -webkit-overflow-scrolling: touch;
   gap: 12px;
   padding-bottom: 8px;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .product-list__wrapper * {
   touch-action: pan-x pan-y !important;
@@ -137,6 +158,10 @@ body {
   -webkit-overflow-scrolling: touch;
   -webkit-user-select: none;
   user-select: none;
+  width: 100%;
+  min-width: 0;
+  max-width: 100%;
+  box-sizing: border-box;
 }
 .bubble-list__wrapper * {
   touch-action: pan-x pan-y !important;
@@ -155,12 +180,17 @@ body {
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  display: flex;
+  display: none;
   align-items: center;
   justify-content: center;
   padding: 0;
   z-index: 10;
   outline: none;
+}
+@media (min-width: 768px) {
+  .post-type__carousel-control-button {
+    display: flex;
+  }
 }
 .post-type__carousel-left-button {
   background: linear-gradient(90deg, #c1c1c1 0.03%, #dedede00 99.97%);
@@ -176,7 +206,7 @@ body {
 }
 .post-type__carousel-left-button--hide,
 .post-type__carousel-right-button--hide {
-  display: none;
+  display: none !important;
 }
 
 /* Zalora Segment Tab Bar with Search (Exact Zalora UI) */

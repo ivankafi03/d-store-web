@@ -27,22 +27,20 @@ export default async function WorkspacePage() {
 
   let db = {};
   try {
-    db = getDb() || {};
-    // Jika catatan pelanggan kosong (misal baru deploy atau cold-start Vercel), pulihkan otomatis dari cloud Google Sheets
-    if (!db.customerNotes || db.customerNotes.length === 0) {
-      await Promise.allSettled([
-        pullNotesFromGoogleSheet(),
-        pullUsersFromGoogleSheet()
-      ]);
-      db = getDb(true) || {};
-    }
+    // Selalu sinkronkan data catatan dan pengguna terbaru dari cloud Google Sheets saat membuka Workspace
+    await Promise.allSettled([
+      pullNotesFromGoogleSheet(),
+      pullUsersFromGoogleSheet()
+    ]);
+    db = getDb(true) || {};
   } catch (e) {
     console.warn('[WorkspacePage Cloud Sync Error]', e);
+    db = getDb() || {};
   }
 
   let registeredUsers = [];
   try {
-    registeredUsers = getAllUsers() || [];
+    registeredUsers = getAllUsers(true) || [];
   } catch (e) {
     console.warn('[WorkspacePage Users Error]', e);
   }

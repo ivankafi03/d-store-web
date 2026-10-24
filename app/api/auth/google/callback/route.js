@@ -2,7 +2,9 @@ import { NextResponse } from 'next/server';
 import { 
   USER_COOKIE_NAME, 
   upsertGoogleUser, 
-  createUserSessionToken 
+  createUserSessionToken,
+  pullUsersFromGoogleSheet,
+  pushUsersToGoogleSheet
 } from '@/lib/userAuth';
 
 function sanitizeReturnTo(url) {
@@ -128,8 +130,14 @@ export async function GET(request) {
       sub: profile.sub || `google_${Date.now()}`
     };
 
+    // Tarik dulu data cloud agar user yang sudah terdaftar sebelumnya tidak tertimpa
+    await pullUsersFromGoogleSheet().catch(() => {});
+
     const user = upsertGoogleUser(googleProfile);
     const sessionToken = createUserSessionToken(user);
+
+    // Langsung simpan dan sinkronkan user baru ke Google Sheets database cloud
+    await pushUsersToGoogleSheet().catch(() => {});
 
     // Cek protokol HTTPS secara akurat
     const isHttps = proto === 'https' || request.url.startsWith('https:');

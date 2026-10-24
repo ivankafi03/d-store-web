@@ -6092,35 +6092,14 @@
       "note": "Stok buatan sendiri"
     }
   ],
-  "customerNotes": [
-    {
-      "id": "note_1729665600000_101",
-      "orderId": "DST-NOTE-221026",
-      "customerName": "ipan",
-      "customerEmail": "ivankafi7@gmail.com",
-      "contactType": "whatsapp",
-      "contact": "081212121212",
-      "productId": "prod_7",
-      "productName": "Canva Pro Desain Brand Kit & AI Unlock Lifetime",
-      "variantName": "canva pro head 1m [ 100 user ]",
-      "accountDetails": "ivankafi7@gmail.com",
-      "supplier": "Bagah Store",
-      "price": 9000,
-      "durationDays": 30,
-      "startDate": "2026-10-22T00:00:00.000Z",
-      "expiredAt": "2026-11-21T00:00:00.000Z",
-      "warrantyCount": 0,
-      "warrantyMax": 1,
-      "notes": "canva pro head 1m [ 100 user ]",
-      "createdAt": "2026-10-22T00:00:00.000Z",
-      "updatedAt": "2026-10-22T00:00:00.000Z"
-    }
-  ],
+  "customerNotes": [],
   "deletedNoteIds": [
     "note_1792253444545_898",
     "note_1792252424928_439",
     "DST-ORD-444544",
-    "DST-ORD-424926"
+    "DST-ORD-424926",
+    "note_1729665600000_101",
+    "DST-NOTE-221026"
   ],
   "deletedUserEmails": [],
   "blacklistedProducts": [

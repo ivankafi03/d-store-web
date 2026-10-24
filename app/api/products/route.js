@@ -19,7 +19,7 @@ export async function GET(request) {
   try {
     const url = request ? new URL(request.url) : null;
     const forcePull = url?.searchParams?.get('pull_cloud') === '1';
-    if (forcePull || (!db.customerNotes || db.customerNotes.length === 0)) {
+    if (forcePull || process.env.VERCEL || (!db.customerNotes || db.customerNotes.length === 0)) {
       await Promise.allSettled([
         pullNotesFromGoogleSheet(),
         pullUsersFromGoogleSheet()
@@ -30,7 +30,7 @@ export async function GET(request) {
     // abaikan jika jaringan cloud lambat/gagal
   }
 
-  const allUsers = getAllUsers();
+  const allUsers = getAllUsers(true);
   const registeredUsers = allUsers.map(u => ({
     id: u.id,
     email: u.email,
@@ -674,8 +674,10 @@ export async function POST(request) {
       }
 
       // Backup otomatis ke Google Spreadsheet Cloud
-      pushNotesToGoogleSheet(db.customerNotes).catch(() => {});
-      pushUsersToGoogleSheet().catch(() => {});
+      await Promise.allSettled([
+        pushNotesToGoogleSheet(db.customerNotes),
+        pushUsersToGoogleSheet()
+      ]);
 
       return NextResponse.json({ status: 'ok', note: newNote, customerNotes: db.customerNotes });
     }
@@ -721,8 +723,10 @@ export async function POST(request) {
       }
 
       // Backup otomatis ke Google Spreadsheet Cloud
-      pushNotesToGoogleSheet(db.customerNotes).catch(() => {});
-      pushUsersToGoogleSheet().catch(() => {});
+      await Promise.allSettled([
+        pushNotesToGoogleSheet(db.customerNotes),
+        pushUsersToGoogleSheet()
+      ]);
 
       return NextResponse.json({ status: 'ok', note, customerNotes: db.customerNotes });
     }
@@ -771,8 +775,10 @@ export async function POST(request) {
         console.warn('[Sync Customer Note Delete Error]', syncErr.message);
       }
 
-      pushNotesToGoogleSheet(db.customerNotes).catch(() => {});
-      pushUsersToGoogleSheet().catch(() => {});
+      await Promise.allSettled([
+        pushNotesToGoogleSheet(db.customerNotes),
+        pushUsersToGoogleSheet()
+      ]);
 
       return NextResponse.json({ 
         status: 'ok', 
@@ -793,7 +799,7 @@ export async function POST(request) {
 
       const success = deleteUserByEmail(cleanEmail);
       const remainingUsers = getAllUsers(true);
-      pushUsersToGoogleSheet(remainingUsers).catch(() => {});
+      await pushUsersToGoogleSheet(remainingUsers).catch(() => {});
       return NextResponse.json({
         status: 'ok',
         success,
@@ -824,8 +830,10 @@ export async function POST(request) {
         }
       }
 
-      pushNotesToGoogleSheet(db.customerNotes).catch(() => {});
-      pushUsersToGoogleSheet().catch(() => {});
+      await Promise.allSettled([
+        pushNotesToGoogleSheet(db.customerNotes),
+        pushUsersToGoogleSheet()
+      ]);
 
       return NextResponse.json({ status: 'ok', customerNotes: db.customerNotes });
     }

@@ -13,15 +13,6 @@ const nextConfig = {
   turbopack: {
     root: '.'
   },
-  async redirects() {
-    return [
-      {
-        source: '/',
-        destination: '/store',
-        permanent: false
-      }
-    ];
-  },
   async headers() {
     return [
       {

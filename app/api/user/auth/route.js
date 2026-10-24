@@ -70,12 +70,16 @@ export async function POST(request) {
         user
       });
 
+      // Deteksi HTTPS
+      const protoRaw = request.headers.get('x-forwarded-proto') || '';
+      const isHttps = protoRaw.includes('https') || request.url.startsWith('https:');
+
       // Simpan cookie sesi aman (30 hari)
       response.cookies.set({
         name: USER_COOKIE_NAME,
         value: token,
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: isHttps,
         sameSite: 'lax',
         maxAge: 30 * 24 * 60 * 60,
         path: '/'
@@ -86,12 +90,15 @@ export async function POST(request) {
 
     // 2. LOGOUT
     if (action === 'logout') {
+      const protoRaw = request.headers.get('x-forwarded-proto') || '';
+      const isHttps = protoRaw.includes('https') || request.url.startsWith('https:');
+
       const response = NextResponse.json({ ok: true, message: 'Berhasil keluar' });
       response.cookies.set({
         name: USER_COOKIE_NAME,
         value: '',
         httpOnly: true,
-        secure: process.env.NODE_ENV === 'production',
+        secure: isHttps,
         sameSite: 'lax',
         maxAge: 0,
         path: '/'

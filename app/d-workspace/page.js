@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { USER_COOKIE_NAME, verifyUserSessionToken, findUserByEmail, getAllUsers, pullUsersFromGoogleSheet } from '@/lib/userAuth';
+import { USER_COOKIE_NAME, verifyUserSessionToken, getAllUsers, pullUsersFromGoogleSheet } from '@/lib/userAuth';
 import { getDb, pullNotesFromGoogleSheet } from '@/lib/db';
 import WorkspaceClient from './WorkspaceClient';
 
@@ -9,33 +9,44 @@ export const fetchCache = 'force-no-store';
 export const revalidate = 0;
 
 export default async function WorkspacePage() {
-  const cookieStore = await cookies();
-
-  const userToken = cookieStore.get(USER_COOKIE_NAME)?.value;
-  const userSession = verifyUserSessionToken(userToken);
-  const email = (userSession?.email || '').toLowerCase().trim();
-  const isOwner = email === 'ivankafipradana@gmail.com';
+  let isOwner = false;
+  try {
+    const cookieStore = await cookies();
+    const userToken = cookieStore.get(USER_COOKIE_NAME)?.value;
+    const userSession = verifyUserSessionToken(userToken);
+    const email = (userSession?.email || '').toLowerCase().trim();
+    isOwner = email === 'ivankafipradana@gmail.com';
+  } catch (err) {
+    console.warn('[WorkspacePage Auth Error]', err);
+  }
 
   // Jika bukan ivankafipradana@gmail.com, langsung tolak dan lempar ke /store
   if (!isOwner) {
     redirect('/store');
   }
 
-  let db = getDb();
-  // Jika catatan pelanggan kosong (misal baru deploy atau cold-start Vercel), pulihkan otomatis dari cloud Google Sheets
-  if (!db.customerNotes || db.customerNotes.length === 0) {
-    try {
+  let db = {};
+  try {
+    db = getDb() || {};
+    // Jika catatan pelanggan kosong (misal baru deploy atau cold-start Vercel), pulihkan otomatis dari cloud Google Sheets
+    if (!db.customerNotes || db.customerNotes.length === 0) {
       await Promise.allSettled([
         pullNotesFromGoogleSheet(),
         pullUsersFromGoogleSheet()
       ]);
-      db = getDb(true);
-    } catch (e) {
-      console.warn('[WorkspacePage Cloud Sync Error]', e);
+      db = getDb(true) || {};
     }
+  } catch (e) {
+    console.warn('[WorkspacePage Cloud Sync Error]', e);
   }
 
-  const allUsers = getAllUsers();
+  let registeredUsers = [];
+  try {
+    registeredUsers = getAllUsers() || [];
+  } catch (e) {
+    console.warn('[WorkspacePage Users Error]', e);
+  }
+
   const initialData = {
     products: db.products || [],
     variants: db.variants || [],

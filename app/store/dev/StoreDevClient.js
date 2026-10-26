@@ -3123,6 +3123,15 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
               <p className="text-xs text-zinc-500 mt-1">
                 Jelajahi seluruh koleksi akun dan aplikasi digital premium dengan garansi resmi.
               </p>
+              <div className="mt-2.5">
+                <Link
+                  href="/produk"
+                  className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-900 bg-white border border-zinc-300 hover:border-zinc-900 px-3 py-1.5 rounded-xl transition shadow-2xs"
+                >
+                  <span>Buka Halaman Khusus Produk</span>
+                  <ExternalLink className="w-3.5 h-3.5" />
+                </Link>
+              </div>
             </div>
 
             {/* Filter Search */}
@@ -3634,12 +3643,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
               type="button"
               className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-600 hover:text-black transition" 
               onClick={() => {
-                const el = document.getElementById('all-products-section');
-                if (el) {
-                  el.scrollIntoView({ behavior: 'smooth' });
-                } else {
-                  router.push('/store#all-products-section');
-                }
+                router.push('/produk');
               }}
             >
               <Package className="w-5 h-5 text-zinc-600" />

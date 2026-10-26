@@ -3189,7 +3189,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
               </button>
             </div>
           ) : (
-            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
               {filteredCatalogProducts.map((prod, idx) => {
                 const live = liveProducts.find(
                   (p) => p.sku === prod.sku || p.id === prod.id || p.name?.toLowerCase() === prod.name?.toLowerCase()
@@ -3200,46 +3200,50 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                 return (
                   <div
                     key={prod.sku || prod.id || idx}
-                    className="group bg-white rounded-2xl border border-zinc-200/80 hover:border-zinc-400 transition-all duration-200 overflow-hidden flex flex-col shadow-2xs hover:shadow-md cursor-pointer"
+                    className="group bg-white rounded-2xl border border-zinc-200/90 hover:border-black transition-all duration-200 p-4 sm:p-5 flex flex-col justify-between shadow-2xs hover:shadow-md cursor-pointer relative"
                     onClick={() => handleProductOrAppClick(prod)}
                   >
-                    <div className="relative aspect-[3/4] w-full bg-zinc-100 overflow-hidden">
-                      <img
-                        src={prod.image || '/icons/icon-512.png'}
-                        alt={prod.name}
-                        loading="lazy"
-                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                      />
+                    <div>
+                      {/* Brand & Category Tags */}
+                      <div className="flex items-center justify-between gap-2 mb-2.5">
+                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-800">
+                          {prod.brand || 'D STORE'}
+                        </span>
+                        {prod.categoryName && (
+                          <span className="text-[10px] font-semibold text-zinc-400 truncate">
+                            {prod.categoryName}
+                          </span>
+                        )}
+                      </div>
+
+                      {/* Product Name */}
+                      <h3 className="text-sm sm:text-[15px] font-bold text-zinc-900 group-hover:text-black transition-colors line-clamp-2 leading-snug">
+                        {prod.name}
+                      </h3>
+
+                      {/* Badge if available */}
                       {prod.badge && (
-                        <span className="absolute top-2 left-2 bg-zinc-950 text-white text-[9px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider shadow-xs">
-                          {prod.badge}
-                        </span>
-                      )}
-                      {prod.categoryName && (
-                        <span className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-xs text-zinc-800 text-[8.5px] font-bold px-1.5 py-0.5 rounded border border-zinc-200/60 shadow-2xs">
-                          {prod.categoryName}
-                        </span>
+                        <div className="mt-2">
+                          <span className="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200/70 text-[9px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider">
+                            {prod.badge}
+                          </span>
+                        </div>
                       )}
                     </div>
 
-                    <div className="p-3 flex-1 flex flex-col justify-between">
+                    {/* Price & Action Button */}
+                    <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between gap-2">
                       <div>
-                        <div className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-400 line-clamp-1">
-                          {prod.brand || 'D STORE'}
+                        <div className="text-[10px] text-zinc-400 font-medium">Mulai dari</div>
+                        <div className="text-sm sm:text-base font-black text-zinc-950">
+                          {formattedPrice}
                         </div>
-                        <h3 className="text-xs sm:text-[13px] font-bold text-zinc-900 group-hover:text-black line-clamp-2 mt-0.5 leading-snug">
-                          {prod.name}
-                        </h3>
                       </div>
 
-                      <div className="mt-2.5 pt-2 border-t border-zinc-100 flex items-center justify-between">
-                        <span className="font-extrabold text-xs sm:text-sm text-zinc-950">
-                          {formattedPrice}
-                        </span>
-                        <span className="text-[10px] font-semibold text-zinc-500 group-hover:text-zinc-950 transition flex items-center gap-0.5">
-                          Order &rarr;
-                        </span>
-                      </div>
+                      <span className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-xl bg-zinc-950 text-white text-xs font-bold group-hover:bg-zinc-800 transition shadow-2xs">
+                        <span>Pilih Paket</span>
+                        <span className="text-[11px]">&rarr;</span>
+                      </span>
                     </div>
                   </div>
                 );

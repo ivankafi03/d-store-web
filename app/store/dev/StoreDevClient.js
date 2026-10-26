@@ -2591,8 +2591,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
               </div>
 
               {/* Bullet Dots */}
-              <div className="slider-control-bottomcenter absolute z-10 bottom-0 left-1/2 -translate-x-1/2">
-                <ul style={{ position: 'relative', top: '-10px', display: 'flex', margin: '0px', padding: '0px', listStyleType: 'none' }}>
+              <div className="slider-control-bottomcenter absolute z-10 bottom-1.5 left-1/2 -translate-x-1/2">
+                <ul style={{ display: 'flex', margin: '0px', padding: '0px', listStyleType: 'none' }}>
                   {[0, 1].map((dotIdx) => {
                     const isActive = stealsCarousel.currentIndex === dotIdx;
                     return (
@@ -2778,8 +2778,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
               </div>
 
               {/* Bullet Dots */}
-              <div className="slider-control-bottomcenter absolute z-10 bottom-0 left-1/2 -translate-x-1/2">
-                <ul style={{ position: 'relative', top: '-10px', display: 'flex', margin: '0px', padding: '0px', listStyleType: 'none' }}>
+              <div className="slider-control-bottomcenter absolute z-10 bottom-1.5 left-1/2 -translate-x-1/2">
+                <ul style={{ display: 'flex', margin: '0px', padding: '0px', listStyleType: 'none' }}>
                   {[0, 1].map((dotIdx) => {
                     const isActive = applyCarousel.currentIndex === dotIdx;
                     return (
@@ -2856,7 +2856,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                       data-entry-id={`apply-slide-${idx}`}
                       draggable={false}
                     >
-                      <div className={`banner__media-item-wrapper rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition w-full h-[180px] sm:h-[230px] md:h-[280px] bg-transparent border-0 outline-none relative ${
+                      <div className={`banner__media-item-wrapper rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition w-full aspect-[1200/280] max-h-[280px] bg-transparent border-0 outline-none relative flex items-center justify-center ${
                         isEditMode ? 'ring-2 ring-blue-500/80 hover:ring-blue-400' : ''
                       }`}>
                         {isEditMode && (
@@ -2865,7 +2865,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                           </div>
                         )}
                         <img
-                          className="unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
+                          className="unit-element__media-image banner__media-image w-full h-full object-contain object-center pointer-events-none"
                           fetchPriority={idx === 0 ? "high" : "auto"}
                           src={slide.img}
                           alt={slide.title}

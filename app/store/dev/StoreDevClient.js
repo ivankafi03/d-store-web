@@ -19,7 +19,8 @@ import {
   QrCode, 
   Share2,
   ShieldCheck,
-  Zap 
+  Zap,
+  ExternalLink
 } from 'lucide-react';
 
 import { 

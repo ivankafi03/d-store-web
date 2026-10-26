@@ -5,9 +5,9 @@ import Link from 'next/link';
 import { usePathname, useRouter } from 'next/navigation';
 import { 
   Search, 
-  Heart, 
-  ShoppingBag, 
-  User, 
+  Home,
+  SlidersHorizontal,
+  Package,
   ChevronRight, 
   ChevronLeft, 
   ChevronDown, 
@@ -42,11 +42,7 @@ import {
   ZALORA_TOP_TIER_PRODUCTS
 } from '@/lib/zaloraMenData';
 import AppVariantModal from '@/app/components/AppVariantModal';
-import CartModal from '@/app/components/CartModal';
 import CategoriesModal from '@/app/components/CategoriesModal';
-import AccountModal from '@/app/components/AccountModal';
-import UserAvatar from '@/app/components/UserAvatar';
-import { useUserAuth } from '@/lib/useUserAuth';
 import { getAppVariantData } from '@/lib/appVariantsData';
 import { buildUnifiedCatalog, searchCatalog } from '@/lib/catalogTemplates';
 import AdminEditToolbar from '@/app/components/AdminEditToolbar';
@@ -464,28 +460,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
   });
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBrandFilter, setSelectedBrandFilter] = useState(null);
-  const [wishlist, setWishlist] = useState(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('d_store_wishlist');
-        if (saved) return JSON.parse(saved);
-      } catch (e) {}
-    }
-    return [];
-  });
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.setItem('d_store_wishlist', JSON.stringify(wishlist));
-      } catch (e) {}
-    }
-  }, [wishlist]);
-  const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [isAccountOpen, setIsAccountOpen] = useState(false);
-  const { user, isLoggedIn, loginWithGoogle, logout, updateProfile } = useUserAuth();
+  const [catalogCategory, setCatalogCategory] = useState('all');
+  const [catalogSearchTerm, setCatalogSearchTerm] = useState('');
   const [liveProducts, setLiveProducts] = useState(() => initialData?.products || []);
   const [liveVariants, setLiveVariants] = useState(() => initialData?.variants || []);
   const [showSeoText, setShowSeoText] = useState(false);
@@ -959,61 +936,28 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
     return null;
   };
 
-  const toggleWishlist = (productId) => {
-    setWishlist((prev) => {
-      const exists = prev.includes(productId);
-      const updated = exists ? prev.filter(id => id !== productId) : [...prev, productId];
-      showNotification(exists ? 'Dihapus dari Wishlist' : 'Ditambahkan ke Wishlist');
-      return updated;
-    });
-  };
+  const catalogFilterChips = [
+    { id: 'all', label: 'Semua' },
+    { id: 'cat_1', label: 'AI Tools' },
+    { id: 'cat_2', label: 'Streaming' },
+    { id: 'cat_3', label: 'Desain & Video' },
+    { id: 'cat_4', label: 'Music & Audio' },
+    { id: 'cat_5', label: 'Edukasi' },
+    { id: 'cat_6', label: 'VPN & Security' },
+    { id: 'cat_7', label: 'Office & Akun' }
+  ];
 
-  const addToCart = (prod) => {
-    setCart((prev) => {
-      const existingIdx = prev.findIndex((item) => item.id === prod.id);
-      if (existingIdx > -1) {
-        const copy = [...prev];
-        copy[existingIdx] = {
-          ...copy[existingIdx],
-          quantity: (copy[existingIdx].quantity || 1) + (prod.quantity || 1)
-        };
-        return copy;
-      }
-      return [
-        ...prev,
-        {
-          id: prod.id,
-          name: prod.name,
-          variantName: prod.variantName || prod.brand || '',
-          price: prod.price,
-          image: prod.image || prod.img,
-          quantity: prod.quantity || 1,
-          cartItemId: `cart-${prod.id}-${Date.now()}`
-        }
-      ];
-    });
-    showNotification(`${prod.name} dimasukkan ke Tas!`);
-  };
-
-  const handleUpdateCartQuantity = (index, newQty) => {
-    setCart((prev) => {
-      const copy = [...prev];
-      if (copy[index]) {
-        copy[index] = { ...copy[index], quantity: newQty };
-      }
-      return copy;
-    });
-  };
-
-  const handleRemoveCartItem = (index) => {
-    setCart((prev) => prev.filter((_, i) => i !== index));
-    showNotification('Item dihapus dari Tas');
-  };
-
-  const handleClearCart = () => {
-    setCart([]);
-    showNotification('Tas belanja dikosongkan');
-  };
+  const filteredCatalogProducts = useMemo(() => {
+    let list = unifiedCatalog || [];
+    if (catalogCategory !== 'all') {
+      list = list.filter((p) => p.categoryId === catalogCategory || p.categorySlug === catalogCategory);
+    }
+    if (catalogSearchTerm.trim()) {
+      const q = catalogSearchTerm.toLowerCase().trim();
+      list = list.filter((p) => (p.name || '').toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q));
+    }
+    return list;
+  }, [unifiedCatalog, catalogCategory, catalogSearchTerm]);
 
   const showNotification = (msg) => {
     setShowQuickAlert(msg);
@@ -1642,52 +1586,37 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
 
           {/* Action Icons */}
           <div className="flex items-center gap-2 sm:gap-5 shrink-0 text-[#222]">
-            {/* User Account (Desktop) */}
-            <button 
+          {/* Action Links (Desktop & Mobile) */}
+          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 text-[#222]">
+            <button
               type="button"
-              onClick={() => setIsAccountOpen(true)}
-              className="hidden md:flex items-center gap-2 cursor-pointer hover:opacity-75 transition select-none bg-transparent border-0 p-0 text-[#222]"
-              title="Akun Saya"
+              onClick={() => {
+                const el = document.getElementById('all-products-section');
+                if (el) el.scrollIntoView({ behavior: 'smooth' });
+              }}
+              className="px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-bold text-zinc-800 hover:text-black hover:bg-zinc-100 transition cursor-pointer select-none"
             >
-              {user ? (
-                <UserAvatar user={user} size={24} />
-              ) : (
-                <User className="w-5 h-5 sm:w-6 sm:h-6" />
-              )}
-              <span className="hidden xl:inline text-xs font-semibold">
-                {user ? (user.name ? user.name.split(' ')[0] : 'Akun') : 'Akun Saya'}
-              </span>
+              Semua Produk
             </button>
 
-            {/* Wishlist (Desktop) */}
-            <Link 
-              href="/store/wishlist"
-              className="hidden md:flex relative cursor-pointer hover:opacity-75 transition select-none items-center justify-center text-[#222]"
-              title="Wishlist"
-            >
-              <Heart className="w-5 h-5 sm:w-6 sm:h-6" />
-              {wishlist.length > 0 && (
-                <span className="absolute -top-1.5 -right-2 bg-[#d92534] text-white text-[10px] font-bold w-4 h-4 rounded-full flex items-center justify-center">
-                  {wishlist.length}
-                </span>
-              )}
-            </Link>
-
-            {/* Shopping Bag / Cart (All Devices) */}
-            <button 
+            <button
               type="button"
-              onClick={() => setIsCartOpen(true)}
-              className="relative cursor-pointer hover:opacity-75 transition select-none flex items-center justify-center p-1.5 -mr-1 text-[#222]"
-              title="Tas Belanja"
-              aria-label="Buka Tas Belanja"
+              onClick={() => setIsCategoriesOpen(true)}
+              className="px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold text-zinc-700 hover:text-black hover:bg-zinc-100 transition cursor-pointer select-none"
             >
-              <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
-              {cart.length > 0 && (
-                <span className="absolute -top-0.5 -right-1 bg-black text-white text-[9px] sm:text-[10px] font-bold min-w-4 h-4 px-1 rounded-full flex items-center justify-center">
-                  {cart.reduce((acc, item) => acc + (item.quantity || 1), 0)}
-                </span>
-              )}
+              Kategori
             </button>
+
+            <a
+              href="https://wa.me/6281230112240"
+              target="_blank"
+              rel="noopener noreferrer"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-950 text-white text-xs font-bold hover:bg-zinc-800 transition cursor-pointer shadow-2xs"
+            >
+              <MessageCircle className="w-3.5 h-3.5" />
+              <span>Bantuan CS</span>
+            </a>
+          </div>
           </div>
         </div>
 
@@ -2391,7 +2320,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                 style={{ justifyContent: 'unset', touchAction: 'pan-x pan-y', WebkitOverflowScrolling: 'touch' }}
               >
                 {topTierProducts.map((prod, idx) => {
-                  const isWishlisted = wishlist.includes(prod.sku || prod.id);
                   return (
                     <div 
                       key={prod.sku || idx} 
@@ -2495,33 +2423,10 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             })()}
                           </div>
                         </div>
-                        <div className="product-item__add-to-wishlist-icon absolute top-0 right-0">
-                          <button 
-                            className="zui-btn zui-btn-link bg-white disabled:bg-white m-0 !h-5 !w-7 p-0 cursor-pointer flex items-center justify-center hover:opacity-80 transition" 
-                            data-test-id="wishlistBtn" 
-                            aria-label="Add To Wishlist"
-                            type="button"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              toggleWishlist(prod.sku || prod.id);
-                            }}
-                          >
-                            {isWishlisted ? (
-                              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6 sm:size-8 cursor-pointer">
-                                <path d="M16.308 8.335c1.68-1.666 3.691-2.219 5.9-1.571 2.168.635 3.57 2.147 4.13 4.394.058.229.082.409.122.802l.012.127.028.279c-.039 1.496-.545 2.874-1.502 4.4-1.454 2.318-3.335 4.298-6.147 6.683-.362.306-.666.549-1.317 1.058l-.031.025c-.454.356-.665.522-.916.727-.375.305-.767.329-1.162.027-3.318-2.532-5.666-4.724-7.574-7.255-1.107-1.467-1.826-2.832-2.196-4.323-.805-3.25 1.625-6.761 4.946-7.141 1.989-.228 3.692.368 5.086 1.786.16.163.228.246.296.248.072 0 .145-.087.325-.266z" fill="#d92534" />
-                              </svg>
-                            ) : (
-                              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6 sm:size-8 cursor-pointer">
-                                <path fillRule="evenodd" clipRule="evenodd" d="M16.308 8.335c1.68-1.666 3.691-2.219 5.9-1.571 2.168.635 3.57 2.147 4.13 4.394.058.229.082.409.122.802l.012.127.028.279c-.039 1.496-.545 2.874-1.502 4.4-1.454 2.318-3.335 4.298-6.147 6.683-.362.306-.666.549-1.317 1.058l-.031.025c-.454.356-.665.522-.916.727-.375.305-.767.329-1.162.027-3.318-2.532-5.666-4.724-7.574-7.255-1.107-1.467-1.826-2.832-2.196-4.323-.805-3.25 1.625-6.761 4.946-7.141 1.989-.228 3.692.368 5.086 1.786.16.163.228.246.296.248.072 0 .145-.087.325-.266zm9.196 4.083a10.708 10.708 0 01-.04-.361 4.378 4.378 0 00-.095-.658c-.477-1.907-1.621-3.142-3.441-3.676-1.853-.543-3.49-.093-4.915 1.322-.74.735-1.317.744-2.04.01-1.176-1.199-2.574-1.688-4.258-1.495-2.721.312-4.75 3.243-4.09 5.907.334 1.345.993 2.594 2.024 3.962 1.836 2.435 4.11 4.56 7.339 7.028.244-.198.459-.368.898-.712l.032-.025c.64-.502.938-.74 1.287-1.034 2.74-2.324 4.557-4.237 5.946-6.451.87-1.387 1.316-2.602 1.353-3.817z" fill="#737373" />
-                              </svg>
-                            )}
-                          </button>
-                        </div>
                       </div>
                       <button 
                         className="zui-btn zui-btn-outline mt-auto h-10 min-h-[40px] rounded-lg tablet:h-12 w-full text-xs sm:text-sm font-bold border border-[#474747] text-[#262626] hover:bg-[#262626] hover:text-white transition active:scale-95 cursor-pointer flex items-center justify-center" 
-                        aria-label="Masukkan ke Tas" 
+                        aria-label="Pesan Produk" 
                         data-test-id="addToBagButton"
                         type="button"
                         onClick={(e) => {
@@ -3008,7 +2913,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                 }}
               >
                 {justForYouProducts.map((prod, idx) => {
-                  const isWishlisted = wishlist.includes(prod.sku || prod.id);
                   return (
                     <div
                       key={prod.sku || idx}
@@ -3153,30 +3057,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             })()}
                           </div>
                         </a>
-
-                        <div className="product-item__add-to-wishlist-icon absolute top-0 right-0">
-                          <button 
-                            className="zui-btn zui-btn-link bg-white disabled:bg-white m-0 !h-5 !w-7 p-0 cursor-pointer flex items-center justify-center hover:opacity-80 transition" 
-                            data-test-id="wishlistBtn" 
-                            aria-label="Add To Wishlist"
-                            type="button"
-                            onClick={(e) => {
-                              e.preventDefault();
-                              e.stopPropagation();
-                              toggleWishlist(prod.sku || prod.id);
-                            }}
-                          >
-                            {isWishlisted ? (
-                              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6 sm:size-8 cursor-pointer">
-                                <path d="M16.308 8.335c1.68-1.666 3.691-2.219 5.9-1.571 2.168.635 3.57 2.147 4.13 4.394.058.229.082.409.122.802l.012.127.028.279c-.039 1.496-.545 2.874-1.502 4.4-1.454 2.318-3.335 4.298-6.147 6.683-.362.306-.666.549-1.317 1.058l-.031.025c-.454.356-.665.522-.916.727-.375.305-.767.329-1.162.027-3.318-2.532-5.666-4.724-7.574-7.255-1.107-1.467-1.826-2.832-2.196-4.323-.805-3.25 1.625-6.761 4.946-7.141 1.989-.228 3.692.368 5.086 1.786.16.163.228.246.296.248.072 0 .145-.087.325-.266z" fill="#d92534" />
-                              </svg>
-                            ) : (
-                              <svg width="32" height="32" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-6 sm:size-8 cursor-pointer">
-                                <path fillRule="evenodd" clipRule="evenodd" d="M16.308 8.335c1.68-1.666 3.691-2.219 5.9-1.571 2.168.635 3.57 2.147 4.13 4.394.058.229.082.409.122.802l.012.127.028.279c-.039 1.496-.545 2.874-1.502 4.4-1.454 2.318-3.335 4.298-6.147 6.683-.362.306-.666.549-1.317 1.058l-.031.025c-.454.356-.665.522-.916.727-.375.305-.767.329-1.162.027-3.318-2.532-5.666-4.724-7.574-7.255-1.107-1.467-1.826-2.832-2.196-4.323-.805-3.25 1.625-6.761 4.946-7.141 1.989-.228 3.692.368 5.086 1.786.16.163.228.246.296.248.072 0 .145-.087.325-.266zm9.196 4.083a10.708 10.708 0 01-.04-.361 4.378 4.378 0 00-.095-.658c-.477-1.907-1.621-3.142-3.441-3.676-1.853-.543-3.49-.093-4.915 1.322-.74.735-1.317.744-2.04.01-1.176-1.199-2.574-1.688-4.258-1.495-2.721.312-4.75 3.243-4.09 5.907.334 1.345.993 2.594 2.024 3.962 1.836 2.435 4.11 4.56 7.339 7.028.244-.198.459-.368.898-.712l.032-.025c.64-.502.938-.74 1.287-1.034 2.74-2.324 4.557-4.237 5.946-6.451.87-1.387 1.316-2.602 1.353-3.817z" fill="#737373" />
-                              </svg>
-                            )}
-                          </button>
-                        </div>
                       </div>
 
                       <button 
@@ -3260,6 +3140,149 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
         </div>
       </section>
 
+
+      {/* =========================================================
+          KATALOG SEMUA PRODUK (KATALOG LENGKAP D STORE)
+      ========================================================= */}
+      <section id="all-products-section" className="bg-[#FAFAFA] border-t border-zinc-200 py-10 px-4 scroll-mt-20">
+        <div className="max-w-[1240px] mx-auto">
+          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
+            <div>
+              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900 text-white text-[10px] font-bold uppercase tracking-wider mb-2">
+                <Package className="w-3.5 h-3.5" />
+                <span>Katalog Lengkap</span>
+              </div>
+              <h2 className="text-xl sm:text-2xl font-black text-zinc-950 uppercase tracking-tight">
+                Semua Produk ({filteredCatalogProducts.length})
+              </h2>
+              <p className="text-xs text-zinc-500 mt-1">
+                Jelajahi seluruh koleksi akun dan aplikasi digital premium dengan garansi resmi.
+              </p>
+            </div>
+
+            {/* Filter Search */}
+            <div className="w-full md:w-72">
+              <div className="relative">
+                <Search className="w-4 h-4 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
+                <input
+                  type="text"
+                  value={catalogSearchTerm}
+                  onChange={(e) => setCatalogSearchTerm(e.target.value)}
+                  placeholder="Cari di semua produk..."
+                  className="w-full pl-9 pr-8 py-2 text-xs bg-white border border-zinc-300 rounded-xl focus:outline-none focus:border-zinc-900 shadow-2xs text-zinc-900 placeholder:text-zinc-400"
+                />
+                {catalogSearchTerm && (
+                  <button
+                    type="button"
+                    onClick={() => setCatalogSearchTerm('')}
+                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 text-xs cursor-pointer p-0.5"
+                    aria-label="Hapus pencarian"
+                  >
+                    <X className="w-3.5 h-3.5" />
+                  </button>
+                )}
+              </div>
+            </div>
+          </div>
+
+          {/* Category Filter Chips */}
+          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-6">
+            {catalogFilterChips.map((chip) => {
+              const active = catalogCategory === chip.id;
+              return (
+                <button
+                  key={chip.id}
+                  type="button"
+                  onClick={() => setCatalogCategory(chip.id)}
+                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition cursor-pointer border ${
+                    active
+                      ? 'bg-zinc-950 text-white border-zinc-950 shadow-xs'
+                      : 'bg-white text-zinc-700 border-zinc-200 hover:border-zinc-400'
+                  }`}
+                >
+                  {chip.label}
+                </button>
+              );
+            })}
+          </div>
+
+          {/* Product Grid */}
+          {filteredCatalogProducts.length === 0 ? (
+            <div className="bg-white rounded-2xl border border-zinc-200 p-10 text-center">
+              <Package className="w-10 h-10 text-zinc-300 mx-auto mb-2" />
+              <div className="text-sm font-bold text-zinc-800">Tidak ada produk ditemukan</div>
+              <p className="text-xs text-zinc-500 mt-1">Coba kata kunci lain atau pilih kategori berbeda.</p>
+              <button
+                type="button"
+                onClick={() => {
+                  setCatalogCategory('all');
+                  setCatalogSearchTerm('');
+                }}
+                className="mt-4 px-4 py-2 bg-zinc-900 text-white rounded-xl text-xs font-semibold hover:bg-zinc-800 transition cursor-pointer"
+              >
+                Reset Filter
+              </button>
+            </div>
+          ) : (
+            <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-3 sm:gap-4">
+              {filteredCatalogProducts.map((prod, idx) => {
+                const live = liveProducts.find(
+                  (p) => p.sku === prod.sku || p.id === prod.id || p.name?.toLowerCase() === prod.name?.toLowerCase()
+                );
+                const displayPrice = live?.minPrice || prod.priceNumber || prod.price;
+                const formattedPrice = typeof displayPrice === 'number' ? formatRupiah(displayPrice) : displayPrice;
+
+                return (
+                  <div
+                    key={prod.sku || prod.id || idx}
+                    className="group bg-white rounded-2xl border border-zinc-200/80 hover:border-zinc-400 transition-all duration-200 overflow-hidden flex flex-col shadow-2xs hover:shadow-md cursor-pointer"
+                    onClick={() => handleProductOrAppClick(prod)}
+                  >
+                    <div className="relative aspect-[3/4] w-full bg-zinc-100 overflow-hidden">
+                      <img
+                        src={prod.image || '/icons/icon-512.png'}
+                        alt={prod.name}
+                        loading="lazy"
+                        className="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                      />
+                      {prod.badge && (
+                        <span className="absolute top-2 left-2 bg-zinc-950 text-white text-[9px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider shadow-xs">
+                          {prod.badge}
+                        </span>
+                      )}
+                      {prod.categoryName && (
+                        <span className="absolute bottom-2 left-2 bg-white/90 backdrop-blur-xs text-zinc-800 text-[8.5px] font-bold px-1.5 py-0.5 rounded border border-zinc-200/60 shadow-2xs">
+                          {prod.categoryName}
+                        </span>
+                      )}
+                    </div>
+
+                    <div className="p-3 flex-1 flex flex-col justify-between">
+                      <div>
+                        <div className="text-[10px] font-extrabold uppercase tracking-wider text-zinc-400 line-clamp-1">
+                          {prod.brand || 'D STORE'}
+                        </div>
+                        <h3 className="text-xs sm:text-[13px] font-bold text-zinc-900 group-hover:text-black line-clamp-2 mt-0.5 leading-snug">
+                          {prod.name}
+                        </h3>
+                      </div>
+
+                      <div className="mt-2.5 pt-2 border-t border-zinc-100 flex items-center justify-between">
+                        <span className="font-extrabold text-xs sm:text-sm text-zinc-950">
+                          {formattedPrice}
+                        </span>
+                        <span className="text-[10px] font-semibold text-zinc-500 group-hover:text-zinc-950 transition flex items-center gap-0.5">
+                          Order &rarr;
+                        </span>
+                      </div>
+                    </div>
+                  </div>
+                );
+              })}
+            </div>
+          )}
+        </div>
+      </section>
 
       {/* =========================================================
           13. CATEGORIES FOOTER PILLS & ACCORDION SEO TEXT
@@ -3562,17 +3585,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                   >
                     Pesan via WhatsApp
                   </a>
-
-                  <button
-                    type="button"
-                    onClick={() => {
-                      addToCart(activeProductModal);
-                      setActiveProductModal(null);
-                    }}
-                    className="w-full py-3 px-4 rounded-xl bg-zinc-100 hover:bg-zinc-200 text-zinc-900 font-medium text-xs sm:text-sm text-center transition cursor-pointer"
-                  >
-                    Tambah ke Tas Belanja
-                  </button>
                 </div>
               </div>
             </div>
@@ -3587,24 +3599,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
         <AppVariantModal
           appData={selectedAppModal}
           onClose={() => setSelectedAppModal(null)}
-          onAddToCart={(item) => {
-            addToCart(item);
-            setSelectedAppModal(null);
-          }}
           onShowNotification={showNotification}
         />
       )}
-
-      {/* Cart / Tas Belanja Modal Terpadu */}
-      <CartModal
-        isOpen={isCartOpen}
-        onClose={() => setIsCartOpen(false)}
-        cart={cart}
-        user={user}
-        onUpdateQuantity={handleUpdateCartQuantity}
-        onRemoveItem={handleRemoveCartItem}
-        onClearCart={handleClearCart}
-      />
 
       {/* Categories Modal Sheet */}
       <CategoriesModal
@@ -3612,38 +3609,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
         onClose={() => setIsCategoriesOpen(false)}
         onSelectCategory={(cat) => {
           showNotification(`Membuka kategori ${cat.name}`);
-        }}
-      />
-
-      {/* Account Support & Member Hub Modal (Google Auth Terpadu) */}
-      <AccountModal
-        isOpen={isAccountOpen}
-        onClose={() => setIsAccountOpen(false)}
-        user={user}
-        onLoginWithGoogle={async (data) => {
-          const res = await loginWithGoogle(data);
-          if (res.ok) {
-            showNotification(`Selamat datang, ${res.user.name}!`);
-          } else {
-            showNotification(res.error || 'Gagal masuk akun Google');
-          }
-        }}
-        onLogout={async () => {
-          await logout();
-          showNotification('Berhasil keluar dari akun Google');
-        }}
-        onUpdatePhone={async (phone) => {
-          const res = await updateProfile({ phone });
-          if (res.ok) {
-            showNotification('Nomor WhatsApp berhasil diperbarui');
-          }
-        }}
-        cartCount={cart.reduce((acc, item) => acc + (item.quantity || 1), 0)}
-        wishlistCount={wishlist.length}
-        onOpenCart={() => setIsCartOpen(true)}
-        onOpenWishlist={() => {
-          setIsAccountOpen(false);
-          router.push('/store/wishlist');
         }}
       />
 
@@ -3658,148 +3623,59 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       )}
 
       {/* =========================================================
-          16. ZALORA OFFICIAL FLOATING PILL MOBILE BOTTOM NAVIGATION BAR
-          (100% PERSIS KODE & SCREENSHOT ASLI ZALORA)
+          16. FLOATING PILL MOBILE BOTTOM NAVIGATION BAR
+          (3 Menu: Home, Kategori, Produk)
       ========================================================= */}
       <div 
         id="mobile_bottom_nav" 
-        className="fixed bottom-3 sm:bottom-4 inset-x-0 mx-auto z-50 w-[92%] max-w-[370px] md:hidden pointer-events-none"
+        className="fixed bottom-3 sm:bottom-4 inset-x-0 mx-auto z-50 w-[86%] max-w-[320px] md:hidden pointer-events-none"
         style={{ left: 0, right: 0, marginLeft: 'auto', marginRight: 'auto' }}
       >
-        <div className="rounded-full iphone-glass-bottom-card px-1.5 py-0.5 pointer-events-auto shadow-[0_8px_25px_rgba(0,0,0,0.1)]">
-          <div className="relative flex items-center justify-center px-1">
+        <div className="rounded-full iphone-glass-bottom-card px-2 py-1 pointer-events-auto shadow-[0_8px_25px_rgba(0,0,0,0.12)] border border-zinc-200/80 bg-white/95 backdrop-blur-md">
+          <div className="relative flex items-center justify-around px-1">
             {/* 1. Home */}
-            <a 
-              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
-              href="/store"
-              onClick={(e) => {
+            <button 
+              type="button"
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-900 hover:text-black transition" 
+              onClick={() => {
                 if (pathname === '/store' || pathname === '/store/dev') {
-                  e.preventDefault();
                   setActiveSegment('all');
                   window.scrollTo({ top: 0, behavior: 'smooth' });
+                } else {
+                  router.push('/store');
                 }
               }}
             >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
-              <span className="relative">
-                <span>
-                  <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-5">
-                    <path d="M8.656 7v1.463H21.95L8 24.416V25h17v-1.464H10.965L24.907 7.693 24.9 7H8.656z" fill="#262626"></path>
-                  </svg>
-                </span>
-              </span>
-              <span className="relative text-[9.5px] leading-tight font-semibold text-[#262626]">Home</span>
-            </a>
+              <Home className="w-5 h-5 text-zinc-900" />
+              <span className="text-[10px] leading-tight font-semibold text-zinc-900">Home</span>
+            </button>
 
             {/* 2. Kategori */}
-            <a 
-              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setIsCategoriesOpen(true);
+            <button 
+              type="button"
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-600 hover:text-black transition" 
+              onClick={() => setIsCategoriesOpen(true)}
+            >
+              <SlidersHorizontal className="w-5 h-5 text-zinc-600" />
+              <span className="text-[10px] leading-tight font-medium text-zinc-600">Kategori</span>
+            </button>
+
+            {/* 3. Produk */}
+            <button 
+              type="button"
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-600 hover:text-black transition" 
+              onClick={() => {
+                const el = document.getElementById('all-products-section');
+                if (el) {
+                  el.scrollIntoView({ behavior: 'smooth' });
+                } else {
+                  router.push('/store#all-products-section');
+                }
               }}
             >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
-              <span className="relative">
-                <span>
-                  <svg width="22" height="22" viewBox="0 0 26 26" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-5">
-                    <path d="M23.64 20.376l-4.083-4.082a7.185 7.185 0 10-.922.922l4.082 4.083a.652.652 0 10.923-.923zM8.174 11.705a5.871 5.871 0 115.871 5.87 5.877 5.877 0 01-5.87-5.87z" fill="#737373"></path>
-                    <path d="M2.169 15.222h1.68M2.169 18.222H5.04M2.169 21.222h7.033" stroke="#737373" strokeLinecap="round"></path>
-                  </svg>
-                </span>
-              </span>
-              <span className="relative text-[9.5px] leading-tight font-normal text-grey-60 text-[#737373]">Kategori</span>
-            </a>
-
-            {/* 3. Tas */}
-            <a 
-              rel="noindex,nofollow" 
-              aria-label="Go To Cart" 
-              data-test-id="cartLink" 
-              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setIsCartOpen(true);
-              }}
-            >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
-              <span className="relative">
-                <span>
-                  <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-5">
-                    <path fillRule="evenodd" clipRule="evenodd" d="M20.5 10.866v.975c0 .27-.224.488-.5.488a.494.494 0 01-.5-.488v-.975h-6v.975c0 .27-.224.488-.5.488a.494.494 0 01-.5-.488v-.975h-2.17L9.007 23.337a.987.987 0 00.986 1.076l12.999.111a.982.982 0 001.003-1.082l-1.411-12.576H20.5zm0-.976h2.083c.51 0 .938.375.994.87l1.41 12.577c.12 1.07-.672 2.034-1.77 2.151a2.072 2.072 0 01-.235.012l-13-.111c-1.104-.01-1.991-.89-1.982-1.968.001-.062.005-.123.011-.184l1.325-12.472a.991.991 0 01.995-.875H12.5v-.319c0-2.243 1.785-4.071 4-4.071 1.922 0 3.555 1.387 3.923 3.275.051.26.077.527.077.796v.32zm-1 0v-.319c0-.208-.02-.413-.059-.614-.28-1.437-1.51-2.481-2.941-2.481-1.651 0-3 1.38-3 3.095v.32h6z" fill="#737373"></path>
-                  </svg>
-                </span>
-                {cart.length > 0 && (
-                  <span className="absolute -top-1 -right-2 bg-black text-white text-[9px] font-bold min-w-3.5 h-3.5 px-0.5 rounded-full flex items-center justify-center shadow-xs">
-                    {cart.reduce((acc, item) => acc + (item.quantity || 1), 0)}
-                  </span>
-                )}
-              </span>
-              <span className="relative text-[9.5px] leading-tight font-normal text-grey-60 text-[#737373]">Tas</span>
-            </a>
-
-            {/* 4. Wishlist */}
-            <Link 
-              rel="noindex,nofollow" 
-              aria-label="Wishlist" 
-              data-test-id="wishlistLink" 
-              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
-              href="/store/wishlist"
-            >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
-              <span className="relative">
-                <span>
-                  {wishlist.length > 0 ? (
-                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-5">
-                      <path d="M16.308 8.335c1.68-1.666 3.691-2.219 5.9-1.571 2.168.635 3.57 2.147 4.13 4.394.058.229.082.409.122.802l.012.127.028.279c-.039 1.496-.545 2.874-1.502 4.4-1.454 2.318-3.335 4.298-6.147 6.683-.362.306-.666.549-1.317 1.058l-.031.025c-.454.356-.665.522-.916.727-.375.305-.767.329-1.162.027-3.318-2.532-5.666-4.724-7.574-7.255-1.107-1.467-1.826-2.832-2.196-4.323-.805-3.25 1.625-6.761 4.946-7.141 1.989-.228 3.692.368 5.086 1.786.16.163.228.246.296.248.072 0 .145-.087.325-.266z" fill="#d92534"></path>
-                    </svg>
-                  ) : (
-                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-5">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M16.308 8.335c1.68-1.666 3.691-2.219 5.9-1.571 2.168.635 3.57 2.147 4.13 4.394.058.229.082.409.122.802l.012.127.028.279c-.039 1.496-.545 2.874-1.502 4.4-1.454 2.318-3.335 4.298-6.147 6.683-.362.306-.666.549-1.317 1.058l-.031.025c-.454.356-.665.522-.916.727-.375.305-.767.329-1.162.027-3.318-2.532-5.666-4.724-7.574-7.255-1.107-1.467-1.826-2.832-2.196-4.323-.805-3.25 1.625-6.761 4.946-7.141 1.989-.228 3.692.368 5.086 1.786.16.163.228.246.296.248.072 0 .145-.087.325-.266zm9.196 4.083a10.708 10.708 0 01-.04-.361 4.378 4.378 0 00-.095-.658c-.477-1.907-1.621-3.142-3.441-3.676-1.853-.543-3.49-.093-4.915 1.322-.74.735-1.317.744-2.04.01-1.176-1.199-2.574-1.688-4.258-1.495-2.721.312-4.75 3.243-4.09 5.907.334 1.345.993 2.594 2.024 3.962 1.836 2.435 4.11 4.56 7.339 7.028.244-.198.459-.368.898-.712l.032-.025c.64-.502.938-.74 1.287-1.034 2.74-2.324 4.557-4.237 5.946-6.451.87-1.387 1.316-2.602 1.353-3.817z" fill="#737373"></path>
-                    </svg>
-                  )}
-                </span>
-                {wishlist.length > 0 && (
-                  <span className="absolute -top-1 -right-1.5 bg-[#d92534] text-white text-[8.5px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
-                    {wishlist.length}
-                  </span>
-                )}
-              </span>
-              <span className={`relative text-[9.5px] leading-tight font-normal ${wishlist.length > 0 ? 'text-[#d92534] font-semibold' : 'text-grey-60 text-[#737373]'}`}>Wishlist</span>
-            </Link>
-
-            {/* 5. Akun Saya */}
-            <a 
-              rel="noindex,nofollow" 
-              data-test-id="bottomNavAccountIcon" 
-              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none" 
-              href="#"
-              onClick={(e) => {
-                e.preventDefault();
-                setIsAccountOpen(true);
-              }}
-            >
-              <span aria-hidden="true" className="absolute left-1/2 top-1/2 h-full w-16 max-w-[calc(100%+0.5rem)] -translate-x-1/2 -translate-y-1/2 rounded-full"></span>
-              <span className="relative">
-                <span>
-                  {user ? (
-                    <UserAvatar user={user} size={20} />
-                  ) : (
-                    <svg width="24" height="24" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg" className="inline-block size-5">
-                      <path fillRule="evenodd" clipRule="evenodd" d="M21.5 11a5.5 5.5 0 11-11 0 5.5 5.5 0 1111 0zm-1 0a4.5 4.5 0 10-8.999-.001A4.5 4.5 0 0020.5 11zm4 13.605c0 .512-.068 1.02-.2 1.522a.5.5 0 01-.966-.254c.11-.42.166-.843.166-1.268 0-3.349-3.339-6.105-7.5-6.105s-7.5 2.756-7.5 6.105c0 .281.074.964.137 1.304a.5.5 0 11-.984.182 10.96 10.96 0 01-.153-1.486c0-3.948 3.824-7.105 8.5-7.105s8.5 3.157 8.5 7.105z" fill="#737373"></path>
-                    </svg>
-                  )}
-                  {user && (
-                    <span className="absolute -top-0.5 -right-0.5 w-2 h-2 rounded-full bg-emerald-500 border border-white" />
-                  )}
-                </span>
-              </span>
-              <span className={`relative text-[9.5px] leading-tight font-normal ${user ? 'text-blue-600 font-semibold' : 'text-[#737373]'}`}>
-                {user ? (user.name ? user.name.split(' ')[0] : 'Akun') : 'Akun Saya'}
-              </span>
-            </a>
+              <Package className="w-5 h-5 text-zinc-600" />
+              <span className="text-[10px] leading-tight font-medium text-zinc-600">Produk</span>
+            </button>
           </div>
         </div>
       </div>

@@ -5,9 +5,6 @@ import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { 
   Search, 
-  Heart, 
-  ShoppingBag, 
-  User, 
   ArrowLeft,
   X,
   SlidersHorizontal,
@@ -16,6 +13,7 @@ import {
   ShieldCheck,
   MessageCircle,
   Home,
+  Package,
   Sparkles,
   Edit3
 } from 'lucide-react';
@@ -28,7 +26,6 @@ import {
   ZALORA_BUBBLES 
 } from '@/lib/zaloraMenData';
 import AppVariantModal from '@/app/components/AppVariantModal';
-import CartModal from '@/app/components/CartModal';
 import CategoriesModal from '@/app/components/CategoriesModal';
 import AdminEditToolbar from '@/app/components/AdminEditToolbar';
 import VisualEditModal from '@/app/components/VisualEditModal';
@@ -54,26 +51,7 @@ export default function CategoryStoreClient({ initialSlug, initialProducts = [],
   const [searchQuery, setSearchQuery] = useState('');
   const [activeSort, setActiveSort] = useState('popular');
   const [selectedAppModal, setSelectedAppModal] = useState(null);
-  const [cart, setCart] = useState([]);
-  const [isCartOpen, setIsCartOpen] = useState(false);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [wishlist, setWishlist] = useState(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        const saved = localStorage.getItem('d_store_wishlist');
-        if (saved) return JSON.parse(saved);
-      } catch (e) {}
-    }
-    return [];
-  });
-
-  useEffect(() => {
-    if (typeof window !== 'undefined') {
-      try {
-        localStorage.setItem('d_store_wishlist', JSON.stringify(wishlist));
-      } catch (e) {}
-    }
-  }, [wishlist]);
   const [toastMessage, setToastMessage] = useState(null);
 
   // Mode Admin Visual Editor State (Hanya aktif jika diakses via route admin/dev)
@@ -184,15 +162,6 @@ export default function CategoryStoreClient({ initialSlug, initialProducts = [],
   }, []);
 
   const formatRupiah = (num) => 'Rp ' + Number(num || 0).toLocaleString('id-ID');
-
-  const toggleWishlist = (productId) => {
-    setWishlist((prev) => {
-      const exists = prev.includes(productId);
-      const updated = exists ? prev.filter((id) => id !== productId) : [...prev, productId];
-      showToast(exists ? 'Dihapus dari Wishlist' : 'Ditambahkan ke Wishlist');
-      return updated;
-    });
-  };
 
   // Helper pencarian gambar bawaan dari katalog utama
   const getProductImage = (prod) => {
@@ -654,41 +623,23 @@ export default function CategoryStoreClient({ initialSlug, initialProducts = [],
               </button>
             )}
 
+            <Link 
+              href="/store#all-products-section"
+              className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-950 text-white text-xs font-semibold hover:bg-zinc-800 transition cursor-pointer"
+            >
+              <Package className="w-3.5 h-3.5" />
+              <span>Semua Produk</span>
+            </Link>
+
             <a 
               href="https://wa.me/6281230112240"
               target="_blank"
               rel="noopener noreferrer"
-              className="hidden sm:flex items-center gap-1.5 text-xs font-semibold hover:opacity-75 transition select-none"
+              className="flex items-center gap-1.5 text-xs font-semibold text-zinc-700 hover:text-black transition select-none"
             >
-              <User className="w-5 h-5" />
+              <MessageCircle className="w-4 h-4 text-emerald-600" />
               <span className="hidden lg:inline">Bantuan CS</span>
             </a>
-
-            <Link 
-              href="/store/wishlist"
-              className="relative cursor-pointer hover:opacity-75 transition select-none p-1 text-[#222]"
-              title="Wishlist"
-            >
-              <Heart className="w-5 h-5 sm:w-6 sm:h-6" />
-              {wishlist.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-[#d92534] text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
-                  {wishlist.length}
-                </span>
-              )}
-            </Link>
-
-            <div 
-              onClick={() => setIsCartOpen(true)}
-              className="relative cursor-pointer hover:opacity-75 transition select-none p-1"
-              title="Tas Belanja"
-            >
-              <ShoppingBag className="w-5 h-5 sm:w-6 sm:h-6" />
-              {cart.length > 0 && (
-                <span className="absolute -top-1 -right-1 bg-black text-white text-[9px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
-                  {cart.length}
-                </span>
-              )}
-            </div>
           </div>
 
         </div>
@@ -765,8 +716,6 @@ export default function CategoryStoreClient({ initialSlug, initialProducts = [],
         {!loading && filteredProducts.length > 0 && (
           <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-4 xl:grid-cols-5 gap-2 sm:gap-2.5 w-full">
             {filteredProducts.map((prod, idx) => {
-              const isWishlisted = wishlist.includes(prod.id || prod.name);
-
               return (
                 <div
                   key={prod.id || idx}
@@ -808,22 +757,6 @@ export default function CategoryStoreClient({ initialSlug, initialProducts = [],
                         <span>Edit</span>
                       </button>
                     )}
-                    {/* Wishlist Button */}
-                    <button
-                      type="button"
-                      onClick={(e) => {
-                        e.stopPropagation();
-                        toggleWishlist(prod.id || prod.name);
-                      }}
-                      className="absolute top-1.5 right-1.5 z-20 w-6 h-6 sm:w-7 sm:h-7 rounded-full bg-white/85 hover:bg-white shadow-2xs flex items-center justify-center transition cursor-pointer"
-                      title="Simpan ke Wishlist"
-                    >
-                      <Heart 
-                        className={`w-3 h-3 sm:w-3.5 sm:h-3.5 transition ${
-                          isWishlisted ? 'text-red-500 fill-red-500' : 'text-[#888]'
-                        }`} 
-                      />
-                    </button>
 
                     {prod.image ? (
                       <img
@@ -948,75 +881,34 @@ export default function CategoryStoreClient({ initialSlug, initialProducts = [],
         </div>
       </footer>
 
-      {/* 5. FLOATING PILL MOBILE BOTTOM BAR (Persis Halaman Utama) */}
-      <div className="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md border border-[#EAEAEA] rounded-full shadow-lg px-6 py-2 flex items-center gap-8">
-        <Link href="/store" className="flex flex-col items-center gap-0.5 text-black">
+      {/* 5. FLOATING PILL MOBILE BOTTOM BAR (Home, Kategori, Produk) */}
+      <div className="md:hidden fixed bottom-3 left-1/2 -translate-x-1/2 z-40 bg-white/95 backdrop-blur-md border border-zinc-200/80 rounded-full shadow-[0_8px_25px_rgba(0,0,0,0.12)] px-6 py-2 flex items-center gap-8">
+        <Link href="/store" className="flex flex-col items-center gap-0.5 text-zinc-900 hover:text-black">
           <Home className="w-4 h-4" />
           <span className="text-[10px] font-bold">Home</span>
         </Link>
         <button 
           type="button" 
           onClick={() => setIsCategoriesOpen(true)} 
-          className="flex flex-col items-center gap-0.5 text-[#737373] hover:text-black transition cursor-pointer"
+          className="flex flex-col items-center gap-0.5 text-zinc-600 hover:text-black transition cursor-pointer"
         >
           <SlidersHorizontal className="w-4 h-4" />
-          <span className="text-[10px]">Kategori</span>
+          <span className="text-[10px] font-medium">Kategori</span>
         </button>
-        <button type="button" onClick={() => setIsCartOpen(true)} className="flex flex-col items-center gap-0.5 text-[#737373] relative">
-          <ShoppingBag className="w-4 h-4" />
-          <span className="text-[10px]">Tas</span>
-          {cart.length > 0 && (
-            <span className="absolute -top-1 -right-1 bg-black text-white text-[8px] font-bold w-3.5 h-3.5 rounded-full flex items-center justify-center">
-              {cart.length}
-            </span>
-          )}
-        </button>
+        <Link href="/store#all-products-section" className="flex flex-col items-center gap-0.5 text-zinc-600 hover:text-black transition">
+          <Package className="w-4 h-4" />
+          <span className="text-[10px] font-medium">Produk</span>
+        </Link>
       </div>
 
-      {/* Modal Detail Paket & Cart */}
+      {/* Modal Detail Paket */}
       {selectedAppModal && (
         <AppVariantModal
           appData={selectedAppModal}
           app={selectedAppModal}
           isOpen={true}
           onClose={() => setSelectedAppModal(null)}
-          onAddToCart={(item) => {
-            setCart((prev) => {
-              const existingIdx = prev.findIndex((p) => p.id === item.id);
-              if (existingIdx >= 0) {
-                const updated = [...prev];
-                updated[existingIdx].quantity = (updated[existingIdx].quantity || 1) + 1;
-                return updated;
-              }
-              return [...prev, { ...item, quantity: 1 }];
-            });
-            showToast(`Ditambahkan ke tas: ${item.name} (${item.variantName || ''})`);
-            setSelectedAppModal(null);
-          }}
           onShowNotification={showToast}
-        />
-      )}
-
-      {isCartOpen && (
-        <CartModal
-          isOpen={isCartOpen}
-          onClose={() => setIsCartOpen(false)}
-          cart={cart}
-          onUpdateQuantity={(index, newQty) => {
-            if (newQty <= 0) {
-              setCart((prev) => prev.filter((_, i) => i !== index));
-            } else {
-              setCart((prev) => prev.map((item, i) => i === index ? { ...item, quantity: newQty } : item));
-            }
-          }}
-          onRemoveItem={(index) => {
-            setCart((prev) => prev.filter((_, i) => i !== index));
-            showToast('Produk dihapus dari tas');
-          }}
-          onClearCart={() => {
-            setCart([]);
-            showToast('Tas belanja dikosongkan');
-          }}
         />
       )}
 

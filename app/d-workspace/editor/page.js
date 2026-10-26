@@ -1,35 +1,21 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { USER_COOKIE_NAME, verifyUserSessionToken } from '@/lib/userAuth';
 import StoreDevClient from '@/app/store/dev/StoreDevClient';
 import { getDb } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+export const revalidate = 0;
 
-export default async function WorkspaceEditorPage() {
-  let isOwner = false;
-  try {
-    const cookieStore = await cookies();
-    const userToken = cookieStore.get(USER_COOKIE_NAME)?.value;
-    const userSession = verifyUserSessionToken(userToken);
-    const email = (userSession?.email || '').toLowerCase().trim();
-    isOwner = email === 'ivankafipradana@gmail.com';
-  } catch (err) {}
-
-  // Jika akun lain atau belum login ivankafipradana@gmail.com, langsung tolak dan lempar ke /store
-  if (!isOwner) {
-    redirect('/store');
-  }
-
+export default function WorkspaceEditorPage() {
   let initialData = {
     banners: null,
     visualEditorData: {},
     products: [],
-    variants: []
+    variants: [],
+    categoryOverrides: {}
   };
 
   try {
-    const db = getDb() || {};
+    const db = getDb(true) || {};
     initialData = {
       banners: db.banners || null,
       visualEditorData: {
@@ -37,7 +23,8 @@ export default async function WorkspaceEditorPage() {
         ...(db.visualEditorData || {})
       },
       products: Array.isArray(db.products) ? db.products : [],
-      variants: Array.isArray(db.variants) ? db.variants : []
+      variants: Array.isArray(db.variants) ? db.variants : [],
+      categoryOverrides: db.categoryOverrides || {}
     };
   } catch (err) {}
 

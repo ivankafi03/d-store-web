@@ -1,25 +1,11 @@
-import { cookies } from 'next/headers';
-import { redirect } from 'next/navigation';
-import { USER_COOKIE_NAME, verifyUserSessionToken } from '@/lib/userAuth';
 import StoreDevClient from './StoreDevClient';
 import { getDb } from '@/lib/db';
 
 export const dynamic = 'force-dynamic';
+export const fetchCache = 'force-no-store';
+export const revalidate = 0;
 
-export default async function StoreDevPage() {
-  let isOwner = false;
-  try {
-    const cookieStore = await cookies();
-    const userToken = cookieStore.get(USER_COOKIE_NAME)?.value;
-    const userSession = verifyUserSessionToken(userToken);
-    const email = (userSession?.email || '').toLowerCase().trim();
-    isOwner = email === 'ivankafipradana@gmail.com';
-  } catch (err) {}
-
-  if (!isOwner) {
-    redirect('/store');
-  }
-
+export default function StoreDevPage() {
   let initialData = {
     banners: null,
     visualEditorData: {},
@@ -29,7 +15,7 @@ export default async function StoreDevPage() {
   };
 
   try {
-    const db = getDb() || {};
+    const db = getDb(true) || {};
     initialData = {
       banners: db.banners || null,
       visualEditorData: {

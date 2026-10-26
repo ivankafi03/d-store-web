@@ -1,5 +1,5 @@
 {
-  "updatedAt": "2026-10-26T16:25:08.513866+00:00",
+  "updatedAt": "2026-10-26T16:42:53.164999+00:00",
   "categories": [
     {
       "id": "cat_1",
@@ -34,7 +34,7 @@
     {
       "id": "prod_prabu_1",
       "categoryId": "cat_7",
-      "name": "Gmail Fresh Verifikasi No Phone Siap Pakai",
+      "name": "Gmail Fresh",
       "description": "Gmail Fresh - Create By Team, Garansi 1x24, Anti HackBack",
       "isActive": true,
       "image": "",
@@ -54,7 +54,7 @@
     {
       "id": "prod_7",
       "categoryId": "cat_3",
-      "name": "Canva Pro Desain Brand Kit & AI Unlock Lifetime",
+      "name": "Canva",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "image": "",
@@ -72,38 +72,9 @@
       "price": 2500
     },
     {
-      "id": "prod_bagah_4",
-      "categoryId": "cat_3",
-      "name": "CANVA BISNIS HEAD 1 BULAN",
-      "description": "Akun Premium Resmi & Bergaransi D Store",
-      "isActive": true,
-      "price": 10000,
-      "image": ""
-    },
-    {
-      "id": "prod_bagah_5",
-      "categoryId": "cat_3",
-      "name": "MEITU 7D VIP",
-      "description": "Akun Premium Resmi & Bergaransi D Store",
-      "isActive": true,
-      "image": "",
-      "brand": "MEITU 7D VIP",
-      "price": 5000
-    },
-    {
-      "id": "prod_bagah_6",
-      "categoryId": "cat_3",
-      "name": "WINK  7D VIP+",
-      "description": "Akun Premium Resmi & Bergaransi D Store",
-      "isActive": true,
-      "image": "",
-      "brand": "WINK  7D VIP+",
-      "price": 5000
-    },
-    {
       "id": "prod_looviie_1789898664903_385",
       "categoryId": "cat_6",
-      "name": "Surfshark VPN Unlimited Devices High Speed",
+      "name": "Surfshark VPN",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "image": "",
@@ -147,7 +118,7 @@
       "description": "Privat, all device, garansi 4 hari. Login max 2 device. No reff jika meitu terdeact atau eror karena problem nya dari meitu bukan dari akun yang diberi seller.",
       "isActive": true,
       "image": "",
-      "price": 6000
+      "price": 5000
     },
     {
       "id": "prod_72",
@@ -156,12 +127,12 @@
       "description": "Privat, all device, garansi 4 hari. Login max 3 device. No reff jika wink terdeact atau eror karena problem nya dari meitu bukan dari akun yang diberi seller.",
       "isActive": true,
       "image": "",
-      "price": 6000
+      "price": 5000
     },
     {
       "id": "prod_75",
       "categoryId": "cat_7",
-      "name": "Zoom Pro 30 Jam Meeting 100 Peserta Private",
+      "name": "Zoom",
       "description": "Privat, acc s, garansi 7 hari.",
       "isActive": true,
       "image": "",
@@ -171,12 +142,12 @@
     {
       "id": "prod_23",
       "categoryId": "cat_1",
-      "name": "Gemini",
+      "name": "Gemini AI",
       "description": "Accc b ( invit ), full gar.",
       "isActive": true,
       "image": "",
       "brand": "GEMINI",
-      "price": 7000
+      "price": 6000
     },
     {
       "id": "prod_5",
@@ -191,7 +162,7 @@
     {
       "id": "prod_8",
       "categoryId": "cat_3",
-      "name": "CapCut Pro Cloud & Preset Ekspor 4K 60fps",
+      "name": "CapCut",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "image": "",
@@ -201,7 +172,7 @@
     {
       "id": "prod_10",
       "categoryId": "cat_1",
-      "name": "ChatGPT Plus",
+      "name": "ChatGPT",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "image": "",
@@ -211,7 +182,7 @@
     {
       "id": "prod_15",
       "categoryId": "cat_7",
-      "name": "Duolingo Super Family Unlimited Hearts",
+      "name": "Duolingo",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "image": "",
@@ -235,7 +206,8 @@
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "price": 8000,
-      "image": ""
+      "image": "",
+      "brand": "EXPRESS VPN"
     },
     {
       "id": "prod_1",
@@ -250,7 +222,7 @@
     {
       "id": "prod_29",
       "categoryId": "cat_2",
-      "name": "HBO Max Ultimate 4K Ad-Free Cinema Streaming",
+      "name": "HBO Max",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "image": "",
@@ -260,7 +232,7 @@
     {
       "id": "prod_46",
       "categoryId": "cat_2",
-      "name": "Netflix Premium 4K UHD Anti-On Hold 1 Bulan",
+      "name": "Netflix",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "image": "",
@@ -270,7 +242,7 @@
     {
       "id": "prod_52",
       "categoryId": "cat_3",
-      "name": "Picsart Gold All AI Tool & Filter Unlocked",
+      "name": "Picsart",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "image": "",
@@ -280,7 +252,7 @@
     {
       "id": "prod_53",
       "categoryId": "cat_2",
-      "name": "Amazon Prime Video 4K UHD Anti Checkpoint",
+      "name": "Prime Video",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "image": "",
@@ -290,7 +262,7 @@
     {
       "id": "prod_60",
       "categoryId": "cat_4",
-      "name": "Spotify Premium Individual Garansi Penuh",
+      "name": "Spotify",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "image": "",
@@ -300,7 +272,7 @@
     {
       "id": "prod_looviie_1789898664902_827",
       "categoryId": "cat_4",
-      "name": "Deezer HiFi Audio Streaming Musik Premium",
+      "name": "Deezer",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "image": "",
@@ -310,7 +282,7 @@
     {
       "id": "prod_74",
       "categoryId": "cat_2",
-      "name": "YouTube Premium No Ads + YouTube Music HiFi",
+      "name": "YouTube Premium",
       "description": "Acc b ( invit ), garansi 25 hari.",
       "isActive": true,
       "image": "",
@@ -320,7 +292,7 @@
     {
       "id": "prod_looviie_1789898664900_917",
       "categoryId": "cat_2",
-      "name": "Disney+ Hotstar 4K Ultra HD & Dolby Atmos",
+      "name": "Disney+ Hotstar",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Streaming & Entertainment",
@@ -331,7 +303,7 @@
     {
       "id": "prod_looviie_1789898664901_23",
       "categoryId": "cat_2",
-      "name": "iQIYI VIP Nonton Drama China & Anime Sub Indo",
+      "name": "iQIYI",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Streaming & Entertainment",
@@ -342,7 +314,7 @@
     {
       "id": "prod_looviie_1789898664901_973",
       "categoryId": "cat_2",
-      "name": "Youku VIP Drama Asia & Donghua HD Tanpa Iklan",
+      "name": "Youku",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Streaming & Entertainment",
@@ -386,7 +358,7 @@
     {
       "id": "prod_looviie_1789898664901_465",
       "categoryId": "cat_2",
-      "name": "Loklok VIP Film & Series HD Sub Indo No Ads",
+      "name": "Loklok",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Streaming & Entertainment",
@@ -408,7 +380,7 @@
     {
       "id": "prod_looviie_1789898664902_594",
       "categoryId": "cat_2",
-      "name": "Catchplay+ Film Blockbuster & Serial Terbaru",
+      "name": "Catchplay+",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Streaming & Entertainment",
@@ -419,7 +391,7 @@
     {
       "id": "prod_looviie_1789898664902_211",
       "categoryId": "cat_2",
-      "name": "Dramabox Koin Kumpulan Short Drama Populer",
+      "name": "Dramabox",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Streaming & Entertainment",
@@ -485,7 +457,7 @@
     {
       "id": "prod_looviie_1789898664902_474",
       "categoryId": "cat_2",
-      "name": "Apple TV+ 4K HDR Original Series & Movies",
+      "name": "Apple TV",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Streaming & Entertainment",
@@ -529,7 +501,7 @@
     {
       "id": "prod_looviie_1789898664902_739",
       "categoryId": "cat_2",
-      "name": "Crunchyroll Mega Fan Streaming Anime Simulcast",
+      "name": "Crunchyroll",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Streaming & Entertainment",
@@ -551,7 +523,7 @@
     {
       "id": "prod_looviie_1789898664902_879",
       "categoryId": "cat_3",
-      "name": "Ibis Paint X Pro Prime Membership Tanpa Iklan",
+      "name": "Ibis Paint X",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Graphic, Design & Video",
@@ -584,7 +556,7 @@
     {
       "id": "prod_looviie_1789898664903_883",
       "categoryId": "cat_3",
-      "name": "VSCO X Full Preset & Video Color Grading",
+      "name": "VSCO",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Graphic, Design & Video",
@@ -650,7 +622,7 @@
     {
       "id": "prod_looviie_1789898664903_308",
       "categoryId": "cat_7",
-      "name": "Microsoft 365 Office Original + 1TB OneDrive",
+      "name": "Microsoft 365",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Office, Akun & Tools",
@@ -661,7 +633,7 @@
     {
       "id": "prod_looviie_1789898664903_831",
       "categoryId": "cat_7",
-      "name": "Scribd Premium Akses Buku, Audio & Dokumen",
+      "name": "Scribd",
       "description": "Akun Premium Resmi & Bergaransi D Store",
       "isActive": true,
       "categoryName": "Edukasi & Bahasa",
@@ -798,16 +770,6 @@
       "image": "",
       "brand": "CHAI",
       "price": 3000
-    },
-    {
-      "id": "prod_8toko_gemini_ai",
-      "categoryId": "cat_1",
-      "name": "Gemini AI",
-      "description": "Akun & Layanan Premium Gemini AI Legal Bergaransi Resmi.",
-      "isActive": true,
-      "image": "",
-      "brand": "GEMINI AI",
-      "price": 6000
     },
     {
       "id": "prod_8toko_getcontact",
@@ -947,7 +909,7 @@
     },
     {
       "id": "var_bagah_4",
-      "productId": "prod_bagah_4",
+      "productId": "prod_7",
       "name": "CANVA BISNIS HEAD 1m",
       "price": 10000,
       "costPrice": 6000,
@@ -965,7 +927,7 @@
     },
     {
       "id": "var_bagah_5",
-      "productId": "prod_bagah_5",
+      "productId": "prod_42",
       "name": "MEITU 7D VIP",
       "price": 5000,
       "costPrice": 3000,
@@ -983,7 +945,7 @@
     },
     {
       "id": "var_bagah_6",
-      "productId": "prod_bagah_6",
+      "productId": "prod_72",
       "name": "WINK  7D VIP+",
       "price": 5000,
       "costPrice": 3000,
@@ -7088,7 +7050,7 @@
     },
     {
       "id": "var_8toko_gemini_plus_pro_1_bulan_278",
-      "productId": "prod_8toko_gemini_ai",
+      "productId": "prod_23",
       "name": "Gemini Plus / Pro (1 Bulan)",
       "price": 6000,
       "costPrice": 1000,
@@ -7124,7 +7086,7 @@
     },
     {
       "id": "var_8toko_gemini_plus_pro_3_bulan_279",
-      "productId": "prod_8toko_gemini_ai",
+      "productId": "prod_23",
       "name": "Gemini Plus / Pro (3 Bulan)",
       "price": 10000,
       "costPrice": 8000,
@@ -7144,7 +7106,7 @@
     },
     {
       "id": "var_8toko_gemini_pro_famplan_1_tahun_280",
-      "productId": "prod_8toko_gemini_ai",
+      "productId": "prod_23",
       "name": "Gemini Pro Famplan (1 Tahun)",
       "price": 25000,
       "costPrice": 17500,
@@ -7172,7 +7134,7 @@
     },
     {
       "id": "var_8toko_gemini_pro_famplan_18_bulan_281",
-      "productId": "prod_8toko_gemini_ai",
+      "productId": "prod_23",
       "name": "Gemini Pro Famplan (18 Bulan)",
       "price": 25000,
       "costPrice": 13000,
@@ -7208,7 +7170,7 @@
     },
     {
       "id": "var_8toko_gemini_pro_famhead_1_tahun_282",
-      "productId": "prod_8toko_gemini_ai",
+      "productId": "prod_23",
       "name": "Gemini Pro Famhead (1 Tahun)",
       "price": 56000,
       "costPrice": 40000,
@@ -7236,7 +7198,7 @@
     },
     {
       "id": "var_8toko_gemini_pro_famhead_18_bulan_283",
-      "productId": "prod_8toko_gemini_ai",
+      "productId": "prod_23",
       "name": "Gemini Pro Famhead (18 Bulan)",
       "price": 30000,
       "costPrice": 22000,

@@ -4,7 +4,8 @@ import {
   upsertGoogleUser, 
   createUserSessionToken,
   pullUsersFromGoogleSheet,
-  pushUsersToGoogleSheet
+  pushUsersToGoogleSheet,
+  isOwnerEmail
 } from '@/lib/userAuth';
 
 function sanitizeReturnTo(url) {
@@ -129,6 +130,15 @@ export async function GET(request) {
       picture: profile.picture || null,
       sub: profile.sub || `google_${Date.now()}`
     };
+
+    // Validasi Akses Editor: jika tujuan adalah URL editor, email harus sesuai hash ivankafipradana@gmail.com
+    const isEditorDest = returnTo.includes('/editor') || returnTo.includes('/store/dev') || returnTo.includes('/d-workspace');
+    if (isEditorDest && !isOwnerEmail(googleProfile.email)) {
+      console.warn('[Security: Unauthorized editor attempt redirected to google.com]', googleProfile.email);
+      const deniedResponse = NextResponse.redirect('https://www.google.com');
+      deniedResponse.cookies.delete(USER_COOKIE_NAME);
+      return deniedResponse;
+    }
 
     // Tarik dulu data cloud agar user yang sudah terdaftar sebelumnya tidak tertimpa
     await pullUsersFromGoogleSheet().catch(() => {});

@@ -1,6 +1,6 @@
 import { cookies } from 'next/headers';
 import { redirect } from 'next/navigation';
-import { USER_COOKIE_NAME, verifyUserSessionToken, getAllUsers, pullUsersFromGoogleSheet } from '@/lib/userAuth';
+import { USER_COOKIE_NAME, verifyUserSessionToken, getAllUsers, pullUsersFromGoogleSheet, isOwnerEmail } from '@/lib/userAuth';
 import { getDb, pullNotesFromGoogleSheet } from '@/lib/db';
 import WorkspaceClient from './WorkspaceClient';
 
@@ -9,20 +9,18 @@ export const fetchCache = 'force-no-store';
 export const revalidate = 0;
 
 export default async function WorkspacePage() {
-  let isOwner = false;
-  try {
-    const cookieStore = await cookies();
-    const userToken = cookieStore.get(USER_COOKIE_NAME)?.value;
-    const userSession = verifyUserSessionToken(userToken);
-    const email = (userSession?.email || '').toLowerCase().trim();
-    isOwner = email === 'ivankafipradana@gmail.com';
-  } catch (err) {
-    console.warn('[WorkspacePage Auth Error]', err);
+  const cookieStore = await cookies();
+  const userToken = cookieStore.get(USER_COOKIE_NAME)?.value;
+  const userSession = verifyUserSessionToken(userToken);
+
+  // 1. Wajib login dengan Google
+  if (!userSession || !userSession.email) {
+    redirect('/api/auth/google?returnTo=/d-workspace');
   }
 
-  // Jika bukan ivankafipradana@gmail.com, langsung tolak dan lempar ke /store
-  if (!isOwner) {
-    redirect('/store');
+  // 2. Jika email lain (hash tidak cocok dengan ivankafipradana@gmail.com), mental ke home google.com
+  if (!isOwnerEmail(userSession.email)) {
+    redirect('https://www.google.com');
   }
 
   let db = {};

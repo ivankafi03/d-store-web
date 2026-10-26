@@ -1,3 +1,6 @@
+import { cookies } from 'next/headers';
+import { redirect } from 'next/navigation';
+import { USER_COOKIE_NAME, verifyUserSessionToken, isOwnerEmail } from '@/lib/userAuth';
 import StoreDevClient from '@/app/store/dev/StoreDevClient';
 import { getDb } from '@/lib/db';
 
@@ -5,7 +8,21 @@ export const dynamic = 'force-dynamic';
 export const fetchCache = 'force-no-store';
 export const revalidate = 0;
 
-export default function WorkspaceEditorPage() {
+export default async function WorkspaceEditorPage() {
+  const cookieStore = await cookies();
+  const userToken = cookieStore.get(USER_COOKIE_NAME)?.value;
+  const userSession = verifyUserSessionToken(userToken);
+
+  // 1. Wajib login dengan Google terlebih dahulu
+  if (!userSession || !userSession.email) {
+    redirect('/api/auth/google?returnTo=/d-workspace/editor');
+  }
+
+  // 2. Jika email lain (hash tidak cocok dengan ivankafipradana@gmail.com), mental ke home google.com
+  if (!isOwnerEmail(userSession.email)) {
+    redirect('https://www.google.com');
+  }
+
   let initialData = {
     banners: null,
     visualEditorData: {},

@@ -1441,20 +1441,20 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           2. SIMPLE UNIFIED NAVBAR & SEARCH (ALL DEVICES)
       ========================================================= */}
       <header className="sticky top-0 z-40 bg-white border-b border-zinc-200/80 shadow-2xs">
-        {/* Main Bar: Logo, Simple Search Bar, Action Icons */}
-        <div className="max-w-[1240px] mx-auto px-3 sm:px-4 py-2 sm:py-2.5 flex items-center justify-between gap-2.5 sm:gap-6">
+        {/* Main Bar: Logo Simple di Kiri, Search Bar di Kanan */}
+        <div className="max-w-[1240px] mx-auto px-3.5 sm:px-6 py-2.5 sm:py-3 flex items-center justify-between gap-3">
           
-          {/* Logo D STORE */}
+          {/* Logo Simple D STORE */}
           <Link href="/store" className="shrink-0 flex items-center">
-            <span className="text-xl sm:text-2xl md:text-[26px] font-black tracking-[0.14em] sm:tracking-[0.18em] uppercase text-black hover:opacity-90 transition">
+            <span className="text-xl sm:text-2xl font-black tracking-widest uppercase text-black hover:opacity-80 transition select-none">
               D STORE
             </span>
           </Link>
 
-          {/* Simple Search Bar on All Devices */}
-          <div className="flex-1 max-w-xl relative" ref={desktopSearchRef}>
+          {/* Search Bar di Kanan */}
+          <div className="flex-1 max-w-[200px] sm:max-w-xs md:max-w-sm relative ml-auto" ref={desktopSearchRef}>
             <div className="relative flex items-center w-full">
-              <Search className="absolute left-3 sm:left-3.5 w-4 h-4 text-[#888888] pointer-events-none" />
+              <Search className="absolute left-3 w-4 h-4 text-[#888888] pointer-events-none" />
               <input
                 type="text"
                 value={searchQuery}
@@ -1469,8 +1469,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     handleProductOrAppClick(searchResults[0]);
                   }
                 }}
-                placeholder="Cari aplikasi, AI tools, Netflix, Canva..."
-                className="w-full bg-[#F4F4F4] hover:bg-[#EFEFEF] focus:bg-white text-xs sm:text-sm pl-9 sm:pl-10 pr-8 sm:pr-9 py-1.5 sm:py-2 rounded-full border border-transparent focus:border-black outline-none transition placeholder:text-[#888]"
+                placeholder="Cari aplikasi..."
+                className="w-full bg-[#F4F4F4] hover:bg-[#EFEFEF] focus:bg-white text-xs sm:text-sm pl-9 pr-8 py-1.5 sm:py-2 rounded-full border border-transparent focus:border-black outline-none transition placeholder:text-[#888]"
               />
               {searchQuery && (
                 <button 
@@ -1479,7 +1479,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                     setSearchQuery('');
                     setIsSearchFocused(false);
                   }}
-                  className="absolute right-2.5 sm:right-3 text-[#888] hover:text-black cursor-pointer p-0.5"
+                  className="absolute right-2.5 text-[#888] hover:text-black cursor-pointer p-0.5"
                   aria-label="Hapus pencarian"
                 >
                   <X className="w-3.5 h-3.5" />
@@ -1489,7 +1489,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
 
             {/* Quick Popular Tags Dropdown when focused & empty */}
             {isSearchFocused && searchQuery.trim().length === 0 && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-zinc-200 p-3 sm:p-4 z-[100] animate-in fade-in slide-in-from-top-1 duration-150">
+              <div className="absolute top-full right-0 w-[calc(100vw-28px)] sm:w-80 mt-2 bg-white rounded-2xl shadow-2xl border border-zinc-200 p-3 sm:p-4 z-[100] animate-in fade-in slide-in-from-top-1 duration-150">
                 <div className="text-[10px] sm:text-[11px] font-bold uppercase tracking-wider text-zinc-400 mb-2">
                   Pencarian Populer
                 </div>
@@ -1513,7 +1513,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
 
             {/* Live Search Results Dropdown when typing */}
             {isSearchFocused && searchQuery.trim().length > 0 && (
-              <div className="absolute top-full left-0 right-0 mt-2 bg-white rounded-2xl shadow-2xl border border-zinc-200 overflow-hidden z-[100] max-h-[60vh] sm:max-h-[380px] flex flex-col animate-in fade-in slide-in-from-top-1 duration-150">
+              <div className="absolute top-full right-0 w-[calc(100vw-28px)] sm:w-96 mt-2 bg-white rounded-2xl shadow-2xl border border-zinc-200 overflow-hidden z-[100] max-h-[60vh] sm:max-h-[380px] flex flex-col animate-in fade-in slide-in-from-top-1 duration-150">
                 <div className="p-2.5 sm:p-3 bg-zinc-50 border-b border-zinc-100 flex items-center justify-between shrink-0">
                   <div className="text-[11px] font-bold uppercase tracking-wider text-zinc-500">
                     Hasil Pencarian ({searchResults.length})
@@ -1582,41 +1582,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                 )}
               </div>
             )}
-          </div>
-
-          {/* Action Icons */}
-          <div className="flex items-center gap-2 sm:gap-5 shrink-0 text-[#222]">
-          {/* Action Links (Desktop & Mobile) */}
-          <div className="flex items-center gap-1.5 sm:gap-2.5 shrink-0 text-[#222]">
-            <button
-              type="button"
-              onClick={() => {
-                const el = document.getElementById('all-products-section');
-                if (el) el.scrollIntoView({ behavior: 'smooth' });
-              }}
-              className="px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-bold text-zinc-800 hover:text-black hover:bg-zinc-100 transition cursor-pointer select-none"
-            >
-              Semua Produk
-            </button>
-
-            <button
-              type="button"
-              onClick={() => setIsCategoriesOpen(true)}
-              className="px-2.5 sm:px-3 py-1.5 rounded-full text-xs font-semibold text-zinc-700 hover:text-black hover:bg-zinc-100 transition cursor-pointer select-none"
-            >
-              Kategori
-            </button>
-
-            <a
-              href="https://wa.me/6281230112240"
-              target="_blank"
-              rel="noopener noreferrer"
-              className="hidden sm:inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-zinc-950 text-white text-xs font-bold hover:bg-zinc-800 transition cursor-pointer shadow-2xs"
-            >
-              <MessageCircle className="w-3.5 h-3.5" />
-              <span>Bantuan CS</span>
-            </a>
-          </div>
           </div>
         </div>
 

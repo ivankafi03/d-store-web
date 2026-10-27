@@ -2122,13 +2122,32 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               Edit Banner
                             </div>
                           )}
-                          <img
-                            className="unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
-                            fetchPriority={idx === 0 ? "high" : "auto"}
-                            src={deal.img}
-                            alt={deal.title}
-                            draggable="false"
-                          />
+                          {(deal.img?.includes('pilihan_utama_ratusan_reseller') || deal.img?.includes('banner_reseller')) ? (
+                            <>
+                              <img
+                                className="block sm:hidden unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
+                                fetchPriority={idx === 0 ? "high" : "auto"}
+                                src="/uploads/banner_reseller_mobile.webp"
+                                alt={deal.title}
+                                draggable="false"
+                              />
+                              <img
+                                className="hidden sm:block unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
+                                fetchPriority={idx === 0 ? "high" : "auto"}
+                                src="/uploads/banner_reseller_desktop.webp"
+                                alt={deal.title}
+                                draggable="false"
+                              />
+                            </>
+                          ) : (
+                            <img
+                              className="unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
+                              fetchPriority={idx === 0 ? "high" : "auto"}
+                              src={deal.img}
+                              alt={deal.title}
+                              draggable="false"
+                            />
+                          )}
                         </div>
                       </a>
                     </div>

@@ -420,8 +420,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
   const [searchQuery, setSearchQuery] = useState('');
   const [selectedBrandFilter, setSelectedBrandFilter] = useState(null);
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
-  const [catalogCategory, setCatalogCategory] = useState('all');
-  const [catalogSearchTerm, setCatalogSearchTerm] = useState('');
   const [liveProducts, setLiveProducts] = useState(() => initialData?.products || []);
   const [liveVariants, setLiveVariants] = useState(() => initialData?.variants || []);
   const [showSeoText, setShowSeoText] = useState(false);
@@ -895,28 +893,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
     return null;
   };
 
-  const catalogFilterChips = [
-    { id: 'all', label: 'Semua' },
-    { id: 'cat_1', label: 'AI Tools' },
-    { id: 'cat_2', label: 'Streaming' },
-    { id: 'cat_3', label: 'Desain & Video' },
-    { id: 'cat_4', label: 'Music & Audio' },
-    { id: 'cat_5', label: 'Edukasi' },
-    { id: 'cat_6', label: 'VPN & Security' },
-    { id: 'cat_7', label: 'Office & Akun' }
-  ];
-
-  const filteredCatalogProducts = useMemo(() => {
-    let list = unifiedCatalog || [];
-    if (catalogCategory !== 'all') {
-      list = list.filter((p) => p.categoryId === catalogCategory || p.categorySlug === catalogCategory);
-    }
-    if (catalogSearchTerm.trim()) {
-      const q = catalogSearchTerm.toLowerCase().trim();
-      list = list.filter((p) => (p.name || '').toLowerCase().includes(q) || (p.brand || '').toLowerCase().includes(q));
-    }
-    return list;
-  }, [unifiedCatalog, catalogCategory, catalogSearchTerm]);
 
   const showNotification = (msg) => {
     setShowQuickAlert(msg);
@@ -3071,162 +3047,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
         </div>
       </section>
 
-
-      {/* =========================================================
-          KATALOG SEMUA PRODUK (KATALOG LENGKAP D STORE)
-      ========================================================= */}
-      <section id="all-products-section" className="bg-[#FAFAFA] border-t border-zinc-200 py-10 px-4 scroll-mt-20">
-        <div className="max-w-[1240px] mx-auto">
-          <div className="flex flex-col md:flex-row md:items-end justify-between gap-4 mb-6">
-            <div>
-              <div className="inline-flex items-center gap-1.5 px-2.5 py-1 rounded-full bg-zinc-900 text-white text-[10px] font-bold uppercase tracking-wider mb-2">
-                <Package className="w-3.5 h-3.5" />
-                <span>Katalog Lengkap</span>
-              </div>
-              <h2 className="text-xl sm:text-2xl font-black text-zinc-950 uppercase tracking-tight">
-                Semua Produk ({filteredCatalogProducts.length})
-              </h2>
-              <p className="text-xs text-zinc-500 mt-1">
-                Jelajahi seluruh koleksi akun dan aplikasi digital premium dengan garansi resmi.
-              </p>
-              <div className="mt-2.5">
-                <Link
-                  href="/produk"
-                  className="inline-flex items-center gap-1.5 text-xs font-bold text-zinc-900 bg-white border border-zinc-300 hover:border-zinc-900 px-3 py-1.5 rounded-xl transition shadow-2xs"
-                >
-                  <span>Buka Halaman Khusus Produk</span>
-                  <ExternalLink className="w-3.5 h-3.5" />
-                </Link>
-              </div>
-            </div>
-
-            {/* Filter Search */}
-            <div className="w-full md:w-72">
-              <div className="relative">
-                <Search className="w-4 h-4 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2" />
-                <input
-                  type="text"
-                  value={catalogSearchTerm}
-                  onChange={(e) => setCatalogSearchTerm(e.target.value)}
-                  placeholder="Cari di semua produk..."
-                  className="w-full pl-9 pr-8 py-2 text-xs bg-white border border-zinc-300 rounded-xl focus:outline-none focus:border-zinc-900 shadow-2xs text-zinc-900 placeholder:text-zinc-400"
-                />
-                {catalogSearchTerm && (
-                  <button
-                    type="button"
-                    onClick={() => setCatalogSearchTerm('')}
-                    className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 text-xs cursor-pointer p-0.5"
-                    aria-label="Hapus pencarian"
-                  >
-                    <X className="w-3.5 h-3.5" />
-                  </button>
-                )}
-              </div>
-            </div>
-          </div>
-
-          {/* Category Filter Chips */}
-          <div className="flex items-center gap-2 overflow-x-auto no-scrollbar pb-3 mb-6">
-            {catalogFilterChips.map((chip) => {
-              const active = catalogCategory === chip.id;
-              return (
-                <button
-                  key={chip.id}
-                  type="button"
-                  onClick={() => setCatalogCategory(chip.id)}
-                  className={`px-3.5 py-1.5 rounded-full text-xs font-semibold whitespace-nowrap transition cursor-pointer border ${
-                    active
-                      ? 'bg-zinc-950 text-white border-zinc-950 shadow-xs'
-                      : 'bg-white text-zinc-700 border-zinc-200 hover:border-zinc-400'
-                  }`}
-                >
-                  {chip.label}
-                </button>
-              );
-            })}
-          </div>
-
-          {/* Product Grid */}
-          {filteredCatalogProducts.length === 0 ? (
-            <div className="bg-white rounded-2xl border border-zinc-200 p-10 text-center">
-              <Package className="w-10 h-10 text-zinc-300 mx-auto mb-2" />
-              <div className="text-sm font-bold text-zinc-800">Tidak ada produk ditemukan</div>
-              <p className="text-xs text-zinc-500 mt-1">Coba kata kunci lain atau pilih kategori berbeda.</p>
-              <button
-                type="button"
-                onClick={() => {
-                  setCatalogCategory('all');
-                  setCatalogSearchTerm('');
-                }}
-                className="mt-4 px-4 py-2 bg-zinc-900 text-white rounded-xl text-xs font-semibold hover:bg-zinc-800 transition cursor-pointer"
-              >
-                Reset Filter
-              </button>
-            </div>
-          ) : (
-            <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 sm:gap-4">
-              {filteredCatalogProducts.map((prod, idx) => {
-                const live = liveProducts.find(
-                  (p) => p.sku === prod.sku || p.id === prod.id || p.name?.toLowerCase() === prod.name?.toLowerCase()
-                );
-                const displayPrice = live?.minPrice || prod.priceNumber || prod.price;
-                const formattedPrice = typeof displayPrice === 'number' ? formatRupiah(displayPrice) : displayPrice;
-
-                return (
-                  <div
-                    key={prod.sku || prod.id || idx}
-                    className="group bg-white rounded-2xl border border-zinc-200/90 hover:border-black transition-all duration-200 p-4 sm:p-5 flex flex-col justify-between shadow-2xs hover:shadow-md cursor-pointer relative"
-                    onClick={() => handleProductOrAppClick(prod)}
-                  >
-                    <div>
-                      {/* Brand & Category Tags */}
-                      <div className="flex items-center justify-between gap-2 mb-2.5">
-                        <span className="text-[10px] font-black uppercase tracking-wider px-2 py-0.5 rounded-md bg-zinc-100 text-zinc-800">
-                          {prod.brand || 'D STORE'}
-                        </span>
-                        {prod.categoryName && (
-                          <span className="text-[10px] font-semibold text-zinc-400 truncate">
-                            {prod.categoryName}
-                          </span>
-                        )}
-                      </div>
-
-                      {/* Product Name */}
-                      <h3 className="text-sm sm:text-[15px] font-bold text-zinc-900 group-hover:text-black transition-colors line-clamp-2 leading-snug">
-                        {prod.name}
-                      </h3>
-
-                      {/* Badge if available */}
-                      {prod.badge && (
-                        <div className="mt-2">
-                          <span className="inline-block bg-emerald-50 text-emerald-700 border border-emerald-200/70 text-[9px] font-extrabold px-2 py-0.5 rounded uppercase tracking-wider">
-                            {prod.badge}
-                          </span>
-                        </div>
-                      )}
-                    </div>
-
-                    {/* Price & Action Button */}
-                    <div className="mt-4 pt-3 border-t border-zinc-100 flex items-center justify-between gap-2">
-                      <div>
-                        <div className="text-[10px] text-zinc-400 font-medium">Mulai dari</div>
-                        <div className="text-sm sm:text-base font-black text-zinc-950">
-                          {formattedPrice}
-                        </div>
-                      </div>
-
-                      <span className="inline-flex items-center gap-1 px-3.5 py-1.5 rounded-xl bg-zinc-950 text-white text-xs font-bold group-hover:bg-zinc-800 transition shadow-2xs">
-                        <span>Pilih Paket</span>
-                        <span className="text-[11px]">&rarr;</span>
-                      </span>
-                    </div>
-                  </div>
-                );
-              })}
-            </div>
-          )}
-        </div>
-      </section>
 
       {/* =========================================================
           13. CATEGORIES FOOTER PILLS & ACCORDION SEO TEXT

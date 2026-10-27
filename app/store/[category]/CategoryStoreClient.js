@@ -624,7 +624,7 @@ export default function CategoryStoreClient({ initialSlug, initialProducts = [],
             )}
 
             <Link 
-              href="/store#all-products-section"
+              href="/produk"
               className="hidden sm:inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-zinc-950 text-white text-xs font-semibold hover:bg-zinc-800 transition cursor-pointer"
             >
               <Package className="w-3.5 h-3.5" />
@@ -895,7 +895,7 @@ export default function CategoryStoreClient({ initialSlug, initialProducts = [],
           <SlidersHorizontal className="w-4 h-4" />
           <span className="text-[10px] font-medium">Kategori</span>
         </button>
-        <Link href="/store#all-products-section" className="flex flex-col items-center gap-0.5 text-zinc-600 hover:text-black transition">
+        <Link href="/produk" className="flex flex-col items-center gap-0.5 text-zinc-600 hover:text-black transition">
           <Package className="w-4 h-4" />
           <span className="text-[10px] font-medium">Produk</span>
         </Link>

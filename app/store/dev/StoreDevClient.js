@@ -2332,9 +2332,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             price: prod.priceNumber || prod.price || 15000,
                             category: 'Top Tier',
                             recommendation: {
-                              dimensions: 'Ikon Persegi / 512 x 512 px (1:1)',
-                              aspectRatio: '1:1',
-                              tips: 'Gunakan ikon logo aplikasi persegi 1:1 tanpa border tebal.'
+                              dimensions: '600 x 800 px (Rasio 3:4)',
+                              aspectRatio: '3:4',
+                              tips: 'Gunakan gambar vertikal 600 x 800 px (3:4) agar pas memenuhi kartu tanpa terpotong.'
                             }
                           });
                           return;
@@ -2369,9 +2369,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               price: prod.priceNumber || prod.price || 15000,
                               category: 'Top Tier',
                               recommendation: {
-                                dimensions: 'Ikon Persegi / 512 x 512 px (1:1)',
-                                aspectRatio: '1:1',
-                                tips: 'Gunakan ikon logo aplikasi persegi 1:1 tanpa border tebal.'
+                                dimensions: '600 x 800 px (Rasio 3:4)',
+                                aspectRatio: '3:4',
+                                tips: 'Gunakan gambar vertikal 600 x 800 px (3:4) agar pas memenuhi kartu tanpa terpotong.'
                               }
                             });
                           }}
@@ -2381,7 +2381,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                         </button>
                       )}
                       <div 
-                        className="product-item__product-image-wrapper aspect-[3/4] bg-[#f7f7f7] rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer p-2"
+                        className="product-item__product-image-wrapper aspect-[3/4] bg-[#f7f7f7] rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer p-0"
                         onClick={(e) => {
                           if (isEditMode) {
                             e.preventDefault();
@@ -2396,16 +2396,16 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               price: prod.priceNumber || prod.price || 15000,
                               category: 'Top Tier',
                               recommendation: {
-                                dimensions: 'Ikon Persegi / 512 x 512 px (1:1)',
-                                aspectRatio: '1:1',
-                                tips: 'Gunakan ikon logo aplikasi persegi 1:1 tanpa border tebal.'
+                                dimensions: '600 x 800 px (Rasio 3:4)',
+                                aspectRatio: '3:4',
+                                tips: 'Gunakan gambar vertikal 600 x 800 px (3:4) agar pas memenuhi kartu tanpa terpotong.'
                               }
                             });
                           }
                         }}
                       >
                         <img 
-                          className="product-item__product-image w-full h-full object-contain pointer-events-none transition duration-300 hover:scale-105" 
+                          className="product-item__product-image w-full h-full object-cover pointer-events-none transition duration-300 hover:scale-105" 
                           src={resolvedImg || '/uploads/desain_tanpa_judul__4_-1791989747452.webp'} 
                           alt={prod.name} 
                           onError={(e) => {
@@ -2482,9 +2482,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               price: prod.priceNumber || prod.price || 15000,
                               category: 'Top Tier',
                               recommendation: {
-                                dimensions: 'Ikon Persegi / 512 x 512 px (1:1)',
-                                aspectRatio: '1:1',
-                                tips: 'Gunakan ikon logo aplikasi persegi 1:1 tanpa border tebal.'
+                                dimensions: '600 x 800 px (Rasio 3:4)',
+                                aspectRatio: '3:4',
+                                tips: 'Gunakan gambar vertikal 600 x 800 px (3:4) agar pas memenuhi kartu tanpa terpotong.'
                               }
                             });
                           } else {
@@ -3057,9 +3057,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             price: prod.priceNumber || prod.price || 15000,
                             category: 'Just For You',
                             recommendation: {
-                              dimensions: 'Ikon Persegi / 512 x 512 px (1:1)',
-                              aspectRatio: '1:1',
-                              tips: 'Gunakan ikon logo aplikasi persegi 1:1 tanpa border tebal.'
+                              dimensions: '600 x 800 px (Rasio 3:4)',
+                              aspectRatio: '3:4',
+                              tips: 'Gunakan gambar vertikal 600 x 800 px (3:4) agar pas memenuhi kartu tanpa terpotong.'
                             }
                           });
                           return;
@@ -3094,9 +3094,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               price: prod.priceNumber || prod.price || 15000,
                               category: 'Just For You',
                               recommendation: {
-                                dimensions: 'Ikon Persegi / 512 x 512 px (1:1)',
-                                aspectRatio: '1:1',
-                                tips: 'Gunakan ikon logo aplikasi persegi 1:1 tanpa border tebal.'
+                                dimensions: '600 x 800 px (Rasio 3:4)',
+                                aspectRatio: '3:4',
+                                tips: 'Gunakan gambar vertikal 600 x 800 px (3:4) agar pas memenuhi kartu tanpa terpotong.'
                               }
                             });
                           }}
@@ -3106,7 +3106,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                         </button>
                       )}
                       <div
-                        className="product-item__product-image-wrapper aspect-[3/4] bg-[#f7f7f7] rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer p-2"
+                        className="product-item__product-image-wrapper aspect-[3/4] bg-[#f7f7f7] rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer p-0"
                         onClick={(e) => {
                           if (isEditMode) {
                             e.preventDefault();
@@ -3121,16 +3121,16 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               price: prod.priceNumber || prod.price || 15000,
                               category: 'Just For You',
                               recommendation: {
-                                dimensions: 'Ikon Persegi / 512 x 512 px (1:1)',
-                                aspectRatio: '1:1',
-                                tips: 'Gunakan ikon logo aplikasi persegi 1:1 tanpa border tebal.'
+                                dimensions: '600 x 800 px (Rasio 3:4)',
+                                aspectRatio: '3:4',
+                                tips: 'Gunakan gambar vertikal 600 x 800 px (3:4) agar pas memenuhi kartu tanpa terpotong.'
                               }
                             });
                           }
                         }}
                       >
                         <img 
-                          className="product-item__product-image w-full h-full object-contain pointer-events-none transition duration-300 hover:scale-105" 
+                          className="product-item__product-image w-full h-full object-cover pointer-events-none transition duration-300 hover:scale-105" 
                           src={resolvedImg || '/uploads/desain_tanpa_judul__4_-1791989747452.webp'} 
                           alt={prod.name} 
                           onError={(e) => {
@@ -3159,9 +3159,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                                 price: prod.priceNumber || prod.price || 15000,
                                 category: 'Just For You',
                                 recommendation: {
-                                  dimensions: 'Ikon Persegi / 512 x 512 px (1:1)',
-                                  aspectRatio: '1:1',
-                                  tips: 'Gunakan ikon logo aplikasi persegi 1:1 tanpa border tebal.'
+                                  dimensions: '600 x 800 px (Rasio 3:4)',
+                                  aspectRatio: '3:4',
+                                  tips: 'Gunakan gambar vertikal 600 x 800 px (3:4) agar pas memenuhi kartu tanpa terpotong.'
                                 }
                               });
                             }
@@ -3232,9 +3232,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               price: prod.priceNumber || prod.price || 15000,
                               category: 'Just For You',
                               recommendation: {
-                                dimensions: 'Ikon Persegi / 512 x 512 px (1:1)',
-                                aspectRatio: '1:1',
-                                tips: 'Gunakan ikon logo aplikasi persegi 1:1 tanpa border tebal.'
+                                dimensions: '600 x 800 px (Rasio 3:4)',
+                                aspectRatio: '3:4',
+                                tips: 'Gunakan gambar vertikal 600 x 800 px (3:4) agar pas memenuhi kartu tanpa terpotong.'
                               }
                             });
                           } else {

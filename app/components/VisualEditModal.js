@@ -58,6 +58,7 @@ export default function VisualEditModal({
   // Deteksi otomatis apakah brand / nama / link mengarah ke aplikasi tertentu
   const detectedApp = getAppVariantData({ brand, name, link }, dbProducts, dbVariants);
   const prevDetectedKeyRef = useRef('');
+  const lastOpenedIdRef = useRef(null);
 
   useEffect(() => {
     fetch('/api/products')
@@ -73,33 +74,42 @@ export default function VisualEditModal({
 
   useEffect(() => {
     if (elementData) {
-      const initialName = elementData.name || elementData.title || '';
-      const initialBrand = elementData.brand || '';
-      const initialLink = elementData.link || '';
+      const currentItemId = `${elementData.type || ''}_${elementData.id || elementData.sku || elementData.name || ''}`;
+      
+      // Hanya re-inisialisasi state form saat item yang diedit berganti atau modal baru dibuka
+      if (currentItemId !== lastOpenedIdRef.current) {
+        lastOpenedIdRef.current = currentItemId;
 
-      setName(initialName);
-      setBrand(initialBrand);
-      setImage(elementData.image || elementData.desktopImg || '');
-      setPrice(elementData.price || elementData.priceNumber || '');
-      setLink(initialLink);
-      setPreviewError(false);
+        const initialName = elementData.name || elementData.title || '';
+        const initialBrand = elementData.brand || '';
+        const initialLink = elementData.link || '';
 
-      const detected = getAppVariantData(
-        { brand: initialBrand, name: initialName, link: initialLink },
-        dbProducts,
-        dbVariants
-      );
+        setName(initialName);
+        setBrand(initialBrand);
+        setImage(elementData.image || elementData.desktopImg || '');
+        setPrice(elementData.price || elementData.priceNumber || '');
+        setLink(initialLink);
+        setPreviewError(false);
 
-      if (detected?.category) {
-        setCategory(detected.category);
-        prevDetectedKeyRef.current = detected.slug || detected.name;
-      } else if (elementData.category) {
-        setCategory(elementData.category);
-      } else {
-        setCategory('AI & Tools');
+        const detected = getAppVariantData(
+          { brand: initialBrand, name: initialName, link: initialLink },
+          dbProducts,
+          dbVariants
+        );
+
+        if (detected?.category) {
+          setCategory(detected.category);
+          prevDetectedKeyRef.current = detected.slug || detected.name;
+        } else if (elementData.category) {
+          setCategory(elementData.category);
+        } else {
+          setCategory('AI & Tools');
+        }
       }
+    } else {
+      lastOpenedIdRef.current = null;
     }
-  }, [elementData, dbProducts, dbVariants]);
+  }, [elementData]);
 
   // Real-time auto-sync: saat brand/nama/link berubah dan mendeteksi produk baru, ganti kategori otomatis
   useEffect(() => {

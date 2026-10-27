@@ -153,6 +153,8 @@ export async function POST(request) {
       }
     }
 
+    db.catalogVersion = '2026-10-27-v3-sync-all';
+    db.updatedAt = new Date().toISOString();
     saveDb(db);
     return NextResponse.json({ status: 'ok', banners: db.banners, visualEditorData: db.visualEditorData });
   } catch (err) {

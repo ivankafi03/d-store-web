@@ -951,16 +951,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
         const parsed = JSON.parse(saved);
 
         if (parsed.catalogVersion !== '2026-10-27-v3-sync-all') {
-          delete parsed.topTierProducts;
-          delete parsed.justForYouProducts;
-          delete parsed.trendList;
-          delete parsed.speedDealsList;
-          delete parsed.stealsList;
-          delete parsed.applyList;
-          delete parsed.brands1List;
-          delete parsed.brands2List;
-          delete parsed.discList;
-          delete parsed.saveList;
           parsed.catalogVersion = '2026-10-27-v3-sync-all';
           try { localStorage.setItem('d_store_visual_editor_data', JSON.stringify(parsed)); } catch (e) {}
         }
@@ -1006,6 +996,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             setBubbleList(ZALORA_BUBBLES);
           }
         }
+        if (Array.isArray(parsed.speedDealsList) && parsed.speedDealsList.length > 0) {
+          setSpeedDealsList(parsed.speedDealsList);
+        }
         if (Array.isArray(parsed.brands1List) && parsed.brands1List.length > 0) {
           setBrands1List(parsed.brands1List);
         } else {
@@ -1015,6 +1008,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           setTrendList(parsed.trendList);
         } else {
           setTrendList(ZALORA_TRENDING);
+        }
+        if (Array.isArray(parsed.stealsList) && parsed.stealsList.length > 0) {
+          setStealsList(parsed.stealsList);
         }
         if (Array.isArray(parsed.brands2List)) setBrands2List(parsed.brands2List);
         if (parsed.topTierBanner) {
@@ -1203,55 +1199,50 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       setTopTierProducts(newTopTier);
     }
 
+    const fullPayload = {
+      catalogVersion: '2026-10-27-v3-sync-all',
+      heroCarouselItems: newHeroItems,
+      mainHeroBanner: newMainHero,
+      topTierProducts: newTopTier,
+      justForYouProducts: newJustForYou,
+      heroSlide1: newHeroSlide1,
+      heroSlide2: newHeroSlide2,
+      heroSlide3: newHeroSlide3,
+      bubbleList: newBubbles,
+      speedDealsList: newSpeedDeals,
+      brands1List: newBrands1,
+      trendList: newTrend,
+      stealsList: newSteals,
+      brands2List: newBrands2,
+      topTierBanner: newTopTierBanner,
+      applyList: newApply,
+      discList: newDisc,
+      saveList: newSave
+    };
+
     try {
-      localStorage.setItem('d_store_visual_editor_data', JSON.stringify({
-        heroCarouselItems: newHeroItems,
-        mainHeroBanner: newMainHero,
-        topTierProducts: newTopTier,
-        justForYouProducts: newJustForYou,
-        heroSlide1: newHeroSlide1,
-        heroSlide2: newHeroSlide2,
-        heroSlide3: newHeroSlide3,
-        bubbleList: newBubbles,
-        speedDealsList: newSpeedDeals,
-        brands1List: newBrands1,
-        trendList: newTrend,
-        stealsList: newSteals,
-        brands2List: newBrands2,
-        topTierBanner: newTopTierBanner,
-        applyList: newApply,
-        discList: newDisc,
-        saveList: newSave
-      }));
-      fetch('/api/store/banners', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          visualEditorData: {
-            heroCarouselItems: newHeroItems,
-            mainHeroBanner: newMainHero,
-            topTierProducts: newTopTier,
-            justForYouProducts: newJustForYou,
-            heroSlide1: newHeroSlide1,
-            heroSlide2: newHeroSlide2,
-            heroSlide3: newHeroSlide3,
-            bubbleList: newBubbles,
-            speedDealsList: newSpeedDeals,
-            brands1List: newBrands1,
-            trendList: newTrend,
-            stealsList: newSteals,
-            brands2List: newBrands2,
-            topTierBanner: newTopTierBanner,
-            applyList: newApply,
-            discList: newDisc,
-            saveList: newSave
-          }
-        })
-      }).catch(() => {});
+      localStorage.setItem('d_store_visual_editor_data', JSON.stringify(fullPayload));
     } catch (e) {}
 
     setVisualEditingItem(null);
-    showNotification('Perubahan gambar & teks berhasil disimpan!');
+    showNotification('Menyimpan perubahan gambar...');
+
+    fetch('/api/store/banners', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ visualEditorData: fullPayload })
+    })
+      .then((r) => r.json())
+      .then((data) => {
+        if (data.status === 'ok') {
+          showNotification('Berhasil! Gambar tersimpan di server & browser.');
+        } else {
+          showNotification('Tersimpan di browser lokal. Perhatian: ' + (data.message || 'Sesi login tidak sah'));
+        }
+      })
+      .catch(() => {
+        showNotification('Tersimpan di browser lokal.');
+      });
   };
 
   const [isSyncing, setIsSyncing] = useState(false);
@@ -1267,6 +1258,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
 
       if (!dataToSync) {
         dataToSync = {
+          catalogVersion: '2026-10-27-v3-sync-all',
           heroCarouselItems,
           mainHeroBanner,
           topTierProducts,
@@ -1285,6 +1277,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           discList,
           saveList
         };
+      } else {
+        dataToSync.catalogVersion = '2026-10-27-v3-sync-all';
       }
 
       const res = await fetch("/api/store/banners", {

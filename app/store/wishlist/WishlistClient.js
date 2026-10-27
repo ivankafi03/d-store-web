@@ -436,43 +436,69 @@ export default function WishlistClient({ initialProducts = [], initialVariants =
           </div>
         </div>
 
-        {/* Category Tabs Strip (Semua Perangkat) */}
-        <div className="border-t border-zinc-100 bg-white">
-          <div className="max-w-[1240px] mx-auto px-3 sm:px-4 py-1.5 flex items-center overflow-x-auto no-scrollbar scrollbar-hide">
-            <div className="flex items-center gap-1.5 sm:gap-2">
-              {[
-                { id: 'all', name: 'Semua App', href: '/store/all' },
-                { id: 'ai', name: 'AI & Tools', href: '/store/ai-tools' },
-                { id: 'stream', name: 'Streaming', href: '/store/streaming' },
-                { id: 'design', name: 'Desain', href: '/store/graphic-design' },
-                { id: 'music', name: 'Musik', href: '/store/music-audio' },
-                { id: 'vpn', name: 'VPN', href: '/store/vpn-security' },
-                { id: 'office', name: 'Office & Akun', href: '/store/office-tools' }
-              ].map((seg) => {
-                const isActive = activeSegment === seg.id;
-                if (isActive) {
-                  return (
-                    <span 
-                      key={seg.id}
-                      data-test-id={`segment-tab-${seg.id}`}
-                      className="cursor-default bg-[#222222] text-white font-bold whitespace-nowrap rounded-full px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm select-none"
-                    >
-                      {seg.name}
-                    </span>
-                  );
-                }
-                return (
-                  <Link 
-                    key={seg.id}
-                    data-test-id={`segment-tab-${seg.id}`}
-                    href={seg.href}
-                    onClick={() => setActiveSegment(seg.id)}
-                    className="bg-zinc-100 hover:bg-zinc-200 text-[#444] hover:text-black font-medium whitespace-nowrap rounded-full px-3 sm:px-4 py-1 sm:py-1.5 text-xs sm:text-sm select-none transition"
-                  >
-                    {seg.name}
-                  </Link>
-                );
-              })}
+        {/* Text Berjalan (Running Text Marquee): Penegasan Bebas Resell */}
+        <div className="border-t border-zinc-100 bg-zinc-950 text-white overflow-hidden select-none py-1 px-3">
+          <div className="max-w-[1240px] mx-auto overflow-hidden">
+            <div className="animate-marquee flex items-center gap-6 whitespace-nowrap">
+              <div className="flex items-center gap-6 shrink-0 text-[11px] font-medium tracking-wide">
+                <span className="inline-flex items-center px-2 py-0.2 rounded-full bg-emerald-500 text-black font-extrabold text-[9px] uppercase tracking-wider">
+                  Bebas Resell
+                </span>
+                <span className="font-bold text-white">
+                  Boleh loh kalian jual lagi dengan harga kalian sendiri!
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+                <span className="text-zinc-300">
+                  Margin keuntungan 100% bebas Anda tentukan
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+                <span className="text-zinc-300">
+                  Beli satuan tetap dapat harga grosir termurah
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+                <span className="text-zinc-300">
+                  100% Akun Legal, Resmi &amp; Bergaransi Penuh
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+                <span className="text-zinc-300">
+                  Proses kilat 5 - 15 menit langsung aktif siap pakai
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+                <span className="text-zinc-300">
+                  Customer Service siap support 24 jam nonstop
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+              </div>
+
+              <div className="flex items-center gap-6 shrink-0 text-[11px] font-medium tracking-wide" aria-hidden="true">
+                <span className="inline-flex items-center px-2 py-0.2 rounded-full bg-emerald-500 text-black font-extrabold text-[9px] uppercase tracking-wider">
+                  Bebas Resell
+                </span>
+                <span className="font-bold text-white">
+                  Boleh loh kalian jual lagi dengan harga kalian sendiri!
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+                <span className="text-zinc-300">
+                  Margin keuntungan 100% bebas Anda tentukan
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+                <span className="text-zinc-300">
+                  Beli satuan tetap dapat harga grosir termurah
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+                <span className="text-zinc-300">
+                  100% Akun Legal, Resmi &amp; Bergaransi Penuh
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+                <span className="text-zinc-300">
+                  Proses kilat 5 - 15 menit langsung aktif siap pakai
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+                <span className="text-zinc-300">
+                  Customer Service siap support 24 jam nonstop
+                </span>
+                <span className="text-zinc-600 font-bold">•</span>
+              </div>
             </div>
           </div>
         </div>

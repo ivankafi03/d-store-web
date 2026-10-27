@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo } from 'react';
+import { useState, useMemo, useEffect } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { 
@@ -47,6 +47,17 @@ export default function ProdukClient({ initialData }) {
   const variants = initialData?.variants || [];
   const categories = initialData?.categories || [];
   const waNumber = initialData?.settings?.waNumber || '6281230112240';
+
+  // Kunci scroll body ketika modal terbuka agar tidak ada efek loncat/rubber-band layar di HP
+  useEffect(() => {
+    if (isCategoryModalOpen || selectedProduct) {
+      const originalOverflow = document.body.style.overflow;
+      document.body.style.overflow = 'hidden';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+      };
+    }
+  }, [isCategoryModalOpen, selectedProduct]);
 
   // Map variants to product IDs
   const productVariantsMap = useMemo(() => {
@@ -304,7 +315,7 @@ export default function ProdukClient({ initialData }) {
                 className="group bg-white border border-zinc-200 hover:border-zinc-900 rounded-lg p-3 sm:p-3.5 transition shadow-2xs cursor-pointer flex flex-col justify-between"
               >
                 <div>
-                  {/* Top Bar: KATEGORI PRODUK (Bukan Duplikat Nama Produk) & Varian Count */}
+                  {/* Top Bar: KATEGORI PRODUK & Varian Count */}
                   <div className="flex items-center justify-between gap-2 mb-1.5">
                     <span className="inline-block bg-zinc-100 text-zinc-800 border border-zinc-200/80 font-bold text-[9px] tracking-wider px-2 py-0.5 rounded-md uppercase">
                       {categoryName}
@@ -366,15 +377,23 @@ export default function ProdukClient({ initialData }) {
         </div>
       </main>
 
-      {/* Modal Detail & Pilih Paket */}
+      {/* Modal Detail & Pilih Paket - Stabil & Bebas Rubber-Band */}
       {selectedProduct && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-3 animate-in fade-in duration-150">
+        <div 
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-3 overflow-hidden overscroll-none touch-none animate-in fade-in duration-150"
+          onClick={() => setSelectedProduct(null)}
+          onTouchMove={(e) => e.stopPropagation()}
+        >
           <div 
-            className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-xl p-4 sm:p-5 max-h-[85vh] flex flex-col shadow-2xl animate-in slide-in-from-bottom-2 duration-150"
+            className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-xl p-4 sm:p-5 h-[76vh] sm:h-auto max-h-[85vh] flex flex-col shadow-2xl overflow-hidden overscroll-contain touch-auto animate-in slide-in-from-bottom-2 duration-150"
             onClick={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
           >
+            {/* Pill drag handle untuk HP */}
+            <div className="w-10 h-1 bg-zinc-300 rounded-full mx-auto mb-2 shrink-0 sm:hidden" />
+
             {/* Modal Header */}
-            <div className="flex items-start justify-between gap-3 pb-2.5 border-b border-zinc-200">
+            <div className="flex items-start justify-between gap-3 pb-2.5 border-b border-zinc-200 shrink-0">
               <div>
                 <span className="inline-block bg-zinc-100 text-zinc-800 border border-zinc-200 font-bold text-[9px] tracking-wider px-2 py-0.5 rounded-md uppercase mb-1">
                   {CATEGORY_SHORT_NAMES[selectedProduct.categoryId] || 'Layanan Digital'}
@@ -396,8 +415,11 @@ export default function ProdukClient({ initialData }) {
               </button>
             </div>
 
-            {/* Modal Body: List of Packages/Variants */}
-            <div className="py-3 overflow-y-auto space-y-1.5 flex-1">
+            {/* Modal Body: List of Packages/Variants dengan Scroll Terkunci di Dalam */}
+            <div 
+              className="py-2.5 overflow-y-auto overscroll-contain space-y-1.5 flex-1 touch-pan-y" 
+              style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}
+            >
               <span className="block text-[11px] font-bold text-zinc-800 uppercase tracking-wider mb-1.5">
                 Pilih Durasi / Paket
               </span>
@@ -445,7 +467,7 @@ export default function ProdukClient({ initialData }) {
             </div>
 
             {/* Modal Footer: Action */}
-            <div className="pt-2.5 border-t border-zinc-200 flex flex-col gap-2">
+            <div className="pt-2.5 border-t border-zinc-200 flex flex-col gap-2 shrink-0">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-zinc-500 font-medium">Total Harga:</span>
                 <span className="text-sm font-black text-zinc-950">
@@ -465,17 +487,22 @@ export default function ProdukClient({ initialData }) {
         </div>
       )}
 
-      {/* Modal Bottom Sheet: Pilih Kategori (Dipicu tombol Kategori di bottom nav) */}
+      {/* Modal Bottom Sheet: Pilih Kategori - Terkunci Solid Tanpa Memantul / Menggeser Layar */}
       {isCategoryModalOpen && (
         <div 
-          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-3 animate-in fade-in duration-150"
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-3 overflow-hidden overscroll-none touch-none animate-in fade-in duration-150"
           onClick={() => setIsCategoryModalOpen(false)}
+          onTouchMove={(e) => e.stopPropagation()}
         >
           <div 
-            className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-xl p-4 sm:p-5 max-h-[85vh] flex flex-col shadow-2xl animate-in slide-in-from-bottom-2 duration-150"
+            className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-xl p-4 sm:p-5 h-[76vh] sm:h-auto max-h-[85vh] flex flex-col shadow-2xl overflow-hidden overscroll-contain touch-auto animate-in slide-in-from-bottom-2 duration-150"
             onClick={(e) => e.stopPropagation()}
+            onTouchMove={(e) => e.stopPropagation()}
           >
-            <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
+            {/* Pill drag handle untuk HP */}
+            <div className="w-10 h-1 bg-zinc-300 rounded-full mx-auto mb-2 shrink-0 sm:hidden" />
+
+            <div className="flex items-center justify-between pb-3 border-b border-zinc-200 shrink-0">
               <div>
                 <h2 className="text-sm sm:text-base font-bold text-zinc-950">
                   Pilih Kategori Produk
@@ -493,7 +520,11 @@ export default function ProdukClient({ initialData }) {
               </button>
             </div>
 
-            <div className="py-3 overflow-y-auto space-y-1.5 flex-1">
+            {/* List Kategori dengan Scroll Terisolasi (Overscroll Contain & Touch Pan Y) */}
+            <div 
+              className="py-2.5 overflow-y-auto overscroll-contain space-y-1.5 flex-1 touch-pan-y"
+              style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}
+            >
               {categoryTabs.map((tab) => {
                 const isSelected = selectedCategory === tab.id;
                 const count = tab.id === 'ALL' 
@@ -546,7 +577,7 @@ export default function ProdukClient({ initialData }) {
         </div>
       )}
 
-      {/* Floating Bottom Navigation Bar (Mobile) - Tombol Kategori Aktif Membuka Modal Kategori */}
+      {/* Floating Bottom Navigation Bar (Mobile) */}
       <div className="fixed bottom-3 inset-x-0 mx-auto z-40 w-[88%] max-w-[320px] md:hidden pointer-events-none">
         <div className="rounded-full iphone-glass-bottom-card px-2 py-1 pointer-events-auto shadow-[0_8px_25px_rgba(0,0,0,0.12)] border border-zinc-200/80 bg-white/95 backdrop-blur-md">
           <div className="relative flex items-center justify-around px-1">

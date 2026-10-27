@@ -2634,7 +2634,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             <img
                               className="hidden sm:block unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
                               fetchPriority={idx === 0 ? "high" : "auto"}
-                              src="/uploads/banner_jasa_website_neo_brutalism.webp"
+                              src="/uploads/banner_jasa_website_desktop.webp"
                               alt={slide.title}
                               draggable="false"
                             />
@@ -2840,7 +2840,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             <img
                               className="hidden sm:block unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
                               fetchPriority={idx === 0 ? "high" : "auto"}
-                              src="/uploads/banner_jasa_website_neo_brutalism.webp"
+                              src="/uploads/banner_jasa_website_desktop.webp"
                               alt={slide.title}
                               draggable="false"
                             />

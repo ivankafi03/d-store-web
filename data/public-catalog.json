@@ -1,6 +1,6 @@
 {
   "catalogVersion": "2026-10-27-v3-sync-all",
-  "updatedAt": "2026-10-27T14:49:50.604174Z",
+  "updatedAt": "2026-10-27T15:34:38.211147Z",
   "categories": [
     {
       "id": "cat_1",
@@ -10188,28 +10188,25 @@
   "banners": {
     "hero": [
       {
-        "id": "hero-1",
-        "title": "D STORE 10.10 Super Flash Sale Akun Aplikasi Premium",
-        "subtitle": "Flash Sale Berakhir Dalam 05:42:19",
-        "image": "/uploads/dstore_kaca_kiri-1791898740038.webp",
-        "link": "#",
-        "brand": "ADIDAS"
+        "id": "hero-top-1",
+        "image": "/uploads/dstore_boss_hero_high_chest.jpg",
+        "title": "D STORE VIP Executive Access",
+        "brand": "D STORE",
+        "link": "#"
       },
       {
-        "id": "hero-2",
-        "title": "Tommy Hilfiger Brand Day",
-        "subtitle": "Diskon Hingga 50% + Voucher 15%",
-        "image": "https://images.ctfassets.net/9q8du028z7sn/72LwXOzRKd7j03GjxUBF8B/a0171940ad0d92dee1eeda68e9a6fc06/225x225_BB2026_TOMMYHILFIGER.png",
-        "link": "#",
-        "brand": "TOMMY HILFIGER"
+        "id": "hero-top-2",
+        "image": "/uploads/netflix_vip_syndicate_boss.jpg",
+        "title": "NETFLIX PREMIUM 4K ULTRA HD",
+        "brand": "NETFLIX",
+        "link": "/store/app/netflix"
       },
       {
-        "id": "hero-3",
-        "title": "On Running Swiss Engineering",
-        "subtitle": "Extra Voucher 10% OFF",
-        "image": "https://images.ctfassets.net/9q8du028z7sn/6JllWuRECk8AXKnFvPKoyM/4ed51d752d605cce34ebe6a2d9db6a2a/225x225_BB2026_ON.png",
-        "link": "#",
-        "brand": "ON"
+        "id": "hero-top-3",
+        "image": "/uploads/youtube_vip_boss.jpg",
+        "title": "YOUTUBE PREMIUM & MUSIC HIFI",
+        "brand": "YOUTUBE",
+        "link": "/store/app/youtube"
       }
     ],
     "speedDeals": [
@@ -10293,9 +10290,9 @@
     ],
     "apply": [
       {
-        "title": "Jasa Pembuatan Website Profesional",
+        "title": "Jasa Pembuatan Website & Aplikasi Toko Online D Store - Terima Beres Siap Jualan",
         "img": "/uploads/banner_jasa_website_desktop.webp",
-        "link": "https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store%2C%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website.%20Boleh%20konsultasi%20mengenai%20paket%2C%20fitur%2C%20dan%20harganya%3F"
+        "link": "#"
       }
     ],
     "featured": [
@@ -11455,8 +11452,8 @@
       },
       "heroSlide1": {
         "id": "hero-top-1",
-        "image": "/uploads/dstore_kaca_kiri-1791898740038.webp",
-        "title": "D STORE 10.10 Super Flash Sale Akun Aplikasi Premium",
+        "image": "/uploads/dstore_boss_hero_high_chest.jpg",
+        "title": "D STORE VIP Executive Access",
         "brand": "D STORE",
         "link": "#"
       },
@@ -11562,14 +11559,9 @@
       },
       "applyList": [
         {
-          "title": "Jasa pembuatan website profesional",
+          "title": "Jasa Pembuatan Website & Aplikasi Toko Online D Store - Terima Beres Siap Jualan",
           "img": "/uploads/banner_jasa_website_desktop.webp",
-          "link": "https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store%2C%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website.%20Boleh%20konsultasi%20mengenai%20paket%2C%20fitur%2C%20dan%20harganya%3F"
-        },
-        {
-          "title": "Partner Promo D Store - Diskon Khusus Pembuatan Website",
-          "img": "/uploads/black_white_aesthetic_film_frame_photo_collage_canvas_banner__1240_x_300_piksel___9_-1792425263223.webp",
-          "link": "https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store%2C%20saya%20tertarik%20dengan%20promo%20website."
+          "link": "#"
         }
       ],
       "discList": [
@@ -11626,8 +11618,8 @@
     },
     "heroSlide1": {
       "id": "hero-top-1",
-      "image": "/uploads/dstore_kaca_kiri-1791898740038.webp",
-      "title": "D STORE 10.10 Super Flash Sale Akun Aplikasi Premium",
+      "image": "/uploads/dstore_boss_hero_high_chest.jpg",
+      "title": "D STORE VIP Executive Access",
       "brand": "D STORE",
       "link": "#"
     },
@@ -12463,8 +12455,8 @@
     },
     "heroSlide1": {
       "id": "hero-top-1",
-      "image": "/uploads/dstore_kaca_kiri-1791898740038.webp",
-      "title": "D STORE 10.10 Super Flash Sale Akun Aplikasi Premium",
+      "image": "/uploads/dstore_boss_hero_high_chest.jpg",
+      "title": "D STORE VIP Executive Access",
       "brand": "D STORE",
       "link": "#"
     },
@@ -12570,9 +12562,9 @@
     },
     "applyList": [
       {
-        "title": "Jasa Pembuatan Website Profesional",
+        "title": "Jasa Pembuatan Website & Aplikasi Toko Online D Store - Terima Beres Siap Jualan",
         "img": "/uploads/banner_jasa_website_desktop.webp",
-        "link": "https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store%2C%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website.%20Boleh%20konsultasi%20mengenai%20paket%2C%20fitur%2C%20dan%20harganya%3F"
+        "link": "#"
       }
     ],
     "discList": [

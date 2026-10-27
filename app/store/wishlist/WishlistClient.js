@@ -344,14 +344,14 @@ export default function WishlistClient({ initialProducts = [], initialVariants =
                         className="p-2.5 sm:p-3 hover:bg-zinc-50 active:bg-zinc-100 rounded-xl flex items-center justify-between gap-3 cursor-pointer transition select-none group"
                       >
                         <div className="min-w-0 flex-1">
-                          <div className="flex items-center gap-1.5">
-                              <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-800">
-                                {item.brand}
-                              </span>
+                          <div className="text-xs sm:text-sm font-bold text-zinc-900 truncate group-hover:text-black">
+                            {item.name}
+                          </div>
+                          {(item.categoryName || item.category) && (
+                            <div className="text-[10px] sm:text-[11px] text-zinc-400 truncate mt-0.5">
+                              {item.categoryName || item.category}
                             </div>
-                            <div className="text-xs sm:text-sm font-bold text-zinc-900 truncate mt-0.5 group-hover:text-black">
-                              {item.name}
-                            </div>
+                          )}
                         </div>
 
                         <div className="shrink-0 text-right">

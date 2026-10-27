@@ -963,8 +963,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       if (saved) {
         const parsed = JSON.parse(saved);
 
-        if (parsed.catalogVersion !== '2026-10-28-v1-custom-cards') {
-          parsed.catalogVersion = '2026-10-28-v1-custom-cards';
+        if (parsed.catalogVersion !== '2026-10-28-v2-exact-15-jfy') {
+          parsed.catalogVersion = '2026-10-28-v2-exact-15-jfy';
           try { localStorage.setItem('d_store_visual_editor_data', JSON.stringify(parsed)); } catch (e) {}
         }
 
@@ -1205,7 +1205,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
     }
 
     const fullPayload = {
-      catalogVersion: '2026-10-28-v1-custom-cards',
+      catalogVersion: '2026-10-28-v2-exact-15-jfy',
       heroCarouselItems: newHeroItems,
       mainHeroBanner: newMainHero,
       topTierProducts: newTopTier,
@@ -1263,7 +1263,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
 
       if (!dataToSync) {
         dataToSync = {
-          catalogVersion: '2026-10-28-v1-custom-cards',
+          catalogVersion: '2026-10-28-v2-exact-15-jfy',
           heroCarouselItems,
           mainHeroBanner,
           topTierProducts,
@@ -1283,7 +1283,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           saveList
         };
       } else {
-        dataToSync.catalogVersion = '2026-10-28-v1-custom-cards';
+        dataToSync.catalogVersion = '2026-10-28-v2-exact-15-jfy';
       }
 
       const res = await fetch("/api/store/banners", {

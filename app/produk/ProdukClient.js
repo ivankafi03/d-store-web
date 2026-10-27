@@ -579,7 +579,7 @@ export default function ProdukClient({ initialData }) {
 
       {/* Floating Bottom Navigation Bar (Mobile) */}
       <div className="fixed bottom-3 inset-x-0 mx-auto z-40 w-[88%] max-w-[320px] md:hidden pointer-events-none">
-        <div className="rounded-full iphone-glass-bottom-card px-2 py-1 pointer-events-auto shadow-[0_8px_25px_rgba(0,0,0,0.12)] border border-zinc-200/80 bg-white/95 backdrop-blur-md">
+        <div className="rounded-full iphone-glass-bottom-card px-2 py-1 pointer-events-auto overflow-hidden border border-zinc-200/80 bg-white/95 backdrop-blur-md">
           <div className="relative flex items-center justify-around px-0.5">
             <Link
               href="/"

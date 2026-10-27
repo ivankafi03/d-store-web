@@ -45,7 +45,7 @@ import {
 import AppVariantModal from '@/app/components/AppVariantModal';
 import CategoriesModal from '@/app/components/CategoriesModal';
 import { getAppVariantData } from '@/lib/appVariantsData';
-import { buildUnifiedCatalog, searchCatalog } from '@/lib/catalogTemplates';
+import { buildUnifiedCatalog, searchCatalog, getResolvedProductImage } from '@/lib/catalogTemplates';
 import AdminEditToolbar from '@/app/components/AdminEditToolbar';
 import VisualEditModal from '@/app/components/VisualEditModal';
 
@@ -572,23 +572,21 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       .then((data) => {
         if (data.status === 'ok' && data.banners) {
           const vData = data.banners.visualEditorData;
-          let shouldRestoreServer = false;
+          let hasLocalEdits = false;
           if (typeof window !== "undefined") {
-            const savedRaw = localStorage.getItem("d_store_visual_editor_data");
-            if (!savedRaw) {
-              shouldRestoreServer = true;
-            } else {
-              try {
+            try {
+              const savedRaw = localStorage.getItem("d_store_visual_editor_data");
+              if (savedRaw) {
                 const parsed = JSON.parse(savedRaw);
-                if (parsed.catalogVersion !== '2026-10-27-v3-sync-all') {
-                  shouldRestoreServer = true;
+                if (parsed && typeof parsed === 'object' && Object.keys(parsed).length > 1) {
+                  hasLocalEdits = true;
                 }
-              } catch (e) {
-                shouldRestoreServer = true;
               }
-            }
+            } catch (e) {}
           }
-          if (vData && shouldRestoreServer) {
+
+          // Prioritaskan editan user di browser lokal: jangan pernah timpa jika user sudah pernah mengedit
+          if (!hasLocalEdits && vData) {
             if (Array.isArray(vData.heroCarouselItems)) setHeroCarouselItems(vData.heroCarouselItems);
             if (Array.isArray(vData.bubbleList)) {
               const allowed = ['netflix', 'chatgpt', 'spotify', 'canva pro', 'youtube', 'capcut pro', 'disney+', 'duolingo', 'bstation'];
@@ -613,7 +611,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             }
             if (Array.isArray(vData.discList) && vData.discList.length > 0) setDiscList(vData.discList);
             if (Array.isArray(vData.saveList) && vData.saveList.length > 0) setSaveList(vData.saveList);
-          } else if (!vData) {
+          } else if (!hasLocalEdits && !vData) {
             if (Array.isArray(data.banners.speedDeals) && data.banners.speedDeals.length > 0) setSpeedDealsList(data.banners.speedDeals);
             if (Array.isArray(data.banners.trending) && data.banners.trending.length > 0) setTrendList(data.banners.trending);
             if (Array.isArray(data.banners.steals) && data.banners.steals.length > 0) setStealsList(data.banners.steals);
@@ -1737,9 +1735,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                       )}
                       <img
                         alt={item.name}
-                        src={item.image}
+                        src={(item.image && item.image.trim()) ? item.image : (getResolvedProductImage(item, liveProducts) || '/uploads/desain_tanpa_judul__4_-1791989747452.webp')}
                         className="aspect-[75/103] w-full rounded-lg border-white bg-gray-50 object-cover pointer-events-none"
-                        onError={(e) => { e.target.src = '/images/hero-card-1.png'; }}
+                        onError={(e) => { e.target.src = getResolvedProductImage(item, liveProducts) || '/uploads/desain_tanpa_judul__4_-1791989747452.webp'; }}
                       />
                       {(() => {
                         const live = getLiveProductStatus(item);
@@ -2343,14 +2341,14 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                           Edit
                         </div>
                       )}
-                      <div className="product-item__product-image-wrapper aspect-[3/4] bg-[#f7f7f7] rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer">
+                      <div className="product-item__product-image-wrapper aspect-[3/4] bg-[#f7f7f7] rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer p-2">
                         <img 
                           className="product-item__product-image w-full h-full object-contain pointer-events-none transition duration-300 hover:scale-105" 
-                          src={prod.image || 'https://images.ctfassets.net/9q8du028z7sn/dWGuNAZUJDAMWnm4oRy8m/ebd10d76f2838c5857bcaf33ab272af7/225x225_KC_BB_1010_SALE_CD.png'} 
+                          src={(prod.image && prod.image.trim()) ? prod.image : (getResolvedProductImage(prod, liveProducts) || '/uploads/desain_tanpa_judul__4_-1791989747452.webp')} 
                           alt={prod.name} 
                           onError={(e) => {
                             e.currentTarget.onerror = null;
-                            e.currentTarget.src = 'https://images.ctfassets.net/9q8du028z7sn/dWGuNAZUJDAMWnm4oRy8m/ebd10d76f2838c5857bcaf33ab272af7/225x225_KC_BB_1010_SALE_CD.png';
+                            e.currentTarget.src = getResolvedProductImage(prod, liveProducts) || '/uploads/desain_tanpa_judul__4_-1791989747452.webp';
                           }}
                           fetchPriority="low" 
                           loading="eager" 
@@ -3004,11 +3002,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                       >
                         <img 
                           className="product-item__product-image w-full h-full object-contain pointer-events-none transition duration-300 hover:scale-105" 
-                          src={prod.image || 'https://images.ctfassets.net/9q8du028z7sn/dWGuNAZUJDAMWnm4oRy8m/ebd10d76f2838c5857bcaf33ab272af7/225x225_KC_BB_1010_SALE_CD.png'} 
+                          src={(prod.image && prod.image.trim()) ? prod.image : (getResolvedProductImage(prod, liveProducts) || '/uploads/desain_tanpa_judul__4_-1791989747452.webp')} 
                           alt={prod.name} 
                           onError={(e) => {
                             e.currentTarget.onerror = null;
-                            e.currentTarget.src = 'https://images.ctfassets.net/9q8du028z7sn/dWGuNAZUJDAMWnm4oRy8m/ebd10d76f2838c5857bcaf33ab272af7/225x225_KC_BB_1010_SALE_CD.png';
+                            e.currentTarget.src = getResolvedProductImage(prod, liveProducts) || '/uploads/desain_tanpa_judul__4_-1791989747452.webp';
                           }}
                           fetchPriority="low" 
                           loading="lazy" 

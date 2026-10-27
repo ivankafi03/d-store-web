@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "2026-10-27-v3-sync-all",
+  "catalogVersion": "2026-10-28-v1-custom-cards",
   "updatedAt": "2026-10-27T15:34:38.211147Z",
   "categories": [
     {
@@ -41,7 +41,7 @@
       "description": "Layanan akun Adobe Express premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "adobe_express",
-      "image": "/uploads/adobe_express.svg"
+      "image": "/uploads/adobe_express_card.webp"
     },
     {
       "id": "prod_cat_alight_motion",
@@ -52,7 +52,7 @@
       "description": "Layanan akun Alight Motion premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "alight_motion",
-      "image": "/uploads/alight_motion.webp"
+      "image": "/uploads/alight_motion_card.webp"
     },
     {
       "id": "prod_cat_apple_music",
@@ -63,7 +63,7 @@
       "description": "Layanan akun Apple Music premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "apple_music",
-      "image": "/uploads/apple_music.svg"
+      "image": "/uploads/apple_music_card.webp"
     },
     {
       "id": "prod_cat_apple_tv",
@@ -74,7 +74,7 @@
       "description": "Layanan akun Apple TV premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "apple_tv",
-      "image": "/uploads/appletv_icon.webp"
+      "image": "/uploads/apple_tv_card.webp"
     },
     {
       "id": "prod_cat_bstation",
@@ -85,7 +85,7 @@
       "description": "Layanan akun Bstation premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "bstation",
-      "image": "/uploads/bstation_icon.webp"
+      "image": "/uploads/bstation_card.webp"
     },
     {
       "id": "prod_cat_canva",
@@ -96,7 +96,7 @@
       "description": "Layanan akun Canva premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "canva",
-      "image": "/uploads/canva_icon.webp"
+      "image": "/uploads/canva_card.webp"
     },
     {
       "id": "prod_cat_capcut",
@@ -107,7 +107,7 @@
       "description": "Layanan akun CapCut premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "capcut",
-      "image": "/uploads/capcut_icon.webp"
+      "image": "/uploads/capcut_card.webp"
     },
     {
       "id": "prod_cat_catchplay",
@@ -118,7 +118,7 @@
       "description": "Layanan akun Catchplay premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "catchplay",
-      "image": "/uploads/catchplay_icon.webp"
+      "image": "/uploads/catchplay_card.webp"
     },
     {
       "id": "prod_cat_chai",
@@ -129,7 +129,7 @@
       "description": "Layanan akun Chai premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "chai",
-      "image": "/uploads/chai_icon.webp"
+      "image": "/uploads/chai_card.webp"
     },
     {
       "id": "prod_cat_chatgpt",
@@ -140,7 +140,7 @@
       "description": "Layanan akun ChatGPT premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "chatgpt",
-      "image": "/uploads/chatgpt_icon.webp"
+      "image": "/uploads/chatgpt_card.webp"
     },
     {
       "id": "prod_cat_crunchyroll",
@@ -151,7 +151,7 @@
       "description": "Layanan akun Crunchyroll premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "crunchyroll",
-      "image": "/uploads/crunchyroll_icon.webp"
+      "image": "/uploads/crunchyroll_card.webp"
     },
     {
       "id": "prod_cat_dazzcam",
@@ -162,7 +162,7 @@
       "description": "Layanan akun Dazzcam premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "dazzcam",
-      "image": "/uploads/dazzcam_icon.webp"
+      "image": "/uploads/dazzcam_card.webp"
     },
     {
       "id": "prod_cat_deezer",
@@ -173,7 +173,7 @@
       "description": "Layanan akun Deezer premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "deezer",
-      "image": "/uploads/deezer_icon.webp"
+      "image": "/uploads/deezer_card.webp"
     },
     {
       "id": "prod_cat_disney_hotstar",
@@ -184,7 +184,7 @@
       "description": "Layanan akun Disney+ Hotstar premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "disney_hotstar",
-      "image": "/uploads/disney_icon.webp"
+      "image": "/uploads/disney_hotstar_card.webp"
     },
     {
       "id": "prod_cat_drakor_id",
@@ -195,7 +195,7 @@
       "description": "Layanan akun Drakor.id premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "drakor_id",
-      "image": "/uploads/drakorid_icon.webp"
+      "image": "/uploads/drakor_id_card.webp"
     },
     {
       "id": "prod_cat_dramabox",
@@ -250,7 +250,7 @@
       "description": "Layanan akun Fizzo Novel premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "fizzo_novel",
-      "image": "/uploads/fizzonovel_icon.webp"
+      "image": "/uploads/fizzo_novel_card.webp"
     },
     {
       "id": "prod_cat_gagaoolala",
@@ -272,7 +272,7 @@
       "description": "Layanan akun Gemini AI premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "gemini_ai",
-      "image": "/uploads/gemini_icon.webp"
+      "image": "/uploads/gemini_ai_card.webp"
     },
     {
       "id": "prod_cat_genflix",
@@ -294,7 +294,7 @@
       "description": "Layanan akun Getcontact premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "getcontact",
-      "image": "/uploads/getcontact_icon.webp"
+      "image": "/uploads/getcontact_card.webp"
     },
     {
       "id": "prod_cat_grammarly",
@@ -305,7 +305,7 @@
       "description": "Layanan akun Grammarly premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "grammarly",
-      "image": "/uploads/grammarly_icon.webp"
+      "image": "/uploads/grammarly_card.webp"
     },
     {
       "id": "prod_cat_grok_ai",
@@ -316,7 +316,7 @@
       "description": "Layanan akun Grok AI premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "grok_ai",
-      "image": "/uploads/grok_icon.webp"
+      "image": "/uploads/grok_ai_card.webp"
     },
     {
       "id": "prod_cat_gsuite",
@@ -327,7 +327,7 @@
       "description": "Layanan akun Gsuite premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "gsuite",
-      "image": "/uploads/gsuite_icon.webp"
+      "image": "/uploads/gsuite_card.webp"
     },
     {
       "id": "prod_cat_hbo_max",
@@ -338,7 +338,7 @@
       "description": "Layanan akun HBO Max premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "hbo_max",
-      "image": "/uploads/hbomax_icon.webp"
+      "image": "/uploads/hbo_max_card.webp"
     },
     {
       "id": "prod_cat_ibis_paint_x",
@@ -806,7 +806,7 @@
       "description": "Layanan akun YouTube premium legal bergaransi resmi.",
       "isActive": true,
       "slug": "youtube",
-      "image": "/uploads/edit_template_colors__22_-1792038177853.webp"
+      "image": "/uploads/youtube_card.webp"
     },
     {
       "id": "prod_cat_youku",
@@ -10676,7 +10676,7 @@
           "originalPrice": "Rp 25.500",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/adobe_express.svg",
+          "image": "/uploads/adobe_express_card.webp",
           "category": "cat_3"
         },
         {
@@ -10691,7 +10691,7 @@
           "originalPrice": "Rp 3.750",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/alight_motion.webp",
+          "image": "/uploads/alight_motion_card.webp",
           "category": "cat_3"
         },
         {
@@ -10706,7 +10706,7 @@
           "originalPrice": "Rp 8.250",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/apple_music.svg",
+          "image": "/uploads/apple_music_card.webp",
           "category": "cat_4"
         },
         {
@@ -10721,7 +10721,7 @@
           "originalPrice": "Rp 13.500",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/appletv_icon.webp",
+          "image": "/uploads/apple_tv_card.webp",
           "category": "cat_2"
         },
         {
@@ -10736,7 +10736,7 @@
           "originalPrice": "Rp 10.500",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/bstation_icon.webp",
+          "image": "/uploads/bstation_card.webp",
           "category": "cat_2"
         },
         {
@@ -10751,7 +10751,7 @@
           "originalPrice": "Rp 3.750",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/canva_icon.webp",
+          "image": "/uploads/canva_card.webp",
           "category": "cat_3"
         },
         {
@@ -10766,7 +10766,7 @@
           "originalPrice": "Rp 9.000",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/capcut_icon.webp",
+          "image": "/uploads/capcut_card.webp",
           "category": "cat_3"
         },
         {
@@ -10781,7 +10781,7 @@
           "originalPrice": "Rp 27.000",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/catchplay_icon.webp",
+          "image": "/uploads/catchplay_card.webp",
           "category": "cat_2"
         }
       ],
@@ -10856,7 +10856,7 @@
           "originalPrice": "Rp 4.500",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/chai_icon.webp",
+          "image": "/uploads/chai_card.webp",
           "category": "cat_1"
         },
         {
@@ -10871,7 +10871,7 @@
           "originalPrice": "Rp 9.000",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/chatgpt_icon.webp",
+          "image": "/uploads/chatgpt_card.webp",
           "category": "cat_1"
         },
         {
@@ -10886,7 +10886,7 @@
           "originalPrice": "Rp 7.500",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/crunchyroll_icon.webp",
+          "image": "/uploads/crunchyroll_card.webp",
           "category": "cat_2"
         },
         {
@@ -10901,7 +10901,7 @@
           "originalPrice": "Rp 25.500",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/dazzcam_icon.webp",
+          "image": "/uploads/dazzcam_card.webp",
           "category": "cat_3"
         },
         {
@@ -10916,7 +10916,7 @@
           "originalPrice": "Rp 18.000",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/deezer_icon.webp",
+          "image": "/uploads/deezer_card.webp",
           "category": "cat_4"
         },
         {
@@ -10931,7 +10931,7 @@
           "originalPrice": "Rp 6.750",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/disney_icon.webp",
+          "image": "/uploads/disney_hotstar_card.webp",
           "category": "cat_2"
         },
         {
@@ -10946,7 +10946,7 @@
           "originalPrice": "Rp 15.000",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/drakorid_icon.webp",
+          "image": "/uploads/drakor_id_card.webp",
           "category": "cat_2"
         },
         {
@@ -11021,7 +11021,7 @@
           "originalPrice": "Rp 15.000",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/fizzonovel_icon.webp",
+          "image": "/uploads/fizzo_novel_card.webp",
           "category": "cat_2"
         },
         {
@@ -11051,7 +11051,7 @@
           "originalPrice": "Rp 9.000",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/gemini_icon.webp",
+          "image": "/uploads/gemini_ai_card.webp",
           "category": "cat_1"
         },
         {
@@ -11081,7 +11081,7 @@
           "originalPrice": "Rp 6.750",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/getcontact_icon.webp",
+          "image": "/uploads/getcontact_card.webp",
           "category": "cat_7"
         },
         {
@@ -11096,7 +11096,7 @@
           "originalPrice": "Rp 21.000",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/grammarly_icon.webp",
+          "image": "/uploads/grammarly_card.webp",
           "category": "cat_5"
         },
         {
@@ -11111,7 +11111,7 @@
           "originalPrice": "Rp 180.000",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/grok_icon.webp",
+          "image": "/uploads/grok_ai_card.webp",
           "category": "cat_1"
         },
         {
@@ -11126,7 +11126,7 @@
           "originalPrice": "Rp 3.750",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/gsuite_icon.webp",
+          "image": "/uploads/gsuite_card.webp",
           "category": "cat_7"
         },
         {
@@ -11141,7 +11141,7 @@
           "originalPrice": "Rp 36.000",
           "discount": "-33%",
           "hasVoucher": true,
-          "image": "/uploads/hbomax_icon.webp",
+          "image": "/uploads/hbo_max_card.webp",
           "category": "cat_2"
         }
       ],
@@ -11366,7 +11366,8 @@
           "img": "https://images.ctfassets.net/9q8du028z7sn/7wULsO9CMdnPYm7IXILyxE/7e9eeb4843b80e477a47c61878e183cc/1920x420_SKINNY_SLIDER_BDPARTNER_KREDIVO_REG1_OKT.jpg",
           "link": "#"
         }
-      ]
+      ],
+      "catalogVersion": "2026-10-28-v1-custom-cards"
     },
     "topTierBanner": {
       "id": "toptier-banner",
@@ -11415,7 +11416,7 @@
         "originalPrice": "Rp 25.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/adobe_express.svg",
+        "image": "/uploads/adobe_express_card.webp",
         "category": "cat_3"
       },
       {
@@ -11430,7 +11431,7 @@
         "originalPrice": "Rp 3.750",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/alight_motion.webp",
+        "image": "/uploads/alight_motion_card.webp",
         "category": "cat_3"
       },
       {
@@ -11445,7 +11446,7 @@
         "originalPrice": "Rp 8.250",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/apple_music.svg",
+        "image": "/uploads/apple_music_card.webp",
         "category": "cat_4"
       },
       {
@@ -11460,7 +11461,7 @@
         "originalPrice": "Rp 13.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/appletv_icon.webp",
+        "image": "/uploads/apple_tv_card.webp",
         "category": "cat_2"
       },
       {
@@ -11475,7 +11476,7 @@
         "originalPrice": "Rp 10.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/bstation_icon.webp",
+        "image": "/uploads/bstation_card.webp",
         "category": "cat_2"
       },
       {
@@ -11490,7 +11491,7 @@
         "originalPrice": "Rp 3.750",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/canva_icon.webp",
+        "image": "/uploads/canva_card.webp",
         "category": "cat_3"
       },
       {
@@ -11505,7 +11506,7 @@
         "originalPrice": "Rp 9.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/capcut_icon.webp",
+        "image": "/uploads/capcut_card.webp",
         "category": "cat_3"
       },
       {
@@ -11520,7 +11521,7 @@
         "originalPrice": "Rp 27.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/catchplay_icon.webp",
+        "image": "/uploads/catchplay_card.webp",
         "category": "cat_2"
       }
     ],
@@ -11537,7 +11538,7 @@
         "originalPrice": "Rp 4.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/chai_icon.webp",
+        "image": "/uploads/chai_card.webp",
         "category": "cat_1"
       },
       {
@@ -11552,7 +11553,7 @@
         "originalPrice": "Rp 9.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/chatgpt_icon.webp",
+        "image": "/uploads/chatgpt_card.webp",
         "category": "cat_1"
       },
       {
@@ -11567,7 +11568,7 @@
         "originalPrice": "Rp 7.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/crunchyroll_icon.webp",
+        "image": "/uploads/crunchyroll_card.webp",
         "category": "cat_2"
       },
       {
@@ -11582,7 +11583,7 @@
         "originalPrice": "Rp 25.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/dazzcam_icon.webp",
+        "image": "/uploads/dazzcam_card.webp",
         "category": "cat_3"
       },
       {
@@ -11597,7 +11598,7 @@
         "originalPrice": "Rp 18.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/deezer_icon.webp",
+        "image": "/uploads/deezer_card.webp",
         "category": "cat_4"
       },
       {
@@ -11612,7 +11613,7 @@
         "originalPrice": "Rp 6.750",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/disney_icon.webp",
+        "image": "/uploads/disney_hotstar_card.webp",
         "category": "cat_2"
       },
       {
@@ -11627,7 +11628,7 @@
         "originalPrice": "Rp 15.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/drakorid_icon.webp",
+        "image": "/uploads/drakor_id_card.webp",
         "category": "cat_2"
       },
       {
@@ -11702,7 +11703,7 @@
         "originalPrice": "Rp 15.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/fizzonovel_icon.webp",
+        "image": "/uploads/fizzo_novel_card.webp",
         "category": "cat_2"
       },
       {
@@ -11732,7 +11733,7 @@
         "originalPrice": "Rp 9.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/gemini_icon.webp",
+        "image": "/uploads/gemini_ai_card.webp",
         "category": "cat_1"
       },
       {
@@ -11762,7 +11763,7 @@
         "originalPrice": "Rp 6.750",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/getcontact_icon.webp",
+        "image": "/uploads/getcontact_card.webp",
         "category": "cat_7"
       },
       {
@@ -11777,7 +11778,7 @@
         "originalPrice": "Rp 21.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/grammarly_icon.webp",
+        "image": "/uploads/grammarly_card.webp",
         "category": "cat_5"
       },
       {
@@ -11792,7 +11793,7 @@
         "originalPrice": "Rp 180.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/grok_icon.webp",
+        "image": "/uploads/grok_ai_card.webp",
         "category": "cat_1"
       },
       {
@@ -11807,7 +11808,7 @@
         "originalPrice": "Rp 3.750",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/gsuite_icon.webp",
+        "image": "/uploads/gsuite_card.webp",
         "category": "cat_7"
       },
       {
@@ -11822,7 +11823,7 @@
         "originalPrice": "Rp 36.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/hbomax_icon.webp",
+        "image": "/uploads/hbo_max_card.webp",
         "category": "cat_2"
       }
     ]
@@ -12103,7 +12104,7 @@
         "originalPrice": "Rp 25.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/adobe_express.svg",
+        "image": "/uploads/adobe_express_card.webp",
         "category": "cat_3"
       },
       {
@@ -12118,7 +12119,7 @@
         "originalPrice": "Rp 3.750",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/alight_motion.webp",
+        "image": "/uploads/alight_motion_card.webp",
         "category": "cat_3"
       },
       {
@@ -12133,7 +12134,7 @@
         "originalPrice": "Rp 8.250",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/apple_music.svg",
+        "image": "/uploads/apple_music_card.webp",
         "category": "cat_4"
       },
       {
@@ -12148,7 +12149,7 @@
         "originalPrice": "Rp 13.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/appletv_icon.webp",
+        "image": "/uploads/apple_tv_card.webp",
         "category": "cat_2"
       },
       {
@@ -12163,7 +12164,7 @@
         "originalPrice": "Rp 10.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/bstation_icon.webp",
+        "image": "/uploads/bstation_card.webp",
         "category": "cat_2"
       },
       {
@@ -12178,7 +12179,7 @@
         "originalPrice": "Rp 3.750",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/canva_icon.webp",
+        "image": "/uploads/canva_card.webp",
         "category": "cat_3"
       },
       {
@@ -12193,7 +12194,7 @@
         "originalPrice": "Rp 9.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/capcut_icon.webp",
+        "image": "/uploads/capcut_card.webp",
         "category": "cat_3"
       },
       {
@@ -12208,7 +12209,7 @@
         "originalPrice": "Rp 27.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/catchplay_icon.webp",
+        "image": "/uploads/catchplay_card.webp",
         "category": "cat_2"
       }
     ],
@@ -12283,7 +12284,7 @@
         "originalPrice": "Rp 4.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/chai_icon.webp",
+        "image": "/uploads/chai_card.webp",
         "category": "cat_1"
       },
       {
@@ -12298,7 +12299,7 @@
         "originalPrice": "Rp 9.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/chatgpt_icon.webp",
+        "image": "/uploads/chatgpt_card.webp",
         "category": "cat_1"
       },
       {
@@ -12313,7 +12314,7 @@
         "originalPrice": "Rp 7.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/crunchyroll_icon.webp",
+        "image": "/uploads/crunchyroll_card.webp",
         "category": "cat_2"
       },
       {
@@ -12328,7 +12329,7 @@
         "originalPrice": "Rp 25.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/dazzcam_icon.webp",
+        "image": "/uploads/dazzcam_card.webp",
         "category": "cat_3"
       },
       {
@@ -12343,7 +12344,7 @@
         "originalPrice": "Rp 18.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/deezer_icon.webp",
+        "image": "/uploads/deezer_card.webp",
         "category": "cat_4"
       },
       {
@@ -12358,7 +12359,7 @@
         "originalPrice": "Rp 6.750",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/disney_icon.webp",
+        "image": "/uploads/disney_hotstar_card.webp",
         "category": "cat_2"
       },
       {
@@ -12373,7 +12374,7 @@
         "originalPrice": "Rp 15.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/drakorid_icon.webp",
+        "image": "/uploads/drakor_id_card.webp",
         "category": "cat_2"
       },
       {
@@ -12448,7 +12449,7 @@
         "originalPrice": "Rp 15.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/fizzonovel_icon.webp",
+        "image": "/uploads/fizzo_novel_card.webp",
         "category": "cat_2"
       },
       {
@@ -12478,7 +12479,7 @@
         "originalPrice": "Rp 9.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/gemini_icon.webp",
+        "image": "/uploads/gemini_ai_card.webp",
         "category": "cat_1"
       },
       {
@@ -12508,7 +12509,7 @@
         "originalPrice": "Rp 6.750",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/getcontact_icon.webp",
+        "image": "/uploads/getcontact_card.webp",
         "category": "cat_7"
       },
       {
@@ -12523,7 +12524,7 @@
         "originalPrice": "Rp 21.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/grammarly_icon.webp",
+        "image": "/uploads/grammarly_card.webp",
         "category": "cat_5"
       },
       {
@@ -12538,7 +12539,7 @@
         "originalPrice": "Rp 180.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/grok_icon.webp",
+        "image": "/uploads/grok_ai_card.webp",
         "category": "cat_1"
       },
       {
@@ -12553,7 +12554,7 @@
         "originalPrice": "Rp 3.750",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/gsuite_icon.webp",
+        "image": "/uploads/gsuite_card.webp",
         "category": "cat_7"
       },
       {
@@ -12568,7 +12569,7 @@
         "originalPrice": "Rp 36.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/hbomax_icon.webp",
+        "image": "/uploads/hbo_max_card.webp",
         "category": "cat_2"
       }
     ],
@@ -12793,7 +12794,8 @@
         "img": "https://images.ctfassets.net/9q8du028z7sn/7wULsO9CMdnPYm7IXILyxE/7e9eeb4843b80e477a47c61878e183cc/1920x420_SKINNY_SLIDER_BDPARTNER_KREDIVO_REG1_OKT.jpg",
         "link": "#"
       }
-    ]
+    ],
+    "catalogVersion": "2026-10-28-v1-custom-cards"
   },
   "categoryOverrides": {}
 }

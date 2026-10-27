@@ -2622,17 +2622,27 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             Edit
                           </div>
                         )}
-                        <img
-                          className="unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
-                          fetchPriority={idx === 0 ? "high" : "auto"}
-                          src={
-                            slide.img && !slide.img.startsWith('data:image')
-                              ? slide.img
-                              : '/uploads/banner_jasa_website_neo_brutalism.webp'
-                          }
-                          alt={slide.title}
-                          draggable="false"
-                        />
+                        {(!slide.img || slide.img.includes('banner_jasa_website')) ? (
+                          <picture className="w-full h-full block">
+                            <source media="(max-width: 640px)" srcSet="/uploads/banner_jasa_website_mobile.webp" />
+                            <source media="(max-width: 1024px)" srcSet="/uploads/banner_jasa_website_tablet.webp" />
+                            <img
+                              className="unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
+                              fetchPriority={idx === 0 ? "high" : "auto"}
+                              src="/uploads/banner_jasa_website_neo_brutalism.webp"
+                              alt={slide.title}
+                              draggable="false"
+                            />
+                          </picture>
+                        ) : (
+                          <img
+                            className="unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
+                            fetchPriority={idx === 0 ? "high" : "auto"}
+                            src={slide.img}
+                            alt={slide.title}
+                            draggable="false"
+                          />
+                        )}
                       </div>
                     </a>
                   </div>
@@ -2813,17 +2823,27 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             Edit
                           </div>
                         )}
-                        <img
-                          className="unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
-                          fetchPriority={idx === 0 ? "high" : "auto"}
-                          src={
-                            slide.img && !slide.img.startsWith('data:image')
-                              ? slide.img
-                              : '/uploads/banner_jasa_website_neo_brutalism.webp'
-                          }
-                          alt={slide.title}
-                          draggable="false"
-                        />
+                        {(!slide.img || slide.img.includes('banner_jasa_website')) ? (
+                          <picture className="w-full h-full block">
+                            <source media="(max-width: 640px)" srcSet="/uploads/banner_jasa_website_mobile.webp" />
+                            <source media="(max-width: 1024px)" srcSet="/uploads/banner_jasa_website_tablet.webp" />
+                            <img
+                              className="unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
+                              fetchPriority={idx === 0 ? "high" : "auto"}
+                              src="/uploads/banner_jasa_website_neo_brutalism.webp"
+                              alt={slide.title}
+                              draggable="false"
+                            />
+                          </picture>
+                        ) : (
+                          <img
+                            className="unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
+                            fetchPriority={idx === 0 ? "high" : "auto"}
+                            src={slide.img}
+                            alt={slide.title}
+                            draggable="false"
+                          />
+                        )}
                       </div>
                     </a>
                   </div>

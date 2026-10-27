@@ -527,7 +527,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
   const [trendList, setTrendList] = useState(() => (vData?.trendList?.length ? vData.trendList : (bData?.trending?.length ? bData.trending : ZALORA_TRENDING)));
   const [stealsList, setStealsList] = useState(() => (vData?.stealsList?.length ? vData.stealsList : (bData?.steals?.length ? bData.steals : ZALORA_STEALS)));
   const [brands2List, setBrands2List] = useState(() => (vData?.brands2List?.length ? vData.brands2List : ZALORA_BRANDS_2));
-  const [applyList, setApplyList] = useState(() => (vData?.applyList?.length ? vData.applyList : (bData?.apply?.length ? bData.apply : ZALORA_APPLY_NOW)));
+  const [applyList, setApplyList] = useState(() => {
+    const raw = (vData?.applyList?.length ? vData.applyList : (bData?.apply?.length ? bData.apply : ZALORA_APPLY_NOW));
+    const isOutdated = raw.some((item) => !item.img || item.img.startsWith('data:image') || item.img.includes('black_white_aesthetic') || item.img.includes('ctfassets.net'));
+    return isOutdated ? ZALORA_APPLY_NOW : raw;
+  });
   const [discList, setDiscList] = useState(() => (vData?.discList?.length ? vData.discList : (bData?.featured?.length ? bData.featured : ZALORA_FEATURED_COLLECTIONS)));
   const [saveList, setSaveList] = useState(() => (vData?.saveList?.length ? vData.saveList : (bData?.saveBanners?.length ? bData.saveBanners : ZALORA_SAVE_BANNERS)));
 
@@ -569,14 +573,20 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             if (Array.isArray(vData.speedDealsList) && vData.speedDealsList.length > 0) setSpeedDealsList(vData.speedDealsList);
             if (Array.isArray(vData.trendList) && vData.trendList.length > 0) setTrendList(vData.trendList);
             if (Array.isArray(vData.stealsList) && vData.stealsList.length > 0) setStealsList(vData.stealsList);
-            if (Array.isArray(vData.applyList) && vData.applyList.length > 0) setApplyList(vData.applyList);
+            if (Array.isArray(vData.applyList) && vData.applyList.length > 0) {
+              const isOutdated = vData.applyList.some((item) => !item.img || item.img.startsWith('data:image') || item.img.includes('black_white_aesthetic') || item.img.includes('ctfassets.net'));
+              setApplyList(isOutdated ? ZALORA_APPLY_NOW : vData.applyList);
+            }
             if (Array.isArray(vData.discList) && vData.discList.length > 0) setDiscList(vData.discList);
             if (Array.isArray(vData.saveList) && vData.saveList.length > 0) setSaveList(vData.saveList);
           } else if (!vData) {
             if (Array.isArray(data.banners.speedDeals) && data.banners.speedDeals.length > 0) setSpeedDealsList(data.banners.speedDeals);
             if (Array.isArray(data.banners.trending) && data.banners.trending.length > 0) setTrendList(data.banners.trending);
             if (Array.isArray(data.banners.steals) && data.banners.steals.length > 0) setStealsList(data.banners.steals);
-            if (Array.isArray(data.banners.apply) && data.banners.apply.length > 0) setApplyList(data.banners.apply);
+            if (Array.isArray(data.banners.apply) && data.banners.apply.length > 0) {
+              const isOutdated = data.banners.apply.some((item) => !item.img || item.img.startsWith('data:image') || item.img.includes('black_white_aesthetic') || item.img.includes('ctfassets.net'));
+              setApplyList(isOutdated ? ZALORA_APPLY_NOW : data.banners.apply);
+            }
             if (Array.isArray(data.banners.featured) && data.banners.featured.length > 0) setDiscList(data.banners.featured);
             if (Array.isArray(data.banners.saveBanners) && data.banners.saveBanners.length > 0) setSaveList(data.banners.saveBanners);
           }
@@ -983,8 +993,23 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           setTrendList(ZALORA_TRENDING);
         }
         if (Array.isArray(parsed.brands2List)) setBrands2List(parsed.brands2List);
-        if (parsed.topTierBanner) setTopTierBanner(parsed.topTierBanner);
-        if (Array.isArray(parsed.applyList)) setApplyList(parsed.applyList);
+        if (parsed.topTierBanner) {
+          if (!parsed.topTierBanner.image || parsed.topTierBanner.image.includes('black_white_aesthetic') || parsed.topTierBanner.image.startsWith('data:image')) {
+            parsed.topTierBanner = DEFAULT_TOP_TIER_BANNER;
+            try { localStorage.setItem('d_store_visual_editor_data', JSON.stringify(parsed)); } catch (e) {}
+          }
+          setTopTierBanner(parsed.topTierBanner);
+        }
+        if (Array.isArray(parsed.applyList)) {
+          const isOutdated = parsed.applyList.some((item) => !item.img || item.img.startsWith('data:image') || item.img.includes('black_white_aesthetic') || item.img.includes('ctfassets.net') || item.img.includes('banner_jasa_website_1200x280') || item.img.includes('banner_jasa_web_dstore_1200x300'));
+          if (isOutdated) {
+            parsed.applyList = ZALORA_APPLY_NOW;
+            try { localStorage.setItem('d_store_visual_editor_data', JSON.stringify(parsed)); } catch (e) {}
+          }
+          setApplyList(parsed.applyList);
+        } else {
+          setApplyList(ZALORA_APPLY_NOW);
+        }
         if (Array.isArray(parsed.discList) && parsed.discList.length >= 5) {
           setDiscList(parsed.discList);
         } else {

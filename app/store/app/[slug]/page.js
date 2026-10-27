@@ -15,11 +15,11 @@ export default function AppDetailPage({ params }) {
 
   useEffect(() => {
     if (slug) {
-      fetch('/api/products')
+      fetch('/api/store/products')
         .then((r) => r.json())
         .then((data) => {
           if (data.status === 'ok') {
-            const detected = getAppVariantData(slug, data.products, data.variants);
+            const detected = getAppVariantData(slug, data.rawProducts || data.products, data.rawVariants || data.variants);
             if (detected) {
               setAppData(detected);
               setSelectedPackage(detected.packages?.find((p) => p.popular) || detected.packages?.[0]);

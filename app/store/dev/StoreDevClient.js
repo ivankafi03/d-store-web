@@ -291,49 +291,7 @@ const TREND_CATEGORIES_CONFIG = {
   }
 };
 
-const FALLBACK_CATEGORY_PRODUCTS = {
-  ai: [
-    { id: 'fb_ai_1', name: 'ChatGPT Plus', description: 'Model GPT-4o, Canvas & DALL-E 3', price: 20000, categoryId: 'cat_1', count: 3 },
-    { id: 'fb_ai_2', name: 'Midjourney Pro', description: 'Generative AI Art Unlimited', price: 45000, categoryId: 'cat_1', count: 2 },
-    { id: 'fb_ai_3', name: 'Gemini AI Advanced', description: 'Google DeepMind 1.5 Pro 1M Token', price: 7000, categoryId: 'cat_1', count: 6 },
-    { id: 'fb_ai_4', name: 'Captions AI Pro', description: 'Auto Subtitle & AI Voice Creator', price: 255000, categoryId: 'cat_1', count: 1 },
-    { id: 'fb_ai_5', name: 'Google Colab Pro', description: 'GPU Computing Cloud untuk Dev', price: 155000, categoryId: 'cat_1', count: 3 },
-    { id: 'fb_ai_6', name: 'Flora AI', description: 'AI Creative Design & Motion', price: 23000, categoryId: 'cat_1', count: 1 }
-  ],
-  streaming: [
-    { id: 'fb_str_1', name: 'Netflix Premium 4K', description: 'UHD HDR Anti-On Hold Legal', price: 25000, categoryId: 'cat_2', count: 12 },
-    { id: 'fb_str_2', name: 'Disney+ Hotstar', description: 'Marvel, Disney & Pixar Premium', price: 18000, categoryId: 'cat_2', count: 12 },
-    { id: 'fb_str_3', name: 'Prime Video 4K', description: 'Serial & Film Hollywood Eksklusif', price: 11000, categoryId: 'cat_2', count: 4 },
-    { id: 'fb_str_4', name: 'YouTube Premium', description: 'Bebas Iklan + Background Play', price: 4000, categoryId: 'cat_2', count: 4 },
-    { id: 'fb_str_5', name: 'HBO Max', description: 'Warner Bros & HBO Original Series', price: 15000, categoryId: 'cat_2', count: 3 },
-    { id: 'fb_str_6', name: 'Vidio Platinum', description: 'Live Sports Liga 1 & Drama', price: 12000, categoryId: 'cat_2', count: 7 }
-  ],
-  design: [
-    { id: 'fb_des_1', name: 'Canva Pro', description: 'Akses Penuh Template & Desain Unlimited', price: 3500, categoryId: 'cat_3', count: 5 },
-    { id: 'fb_des_2', name: 'CapCut Pro', description: 'Video Editing 4K & Cloud Tanpa Watermark', price: 8000, categoryId: 'cat_3', count: 3 },
-    { id: 'fb_des_3', name: 'Adobe Creative Cloud', description: 'Photoshop, Illustrator & Premiere', price: 18000, categoryId: 'cat_3', count: 1 },
-    { id: 'fb_des_4', name: 'Remini Pro', description: 'AI Photo Enhancer HD & Restore', price: 11000, categoryId: 'cat_3', count: 3 },
-    { id: 'fb_des_5', name: 'Alight Motion Pro', description: 'Motion Design Preset XML Unlimited', price: 2500, categoryId: 'cat_3', count: 2 },
-    { id: 'fb_des_6', name: 'Picsart Gold', description: 'Editor Foto & Kolase VIP', price: 13000, categoryId: 'cat_3', count: 2 }
-  ],
-  music: [
-    { id: 'fb_mus_1', name: 'Spotify Premium', description: 'Audio HiFi 320kbps & Bebas Iklan', price: 12000, categoryId: 'cat_4', count: 5 },
-    { id: 'fb_mus_2', name: 'Apple Music Lossless', description: 'Spatial Audio & Dolby Atmos 24-bit', price: 6500, categoryId: 'cat_4', count: 8 },
-    { id: 'fb_mus_3', name: 'Deezer Premium HiFi', description: 'FLAC Lossless Audio Streaming', price: 11000, categoryId: 'cat_4', count: 2 }
-  ],
-  vpn: [
-    { id: 'fb_vpn_1', name: 'Surfshark VPN', description: 'Unlimited Device & CleanWeb Shield', price: 4500, categoryId: 'cat_6', count: 4 },
-    { id: 'fb_vpn_2', name: 'ExpressVPN', description: 'Kecepatan Ultra Cepat 105 Negara', price: 8000, categoryId: 'cat_6', count: 1 },
-    { id: 'fb_vpn_3', name: 'HMA VPN', description: 'Privasi Anonim & IP Luas', price: 13000, categoryId: 'cat_6', count: 1 }
-  ],
-  office: [
-    { id: 'fb_off_1', name: 'Microsoft 365 + 1TB', description: 'Word, Excel, PPT & 1TB OneDrive', price: 8000, categoryId: 'cat_7', count: 2 },
-    { id: 'fb_off_2', name: 'Google Workspace / GSuite', description: 'Penyimpanan Google Drive & Custom Domain', price: 4500, categoryId: 'cat_7', count: 9 },
-    { id: 'fb_off_3', name: 'Zoom Pro Meeting', description: 'Meeting Tanpa Batas 40 Menit & Rekam', price: 8000, categoryId: 'cat_7', count: 3 },
-    { id: 'fb_off_4', name: 'WPS Office Premium', description: 'PDF Tool, Converter & Office Suite', price: 10000, categoryId: 'cat_7', count: 1 },
-    { id: 'fb_off_5', name: 'Gmail Fresh Terverifikasi', description: 'Akun Fresh Garansi 1x24 Jam', price: 7000, categoryId: 'cat_7', count: 1 }
-  ]
-};
+const FALLBACK_CATEGORY_PRODUCTS = {};
 
 function useDraggableCarousel({ totalSlides, interval = 4500, loop = true }) {
   const [currentIndex, setCurrentIndex] = useState(0);
@@ -990,6 +948,13 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       const saved = localStorage.getItem('d_store_visual_editor_data');
       if (saved) {
         const parsed = JSON.parse(saved);
+
+        if (parsed.catalogVersion !== '2026-10-27-master-77-clean') {
+          delete parsed.topTierProducts;
+          delete parsed.justForYouProducts;
+          parsed.catalogVersion = '2026-10-27-master-77-clean';
+          try { localStorage.setItem('d_store_visual_editor_data', JSON.stringify(parsed)); } catch (e) {}
+        }
 
         if (Array.isArray(parsed.heroCarouselItems)) {
           // Pure restore: render exactly what user saved without altering prices or names

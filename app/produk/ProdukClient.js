@@ -13,7 +13,15 @@ import {
   Home, 
   SlidersHorizontal,
   Check,
-  ChevronRight
+  ChevronRight,
+  Layers,
+  Cpu,
+  Film,
+  PenTool,
+  Headphones,
+  BookOpen,
+  Shield,
+  Briefcase
 } from 'lucide-react';
 
 const CATEGORY_SHORT_NAMES = {
@@ -33,6 +41,7 @@ export default function ProdukClient({ initialData }) {
   const [sortBy, setSortBy] = useState('cheapest'); // 'cheapest' | 'expensive' | 'az'
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
+  const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
 
   const products = initialData?.products || [];
   const variants = initialData?.variants || [];
@@ -54,17 +63,17 @@ export default function ProdukClient({ initialData }) {
     return map;
   }, [variants]);
 
-  // Category list
+  // Category list dengan ikon
   const categoryTabs = useMemo(() => {
     return [
-      { id: 'ALL', name: 'Semua Produk' },
-      { id: 'cat_1', name: 'AI & Tools' },
-      { id: 'cat_2', name: 'Streaming' },
-      { id: 'cat_3', name: 'Desain & Video' },
-      { id: 'cat_4', name: 'Musik' },
-      { id: 'cat_5', name: 'Edukasi' },
-      { id: 'cat_6', name: 'VPN' },
-      { id: 'cat_7', name: 'Office & Akun' },
+      { id: 'ALL', name: 'Semua Produk', icon: Layers },
+      { id: 'cat_1', name: 'AI & Tools', icon: Cpu },
+      { id: 'cat_2', name: 'Streaming', icon: Film },
+      { id: 'cat_3', name: 'Desain & Video', icon: PenTool },
+      { id: 'cat_4', name: 'Musik', icon: Headphones },
+      { id: 'cat_5', name: 'Edukasi', icon: BookOpen },
+      { id: 'cat_6', name: 'VPN', icon: Shield },
+      { id: 'cat_7', name: 'Office & Akun', icon: Briefcase },
     ];
   }, []);
 
@@ -357,7 +366,7 @@ export default function ProdukClient({ initialData }) {
         </div>
       </main>
 
-      {/* Modal Detail & Pilih Paket: Siku Melengkung Proporsional (rounded-t-2xl sm:rounded-xl) */}
+      {/* Modal Detail & Pilih Paket */}
       {selectedProduct && (
         <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-3 animate-in fade-in duration-150">
           <div 
@@ -456,7 +465,88 @@ export default function ProdukClient({ initialData }) {
         </div>
       )}
 
-      {/* Floating Bottom Navigation Bar (Mobile) - Mengikuti persis template pengguna */}
+      {/* Modal Bottom Sheet: Pilih Kategori (Dipicu tombol Kategori di bottom nav) */}
+      {isCategoryModalOpen && (
+        <div 
+          className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-3 animate-in fade-in duration-150"
+          onClick={() => setIsCategoryModalOpen(false)}
+        >
+          <div 
+            className="bg-white w-full sm:max-w-md rounded-t-2xl sm:rounded-xl p-4 sm:p-5 max-h-[85vh] flex flex-col shadow-2xl animate-in slide-in-from-bottom-2 duration-150"
+            onClick={(e) => e.stopPropagation()}
+          >
+            <div className="flex items-center justify-between pb-3 border-b border-zinc-200">
+              <div>
+                <h2 className="text-sm sm:text-base font-bold text-zinc-950">
+                  Pilih Kategori Produk
+                </h2>
+                <p className="text-[11px] text-zinc-500 mt-0.5">
+                  Saring katalog berdasarkan kategori akun digital
+                </p>
+              </div>
+              <button
+                type="button"
+                onClick={() => setIsCategoryModalOpen(false)}
+                className="p-1 text-zinc-400 hover:text-zinc-700 rounded-md hover:bg-zinc-100 transition"
+              >
+                <X className="w-4 h-4" />
+              </button>
+            </div>
+
+            <div className="py-3 overflow-y-auto space-y-1.5 flex-1">
+              {categoryTabs.map((tab) => {
+                const isSelected = selectedCategory === tab.id;
+                const count = tab.id === 'ALL' 
+                  ? products.length 
+                  : products.filter(p => p.categoryId === tab.id).length;
+                const IconComponent = tab.icon;
+
+                return (
+                  <div
+                    key={tab.id}
+                    onClick={() => {
+                      setSelectedCategory(tab.id);
+                      setIsCategoryModalOpen(false);
+                      window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }}
+                    className={`p-3 rounded-lg border transition cursor-pointer flex items-center justify-between gap-3 ${
+                      isSelected
+                        ? 'border-zinc-950 bg-zinc-900 text-white shadow-xs'
+                        : 'border-zinc-200 hover:border-zinc-400 bg-white text-zinc-800'
+                    }`}
+                  >
+                    <div className="flex items-center gap-3 min-w-0">
+                      <div
+                        className={`w-8 h-8 rounded-md flex items-center justify-center shrink-0 ${
+                          isSelected ? 'bg-zinc-800 text-white' : 'bg-zinc-100 text-zinc-700'
+                        }`}
+                      >
+                        <IconComponent className="w-4 h-4" />
+                      </div>
+                      <div className="min-w-0">
+                        <span className="block text-xs sm:text-sm font-bold truncate">
+                          {tab.name}
+                        </span>
+                        <span className={`block text-[10px] ${isSelected ? 'text-zinc-300' : 'text-zinc-400'}`}>
+                          {count} Produk Tersedia
+                        </span>
+                      </div>
+                    </div>
+
+                    {isSelected && (
+                      <div className="w-5 h-5 rounded-full bg-white text-zinc-950 flex items-center justify-center shrink-0">
+                        <Check className="w-3 h-3 stroke-[3]" />
+                      </div>
+                    )}
+                  </div>
+                );
+              })}
+            </div>
+          </div>
+        </div>
+      )}
+
+      {/* Floating Bottom Navigation Bar (Mobile) - Tombol Kategori Aktif Membuka Modal Kategori */}
       <div className="fixed bottom-3 inset-x-0 mx-auto z-40 w-[88%] max-w-[320px] md:hidden pointer-events-none">
         <div className="rounded-full iphone-glass-bottom-card px-2 py-1 pointer-events-auto shadow-[0_8px_25px_rgba(0,0,0,0.12)] border border-zinc-200/80 bg-white/95 backdrop-blur-md">
           <div className="relative flex items-center justify-around px-1">
@@ -470,9 +560,7 @@ export default function ProdukClient({ initialData }) {
 
             <button
               type="button"
-              onClick={() => {
-                window.scrollTo({ top: 0, behavior: 'smooth' });
-              }}
+              onClick={() => setIsCategoryModalOpen(true)}
               className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-600 hover:text-black transition"
             >
               <SlidersHorizontal className="w-5 h-5 text-zinc-600" />
@@ -482,6 +570,8 @@ export default function ProdukClient({ initialData }) {
             <button
               type="button"
               onClick={() => {
+                setSelectedCategory('ALL');
+                setSearchTerm('');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
               className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-900 hover:text-black transition"

@@ -3576,11 +3576,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
         style={{ left: 0, right: 0, marginLeft: 'auto', marginRight: 'auto' }}
       >
         <div className="rounded-full iphone-glass-bottom-card px-2 py-1 pointer-events-auto shadow-[0_8px_25px_rgba(0,0,0,0.12)] border border-zinc-200/80 bg-white/95 backdrop-blur-md">
-          <div className="relative flex items-center justify-around px-1">
+          <div className="relative flex items-center justify-around px-0.5">
             {/* 1. Home */}
             <button 
               type="button"
-              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-900 hover:text-black transition" 
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none rounded-full text-zinc-900 hover:text-black active:bg-zinc-200/60 active:scale-95 transition-all duration-100 outline-none" 
               onClick={() => {
                 if (pathname === '/store' || pathname === '/store/dev') {
                   setActiveSegment('all');
@@ -3597,7 +3597,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             {/* 2. Kategori */}
             <button 
               type="button"
-              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-600 hover:text-black transition" 
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none rounded-full text-zinc-600 hover:text-black active:bg-zinc-200/60 active:scale-95 transition-all duration-100 outline-none" 
               onClick={() => setIsCategoriesOpen(true)}
             >
               <SlidersHorizontal className="w-5 h-5 text-zinc-600" />
@@ -3605,16 +3605,14 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             </button>
 
             {/* 3. Produk */}
-            <button 
-              type="button"
-              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-600 hover:text-black transition" 
-              onClick={() => {
-                router.push('/produk');
-              }}
+            <Link
+              href="/produk"
+              prefetch={true}
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none rounded-full text-zinc-600 hover:text-black active:bg-zinc-200/60 active:scale-95 transition-all duration-100 outline-none" 
             >
               <Package className="w-5 h-5 text-zinc-600" />
               <span className="text-[10px] leading-tight font-medium text-zinc-600">Produk</span>
-            </button>
+            </Link>
           </div>
         </div>
       </div>

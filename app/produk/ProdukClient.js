@@ -312,7 +312,7 @@ export default function ProdukClient({ initialData }) {
               <div
                 key={prod.id}
                 onClick={() => handleOpenProduct(prod)}
-                className="group bg-white border border-zinc-200 hover:border-zinc-900 rounded-lg p-3 sm:p-3.5 transition shadow-2xs cursor-pointer flex flex-col justify-between"
+                className="group bg-white border border-zinc-200 hover:border-zinc-900 active:border-zinc-900 active:scale-[0.985] rounded-lg p-3 sm:p-3.5 transition-all duration-100 shadow-2xs cursor-pointer flex flex-col justify-between"
               >
                 <div>
                   {/* Top Bar: KATEGORI PRODUK & Varian Count */}
@@ -580,10 +580,11 @@ export default function ProdukClient({ initialData }) {
       {/* Floating Bottom Navigation Bar (Mobile) */}
       <div className="fixed bottom-3 inset-x-0 mx-auto z-40 w-[88%] max-w-[320px] md:hidden pointer-events-none">
         <div className="rounded-full iphone-glass-bottom-card px-2 py-1 pointer-events-auto shadow-[0_8px_25px_rgba(0,0,0,0.12)] border border-zinc-200/80 bg-white/95 backdrop-blur-md">
-          <div className="relative flex items-center justify-around px-1">
+          <div className="relative flex items-center justify-around px-0.5">
             <Link
               href="/"
-              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-600 hover:text-black transition"
+              prefetch={true}
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none rounded-full text-zinc-600 hover:text-black active:bg-zinc-200/60 active:scale-95 transition-all duration-100 outline-none"
             >
               <Home className="w-5 h-5 text-zinc-600" />
               <span className="text-[10px] leading-tight font-medium text-zinc-600">Home</span>
@@ -592,7 +593,7 @@ export default function ProdukClient({ initialData }) {
             <button
               type="button"
               onClick={() => setIsCategoryModalOpen(true)}
-              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-600 hover:text-black transition"
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none rounded-full text-zinc-600 hover:text-black active:bg-zinc-200/60 active:scale-95 transition-all duration-100 outline-none"
             >
               <SlidersHorizontal className="w-5 h-5 text-zinc-600" />
               <span className="text-[10px] leading-tight font-medium text-zinc-600">Kategori</span>
@@ -605,7 +606,7 @@ export default function ProdukClient({ initialData }) {
                 setSearchTerm('');
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none text-zinc-900 hover:text-black transition"
+              className="relative flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 cursor-pointer select-none rounded-full text-zinc-900 hover:text-black active:bg-zinc-200/60 active:scale-95 transition-all duration-100 outline-none"
             >
               <Package className="w-5 h-5 text-zinc-900" />
               <span className="text-[10px] leading-tight font-semibold text-zinc-900">Produk</span>

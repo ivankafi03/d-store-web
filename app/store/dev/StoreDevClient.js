@@ -75,7 +75,7 @@ const DEFAULT_HERO_SLIDE_3 = {
 
 const DEFAULT_TOP_TIER_BANNER = {
   id: 'toptier-banner',
-  image: '/uploads/banner_jasa_website_modern_luxury.webp',
+  image: '/uploads/banner_jasa_website_neo_brutalism.webp',
   title: 'Jasa Pembuatan Website Profesional',
   brand: 'JASA WEB',
   link: 'https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store%2C%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website.%20Boleh%20konsultasi%20mengenai%20paket%2C%20fitur%2C%20dan%20harganya%3F'
@@ -1001,7 +1001,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           setTopTierBanner(parsed.topTierBanner);
         }
         if (Array.isArray(parsed.applyList)) {
-          const isOutdated = parsed.applyList.some((item) => !item.img || item.img.startsWith('data:image') || item.img.includes('black_white_aesthetic') || item.img.includes('ctfassets.net') || item.img.includes('banner_jasa_website_1200x280') || item.img.includes('banner_jasa_web_dstore_1200x300'));
+          const isOutdated = parsed.applyList.some((item) => !item.img || item.img.startsWith('data:image') || item.img.includes('black_white_aesthetic') || item.img.includes('ctfassets.net') || item.img.includes('banner_jasa_website_1200x280') || item.img.includes('banner_jasa_web_dstore_1200x300') || item.img.includes('banner_jasa_website_modern_luxury'));
           if (isOutdated) {
             parsed.applyList = ZALORA_APPLY_NOW;
             try { localStorage.setItem('d_store_visual_editor_data', JSON.stringify(parsed)); } catch (e) {}

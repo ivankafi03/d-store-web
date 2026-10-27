@@ -2317,9 +2317,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             price: prod.priceNumber,
                             category: 'Top Tier',
                             recommendation: {
-                              dimensions: '600 x 800 px (Rasio 3:4)',
-                              aspectRatio: '3:4',
-                              tips: 'Foto produk ukuran 600 x 800 px dengan latar belakang bersih atau transparan.'
+                              dimensions: 'Ikon Persegi / 512 x 512 px atau 600 x 800 px (3:4)',
+                              aspectRatio: '1:1 atau 3:4',
+                              tips: 'Gunakan ikon logo aplikasi persegi (1:1 tanpa border putih tebal) atau poster 600 x 800 px.'
                             }
                           });
                         } else {
@@ -2965,7 +2965,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                         </div>
                       )}
                       <div
-                        className="no-decoration product-item__product-image-wrapper block aspect-[3/4] w-full overflow-hidden rounded-lg bg-gray-50 cursor-pointer relative"
+                        className="no-decoration product-item__product-image-wrapper flex items-center justify-center aspect-[3/4] w-full overflow-hidden rounded-lg bg-gray-50 cursor-pointer relative p-2.5"
                         href="#"
                         onClick={(e) => {
                           e.preventDefault();
@@ -2981,9 +2981,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               price: prod.priceNumber,
                               category: 'Just For You',
                               recommendation: {
-                                dimensions: '600 x 800 px (Rasio 3:4)',
-                                aspectRatio: '3:4',
-                                tips: 'Foto produk ukuran 600 x 800 px dengan background rapi.'
+                                dimensions: 'Ikon Persegi / 512 x 512 px atau 600 x 800 px (3:4)',
+                                aspectRatio: '1:1 atau 3:4',
+                                tips: 'Gunakan ikon logo aplikasi persegi (1:1 tanpa border putih tebal) atau poster 600 x 800 px.'
                               }
                             });
                           } else {

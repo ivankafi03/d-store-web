@@ -65,9 +65,11 @@ export default function AppVariantModal({ appData: propAppData, app, onClose, on
         <div className="px-5 py-3.5 border-b border-zinc-100 flex items-start justify-between gap-4 bg-white">
           <div className="space-y-0.5">
             <div className="flex items-center gap-2">
-              <span className="text-[11px] font-semibold tracking-wider uppercase text-zinc-500">
-                {appData.brand}
-              </span>
+              {appData.brand && appData.name && appData.brand.trim().toLowerCase() !== appData.name.trim().toLowerCase() && (
+                <span className="text-[11px] font-semibold tracking-wider uppercase text-zinc-500">
+                  {appData.brand}
+                </span>
+              )}
               {appData.badge && (
                 <span className="text-[10px] font-semibold uppercase px-1.5 py-0.2 rounded bg-zinc-100 text-zinc-800">
                   {appData.badge}

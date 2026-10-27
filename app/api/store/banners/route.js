@@ -1,3 +1,5 @@
+import fs from 'fs';
+import path from 'path';
 import { NextResponse } from 'next/server';
 import { getDb, saveDb } from '@/lib/db';
 import { isAuthenticatedRequest } from '@/lib/auth';
@@ -181,6 +183,21 @@ export async function POST(request) {
     db.catalogVersion = '2026-10-27-v3-sync-all';
     db.updatedAt = new Date().toISOString();
     saveDb(db);
+
+    try {
+      const pubPath = path.join(process.cwd(), 'data', 'public-catalog.json');
+      if (fs.existsSync(pubPath)) {
+        const pubData = JSON.parse(fs.readFileSync(pubPath, 'utf8'));
+        pubData.products = db.products || [];
+        pubData.banners = db.banners || {};
+        pubData.visualEditorData = db.visualEditorData || {};
+        pubData.catalogVersion = db.catalogVersion;
+        fs.writeFileSync(pubPath, JSON.stringify(pubData, null, 2), 'utf8');
+      }
+    } catch (pubErr) {
+      console.warn('Warning: Could not sync public-catalog.json:', pubErr.message);
+    }
+
     return NextResponse.json({ status: 'ok', banners: db.banners, visualEditorData: db.visualEditorData });
   } catch (err) {
     return NextResponse.json({ status: 'error', message: err.message }, { status: 500 });

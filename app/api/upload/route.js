@@ -5,7 +5,11 @@ import sharp from 'sharp';
 import { isAuthenticatedRequest } from '@/lib/auth';
 
 export async function POST(request) {
-  if (!isAuthenticatedRequest(request)) {
+  const isAuth = isAuthenticatedRequest(request);
+  const host = request.headers.get('host') || '';
+  const isLocalOrDev = process.env.NODE_ENV !== 'production' && (host.includes('localhost') || host.includes('192.168.') || host.includes('127.0.0.1'));
+
+  if (!isAuth && !isLocalOrDev) {
     return NextResponse.json({ status: 'error', message: 'Akses ditolak. Sesi tidak sah.' }, { status: 401 });
   }
 

@@ -1,6 +1,6 @@
 {
-  "catalogVersion": "2026-10-27-master-77-clean",
-  "updatedAt": "2026-10-27T05:31:51.851969+00:00",
+  "catalogVersion": "2026-10-27-v3-sync-all",
+  "updatedAt": "2026-10-27T14:49:50.604174Z",
   "categories": [
     {
       "id": "cat_1",
@@ -10221,7 +10221,7 @@
       },
       {
         "title": "Desain Modern & Responsif D Store - Terima Beres Siap Online",
-        "img": "/uploads/black_white_aesthetic_film_frame_photo_collage_canvas_banner-1792421400184.webp",
+        "img": "/uploads/banner_jasa_website_desktop.webp",
         "link": "/c/men/all?cmpgnOne=camp-c239c083&csa=26w38secondary1brandedsaleupto50vou25&utm_campaign=26w38secondary1brandedsaleupto50vou25&utm_medium=homepage&utm_source=onsite",
         "entryId": "4ODfqMMnzfxvoQ8v2Os6WJ"
       }
@@ -10232,83 +10232,62 @@
         "label": "ChatGPT Plus, Gemini & Cursor",
         "img": "/uploads/1-1792073494966.webp",
         "segmentId": "ai",
-        "slug": "ai-tools",
-        "link": "/store/ai-tools",
-        "brand": "AI TOOLS & CODING"
+        "slug": "ai-tools"
       },
       {
         "title": "STREAMING 4K CINEMA",
-        "label": "Netflix, Disney+, Prime & HBO",
+        "label": "Netflix, YouTube & Disney+",
         "img": "/uploads/2-1792073509953.webp",
         "segmentId": "streaming",
-        "slug": "streaming",
-        "link": "/store/streaming",
-        "brand": "STREAMING 4K CINEMA"
+        "slug": "streaming"
       },
       {
         "title": "DESAIN & KREATOR",
-        "label": "Canva Pro, CapCut & Adobe",
+        "label": "Canva Pro & Adobe Master",
         "img": "/uploads/5-1792073530614.webp",
         "segmentId": "design",
-        "slug": "graphic-design",
-        "link": "/store/graphic-design",
-        "brand": "DESAIN & KREATOR"
+        "slug": "graphic-design"
       },
       {
         "title": "MUSIK & AUDIO HIFI",
-        "label": "Spotify Premium & Apple Music",
+        "label": "Spotify HiFi & Apple Music",
         "img": "/uploads/3-1792073547591.webp",
         "segmentId": "music",
-        "slug": "music-audio",
-        "link": "/store/music-audio",
-        "brand": "MUSIK & AUDIO HIFI"
+        "slug": "music-audio"
       },
       {
         "title": "EDUKASI & BAHASA",
-        "label": "Duolingo, Grammarly & Kahoot",
+        "label": "Duolingo, Grammarly & Scribd",
         "img": "/uploads/trend_edukasi_bahasa.webp",
         "segmentId": "edukasi",
-        "slug": "edukasi",
-        "link": "/store/edukasi",
-        "brand": "EDUKASI & BAHASA"
+        "slug": "edukasi"
       },
       {
         "title": "VPN & PRIVASI SIBER",
-        "label": "Surfshark, ExpressVPN & NordVPN",
+        "label": "Surfshark, Nord & Express",
         "img": "/uploads/4-1792073557122.webp",
         "segmentId": "vpn",
-        "slug": "vpn-security",
-        "link": "/store/vpn-security",
-        "brand": "VPN & PRIVASI SIBER"
+        "slug": "vpn-security"
       },
       {
         "title": "OFFICE & CLOUD",
-        "label": "Microsoft 365, Workspace & WPS",
+        "label": "Office 365, Google & Zoom",
         "img": "/uploads/6-1792073571781.webp",
         "segmentId": "office",
-        "slug": "office-tools",
-        "link": "/store/office-tools",
-        "brand": "OFFICE & CLOUD"
+        "slug": "office-tools"
       },
       {
         "title": "SEMUA PRODUK",
-        "label": "Katalog 77+ Lisensi Resmi",
+        "label": "77+ Katalog Lengkap D Store",
         "img": "/uploads/trend_semua_produk.webp",
         "segmentId": "all",
-        "slug": "all",
-        "link": "/store/all",
-        "brand": "SEMUA PRODUK"
+        "slug": "all"
       }
     ],
     "steals": [
       {
-        "title": "Google Pro",
-        "img": "/uploads/black_white_aesthetic_film_frame_photo_collage_canvas_banner__1240_x_300_piksel___5_-1792423843665.webp",
-        "link": "#"
-      },
-      {
-        "title": "YouTube Premium & YT Music",
-        "img": "/uploads/black_white_aesthetic_film_frame_photo_collage_canvas_banner__1240_x_300_piksel___3_-1792423094423.webp",
+        "title": "Jasa Pembuatan Website & Aplikasi Toko Online D Store - Terima Beres Siap Jualan",
+        "img": "/uploads/banner_jasa_website_desktop.webp",
         "link": "#"
       }
     ],
@@ -11416,54 +11395,56 @@
           "label": "ChatGPT Plus, Gemini & Cursor",
           "img": "/uploads/1-1792073494966.webp",
           "segmentId": "ai",
-          "slug": "ai-tools",
-          "link": "/store/ai-tools",
-          "brand": "AI TOOLS & CODING"
+          "slug": "ai-tools"
         },
         {
           "title": "STREAMING 4K CINEMA",
-          "label": "Netflix, Disney+, Prime & HBO",
+          "label": "Netflix, YouTube & Disney+",
           "img": "/uploads/2-1792073509953.webp",
           "segmentId": "streaming",
-          "slug": "streaming",
-          "link": "/store/streaming",
-          "brand": "STREAMING 4K CINEMA"
+          "slug": "streaming"
         },
         {
           "title": "DESAIN & KREATOR",
-          "label": "Canva Pro, CapCut & Adobe",
+          "label": "Canva Pro & Adobe Master",
           "img": "/uploads/5-1792073530614.webp",
           "segmentId": "design",
-          "slug": "graphic-design",
-          "link": "/store/graphic-design",
-          "brand": "DESAIN & KREATOR"
+          "slug": "graphic-design"
         },
         {
           "title": "MUSIK & AUDIO HIFI",
-          "label": "Spotify Premium & Apple Music",
+          "label": "Spotify HiFi & Apple Music",
           "img": "/uploads/3-1792073547591.webp",
           "segmentId": "music",
-          "slug": "music-audio",
-          "link": "/store/music-audio",
-          "brand": "MUSIK & AUDIO HIFI"
+          "slug": "music-audio"
+        },
+        {
+          "title": "EDUKASI & BAHASA",
+          "label": "Duolingo, Grammarly & Scribd",
+          "img": "/uploads/trend_edukasi_bahasa.webp",
+          "segmentId": "edukasi",
+          "slug": "edukasi"
         },
         {
           "title": "VPN & PRIVASI SIBER",
-          "label": "Surfshark, ExpressVPN & NordVPN",
+          "label": "Surfshark, Nord & Express",
           "img": "/uploads/4-1792073557122.webp",
           "segmentId": "vpn",
-          "slug": "vpn-security",
-          "link": "/store/vpn-security",
-          "brand": "VPN & PRIVASI SIBER"
+          "slug": "vpn-security"
         },
         {
           "title": "OFFICE & CLOUD",
-          "label": "Microsoft 365, Workspace & WPS",
+          "label": "Office 365, Google & Zoom",
           "img": "/uploads/6-1792073571781.webp",
           "segmentId": "office",
-          "slug": "office-tools",
-          "link": "/store/office-tools",
-          "brand": "OFFICE & CLOUD"
+          "slug": "office-tools"
+        },
+        {
+          "title": "SEMUA PRODUK",
+          "label": "77+ Katalog Lengkap D Store",
+          "img": "/uploads/trend_semua_produk.webp",
+          "segmentId": "all",
+          "slug": "all"
         }
       ],
       "mainHeroBanner": {
@@ -11502,20 +11483,15 @@
         },
         {
           "title": "Desain Modern & Responsif D Store - Terima Beres Siap Online",
-          "img": "/uploads/black_white_aesthetic_film_frame_photo_collage_canvas_banner-1792421400184.webp",
+          "img": "/uploads/banner_jasa_website_desktop.webp",
           "link": "/c/men/all?cmpgnOne=camp-c239c083&csa=26w38secondary1brandedsaleupto50vou25&utm_campaign=26w38secondary1brandedsaleupto50vou25&utm_medium=homepage&utm_source=onsite",
           "entryId": "4ODfqMMnzfxvoQ8v2Os6WJ"
         }
       ],
       "stealsList": [
         {
-          "title": "Google Pro",
-          "img": "/uploads/black_white_aesthetic_film_frame_photo_collage_canvas_banner__1240_x_300_piksel___5_-1792423843665.webp",
-          "link": "#"
-        },
-        {
-          "title": "YouTube Premium & YT Music",
-          "img": "/uploads/black_white_aesthetic_film_frame_photo_collage_canvas_banner__1240_x_300_piksel___3_-1792423094423.webp",
+          "title": "Jasa Pembuatan Website & Aplikasi Toko Online D Store - Terima Beres Siap Jualan",
+          "img": "/uploads/banner_jasa_website_desktop.webp",
           "link": "#"
         }
       ],
@@ -12427,72 +12403,56 @@
         "label": "ChatGPT Plus, Gemini & Cursor",
         "img": "/uploads/1-1792073494966.webp",
         "segmentId": "ai",
-        "slug": "ai-tools",
-        "link": "/store/ai-tools",
-        "brand": "AI TOOLS & CODING"
+        "slug": "ai-tools"
       },
       {
         "title": "STREAMING 4K CINEMA",
-        "label": "Netflix, Disney+, Prime & HBO",
+        "label": "Netflix, YouTube & Disney+",
         "img": "/uploads/2-1792073509953.webp",
         "segmentId": "streaming",
-        "slug": "streaming",
-        "link": "/store/streaming",
-        "brand": "STREAMING 4K CINEMA"
+        "slug": "streaming"
       },
       {
         "title": "DESAIN & KREATOR",
-        "label": "Canva Pro, CapCut & Adobe",
+        "label": "Canva Pro & Adobe Master",
         "img": "/uploads/5-1792073530614.webp",
         "segmentId": "design",
-        "slug": "graphic-design",
-        "link": "/store/graphic-design",
-        "brand": "DESAIN & KREATOR"
+        "slug": "graphic-design"
       },
       {
         "title": "MUSIK & AUDIO HIFI",
-        "label": "Spotify Premium & Apple Music",
+        "label": "Spotify HiFi & Apple Music",
         "img": "/uploads/3-1792073547591.webp",
         "segmentId": "music",
-        "slug": "music-audio",
-        "link": "/store/music-audio",
-        "brand": "MUSIK & AUDIO HIFI"
+        "slug": "music-audio"
       },
       {
         "title": "EDUKASI & BAHASA",
-        "label": "Duolingo, Grammarly & Kahoot",
+        "label": "Duolingo, Grammarly & Scribd",
         "img": "/uploads/trend_edukasi_bahasa.webp",
         "segmentId": "edukasi",
-        "slug": "edukasi",
-        "link": "/store/edukasi",
-        "brand": "EDUKASI & BAHASA"
+        "slug": "edukasi"
       },
       {
         "title": "VPN & PRIVASI SIBER",
-        "label": "Surfshark, ExpressVPN & NordVPN",
+        "label": "Surfshark, Nord & Express",
         "img": "/uploads/4-1792073557122.webp",
         "segmentId": "vpn",
-        "slug": "vpn-security",
-        "link": "/store/vpn-security",
-        "brand": "VPN & PRIVASI SIBER"
+        "slug": "vpn-security"
       },
       {
         "title": "OFFICE & CLOUD",
-        "label": "Microsoft 365, Workspace & WPS",
+        "label": "Office 365, Google & Zoom",
         "img": "/uploads/6-1792073571781.webp",
         "segmentId": "office",
-        "slug": "office-tools",
-        "link": "/store/office-tools",
-        "brand": "OFFICE & CLOUD"
+        "slug": "office-tools"
       },
       {
         "title": "SEMUA PRODUK",
-        "label": "Katalog 77+ Lisensi Resmi",
+        "label": "77+ Katalog Lengkap D Store",
         "img": "/uploads/trend_semua_produk.webp",
         "segmentId": "all",
-        "slug": "all",
-        "link": "/store/all",
-        "brand": "SEMUA PRODUK"
+        "slug": "all"
       }
     ],
     "mainHeroBanner": {
@@ -12531,20 +12491,15 @@
       },
       {
         "title": "Desain Modern & Responsif D Store - Terima Beres Siap Online",
-        "img": "/uploads/banner_jasa_web_dstore_1080x450.webp",
+        "img": "/uploads/banner_jasa_website_desktop.webp",
         "link": "/c/men/all?cmpgnOne=camp-c239c083&csa=26w38secondary1brandedsaleupto50vou25&utm_campaign=26w38secondary1brandedsaleupto50vou25&utm_medium=homepage&utm_source=onsite",
         "entryId": "4ODfqMMnzfxvoQ8v2Os6WJ"
       }
     ],
     "stealsList": [
       {
-        "title": "Google Pro",
-        "img": "/uploads/black_white_aesthetic_film_frame_photo_collage_canvas_banner__1240_x_300_piksel___5_-1792423843665.webp",
-        "link": "#"
-      },
-      {
-        "title": "YouTube Premium & YT Music",
-        "img": "/uploads/black_white_aesthetic_film_frame_photo_collage_canvas_banner__1240_x_300_piksel___3_-1792423094423.webp",
+        "title": "Jasa Pembuatan Website & Aplikasi Toko Online D Store - Terima Beres Siap Jualan",
+        "img": "/uploads/banner_jasa_website_desktop.webp",
         "link": "#"
       }
     ],

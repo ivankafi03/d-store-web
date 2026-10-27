@@ -554,7 +554,23 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       .then((data) => {
         if (data.status === 'ok' && data.banners) {
           const vData = data.banners.visualEditorData;
-          if (vData && typeof window !== "undefined" && !localStorage.getItem("d_store_visual_editor_data")) {
+          let shouldRestoreServer = false;
+          if (typeof window !== "undefined") {
+            const savedRaw = localStorage.getItem("d_store_visual_editor_data");
+            if (!savedRaw) {
+              shouldRestoreServer = true;
+            } else {
+              try {
+                const parsed = JSON.parse(savedRaw);
+                if (parsed.catalogVersion !== '2026-10-27-v3-sync-all') {
+                  shouldRestoreServer = true;
+                }
+              } catch (e) {
+                shouldRestoreServer = true;
+              }
+            }
+          }
+          if (vData && shouldRestoreServer) {
             if (Array.isArray(vData.heroCarouselItems)) setHeroCarouselItems(vData.heroCarouselItems);
             if (Array.isArray(vData.bubbleList)) {
               const allowed = ['netflix', 'chatgpt', 'spotify', 'canva pro', 'youtube', 'capcut pro', 'disney+', 'duolingo', 'bstation'];
@@ -934,10 +950,18 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       if (saved) {
         const parsed = JSON.parse(saved);
 
-        if (parsed.catalogVersion !== '2026-10-27-master-77-clean') {
+        if (parsed.catalogVersion !== '2026-10-27-v3-sync-all') {
           delete parsed.topTierProducts;
           delete parsed.justForYouProducts;
-          parsed.catalogVersion = '2026-10-27-master-77-clean';
+          delete parsed.trendList;
+          delete parsed.speedDealsList;
+          delete parsed.stealsList;
+          delete parsed.applyList;
+          delete parsed.brands1List;
+          delete parsed.brands2List;
+          delete parsed.discList;
+          delete parsed.saveList;
+          parsed.catalogVersion = '2026-10-27-v3-sync-all';
           try { localStorage.setItem('d_store_visual_editor_data', JSON.stringify(parsed)); } catch (e) {}
         }
 
@@ -2122,7 +2146,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               Edit Banner
                             </div>
                           )}
-                          {(deal.img?.includes('pilihan_utama_ratusan_reseller') || deal.img?.includes('banner_reseller')) ? (
+                          {(deal.img === '/uploads/banner_reseller_desktop.webp' || deal.img === '/uploads/banner_reseller_neo_brutalism.webp' || deal.img?.includes('pilihan_utama_ratusan_reseller')) ? (
                             <>
                               <img
                                 className="block sm:hidden unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
@@ -2493,6 +2517,25 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                 <Link
                   key={idx}
                   href={targetUrl}
+                  onClick={(e) => {
+                    if (isEditMode) {
+                      e.preventDefault();
+                      setVisualEditingItem({
+                        type: 'trend-item',
+                        index: idx,
+                        id: 'trend-' + idx,
+                        name: slide.title,
+                        brand: slide.title,
+                        image: slide.img,
+                        label: slide.label,
+                        recommendation: {
+                          dimensions: '700 x 1200 px (Rasio 7:12 Portrait)',
+                          aspectRatio: '7:12',
+                          tips: 'Poster vertikal tren & kategori digital.'
+                        }
+                      });
+                    }
+                  }}
                   className="no-decoration grid__item block rounded-xl overflow-hidden cursor-pointer select-none active:scale-95 transition relative group"
                   data-placement-id="static"
                   data-entry-id={'trend-slide-' + idx}
@@ -2643,7 +2686,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             Edit
                           </div>
                         )}
-                        {(!slide.img || slide.img.includes('banner_jasa_website')) ? (
+                        {(!slide.img || slide.img === '/uploads/banner_jasa_website_desktop.webp' || slide.img === '/uploads/banner_jasa_website_neo_brutalism.webp' || slide.img === '/uploads/banner_jasa_web_dstore_1080x450.webp') ? (
                           <>
                             <img
                               className="block sm:hidden unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
@@ -2851,7 +2894,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                             Edit
                           </div>
                         )}
-                        {(!slide.img || slide.img.includes('banner_jasa_website')) ? (
+                        {(!slide.img || slide.img === '/uploads/banner_jasa_website_desktop.webp' || slide.img === '/uploads/banner_jasa_website_neo_brutalism.webp' || slide.img === '/uploads/banner_jasa_web_dstore_1080x450.webp') ? (
                           <>
                             <img
                               className="block sm:hidden unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"

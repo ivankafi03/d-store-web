@@ -10634,7 +10634,7 @@
           "href": "#",
           "brand": "CHATGPT",
           "name": "ChatGPT Plus GPT-4o & Canvas Unlimited Access",
-          "image": "/uploads/4-1791894671282.webp",
+          "image": "/uploads/canva_icon.webp",
           "hasVoucher": true,
           "voucherPrice": "Rp 20.000",
           "specialPrice": null,
@@ -10662,7 +10662,7 @@
           "href": "#",
           "brand": "CANVA",
           "name": "Canva Pro Desain Brand Kit & AI Unlock Lifetime",
-          "image": "/uploads/1-1791894445736.webp",
+          "image": "/uploads/canva_icon.webp",
           "hasVoucher": true,
           "voucherPrice": "Rp 3.500",
           "specialPrice": null,
@@ -10704,7 +10704,7 @@
           "href": "#",
           "brand": "CAPCUT",
           "name": "CapCut Pro Cloud & Preset Ekspor 4K 60fps",
-          "image": "/uploads/3-1791894576752.webp",
+          "image": "/uploads/capcut_icon.webp",
           "hasVoucher": true,
           "voucherPrice": "Rp 8.000",
           "specialPrice": null,
@@ -11052,7 +11052,7 @@
           "href": "#",
           "brand": "APPLE TV",
           "name": "Apple TV+ 4K HDR Original Series & Movies",
-          "image": "/uploads/11-1792133844447.webp",
+          "image": "/uploads/appletv_icon.webp",
           "hasVoucher": false,
           "voucherPrice": "Rp 9.000",
           "specialPrice": "Rp 9.000",
@@ -11156,7 +11156,7 @@
           "href": "#",
           "brand": "CATCHPLAY",
           "name": "Catchplay+ Film Blockbuster & Serial Terbaru",
-          "image": "/uploads/15-1792133881553.webp",
+          "image": "/uploads/catchplay_icon.webp",
           "hasVoucher": false,
           "voucherPrice": "Rp 18.000",
           "specialPrice": "Rp 18.000",
@@ -11965,7 +11965,7 @@
         "originalPrice": "Rp 13.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/desain_tanpa_judul__4_-1791989747452.webp",
+        "image": "/uploads/appletv_icon.webp",
         "category": "cat_2"
       },
       {
@@ -11980,7 +11980,7 @@
         "originalPrice": "Rp 10.500",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/edit_template_colors__34_-1792039470941.webp",
+        "image": "/uploads/bstation_icon.webp",
         "category": "cat_2"
       },
       {
@@ -11995,7 +11995,7 @@
         "originalPrice": "Rp 3.750",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/edit_template_colors__47_-1792066001271.webp",
+        "image": "/uploads/canva_icon.webp",
         "category": "cat_3"
       },
       {
@@ -12010,7 +12010,7 @@
         "originalPrice": "Rp 9.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/edit_template_colors__48_-1792066089965.webp",
+        "image": "/uploads/capcut_icon.webp",
         "category": "cat_3"
       },
       {
@@ -12025,7 +12025,7 @@
         "originalPrice": "Rp 27.000",
         "discount": "-33%",
         "hasVoucher": true,
-        "image": "/uploads/desain_tanpa_judul__4_-1791989747452.webp",
+        "image": "/uploads/catchplay_icon.webp",
         "category": "cat_2"
       }
     ],

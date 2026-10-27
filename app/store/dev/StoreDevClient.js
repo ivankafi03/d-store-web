@@ -2448,22 +2448,24 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           </div>
           <div className="flex items-center gap-2">
             <span className="text-[11px] font-semibold text-zinc-400">
-              6 Kategori Utama
+              {trendList.length} Kategori Utama
             </span>
           </div>
         </div>
 
         {/* 6 Category Posters Grid (Rapat, Kompak & Menghubungkan ke Halaman Baru) */}
         <div className="post-type__content">
-          <div className="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-6 gap-2 sm:gap-2.5">
+          <div className="grid grid-cols-2 sm:grid-cols-4 md:grid-cols-4 lg:grid-cols-8 gap-2 sm:gap-2.5">
             {trendList.map((slide, idx) => {
               const slugMap = {
                 ai: 'ai-tools',
                 streaming: 'streaming',
                 design: 'graphic-design',
                 music: 'music-audio',
+                edukasi: 'edukasi',
                 vpn: 'vpn-security',
-                office: 'office-tools'
+                office: 'office-tools',
+                all: 'all'
               };
               const targetSlug = slide.slug || slugMap[slide.segmentId] || (idx === 0 ? 'ai-tools' : idx === 1 ? 'streaming' : idx === 2 ? 'graphic-design' : idx === 3 ? 'music-audio' : idx === 4 ? 'vpn-security' : 'office-tools');
               const targetUrl = (slide.link && slide.link.startsWith('/store') ? slide.link : ('/store/' + targetSlug)) + (isAdminMode ? '?admin=1' : '');

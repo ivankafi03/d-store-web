@@ -10264,6 +10264,15 @@
         "brand": "MUSIK & AUDIO HIFI"
       },
       {
+        "title": "EDUKASI & BAHASA",
+        "label": "Duolingo, Grammarly & Kahoot",
+        "img": "/uploads/trend_edukasi_bahasa.webp",
+        "segmentId": "edukasi",
+        "slug": "edukasi",
+        "link": "/store/edukasi",
+        "brand": "EDUKASI & BAHASA"
+      },
+      {
         "title": "VPN & PRIVASI SIBER",
         "label": "Surfshark, ExpressVPN & NordVPN",
         "img": "/uploads/4-1792073557122.webp",
@@ -10280,6 +10289,15 @@
         "slug": "office-tools",
         "link": "/store/office-tools",
         "brand": "OFFICE & CLOUD"
+      },
+      {
+        "title": "SEMUA PRODUK",
+        "label": "Katalog 77+ Lisensi Resmi",
+        "img": "/uploads/trend_semua_produk.webp",
+        "segmentId": "all",
+        "slug": "all",
+        "link": "/store/all",
+        "brand": "SEMUA PRODUK"
       }
     ],
     "steals": [
@@ -12441,6 +12459,15 @@
         "brand": "MUSIK & AUDIO HIFI"
       },
       {
+        "title": "EDUKASI & BAHASA",
+        "label": "Duolingo, Grammarly & Kahoot",
+        "img": "/uploads/trend_edukasi_bahasa.webp",
+        "segmentId": "edukasi",
+        "slug": "edukasi",
+        "link": "/store/edukasi",
+        "brand": "EDUKASI & BAHASA"
+      },
+      {
         "title": "VPN & PRIVASI SIBER",
         "label": "Surfshark, ExpressVPN & NordVPN",
         "img": "/uploads/4-1792073557122.webp",
@@ -12457,6 +12484,15 @@
         "slug": "office-tools",
         "link": "/store/office-tools",
         "brand": "OFFICE & CLOUD"
+      },
+      {
+        "title": "SEMUA PRODUK",
+        "label": "Katalog 77+ Lisensi Resmi",
+        "img": "/uploads/trend_semua_produk.webp",
+        "segmentId": "all",
+        "slug": "all",
+        "link": "/store/all",
+        "brand": "SEMUA PRODUK"
       }
     ],
     "mainHeroBanner": {

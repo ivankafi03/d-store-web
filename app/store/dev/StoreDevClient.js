@@ -979,13 +979,27 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
         if (parsed.mainHeroBanner && isDiff(mainHeroBanner, parsed.mainHeroBanner)) {
           setMainHeroBanner(parsed.mainHeroBanner);
         }
-        if (Array.isArray(parsed.topTierProducts) && isDiff(topTierProducts, parsed.topTierProducts)) {
-          const hasZaloraClothes = parsed.topTierProducts.some((p) => p.image && (p.image.includes('zacdn.com') || p.image.includes('static-id')));
-          if (!hasZaloraClothes) setTopTierProducts(parsed.topTierProducts);
+        if (Array.isArray(parsed.topTierProducts)) {
+          const cleaned = parsed.topTierProducts.map((p) => {
+            const isDummy = !p.image || p.image.includes('desain_tanpa_judul__4') || p.image.includes('edit_template_colors__') || p.image.includes('ctfassets') || p.image.startsWith('data:image');
+            return isDummy ? { ...p, image: getResolvedProductImage(p, liveProducts) || p.image } : p;
+          });
+          if (isDiff(topTierProducts, cleaned)) {
+            setTopTierProducts(cleaned);
+            parsed.topTierProducts = cleaned;
+            try { localStorage.setItem('d_store_visual_editor_data', JSON.stringify(parsed)); } catch (e) {}
+          }
         }
-        if (Array.isArray(parsed.justForYouProducts) && isDiff(justForYouProducts, parsed.justForYouProducts)) {
-          const hasZaloraClothes = parsed.justForYouProducts.some((p) => p.image && (p.image.includes('zacdn.com') || p.image.includes('static-id')));
-          if (!hasZaloraClothes) setJustForYouProducts(parsed.justForYouProducts);
+        if (Array.isArray(parsed.justForYouProducts)) {
+          const cleaned = parsed.justForYouProducts.map((p) => {
+            const isDummy = !p.image || p.image.includes('desain_tanpa_judul__4') || p.image.includes('edit_template_colors__') || p.image.includes('ctfassets') || p.image.startsWith('data:image');
+            return isDummy ? { ...p, image: getResolvedProductImage(p, liveProducts) || p.image } : p;
+          });
+          if (isDiff(justForYouProducts, cleaned)) {
+            setJustForYouProducts(cleaned);
+            parsed.justForYouProducts = cleaned;
+            try { localStorage.setItem('d_store_visual_editor_data', JSON.stringify(parsed)); } catch (e) {}
+          }
         }
         if (parsed.heroSlide1 && parsed.heroSlide1.image && isDiff(heroSlide1, parsed.heroSlide1)) {
           setHeroSlide1(parsed.heroSlide1);
@@ -2305,7 +2319,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                       style={{ touchAction: 'pan-x pan-y' }}
                       data-sku={prod.sku}
                       onClick={() => {
-                        if (dragDistTopTier.current > 5) return;
+                        if (dragDistTopTier.current > 18) return;
                         dragDistTopTier.current = 0;
                         if (isEditMode) {
                           setVisualEditingItem({
@@ -2337,14 +2351,34 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                       }}
                     >
                       {isEditMode && (
-                        <div className="absolute top-1.5 right-1.5 z-20 bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setVisualEditingItem({
+                              type: 'product-toptier',
+                              id: prod.sku,
+                              name: prod.name,
+                              brand: prod.brand,
+                              image: prod.image,
+                              price: prod.priceNumber,
+                              category: 'Top Tier',
+                              recommendation: {
+                                dimensions: 'Ikon Persegi / 512 x 512 px atau 600 x 800 px (3:4)',
+                                aspectRatio: '1:1 atau 3:4',
+                                tips: 'Gunakan ikon logo aplikasi persegi (1:1 tanpa border putih tebal) atau poster 600 x 800 px.'
+                              }
+                            });
+                          }}
+                          className="absolute top-1.5 right-1.5 z-20 bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow hover:bg-blue-700 active:scale-95 transition"
+                        >
                           Edit
-                        </div>
+                        </button>
                       )}
                       <div className="product-item__product-image-wrapper aspect-[3/4] bg-[#f7f7f7] rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer p-2">
                         <img 
                           className="product-item__product-image w-full h-full object-contain pointer-events-none transition duration-300 hover:scale-105" 
-                          src={(prod.image && prod.image.trim()) ? prod.image : (getResolvedProductImage(prod, liveProducts) || '/uploads/desain_tanpa_judul__4_-1791989747452.webp')} 
+                          src={(prod.image && prod.image.trim() && !prod.image.includes('desain_tanpa_judul__4') && !prod.image.includes('edit_template_colors__') && !prod.image.includes('ctfassets')) ? prod.image : (getResolvedProductImage(prod, liveProducts) || '/uploads/desain_tanpa_judul__4_-1791989747452.webp')} 
                           alt={prod.name} 
                           onError={(e) => {
                             e.currentTarget.onerror = null;
@@ -2407,19 +2441,36 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                         type="button"
                         onClick={(e) => {
                           e.stopPropagation();
-                          handleProductOrAppClick({
-                            id: prod.sku,
-                            name: prod.name,
-                            brand: prod.brand,
-                            image: prod.image,
-                            price: prod.priceNumber,
-                            originalPrice: prod.originalPriceNumber,
-                            discount: prod.discount,
-                            category: 'Top Tier'
-                          });
+                          if (isEditMode) {
+                            setVisualEditingItem({
+                              type: 'product-toptier',
+                              id: prod.sku,
+                              name: prod.name,
+                              brand: prod.brand,
+                              image: prod.image,
+                              price: prod.priceNumber,
+                              category: 'Top Tier',
+                              recommendation: {
+                                dimensions: 'Ikon Persegi / 512 x 512 px atau 600 x 800 px (3:4)',
+                                aspectRatio: '1:1 atau 3:4',
+                                tips: 'Gunakan ikon logo aplikasi persegi (1:1 tanpa border putih tebal) atau poster 600 x 800 px.'
+                              }
+                            });
+                          } else {
+                            handleProductOrAppClick({
+                              id: prod.sku,
+                              name: prod.name,
+                              brand: prod.brand,
+                              image: prod.image,
+                              price: prod.priceNumber,
+                              originalPrice: prod.originalPriceNumber,
+                              discount: prod.discount,
+                              category: 'Top Tier'
+                            });
+                          }
                         }}
                       >
-                        Pesan
+                        {isEditMode ? 'Edit Produk' : 'Pesan'}
                       </button>
                     </div>
                   );
@@ -2953,23 +3004,63 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                   return (
                     <div
                       key={prod.sku || idx}
-                      className={`product-item__wrapper shrink-0 w-[140px] sm:w-[170px] md:w-[200px] flex flex-col bg-white rounded-lg select-none relative ${
+                      className={`product-item__wrapper shrink-0 w-[140px] sm:w-[170px] md:w-[200px] flex flex-col bg-white rounded-lg select-none relative cursor-pointer ${
                         isEditMode ? 'ring-2 ring-blue-500/80 hover:ring-blue-400' : ''
                       }`}
                       style={{ touchAction: 'pan-x pan-y' }}
                       data-sku={prod.sku}
+                      onClick={() => {
+                        if (dragDistJustForYou.current > 18) return;
+                        dragDistJustForYou.current = 0;
+                        if (isEditMode) {
+                          setVisualEditingItem({
+                            type: 'product-justforyou',
+                            id: prod.sku,
+                            name: prod.name,
+                            brand: prod.brand,
+                            image: prod.image,
+                            price: prod.priceNumber,
+                            category: 'Just For You',
+                            recommendation: {
+                              dimensions: 'Ikon Persegi / 512 x 512 px atau 600 x 800 px (3:4)',
+                              aspectRatio: '1:1 atau 3:4',
+                              tips: 'Gunakan ikon logo aplikasi persegi (1:1 tanpa border putih tebal) atau poster 600 x 800 px.'
+                            }
+                          });
+                        }
+                      }}
                     >
                       {isEditMode && (
-                        <div className="absolute top-1.5 right-1.5 z-20 bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
+                        <button
+                          type="button"
+                          onClick={(e) => {
+                            e.stopPropagation();
+                            setVisualEditingItem({
+                              type: 'product-justforyou',
+                              id: prod.sku,
+                              name: prod.name,
+                              brand: prod.brand,
+                              image: prod.image,
+                              price: prod.priceNumber,
+                              category: 'Just For You',
+                              recommendation: {
+                                dimensions: 'Ikon Persegi / 512 x 512 px atau 600 x 800 px (3:4)',
+                                aspectRatio: '1:1 atau 3:4',
+                                tips: 'Gunakan ikon logo aplikasi persegi (1:1 tanpa border putih tebal) atau poster 600 x 800 px.'
+                              }
+                            });
+                          }}
+                          className="absolute top-1.5 right-1.5 z-20 bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow hover:bg-blue-700 active:scale-95 transition"
+                        >
                           Edit
-                        </div>
+                        </button>
                       )}
                       <div
                         className="no-decoration product-item__product-image-wrapper flex items-center justify-center aspect-[3/4] w-full overflow-hidden rounded-lg bg-gray-50 cursor-pointer relative p-2.5"
                         href="#"
                         onClick={(e) => {
                           e.preventDefault();
-                          if (dragDistJustForYou.current > 5) return;
+                          if (dragDistJustForYou.current > 18) return;
                           dragDistJustForYou.current = 0;
                           if (isEditMode) {
                             setVisualEditingItem({
@@ -3002,7 +3093,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                       >
                         <img 
                           className="product-item__product-image w-full h-full object-contain pointer-events-none transition duration-300 hover:scale-105" 
-                          src={(prod.image && prod.image.trim()) ? prod.image : (getResolvedProductImage(prod, liveProducts) || '/uploads/desain_tanpa_judul__4_-1791989747452.webp')} 
+                          src={(prod.image && prod.image.trim() && !prod.image.includes('desain_tanpa_judul__4') && !prod.image.includes('edit_template_colors__') && !prod.image.includes('ctfassets')) ? prod.image : (getResolvedProductImage(prod, liveProducts) || '/uploads/desain_tanpa_judul__4_-1791989747452.webp')} 
                           alt={prod.name} 
                           onError={(e) => {
                             e.currentTarget.onerror = null;
@@ -3019,7 +3110,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                           href="#"
                           onClick={(e) => {
                             e.preventDefault();
-                            if (dragDistJustForYou.current > 5) return;
+                            if (dragDistJustForYou.current > 18) return;
                             dragDistJustForYou.current = 0;
                             if (isEditMode) {
                               setVisualEditingItem({
@@ -3031,9 +3122,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                                 price: prod.priceNumber,
                                 category: 'Just For You',
                                 recommendation: {
-                                  dimensions: '600 x 800 px (Rasio 3:4)',
-                                  aspectRatio: '3:4',
-                                  tips: 'Foto produk ukuran 600 x 800 px dengan background rapi.'
+                                  dimensions: 'Ikon Persegi / 512 x 512 px atau 600 x 800 px (3:4)',
+                                  aspectRatio: '1:1 atau 3:4',
+                                  tips: 'Gunakan ikon logo aplikasi persegi (1:1 tanpa border putih tebal) atau poster 600 x 800 px.'
                                 }
                               });
                             } else {
@@ -3113,9 +3204,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               price: prod.priceNumber,
                               category: 'Just For You',
                               recommendation: {
-                                dimensions: '600 x 800 px (Rasio 3:4)',
-                                aspectRatio: '3:4',
-                                tips: 'Foto produk ukuran 600 x 800 px dengan background rapi.'
+                                dimensions: 'Ikon Persegi / 512 x 512 px atau 600 x 800 px (3:4)',
+                                aspectRatio: '1:1 atau 3:4',
+                                tips: 'Gunakan ikon logo aplikasi persegi (1:1 tanpa border putih tebal) atau poster 600 x 800 px.'
                               }
                             });
                           } else {

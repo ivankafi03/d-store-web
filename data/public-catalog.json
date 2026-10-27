@@ -40,7 +40,8 @@
       "price": 17000,
       "description": "Layanan akun Adobe Express premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "adobe_express"
+      "slug": "adobe_express",
+      "image": "/uploads/adobe_express.svg"
     },
     {
       "id": "prod_cat_alight_motion",
@@ -50,7 +51,8 @@
       "price": 2500,
       "description": "Layanan akun Alight Motion premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "alight_motion"
+      "slug": "alight_motion",
+      "image": "/uploads/alight_motion.webp"
     },
     {
       "id": "prod_cat_apple_music",
@@ -60,7 +62,8 @@
       "price": 5500,
       "description": "Layanan akun Apple Music premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "apple_music"
+      "slug": "apple_music",
+      "image": "/uploads/apple_music.svg"
     },
     {
       "id": "prod_cat_apple_tv",
@@ -70,7 +73,8 @@
       "price": 9000,
       "description": "Layanan akun Apple TV premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "apple_tv"
+      "slug": "apple_tv",
+      "image": "/uploads/appletv_icon.webp"
     },
     {
       "id": "prod_cat_bstation",
@@ -80,7 +84,8 @@
       "price": 7000,
       "description": "Layanan akun Bstation premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "bstation"
+      "slug": "bstation",
+      "image": "/uploads/bstation_icon.webp"
     },
     {
       "id": "prod_cat_canva",
@@ -90,7 +95,8 @@
       "price": 2500,
       "description": "Layanan akun Canva premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "canva"
+      "slug": "canva",
+      "image": "/uploads/canva_icon.webp"
     },
     {
       "id": "prod_cat_capcut",
@@ -100,7 +106,8 @@
       "price": 6000,
       "description": "Layanan akun CapCut premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "capcut"
+      "slug": "capcut",
+      "image": "/uploads/capcut_icon.webp"
     },
     {
       "id": "prod_cat_catchplay",
@@ -110,7 +117,8 @@
       "price": 18000,
       "description": "Layanan akun Catchplay premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "catchplay"
+      "slug": "catchplay",
+      "image": "/uploads/catchplay_icon.webp"
     },
     {
       "id": "prod_cat_chai",
@@ -120,7 +128,8 @@
       "price": 3000,
       "description": "Layanan akun Chai premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "chai"
+      "slug": "chai",
+      "image": "/uploads/chai_icon.webp"
     },
     {
       "id": "prod_cat_chatgpt",
@@ -130,7 +139,8 @@
       "price": 6000,
       "description": "Layanan akun ChatGPT premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "chatgpt"
+      "slug": "chatgpt",
+      "image": "/uploads/chatgpt_icon.webp"
     },
     {
       "id": "prod_cat_crunchyroll",
@@ -140,7 +150,8 @@
       "price": 5000,
       "description": "Layanan akun Crunchyroll premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "crunchyroll"
+      "slug": "crunchyroll",
+      "image": "/uploads/crunchyroll_icon.webp"
     },
     {
       "id": "prod_cat_dazzcam",
@@ -150,7 +161,8 @@
       "price": 17000,
       "description": "Layanan akun Dazzcam premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "dazzcam"
+      "slug": "dazzcam",
+      "image": "/uploads/dazzcam_icon.webp"
     },
     {
       "id": "prod_cat_deezer",
@@ -160,7 +172,8 @@
       "price": 12000,
       "description": "Layanan akun Deezer premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "deezer"
+      "slug": "deezer",
+      "image": "/uploads/deezer_icon.webp"
     },
     {
       "id": "prod_cat_disney_hotstar",
@@ -170,7 +183,8 @@
       "price": 4500,
       "description": "Layanan akun Disney+ Hotstar premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "disney_hotstar"
+      "slug": "disney_hotstar",
+      "image": "/uploads/disney_icon.webp"
     },
     {
       "id": "prod_cat_drakor_id",
@@ -180,7 +194,8 @@
       "price": 10000,
       "description": "Layanan akun Drakor.id premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "drakor_id"
+      "slug": "drakor_id",
+      "image": "/uploads/drakorid_icon.webp"
     },
     {
       "id": "prod_cat_dramabox",
@@ -190,7 +205,8 @@
       "price": 16000,
       "description": "Layanan akun Dramabox premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "dramabox"
+      "slug": "dramabox",
+      "image": "/uploads/dramabox_icon.webp"
     },
     {
       "id": "prod_cat_dramaku",
@@ -200,7 +216,8 @@
       "price": 16000,
       "description": "Layanan akun Dramaku premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "dramaku"
+      "slug": "dramaku",
+      "image": "/uploads/dramaku_icon.webp"
     },
     {
       "id": "prod_cat_duolingo",
@@ -210,7 +227,8 @@
       "price": 5000,
       "description": "Layanan akun Duolingo premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "duolingo"
+      "slug": "duolingo",
+      "image": "/uploads/duolingo_icon.webp"
     },
     {
       "id": "prod_cat_epik",
@@ -220,7 +238,8 @@
       "price": 5000,
       "description": "Layanan akun Epik premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "epik"
+      "slug": "epik",
+      "image": "/uploads/epik_icon.webp"
     },
     {
       "id": "prod_cat_fizzo_novel",
@@ -230,7 +249,8 @@
       "price": 10000,
       "description": "Layanan akun Fizzo Novel premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "fizzo_novel"
+      "slug": "fizzo_novel",
+      "image": "/uploads/fizzonovel_icon.webp"
     },
     {
       "id": "prod_cat_gagaoolala",
@@ -240,7 +260,8 @@
       "price": 10000,
       "description": "Layanan akun GagaOOLala premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "gagaoolala"
+      "slug": "gagaoolala",
+      "image": "/uploads/gagaoolala_icon.webp"
     },
     {
       "id": "prod_cat_gemini_ai",
@@ -250,7 +271,8 @@
       "price": 6000,
       "description": "Layanan akun Gemini AI premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "gemini_ai"
+      "slug": "gemini_ai",
+      "image": "/uploads/gemini_icon.webp"
     },
     {
       "id": "prod_cat_genflix",
@@ -260,7 +282,8 @@
       "price": 6000,
       "description": "Layanan akun Genflix premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "genflix"
+      "slug": "genflix",
+      "image": "/uploads/genflix_icon.webp"
     },
     {
       "id": "prod_cat_getcontact",
@@ -270,7 +293,8 @@
       "price": 4500,
       "description": "Layanan akun Getcontact premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "getcontact"
+      "slug": "getcontact",
+      "image": "/uploads/getcontact_icon.webp"
     },
     {
       "id": "prod_cat_grammarly",
@@ -280,7 +304,8 @@
       "price": 14000,
       "description": "Layanan akun Grammarly premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "grammarly"
+      "slug": "grammarly",
+      "image": "/uploads/grammarly_icon.webp"
     },
     {
       "id": "prod_cat_grok_ai",
@@ -290,7 +315,8 @@
       "price": 120000,
       "description": "Layanan akun Grok AI premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "grok_ai"
+      "slug": "grok_ai",
+      "image": "/uploads/grok_icon.webp"
     },
     {
       "id": "prod_cat_gsuite",
@@ -300,7 +326,8 @@
       "price": 2500,
       "description": "Layanan akun Gsuite premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "gsuite"
+      "slug": "gsuite",
+      "image": "/uploads/gsuite_icon.webp"
     },
     {
       "id": "prod_cat_hbo_max",
@@ -310,7 +337,8 @@
       "price": 24000,
       "description": "Layanan akun HBO Max premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "hbo_max"
+      "slug": "hbo_max",
+      "image": "/uploads/hbomax_icon.webp"
     },
     {
       "id": "prod_cat_ibis_paint_x",
@@ -320,7 +348,8 @@
       "price": 5000,
       "description": "Layanan akun Ibis Paint X premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "ibis_paint_x"
+      "slug": "ibis_paint_x",
+      "image": "/uploads/edit_template_colors__50_-1792066232833.webp"
     },
     {
       "id": "prod_cat_kahoot",
@@ -350,7 +379,8 @@
       "price": 12000,
       "description": "Layanan akun Lightroom premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "lightroom"
+      "slug": "lightroom",
+      "image": "/uploads/edit_template_colors__64_-1792067721209.webp"
     },
     {
       "id": "prod_cat_loklok",
@@ -360,7 +390,8 @@
       "price": 14500,
       "description": "Layanan akun Loklok premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "loklok"
+      "slug": "loklok",
+      "image": "/uploads/edit_template_colors__32_-1792039158451.webp"
     },
     {
       "id": "prod_cat_mangotv",
@@ -370,7 +401,8 @@
       "price": 11000,
       "description": "Layanan akun MangoTV premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "mangotv"
+      "slug": "mangotv",
+      "image": "/uploads/edit_template_colors__44_-1792065658421.webp"
     },
     {
       "id": "prod_cat_meitu",
@@ -380,7 +412,8 @@
       "price": 8000,
       "description": "Layanan akun Meitu premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "meitu"
+      "slug": "meitu",
+      "image": "/uploads/edit_template_colors__54_-1792066644151.webp"
     },
     {
       "id": "prod_cat_melolo",
@@ -390,7 +423,8 @@
       "price": 14000,
       "description": "Layanan akun Melolo premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "melolo"
+      "slug": "melolo",
+      "image": "/uploads/edit_template_colors__38_-1792040024585.webp"
     },
     {
       "id": "prod_cat_microsoft_365",
@@ -400,7 +434,8 @@
       "price": 8000,
       "description": "Layanan akun Microsoft 365 premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "microsoft_365"
+      "slug": "microsoft_365",
+      "image": "/uploads/edit_template_colors__71_-1792068481250.webp"
     },
     {
       "id": "prod_cat_moviebox",
@@ -410,7 +445,8 @@
       "price": 10000,
       "description": "Layanan akun Moviebox premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "moviebox"
+      "slug": "moviebox",
+      "image": "/uploads/edit_template_colors__36_-1792039736084.webp"
     },
     {
       "id": "prod_cat_mubi",
@@ -420,7 +456,8 @@
       "price": 10000,
       "description": "Layanan akun Mubi premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "mubi"
+      "slug": "mubi",
+      "image": "/uploads/edit_template_colors__43_-1792040440193.webp"
     },
     {
       "id": "prod_cat_netflix",
@@ -430,7 +467,8 @@
       "price": 3000,
       "description": "Layanan akun Netflix premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "netflix"
+      "slug": "netflix",
+      "image": "/uploads/edit_template_colors__21_-1792038128249.webp"
     },
     {
       "id": "prod_cat_nokos_nomor_kosong",
@@ -460,7 +498,8 @@
       "price": 7000,
       "description": "Layanan akun Picsart premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "picsart"
+      "slug": "picsart",
+      "image": "/uploads/edit_template_colors__49_-1792066147591.webp"
     },
     {
       "id": "prod_cat_polarr",
@@ -470,7 +509,8 @@
       "price": 18000,
       "description": "Layanan akun Polarr premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "polarr"
+      "slug": "polarr",
+      "image": "/uploads/edit_template_colors__62_-1792067571099.webp"
     },
     {
       "id": "prod_cat_polybuzz",
@@ -490,7 +530,8 @@
       "price": 8000,
       "description": "Layanan akun Prime Video premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "prime_video"
+      "slug": "prime_video",
+      "image": "/uploads/edit_template_colors__24_-1792038375667.webp"
     },
     {
       "id": "prod_cat_quillbot",
@@ -520,7 +561,8 @@
       "price": 11000,
       "description": "Layanan akun Remini premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "remini"
+      "slug": "remini",
+      "image": "/uploads/edit_template_colors__57_-1792066910525.webp"
     },
     {
       "id": "prod_cat_scrl",
@@ -530,7 +572,8 @@
       "price": 8000,
       "description": "Layanan akun SCRL premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "scrl"
+      "slug": "scrl",
+      "image": "/uploads/edit_template_colors__61_-1792067395518.webp"
     },
     {
       "id": "prod_cat_scribd",
@@ -540,7 +583,8 @@
       "price": 7000,
       "description": "Layanan akun Scribd premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "scribd"
+      "slug": "scribd",
+      "image": "/uploads/edit_template_colors__74_-1792068638593.webp"
     },
     {
       "id": "prod_cat_snow",
@@ -550,7 +594,8 @@
       "price": 5000,
       "description": "Layanan akun Snow premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "snow"
+      "slug": "snow",
+      "image": "/uploads/edit_template_colors__59_-1792067201074.webp"
     },
     {
       "id": "prod_cat_spotify",
@@ -560,7 +605,8 @@
       "price": 3000,
       "description": "Layanan akun Spotify premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "spotify"
+      "slug": "spotify",
+      "image": "/uploads/edit_template_colors__65_-1792067965755.webp"
     },
     {
       "id": "prod_cat_suntik_sosmed_ig",
@@ -650,7 +696,8 @@
       "price": 20000,
       "description": "Layanan akun VSCO premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "vsco"
+      "slug": "vsco",
+      "image": "/uploads/edit_template_colors__51_-1792066453948.webp"
     },
     {
       "id": "prod_cat_vidio",
@@ -660,7 +707,8 @@
       "price": 10000,
       "description": "Layanan akun Vidio premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "vidio"
+      "slug": "vidio",
+      "image": "/uploads/edit_template_colors__41_-1792040316523.webp"
     },
     {
       "id": "prod_cat_viki_rakuten",
@@ -670,7 +718,8 @@
       "price": 11000,
       "description": "Layanan akun Viki Rakuten premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "viki_rakuten"
+      "slug": "viki_rakuten",
+      "image": "/uploads/edit_template_colors__40_-1792040238043.webp"
     },
     {
       "id": "prod_cat_vision",
@@ -680,7 +729,8 @@
       "price": 12000,
       "description": "Layanan akun Vision+ premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "vision"
+      "slug": "vision",
+      "image": "/uploads/edit_template_colors__42_-1792040383050.webp"
     },
     {
       "id": "prod_cat_viu",
@@ -690,7 +740,8 @@
       "price": 2500,
       "description": "Layanan akun Viu premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "viu"
+      "slug": "viu",
+      "image": "/uploads/edit_template_colors__33_-1792039419700.webp"
     },
     {
       "id": "prod_cat_wps_office",
@@ -700,7 +751,8 @@
       "price": 10000,
       "description": "Layanan akun WPS Office premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "wps_office"
+      "slug": "wps_office",
+      "image": "/uploads/edit_template_colors__85_-1792070896245.webp"
     },
     {
       "id": "prod_cat_wattpad",
@@ -720,7 +772,8 @@
       "price": 10000,
       "description": "Layanan akun WeTV premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "wetv"
+      "slug": "wetv",
+      "image": "/uploads/edit_template_colors__35_-1792039527109.webp"
     },
     {
       "id": "prod_cat_wibuku",
@@ -730,7 +783,8 @@
       "price": 9000,
       "description": "Layanan akun Wibuku premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "wibuku"
+      "slug": "wibuku",
+      "image": "/uploads/edit_template_colors__39_-1792040088913.webp"
     },
     {
       "id": "prod_cat_wink",
@@ -740,7 +794,8 @@
       "price": 6000,
       "description": "Layanan akun Wink premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "wink"
+      "slug": "wink",
+      "image": "/uploads/edit_template_colors__55_-1792066715723.webp"
     },
     {
       "id": "prod_cat_youtube",
@@ -750,7 +805,8 @@
       "price": 5000,
       "description": "Layanan akun YouTube premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "youtube"
+      "slug": "youtube",
+      "image": "/uploads/edit_template_colors__22_-1792038177853.webp"
     },
     {
       "id": "prod_cat_youku",
@@ -760,7 +816,8 @@
       "price": 9000,
       "description": "Layanan akun Youku premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "youku"
+      "slug": "youku",
+      "image": "/uploads/edit_template_colors__28_-1792038741633.webp"
     },
     {
       "id": "prod_cat_zoom",
@@ -770,7 +827,8 @@
       "price": 6000,
       "description": "Layanan akun Zoom premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "zoom"
+      "slug": "zoom",
+      "image": "/uploads/edit_template_colors__72_-1792068539269.webp"
     },
     {
       "id": "prod_cat_iflix",
@@ -780,7 +838,8 @@
       "price": 14000,
       "description": "Layanan akun iFlix premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "iflix"
+      "slug": "iflix",
+      "image": "/uploads/edit_template_colors__45_-1792065737722.webp"
     },
     {
       "id": "prod_cat_ilovepdf",
@@ -790,7 +849,8 @@
       "price": 8000,
       "description": "Layanan akun iLovePDF premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "ilovepdf"
+      "slug": "ilovepdf",
+      "image": "/uploads/edit_template_colors__84_-1792069628302.webp"
     },
     {
       "id": "prod_cat_iqiyi",
@@ -800,7 +860,8 @@
       "price": 8000,
       "description": "Layanan akun iQIYI premium legal bergaransi resmi.",
       "isActive": true,
-      "slug": "iqiyi"
+      "slug": "iqiyi",
+      "image": "/uploads/edit_template_colors__27_-1792038629652.webp"
     }
   ],
   "variants": [
@@ -10604,128 +10665,124 @@
       ],
       "topTierProducts": [
         {
-          "sku": "D1_PROD_46",
-          "href": "#",
-          "brand": "NETFLIX",
-          "name": "Netflix Premium 4K UHD Anti-On Hold 1 Bulan",
-          "image": "/uploads/cuserspongodownloadsddesain_tanpa_judul__5_-1792135020820.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 3.800",
-          "specialPrice": "Rp 3.800",
-          "originalPrice": "Rp 8.360",
-          "discount": "-55%",
-          "priceNumber": 3800,
-          "originalPriceNumber": 8360,
-          "type": "product-toptier",
-          "id": "D1_PROD_46",
-          "price": 3800,
-          "category": "Top Tier",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk dengan latar belakang bersih atau transparan."
-          },
-          "title": "Netflix Premium 4K UHD Anti-On Hold 1 Bulan",
-          "desktopImg": "/uploads/cuserspongodownloadsddesain_tanpa_judul__5_-1792135020820.webp",
-          "link": ""
+          "id": "prod_cat_adobe_express",
+          "sku": "prod_cat_adobe_express",
+          "name": "Adobe Express",
+          "brand": "ADOBE EXPRESS",
+          "price": 17000,
+          "priceNumber": 17000,
+          "voucherPrice": "Rp 17.000",
+          "originalPriceNumber": 25500,
+          "originalPrice": "Rp 25.500",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/adobe_express.svg",
+          "category": "cat_3"
         },
         {
-          "sku": "D1_PROD_10",
-          "href": "#",
-          "brand": "CHATGPT",
-          "name": "ChatGPT Plus GPT-4o & Canvas Unlimited Access",
-          "image": "/uploads/canva_icon.webp",
+          "id": "prod_cat_alight_motion",
+          "sku": "prod_cat_alight_motion",
+          "name": "Alight Motion",
+          "brand": "ALIGHT MOTION",
+          "price": 2500,
+          "priceNumber": 2500,
+          "voucherPrice": "Rp 2.500",
+          "originalPriceNumber": 3750,
+          "originalPrice": "Rp 3.750",
+          "discount": "-33%",
           "hasVoucher": true,
-          "voucherPrice": "Rp 20.000",
-          "specialPrice": null,
-          "originalPrice": "Rp 44.000",
-          "discount": "-55%",
-          "priceNumber": 20000,
-          "originalPriceNumber": 44000
+          "image": "/uploads/alight_motion.webp",
+          "category": "cat_3"
         },
         {
-          "sku": "D1_PROD_60",
-          "href": "#",
-          "brand": "SPOTIFY",
-          "name": "Spotify Premium Individual Garansi Penuh",
-          "image": "/uploads/6-1791894413267.webp",
+          "id": "prod_cat_apple_music",
+          "sku": "prod_cat_apple_music",
+          "name": "Apple Music",
+          "brand": "APPLE MUSIC",
+          "price": 5500,
+          "priceNumber": 5500,
+          "voucherPrice": "Rp 5.500",
+          "originalPriceNumber": 8250,
+          "originalPrice": "Rp 8.250",
+          "discount": "-33%",
           "hasVoucher": true,
-          "voucherPrice": "Rp 12.000",
-          "specialPrice": null,
-          "originalPrice": "Rp 26.400",
-          "discount": "-55%",
-          "priceNumber": 12000,
-          "originalPriceNumber": 26400
+          "image": "/uploads/apple_music.svg",
+          "category": "cat_4"
         },
         {
-          "sku": "D1_PROD_7",
-          "href": "#",
-          "brand": "CANVA",
-          "name": "Canva Pro Desain Brand Kit & AI Unlock Lifetime",
-          "image": "/uploads/canva_icon.webp",
+          "id": "prod_cat_apple_tv",
+          "sku": "prod_cat_apple_tv",
+          "name": "Apple TV",
+          "brand": "APPLE TV",
+          "price": 9000,
+          "priceNumber": 9000,
+          "voucherPrice": "Rp 9.000",
+          "originalPriceNumber": 13500,
+          "originalPrice": "Rp 13.500",
+          "discount": "-33%",
           "hasVoucher": true,
-          "voucherPrice": "Rp 3.500",
-          "specialPrice": null,
-          "originalPrice": "Rp 7.700",
-          "discount": "-55%",
-          "priceNumber": 3500,
-          "originalPriceNumber": 7700
+          "image": "/uploads/appletv_icon.webp",
+          "category": "cat_2"
         },
         {
-          "sku": "D1_PROD_74",
-          "href": "#",
-          "brand": "YOUTUBE",
-          "name": "YouTube Premium No Ads + YouTube Music HiFi",
-          "image": "/uploads/5-1791894599241.webp",
-          "hasVoucher": true,
-          "voucherPrice": "Rp 4.000",
-          "specialPrice": null,
-          "originalPrice": "Rp 8.800",
-          "discount": "-55%",
-          "priceNumber": 4000,
-          "originalPriceNumber": 8800
-        },
-        {
-          "sku": "D1_PROD_23",
-          "href": "#",
-          "brand": "GEMINI",
-          "name": "Gemini Advanced 1.5 Pro & Imagen 3 Google AI",
-          "image": "/uploads/2-1791894544162.webp",
-          "hasVoucher": true,
-          "voucherPrice": "Rp 7.000",
-          "specialPrice": null,
-          "originalPrice": "Rp 15.400",
-          "discount": "-55%",
+          "id": "prod_cat_bstation",
+          "sku": "prod_cat_bstation",
+          "name": "Bstation",
+          "brand": "BSTATION",
+          "price": 7000,
           "priceNumber": 7000,
-          "originalPriceNumber": 15400
+          "voucherPrice": "Rp 7.000",
+          "originalPriceNumber": 10500,
+          "originalPrice": "Rp 10.500",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/bstation_icon.webp",
+          "category": "cat_2"
         },
         {
-          "sku": "D1_PROD_8",
-          "href": "#",
+          "id": "prod_cat_canva",
+          "sku": "prod_cat_canva",
+          "name": "Canva",
+          "brand": "CANVA",
+          "price": 2500,
+          "priceNumber": 2500,
+          "voucherPrice": "Rp 2.500",
+          "originalPriceNumber": 3750,
+          "originalPrice": "Rp 3.750",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/canva_icon.webp",
+          "category": "cat_3"
+        },
+        {
+          "id": "prod_cat_capcut",
+          "sku": "prod_cat_capcut",
+          "name": "CapCut",
           "brand": "CAPCUT",
-          "name": "CapCut Pro Cloud & Preset Ekspor 4K 60fps",
-          "image": "/uploads/capcut_icon.webp",
+          "price": 6000,
+          "priceNumber": 6000,
+          "voucherPrice": "Rp 6.000",
+          "originalPriceNumber": 9000,
+          "originalPrice": "Rp 9.000",
+          "discount": "-33%",
           "hasVoucher": true,
-          "voucherPrice": "Rp 8.000",
-          "specialPrice": null,
-          "originalPrice": "Rp 17.600",
-          "discount": "-55%",
-          "priceNumber": 8000,
-          "originalPriceNumber": 17600
+          "image": "/uploads/capcut_icon.webp",
+          "category": "cat_3"
         },
         {
-          "sku": "D1_PROD_LOOVIIE_1789898664900_917",
-          "href": "#",
-          "brand": "DISNEY+",
-          "name": "Disney+ Hotstar 4K Ultra HD & Dolby Atmos",
-          "image": "/uploads/13-1791894402858.webp",
+          "id": "prod_cat_catchplay",
+          "sku": "prod_cat_catchplay",
+          "name": "Catchplay",
+          "brand": "CATCHPLAY",
+          "price": 18000,
+          "priceNumber": 18000,
+          "voucherPrice": "Rp 18.000",
+          "originalPriceNumber": 27000,
+          "originalPrice": "Rp 27.000",
+          "discount": "-33%",
           "hasVoucher": true,
-          "voucherPrice": "Rp 4.000",
-          "specialPrice": null,
-          "originalPrice": "Rp 8.800",
-          "discount": "-55%",
-          "priceNumber": 4000,
-          "originalPriceNumber": 8800
+          "image": "/uploads/catchplay_icon.webp",
+          "category": "cat_2"
         }
       ],
       "brands1List": [
@@ -10788,602 +10845,304 @@
       ],
       "justForYouProducts": [
         {
-          "sku": "D1_PROD_PERPLEXITY",
-          "href": "#",
-          "brand": "PERPLEXITY",
-          "name": "Perplexity Pro AI Search & Copilot Unlimited",
-          "image": "/uploads/1-1792133757519.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 35.000",
-          "specialPrice": "Rp 35.000",
-          "originalPrice": "Rp 77.000",
-          "discount": "-55%",
-          "priceNumber": 35000,
-          "originalPriceNumber": 77000,
-          "type": "product-justforyou",
-          "id": "D1_PROD_PERPLEXITY",
-          "price": 35000,
-          "category": "AI & Tools",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Perplexity Pro AI Search & Copilot Unlimited",
-          "desktopImg": "/uploads/1-1792133757519.webp",
-          "link": ""
+          "id": "prod_cat_chai",
+          "sku": "prod_cat_chai",
+          "name": "Chai",
+          "brand": "CHAI",
+          "price": 3000,
+          "priceNumber": 3000,
+          "voucherPrice": "Rp 3.000",
+          "originalPriceNumber": 4500,
+          "originalPrice": "Rp 4.500",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/chai_icon.webp",
+          "category": "cat_1"
         },
         {
-          "sku": "D1_PROD_LOOVIIE_1789898664903_308",
-          "href": "#",
-          "brand": "MICROSOFT 365",
-          "name": "Microsoft 365 Office Original + 1TB OneDrive",
-          "image": "/uploads/2-1792133765925.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 8.000",
-          "specialPrice": "Rp 8.000",
-          "originalPrice": "Rp 17.600",
-          "discount": "-55%",
-          "priceNumber": 8000,
-          "originalPriceNumber": 17600,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664903_308",
-          "price": 8000,
-          "category": "Office & Akun Tools",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Microsoft 365 Office Original + 1TB OneDrive",
-          "desktopImg": "/uploads/2-1792133765925.webp",
-          "link": ""
+          "id": "prod_cat_chatgpt",
+          "sku": "prod_cat_chatgpt",
+          "name": "ChatGPT",
+          "brand": "CHATGPT",
+          "price": 6000,
+          "priceNumber": 6000,
+          "voucherPrice": "Rp 6.000",
+          "originalPriceNumber": 9000,
+          "originalPrice": "Rp 9.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/chatgpt_icon.webp",
+          "category": "cat_1"
         },
         {
-          "sku": "D1_PROD_75",
-          "href": "#",
-          "brand": "ZOOM",
-          "name": "Zoom Pro 30 Jam Meeting 100 Peserta Private",
-          "image": "/uploads/3-1792133772406.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 8.000",
-          "specialPrice": "Rp 8.000",
-          "originalPrice": "Rp 17.600",
-          "discount": "-55%",
-          "priceNumber": 8000,
-          "originalPriceNumber": 17600,
-          "type": "product-justforyou",
-          "id": "D1_PROD_75",
-          "price": 8000,
-          "category": "Office & Akun Tools",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Zoom Pro 30 Jam Meeting 100 Peserta Private",
-          "desktopImg": "/uploads/3-1792133772406.webp",
-          "link": ""
-        },
-        {
-          "sku": "D1_PROD_LOOVIIE_1789898664903_385",
-          "href": "#",
-          "brand": "SURFSHARK",
-          "name": "Surfshark VPN Unlimited Devices High Speed",
-          "image": "/uploads/4-1792133789709.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 4.500",
-          "specialPrice": "Rp 4.500",
-          "originalPrice": "Rp 9.900",
-          "discount": "-55%",
-          "priceNumber": 4500,
-          "originalPriceNumber": 9900,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664903_385",
-          "price": 4500,
-          "category": "VPN & Security",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Surfshark VPN Unlimited Devices High Speed",
-          "desktopImg": "/uploads/4-1792133789709.webp",
-          "link": ""
-        },
-        {
-          "sku": "D1_PROD_LOOVIIE_1789898664903_338",
-          "href": "#",
-          "brand": "EXPRESS VPN",
-          "name": "Express VPN Server Cepat 94 Negara Ultra Aman",
-          "image": "/uploads/5-1792133797791.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 8.000",
-          "specialPrice": "Rp 8.000",
-          "originalPrice": "Rp 17.600",
-          "discount": "-55%",
-          "priceNumber": 8000,
-          "originalPriceNumber": 17600,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664903_338",
-          "price": 8000,
-          "category": "VPN & Security",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Express VPN Server Cepat 94 Negara Ultra Aman",
-          "desktopImg": "/uploads/5-1792133797791.webp",
-          "link": ""
-        },
-        {
-          "sku": "D1_PROD_15",
-          "href": "#",
-          "brand": "DUOLINGO",
-          "name": "Duolingo Super Family Unlimited Hearts",
-          "image": "/uploads/6-1792133805733.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 9.000",
-          "specialPrice": "Rp 9.000",
-          "originalPrice": "Rp 19.800",
-          "discount": "-55%",
-          "priceNumber": 9000,
-          "originalPriceNumber": 19800,
-          "type": "product-justforyou",
-          "id": "D1_PROD_15",
-          "price": 9000,
-          "category": "Office & Akun Tools",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Duolingo Super Family Unlimited Hearts",
-          "desktopImg": "/uploads/6-1792133805733.webp",
-          "link": ""
-        },
-        {
-          "sku": "D1_PROD_53",
-          "href": "#",
-          "brand": "PRIME VIDEO",
-          "name": "Amazon Prime Video 4K UHD Anti Checkpoint",
-          "image": "/uploads/7-1792133814422.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 11.000",
-          "specialPrice": "Rp 11.000",
-          "originalPrice": "Rp 24.200",
-          "discount": "-55%",
-          "priceNumber": 11000,
-          "originalPriceNumber": 24200,
-          "type": "product-justforyou",
-          "id": "D1_PROD_53",
-          "price": 11000,
-          "category": "Streaming & Film",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Amazon Prime Video 4K UHD Anti Checkpoint",
-          "desktopImg": "/uploads/7-1792133814422.webp",
-          "link": ""
-        },
-        {
-          "sku": "D1_PROD_29",
-          "href": "#",
-          "brand": "HBO MAX",
-          "name": "HBO Max Ultimate 4K Ad-Free Cinema Streaming",
-          "image": "/uploads/8-1792133821374.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 15.000",
-          "specialPrice": "Rp 15.000",
-          "originalPrice": "Rp 33.000",
-          "discount": "-55%",
-          "priceNumber": 15000,
-          "originalPriceNumber": 33000,
-          "type": "product-justforyou",
-          "id": "D1_PROD_29",
-          "price": 15000,
-          "category": "Just For You",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "HBO Max Ultimate 4K Ad-Free Cinema Streaming",
-          "desktopImg": "/uploads/8-1792133821374.webp",
-          "link": ""
-        },
-        {
-          "sku": "D1_PROD_LOOVIIE_1789898664902_827",
-          "href": "#",
-          "brand": "DEEZER",
-          "name": "Deezer HiFi Audio Streaming Musik Premium",
-          "image": "/uploads/9-1792133828822.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 12.000",
-          "specialPrice": "Rp 12.000",
-          "originalPrice": "Rp 26.400",
-          "discount": "-55%",
-          "priceNumber": 12000,
-          "originalPriceNumber": 26400,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664902_827",
-          "price": 12000,
-          "category": "Musik & Audio",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Deezer HiFi Audio Streaming Musik Premium",
-          "desktopImg": "/uploads/9-1792133828822.webp",
-          "link": ""
-        },
-        {
-          "sku": "D1_PROD_LOOVIIE_1789898664903_431",
-          "href": "#",
-          "brand": "GRAMMARLY",
-          "name": "Grammarly Premium AI Writing & Grammar Checker",
-          "image": "/uploads/10-1792133837234.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 13.000",
-          "specialPrice": "Rp 13.000",
-          "originalPrice": "Rp 28.600",
-          "discount": "-55%",
-          "priceNumber": 13000,
-          "originalPriceNumber": 28600,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664903_431",
-          "price": 13000,
-          "category": "AI & Tools",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Grammarly Premium AI Writing & Grammar Checker",
-          "desktopImg": "/uploads/10-1792133837234.webp",
-          "link": ""
-        },
-        {
-          "sku": "D1_PROD_LOOVIIE_1789898664902_474",
-          "href": "#",
-          "brand": "APPLE TV",
-          "name": "Apple TV+ 4K HDR Original Series & Movies",
-          "image": "/uploads/appletv_icon.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 9.000",
-          "specialPrice": "Rp 9.000",
-          "originalPrice": "Rp 19.800",
-          "discount": "-55%",
-          "priceNumber": 9000,
-          "originalPriceNumber": 19800,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664902_474",
-          "price": 9000,
-          "category": "Streaming & Film",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Apple TV+ 4K HDR Original Series & Movies",
-          "desktopImg": "/uploads/11-1792133844447.webp",
-          "link": ""
-        },
-        {
-          "sku": "D1_PROD_LOOVIIE_1789898664901_23",
-          "href": "#",
-          "brand": "IQIYI",
-          "name": "iQIYI VIP Nonton Drama China & Anime Sub Indo",
-          "image": "/uploads/12-1792133851512.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 10.000",
-          "specialPrice": "Rp 10.000",
-          "originalPrice": "Rp 22.000",
-          "discount": "-55%",
-          "priceNumber": 10000,
-          "originalPriceNumber": 22000,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664901_23",
-          "price": 10000,
-          "category": "Streaming & Film",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "iQIYI VIP Nonton Drama China & Anime Sub Indo",
-          "desktopImg": "/uploads/12-1792133851512.webp",
-          "link": ""
-        },
-        {
-          "sku": "D1_PROD_LOOVIIE_1789898664901_973",
-          "href": "#",
-          "brand": "YOUKU",
-          "name": "Youku VIP Drama Asia & Donghua HD Tanpa Iklan",
-          "image": "/uploads/13-1792133859771.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 10.000",
-          "specialPrice": "Rp 10.000",
-          "originalPrice": "Rp 22.000",
-          "discount": "-55%",
-          "priceNumber": 10000,
-          "originalPriceNumber": 22000,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664901_973",
-          "price": 10000,
-          "category": "Streaming & Film",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Youku VIP Drama Asia & Donghua HD Tanpa Iklan",
-          "desktopImg": "/uploads/13-1792133859771.webp",
-          "link": ""
-        },
-        {
-          "sku": "D1_PROD_LOOVIIE_1789898664902_739",
-          "href": "#",
+          "id": "prod_cat_crunchyroll",
+          "sku": "prod_cat_crunchyroll",
+          "name": "Crunchyroll",
           "brand": "CRUNCHYROLL",
-          "name": "Crunchyroll Mega Fan Streaming Anime Simulcast",
-          "image": "/uploads/14-1792133872135.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 9.000",
-          "specialPrice": "Rp 9.000",
-          "originalPrice": "Rp 19.800",
-          "discount": "-55%",
-          "priceNumber": 9000,
-          "originalPriceNumber": 19800,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664902_739",
-          "price": 9000,
-          "category": "Streaming & Film",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Crunchyroll Mega Fan Streaming Anime Simulcast",
-          "desktopImg": "/uploads/14-1792133872135.webp",
-          "link": ""
+          "price": 5000,
+          "priceNumber": 5000,
+          "voucherPrice": "Rp 5.000",
+          "originalPriceNumber": 7500,
+          "originalPrice": "Rp 7.500",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/crunchyroll_icon.webp",
+          "category": "cat_2"
         },
         {
-          "sku": "D1_PROD_LOOVIIE_1789898664902_594",
-          "href": "#",
-          "brand": "CATCHPLAY",
-          "name": "Catchplay+ Film Blockbuster & Serial Terbaru",
-          "image": "/uploads/catchplay_icon.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 18.000",
-          "specialPrice": "Rp 18.000",
-          "originalPrice": "Rp 39.600",
-          "discount": "-55%",
-          "priceNumber": 18000,
-          "originalPriceNumber": 39600,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664902_594",
-          "price": 18000,
-          "category": "Streaming & Film",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Catchplay+ Film Blockbuster & Serial Terbaru",
-          "desktopImg": "/uploads/15-1792133881553.webp",
-          "link": ""
+          "id": "prod_cat_dazzcam",
+          "sku": "prod_cat_dazzcam",
+          "name": "Dazzcam",
+          "brand": "DAZZCAM",
+          "price": 17000,
+          "priceNumber": 17000,
+          "voucherPrice": "Rp 17.000",
+          "originalPriceNumber": 25500,
+          "originalPrice": "Rp 25.500",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/dazzcam_icon.webp",
+          "category": "cat_3"
         },
         {
-          "sku": "D1_PROD_LOOVIIE_1789898664902_211",
-          "href": "#",
+          "id": "prod_cat_deezer",
+          "sku": "prod_cat_deezer",
+          "name": "Deezer",
+          "brand": "DEEZER",
+          "price": 12000,
+          "priceNumber": 12000,
+          "voucherPrice": "Rp 12.000",
+          "originalPriceNumber": 18000,
+          "originalPrice": "Rp 18.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/deezer_icon.webp",
+          "category": "cat_4"
+        },
+        {
+          "id": "prod_cat_disney_hotstar",
+          "sku": "prod_cat_disney_hotstar",
+          "name": "Disney+ Hotstar",
+          "brand": "DISNEY+ HOTSTAR",
+          "price": 4500,
+          "priceNumber": 4500,
+          "voucherPrice": "Rp 4.500",
+          "originalPriceNumber": 6750,
+          "originalPrice": "Rp 6.750",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/disney_icon.webp",
+          "category": "cat_2"
+        },
+        {
+          "id": "prod_cat_drakor_id",
+          "sku": "prod_cat_drakor_id",
+          "name": "Drakor.id",
+          "brand": "DRAKOR.ID",
+          "price": 10000,
+          "priceNumber": 10000,
+          "voucherPrice": "Rp 10.000",
+          "originalPriceNumber": 15000,
+          "originalPrice": "Rp 15.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/drakorid_icon.webp",
+          "category": "cat_2"
+        },
+        {
+          "id": "prod_cat_dramabox",
+          "sku": "prod_cat_dramabox",
+          "name": "Dramabox",
           "brand": "DRAMABOX",
-          "name": "Dramabox Koin Kumpulan Short Drama Populer",
-          "image": "/uploads/16-1792133893766.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 11.000",
-          "specialPrice": "Rp 11.000",
-          "originalPrice": "Rp 24.200",
-          "discount": "-55%",
-          "priceNumber": 11000,
-          "originalPriceNumber": 24200,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664902_211",
-          "price": 11000,
-          "category": "Streaming & Film",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Dramabox Koin Kumpulan Short Drama Populer",
-          "desktopImg": "/uploads/16-1792133893766.webp",
-          "link": ""
+          "price": 16000,
+          "priceNumber": 16000,
+          "voucherPrice": "Rp 16.000",
+          "originalPriceNumber": 24000,
+          "originalPrice": "Rp 24.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/dramabox_icon.webp",
+          "category": "cat_2"
         },
         {
-          "sku": "D1_PROD_LOOVIIE_1789898664901_465",
-          "href": "#",
-          "brand": "LOKLOK",
-          "name": "Loklok VIP Film & Series HD Sub Indo No Ads",
-          "image": "/uploads/17-1792133901430.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 19.000",
-          "specialPrice": "Rp 19.000",
-          "originalPrice": "Rp 41.800",
-          "discount": "-55%",
-          "priceNumber": 19000,
-          "originalPriceNumber": 41800,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664901_465",
-          "price": 19000,
-          "category": "Streaming & Film",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Loklok VIP Film & Series HD Sub Indo No Ads",
-          "desktopImg": "/uploads/17-1792133901430.webp",
-          "link": ""
+          "id": "prod_cat_dramaku",
+          "sku": "prod_cat_dramaku",
+          "name": "Dramaku",
+          "brand": "DRAMAKU",
+          "price": 16000,
+          "priceNumber": 16000,
+          "voucherPrice": "Rp 16.000",
+          "originalPriceNumber": 24000,
+          "originalPrice": "Rp 24.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/dramaku_icon.webp",
+          "category": "cat_2"
         },
         {
-          "sku": "D1_PROD_52",
-          "href": "#",
-          "brand": "PICSART",
-          "name": "Picsart Gold All AI Tool & Filter Unlocked",
-          "image": "/uploads/18-1792133908729.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 13.000",
-          "specialPrice": "Rp 13.000",
-          "originalPrice": "Rp 28.600",
-          "discount": "-55%",
-          "priceNumber": 13000,
-          "originalPriceNumber": 28600,
-          "type": "product-justforyou",
-          "id": "D1_PROD_52",
-          "price": 13000,
-          "category": "Desain & Video",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Picsart Gold All AI Tool & Filter Unlocked",
-          "desktopImg": "/uploads/18-1792133908729.webp",
-          "link": ""
+          "id": "prod_cat_duolingo",
+          "sku": "prod_cat_duolingo",
+          "name": "Duolingo",
+          "brand": "DUOLINGO",
+          "price": 5000,
+          "priceNumber": 5000,
+          "voucherPrice": "Rp 5.000",
+          "originalPriceNumber": 7500,
+          "originalPrice": "Rp 7.500",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/duolingo_icon.webp",
+          "category": "cat_5"
         },
         {
-          "sku": "D1_PROD_LOOVIIE_1789898664902_879",
-          "href": "#",
-          "brand": "IBIS PAINT",
-          "name": "Ibis Paint X Pro Prime Membership Tanpa Iklan",
-          "image": "/uploads/19-1792133918524.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 18.000",
-          "specialPrice": "Rp 18.000",
-          "originalPrice": "Rp 39.600",
-          "discount": "-55%",
-          "priceNumber": 18000,
-          "originalPriceNumber": 39600,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664902_879",
-          "price": 18000,
-          "category": "Desain & Video",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Ibis Paint X Pro Prime Membership Tanpa Iklan",
-          "desktopImg": "/uploads/19-1792133918524.webp",
-          "link": ""
+          "id": "prod_cat_epik",
+          "sku": "prod_cat_epik",
+          "name": "Epik",
+          "brand": "EPIK",
+          "price": 5000,
+          "priceNumber": 5000,
+          "voucherPrice": "Rp 5.000",
+          "originalPriceNumber": 7500,
+          "originalPrice": "Rp 7.500",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/epik_icon.webp",
+          "category": "cat_3"
         },
         {
-          "sku": "D1_PROD_LOOVIIE_1789898664903_883",
-          "href": "#",
-          "brand": "VSCO",
-          "name": "VSCO X Full Preset & Video Color Grading",
-          "image": "/uploads/20-1792133925263.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 21.000",
-          "specialPrice": "Rp 21.000",
-          "originalPrice": "Rp 46.200",
-          "discount": "-55%",
-          "priceNumber": 21000,
-          "originalPriceNumber": 46200,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664903_883",
-          "price": 21000,
-          "category": "Desain & Video",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "VSCO X Full Preset & Video Color Grading",
-          "desktopImg": "/uploads/20-1792133925263.webp",
-          "link": ""
+          "id": "prod_cat_fizzo_novel",
+          "sku": "prod_cat_fizzo_novel",
+          "name": "Fizzo Novel",
+          "brand": "FIZZO NOVEL",
+          "price": 10000,
+          "priceNumber": 10000,
+          "voucherPrice": "Rp 10.000",
+          "originalPriceNumber": 15000,
+          "originalPrice": "Rp 15.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/fizzonovel_icon.webp",
+          "category": "cat_2"
         },
         {
-          "sku": "D1_PROD_26",
-          "href": "#",
-          "brand": "GOOGLE COLAB",
-          "name": "Google Colab Pro GPU A100/V100 High RAM",
-          "image": "/uploads/desain_tanpa_judul__10_-1792134017505.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 155.010",
-          "specialPrice": "Rp 155.010",
-          "originalPrice": "Rp 341.000",
-          "discount": "-55%",
-          "priceNumber": 155010,
-          "originalPriceNumber": 341000,
-          "type": "product-justforyou",
-          "id": "D1_PROD_26",
-          "price": 155010,
-          "category": "AI & Tools",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Google Colab Pro GPU A100/V100 High RAM",
-          "desktopImg": "/uploads/desain_tanpa_judul__10_-1792134017505.webp",
-          "link": ""
+          "id": "prod_cat_gagaoolala",
+          "sku": "prod_cat_gagaoolala",
+          "name": "GagaOOLala",
+          "brand": "GAGAOOLALA",
+          "price": 10000,
+          "priceNumber": 10000,
+          "voucherPrice": "Rp 10.000",
+          "originalPriceNumber": 15000,
+          "originalPrice": "Rp 15.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/gagaoolala_icon.webp",
+          "category": "cat_2"
         },
         {
-          "sku": "D1_PROD_LOOVIIE_1789898664903_831",
-          "href": "#",
-          "brand": "SCRIBD",
-          "name": "Scribd Premium Akses Buku, Audio & Dokumen",
-          "image": "/uploads/21-1792134030843.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 7.000",
-          "specialPrice": "Rp 7.000",
-          "originalPrice": "Rp 15.400",
-          "discount": "-55%",
-          "priceNumber": 7000,
-          "originalPriceNumber": 15400,
-          "type": "product-justforyou",
-          "id": "D1_PROD_LOOVIIE_1789898664903_831",
-          "price": 7000,
-          "category": "Office & Akun Tools",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Scribd Premium Akses Buku, Audio & Dokumen",
-          "desktopImg": "/uploads/21-1792134030843.webp",
-          "link": ""
+          "id": "prod_cat_gemini_ai",
+          "sku": "prod_cat_gemini_ai",
+          "name": "Gemini AI",
+          "brand": "GEMINI AI",
+          "price": 6000,
+          "priceNumber": 6000,
+          "voucherPrice": "Rp 6.000",
+          "originalPriceNumber": 9000,
+          "originalPrice": "Rp 9.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/gemini_icon.webp",
+          "category": "cat_1"
         },
         {
-          "sku": "D1_PROD_PRABU_1",
-          "href": "#",
-          "brand": "GMAIL",
-          "name": "Gmail Fresh Verifikasi No Phone Siap Pakai",
-          "image": "/uploads/22-1792134037312.webp",
-          "hasVoucher": false,
-          "voucherPrice": "Rp 7.000",
-          "specialPrice": "Rp 7.000",
-          "originalPrice": "Rp 15.400",
-          "discount": "-55%",
-          "priceNumber": 7000,
-          "originalPriceNumber": 15400,
-          "type": "product-justforyou",
-          "id": "D1_PROD_PRABU_1",
-          "price": 7000,
-          "category": "Office & Akun Tools",
-          "recommendation": {
-            "dimensions": "600 x 800 px (Rasio 3:4) atau 800 x 800 px (1:1)",
-            "aspectRatio": "3:4",
-            "tips": "Foto produk atau ikon aplikasi dengan background rapi."
-          },
-          "title": "Gmail Fresh Verifikasi No Phone Siap Pakai",
-          "desktopImg": "/uploads/22-1792134037312.webp",
-          "link": ""
+          "id": "prod_cat_genflix",
+          "sku": "prod_cat_genflix",
+          "name": "Genflix",
+          "brand": "GENFLIX",
+          "price": 6000,
+          "priceNumber": 6000,
+          "voucherPrice": "Rp 6.000",
+          "originalPriceNumber": 9000,
+          "originalPrice": "Rp 9.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/genflix_icon.webp",
+          "category": "cat_2"
+        },
+        {
+          "id": "prod_cat_getcontact",
+          "sku": "prod_cat_getcontact",
+          "name": "Getcontact",
+          "brand": "GETCONTACT",
+          "price": 4500,
+          "priceNumber": 4500,
+          "voucherPrice": "Rp 4.500",
+          "originalPriceNumber": 6750,
+          "originalPrice": "Rp 6.750",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/getcontact_icon.webp",
+          "category": "cat_7"
+        },
+        {
+          "id": "prod_cat_grammarly",
+          "sku": "prod_cat_grammarly",
+          "name": "Grammarly",
+          "brand": "GRAMMARLY",
+          "price": 14000,
+          "priceNumber": 14000,
+          "voucherPrice": "Rp 14.000",
+          "originalPriceNumber": 21000,
+          "originalPrice": "Rp 21.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/grammarly_icon.webp",
+          "category": "cat_5"
+        },
+        {
+          "id": "prod_cat_grok_ai",
+          "sku": "prod_cat_grok_ai",
+          "name": "Grok AI",
+          "brand": "GROK AI",
+          "price": 120000,
+          "priceNumber": 120000,
+          "voucherPrice": "Rp 120.000",
+          "originalPriceNumber": 180000,
+          "originalPrice": "Rp 180.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/grok_icon.webp",
+          "category": "cat_1"
+        },
+        {
+          "id": "prod_cat_gsuite",
+          "sku": "prod_cat_gsuite",
+          "name": "Gsuite",
+          "brand": "GSUITE",
+          "price": 2500,
+          "priceNumber": 2500,
+          "voucherPrice": "Rp 2.500",
+          "originalPriceNumber": 3750,
+          "originalPrice": "Rp 3.750",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/gsuite_icon.webp",
+          "category": "cat_7"
+        },
+        {
+          "id": "prod_cat_hbo_max",
+          "sku": "prod_cat_hbo_max",
+          "name": "HBO Max",
+          "brand": "HBO MAX",
+          "price": 24000,
+          "priceNumber": 24000,
+          "voucherPrice": "Rp 24.000",
+          "originalPriceNumber": 36000,
+          "originalPrice": "Rp 36.000",
+          "discount": "-33%",
+          "hasVoucher": true,
+          "image": "/uploads/hbomax_icon.webp",
+          "category": "cat_2"
         }
       ],
       "trendList": [
@@ -11515,16 +11274,16 @@
           "link": "#"
         },
         {
-          "brand": "SURFSHARK VPN",
-          "name": "Surfshark VPN",
-          "label": "VPN Unlimited Devices High Speed",
+          "brand": "VPN",
+          "name": "VPN",
+          "label": "VPN Private & Sharing Garansi Aktif",
           "img": "/uploads/4-1792131796111.webp",
           "link": "#"
         },
         {
-          "brand": "EXPRESS VPN",
-          "name": "Express VPN",
-          "label": "Server Cepat 94 Negara Ultra Aman",
+          "brand": "PRIME VIDEO",
+          "name": "Prime Video",
+          "label": "Streaming Film & Serial Eksklusif",
           "img": "/uploads/5-1792131807670.webp",
           "link": "#"
         },
@@ -11611,10 +11370,10 @@
     },
     "topTierBanner": {
       "id": "toptier-banner",
-      "image": "/uploads/black_white_aesthetic_film_frame_photo_collage_canvas_banner__1240_x_300_piksel_-1792422425102.webp",
-      "title": "Canva Pro Designer",
-      "brand": "Canva",
-      "link": "#"
+      "image": "/uploads/banner_jasa_website_desktop.webp",
+      "title": "Jasa Pembuatan Website Profesional",
+      "brand": "JASA WEB",
+      "link": "https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store%2C%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website.%20Boleh%20konsultasi%20mengenai%20paket%2C%20fitur%2C%20dan%20harganya%3F"
     },
     "heroSlide1": {
       "id": "hero-top-1",
@@ -11642,7 +11401,431 @@
       "desktopImg": "https://images.ctfassets.net/9q8du028z7sn/7wxipMmzcMa3uNwS7fk6m8/ab52d548583c95cfe151b4e9df070dc5/APP_HEROSECONDARY_1280x720_1010CD_FSBRAND_ADIDAS.jpg",
       "mobileImg": "https://images.ctfassets.net/9q8du028z7sn/7wxipMmzcMa3uNwS7fk6m8/ab52d548583c95cfe151b4e9df070dc5/APP_HEROSECONDARY_1280x720_1010CD_FSBRAND_ADIDAS.jpg",
       "link": "#"
-    }
+    },
+    "topTierProducts": [
+      {
+        "id": "prod_cat_adobe_express",
+        "sku": "prod_cat_adobe_express",
+        "name": "Adobe Express",
+        "brand": "ADOBE EXPRESS",
+        "price": 17000,
+        "priceNumber": 17000,
+        "voucherPrice": "Rp 17.000",
+        "originalPriceNumber": 25500,
+        "originalPrice": "Rp 25.500",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/adobe_express.svg",
+        "category": "cat_3"
+      },
+      {
+        "id": "prod_cat_alight_motion",
+        "sku": "prod_cat_alight_motion",
+        "name": "Alight Motion",
+        "brand": "ALIGHT MOTION",
+        "price": 2500,
+        "priceNumber": 2500,
+        "voucherPrice": "Rp 2.500",
+        "originalPriceNumber": 3750,
+        "originalPrice": "Rp 3.750",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/alight_motion.webp",
+        "category": "cat_3"
+      },
+      {
+        "id": "prod_cat_apple_music",
+        "sku": "prod_cat_apple_music",
+        "name": "Apple Music",
+        "brand": "APPLE MUSIC",
+        "price": 5500,
+        "priceNumber": 5500,
+        "voucherPrice": "Rp 5.500",
+        "originalPriceNumber": 8250,
+        "originalPrice": "Rp 8.250",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/apple_music.svg",
+        "category": "cat_4"
+      },
+      {
+        "id": "prod_cat_apple_tv",
+        "sku": "prod_cat_apple_tv",
+        "name": "Apple TV",
+        "brand": "APPLE TV",
+        "price": 9000,
+        "priceNumber": 9000,
+        "voucherPrice": "Rp 9.000",
+        "originalPriceNumber": 13500,
+        "originalPrice": "Rp 13.500",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/appletv_icon.webp",
+        "category": "cat_2"
+      },
+      {
+        "id": "prod_cat_bstation",
+        "sku": "prod_cat_bstation",
+        "name": "Bstation",
+        "brand": "BSTATION",
+        "price": 7000,
+        "priceNumber": 7000,
+        "voucherPrice": "Rp 7.000",
+        "originalPriceNumber": 10500,
+        "originalPrice": "Rp 10.500",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/bstation_icon.webp",
+        "category": "cat_2"
+      },
+      {
+        "id": "prod_cat_canva",
+        "sku": "prod_cat_canva",
+        "name": "Canva",
+        "brand": "CANVA",
+        "price": 2500,
+        "priceNumber": 2500,
+        "voucherPrice": "Rp 2.500",
+        "originalPriceNumber": 3750,
+        "originalPrice": "Rp 3.750",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/canva_icon.webp",
+        "category": "cat_3"
+      },
+      {
+        "id": "prod_cat_capcut",
+        "sku": "prod_cat_capcut",
+        "name": "CapCut",
+        "brand": "CAPCUT",
+        "price": 6000,
+        "priceNumber": 6000,
+        "voucherPrice": "Rp 6.000",
+        "originalPriceNumber": 9000,
+        "originalPrice": "Rp 9.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/capcut_icon.webp",
+        "category": "cat_3"
+      },
+      {
+        "id": "prod_cat_catchplay",
+        "sku": "prod_cat_catchplay",
+        "name": "Catchplay",
+        "brand": "CATCHPLAY",
+        "price": 18000,
+        "priceNumber": 18000,
+        "voucherPrice": "Rp 18.000",
+        "originalPriceNumber": 27000,
+        "originalPrice": "Rp 27.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/catchplay_icon.webp",
+        "category": "cat_2"
+      }
+    ],
+    "justForYouProducts": [
+      {
+        "id": "prod_cat_chai",
+        "sku": "prod_cat_chai",
+        "name": "Chai",
+        "brand": "CHAI",
+        "price": 3000,
+        "priceNumber": 3000,
+        "voucherPrice": "Rp 3.000",
+        "originalPriceNumber": 4500,
+        "originalPrice": "Rp 4.500",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/chai_icon.webp",
+        "category": "cat_1"
+      },
+      {
+        "id": "prod_cat_chatgpt",
+        "sku": "prod_cat_chatgpt",
+        "name": "ChatGPT",
+        "brand": "CHATGPT",
+        "price": 6000,
+        "priceNumber": 6000,
+        "voucherPrice": "Rp 6.000",
+        "originalPriceNumber": 9000,
+        "originalPrice": "Rp 9.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/chatgpt_icon.webp",
+        "category": "cat_1"
+      },
+      {
+        "id": "prod_cat_crunchyroll",
+        "sku": "prod_cat_crunchyroll",
+        "name": "Crunchyroll",
+        "brand": "CRUNCHYROLL",
+        "price": 5000,
+        "priceNumber": 5000,
+        "voucherPrice": "Rp 5.000",
+        "originalPriceNumber": 7500,
+        "originalPrice": "Rp 7.500",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/crunchyroll_icon.webp",
+        "category": "cat_2"
+      },
+      {
+        "id": "prod_cat_dazzcam",
+        "sku": "prod_cat_dazzcam",
+        "name": "Dazzcam",
+        "brand": "DAZZCAM",
+        "price": 17000,
+        "priceNumber": 17000,
+        "voucherPrice": "Rp 17.000",
+        "originalPriceNumber": 25500,
+        "originalPrice": "Rp 25.500",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/dazzcam_icon.webp",
+        "category": "cat_3"
+      },
+      {
+        "id": "prod_cat_deezer",
+        "sku": "prod_cat_deezer",
+        "name": "Deezer",
+        "brand": "DEEZER",
+        "price": 12000,
+        "priceNumber": 12000,
+        "voucherPrice": "Rp 12.000",
+        "originalPriceNumber": 18000,
+        "originalPrice": "Rp 18.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/deezer_icon.webp",
+        "category": "cat_4"
+      },
+      {
+        "id": "prod_cat_disney_hotstar",
+        "sku": "prod_cat_disney_hotstar",
+        "name": "Disney+ Hotstar",
+        "brand": "DISNEY+ HOTSTAR",
+        "price": 4500,
+        "priceNumber": 4500,
+        "voucherPrice": "Rp 4.500",
+        "originalPriceNumber": 6750,
+        "originalPrice": "Rp 6.750",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/disney_icon.webp",
+        "category": "cat_2"
+      },
+      {
+        "id": "prod_cat_drakor_id",
+        "sku": "prod_cat_drakor_id",
+        "name": "Drakor.id",
+        "brand": "DRAKOR.ID",
+        "price": 10000,
+        "priceNumber": 10000,
+        "voucherPrice": "Rp 10.000",
+        "originalPriceNumber": 15000,
+        "originalPrice": "Rp 15.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/drakorid_icon.webp",
+        "category": "cat_2"
+      },
+      {
+        "id": "prod_cat_dramabox",
+        "sku": "prod_cat_dramabox",
+        "name": "Dramabox",
+        "brand": "DRAMABOX",
+        "price": 16000,
+        "priceNumber": 16000,
+        "voucherPrice": "Rp 16.000",
+        "originalPriceNumber": 24000,
+        "originalPrice": "Rp 24.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/dramabox_icon.webp",
+        "category": "cat_2"
+      },
+      {
+        "id": "prod_cat_dramaku",
+        "sku": "prod_cat_dramaku",
+        "name": "Dramaku",
+        "brand": "DRAMAKU",
+        "price": 16000,
+        "priceNumber": 16000,
+        "voucherPrice": "Rp 16.000",
+        "originalPriceNumber": 24000,
+        "originalPrice": "Rp 24.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/dramaku_icon.webp",
+        "category": "cat_2"
+      },
+      {
+        "id": "prod_cat_duolingo",
+        "sku": "prod_cat_duolingo",
+        "name": "Duolingo",
+        "brand": "DUOLINGO",
+        "price": 5000,
+        "priceNumber": 5000,
+        "voucherPrice": "Rp 5.000",
+        "originalPriceNumber": 7500,
+        "originalPrice": "Rp 7.500",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/duolingo_icon.webp",
+        "category": "cat_5"
+      },
+      {
+        "id": "prod_cat_epik",
+        "sku": "prod_cat_epik",
+        "name": "Epik",
+        "brand": "EPIK",
+        "price": 5000,
+        "priceNumber": 5000,
+        "voucherPrice": "Rp 5.000",
+        "originalPriceNumber": 7500,
+        "originalPrice": "Rp 7.500",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/epik_icon.webp",
+        "category": "cat_3"
+      },
+      {
+        "id": "prod_cat_fizzo_novel",
+        "sku": "prod_cat_fizzo_novel",
+        "name": "Fizzo Novel",
+        "brand": "FIZZO NOVEL",
+        "price": 10000,
+        "priceNumber": 10000,
+        "voucherPrice": "Rp 10.000",
+        "originalPriceNumber": 15000,
+        "originalPrice": "Rp 15.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/fizzonovel_icon.webp",
+        "category": "cat_2"
+      },
+      {
+        "id": "prod_cat_gagaoolala",
+        "sku": "prod_cat_gagaoolala",
+        "name": "GagaOOLala",
+        "brand": "GAGAOOLALA",
+        "price": 10000,
+        "priceNumber": 10000,
+        "voucherPrice": "Rp 10.000",
+        "originalPriceNumber": 15000,
+        "originalPrice": "Rp 15.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/gagaoolala_icon.webp",
+        "category": "cat_2"
+      },
+      {
+        "id": "prod_cat_gemini_ai",
+        "sku": "prod_cat_gemini_ai",
+        "name": "Gemini AI",
+        "brand": "GEMINI AI",
+        "price": 6000,
+        "priceNumber": 6000,
+        "voucherPrice": "Rp 6.000",
+        "originalPriceNumber": 9000,
+        "originalPrice": "Rp 9.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/gemini_icon.webp",
+        "category": "cat_1"
+      },
+      {
+        "id": "prod_cat_genflix",
+        "sku": "prod_cat_genflix",
+        "name": "Genflix",
+        "brand": "GENFLIX",
+        "price": 6000,
+        "priceNumber": 6000,
+        "voucherPrice": "Rp 6.000",
+        "originalPriceNumber": 9000,
+        "originalPrice": "Rp 9.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/genflix_icon.webp",
+        "category": "cat_2"
+      },
+      {
+        "id": "prod_cat_getcontact",
+        "sku": "prod_cat_getcontact",
+        "name": "Getcontact",
+        "brand": "GETCONTACT",
+        "price": 4500,
+        "priceNumber": 4500,
+        "voucherPrice": "Rp 4.500",
+        "originalPriceNumber": 6750,
+        "originalPrice": "Rp 6.750",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/getcontact_icon.webp",
+        "category": "cat_7"
+      },
+      {
+        "id": "prod_cat_grammarly",
+        "sku": "prod_cat_grammarly",
+        "name": "Grammarly",
+        "brand": "GRAMMARLY",
+        "price": 14000,
+        "priceNumber": 14000,
+        "voucherPrice": "Rp 14.000",
+        "originalPriceNumber": 21000,
+        "originalPrice": "Rp 21.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/grammarly_icon.webp",
+        "category": "cat_5"
+      },
+      {
+        "id": "prod_cat_grok_ai",
+        "sku": "prod_cat_grok_ai",
+        "name": "Grok AI",
+        "brand": "GROK AI",
+        "price": 120000,
+        "priceNumber": 120000,
+        "voucherPrice": "Rp 120.000",
+        "originalPriceNumber": 180000,
+        "originalPrice": "Rp 180.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/grok_icon.webp",
+        "category": "cat_1"
+      },
+      {
+        "id": "prod_cat_gsuite",
+        "sku": "prod_cat_gsuite",
+        "name": "Gsuite",
+        "brand": "GSUITE",
+        "price": 2500,
+        "priceNumber": 2500,
+        "voucherPrice": "Rp 2.500",
+        "originalPriceNumber": 3750,
+        "originalPrice": "Rp 3.750",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/gsuite_icon.webp",
+        "category": "cat_7"
+      },
+      {
+        "id": "prod_cat_hbo_max",
+        "sku": "prod_cat_hbo_max",
+        "name": "HBO Max",
+        "brand": "HBO MAX",
+        "price": 24000,
+        "priceNumber": 24000,
+        "voucherPrice": "Rp 24.000",
+        "originalPriceNumber": 36000,
+        "originalPrice": "Rp 36.000",
+        "discount": "-33%",
+        "hasVoucher": true,
+        "image": "/uploads/hbomax_icon.webp",
+        "category": "cat_2"
+      }
+    ]
   },
   "visualEditorData": {
     "heroCarouselItems": [
@@ -12518,16 +12701,16 @@
         "link": "#"
       },
       {
-        "brand": "SURFSHARK VPN",
-        "name": "Surfshark VPN",
-        "label": "VPN Unlimited Devices High Speed",
+        "brand": "VPN",
+        "name": "VPN",
+        "label": "VPN Private & Sharing Garansi Aktif",
         "img": "/uploads/4-1792131796111.webp",
         "link": "#"
       },
       {
-        "brand": "EXPRESS VPN",
-        "name": "Express VPN",
-        "label": "Server Cepat 94 Negara Ultra Aman",
+        "brand": "PRIME VIDEO",
+        "name": "Prime Video",
+        "label": "Streaming Film & Serial Eksklusif",
         "img": "/uploads/5-1792131807670.webp",
         "link": "#"
       },

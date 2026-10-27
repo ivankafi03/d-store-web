@@ -139,6 +139,31 @@ export async function POST(request) {
       if (Array.isArray(body.visualEditorData.speedDealsList) && body.visualEditorData.speedDealsList.length > 0) {
         db.banners.speedDeals = body.visualEditorData.speedDealsList;
       }
+      if (Array.isArray(body.visualEditorData.topTierProducts) && body.visualEditorData.topTierProducts.length > 0) {
+        db.banners.topTierProducts = body.visualEditorData.topTierProducts;
+      }
+      if (Array.isArray(body.visualEditorData.justForYouProducts) && body.visualEditorData.justForYouProducts.length > 0) {
+        db.banners.justForYouProducts = body.visualEditorData.justForYouProducts;
+      }
+
+      // Sinkronisasi gambar dan harga produk ke db.products agar seluruh web utama terupdate otomatis
+      if (Array.isArray(db.products) && db.products.length > 0) {
+        const productUpdates = [
+          ...(Array.isArray(body.visualEditorData.topTierProducts) ? body.visualEditorData.topTierProducts : []),
+          ...(Array.isArray(body.visualEditorData.justForYouProducts) ? body.visualEditorData.justForYouProducts : [])
+        ];
+        for (const update of productUpdates) {
+          const targetId = update.sku || update.id;
+          if (!targetId) continue;
+          const target = db.products.find((p) => p.id === targetId || p.sku === targetId);
+          if (target) {
+            if (update.image) target.image = update.image;
+            if (update.name) target.name = update.name;
+            if (update.brand) target.brand = update.brand;
+            if (update.priceNumber || update.price) target.price = Number(update.priceNumber || update.price);
+          }
+        }
+      }
       if (Array.isArray(body.visualEditorData.discList) && body.visualEditorData.discList.length > 0) {
         db.banners.featured = body.visualEditorData.discList;
       }

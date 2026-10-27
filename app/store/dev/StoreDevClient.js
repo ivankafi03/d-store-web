@@ -75,7 +75,7 @@ const DEFAULT_HERO_SLIDE_3 = {
 
 const DEFAULT_TOP_TIER_BANNER = {
   id: 'toptier-banner',
-  image: '/uploads/black_white_aesthetic_film_frame_photo_collage_canvas_banner__1240_x_300_piksel_-1792422425102.webp',
+  image: '/uploads/banner_jasa_website_modern_luxury.webp',
   title: 'Jasa Pembuatan Website Profesional',
   brand: 'JASA WEB',
   link: 'https://wa.me/6281230112240?text=Halo%20Admin%20D%20Store%2C%20saya%20tertarik%20dengan%20jasa%20pembuatan%20website.%20Boleh%20konsultasi%20mengenai%20paket%2C%20fitur%2C%20dan%20harganya%3F'

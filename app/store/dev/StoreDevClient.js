@@ -422,7 +422,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
   const [isCategoriesOpen, setIsCategoriesOpen] = useState(false);
   const [liveProducts, setLiveProducts] = useState(() => initialData?.products || []);
   const [liveVariants, setLiveVariants] = useState(() => initialData?.variants || []);
-  const [showSeoText, setShowSeoText] = useState(false);
   const [activeProductModal, setActiveProductModal] = useState(null);
   const [selectedAppModal, setSelectedAppModal] = useState(null);
   const [selectedSize, setSelectedSize] = useState('1 Bulan (Private)');
@@ -3065,62 +3064,69 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           ))}
         </div>
 
-        {/* SEO Text Dropdown Accordion */}
-        <div className="border border-zinc-200/80 rounded-xl bg-white overflow-hidden transition-all duration-200 hover:border-zinc-300">
-          <button
-            type="button"
-            onClick={() => setShowSeoText(!showSeoText)}
-            className="w-full flex items-center justify-between p-4 sm:p-5 text-left cursor-pointer select-none transition-colors hover:bg-zinc-50/70"
-            aria-expanded={showSeoText}
-          >
-            <div className="flex items-center gap-2.5 min-w-0 pr-4">
-              <span className="w-1.5 h-1.5 rounded-full bg-zinc-900 shrink-0" />
-              <h3 className="font-semibold text-xs sm:text-sm text-zinc-900 tracking-tight line-clamp-1">
-                Pusat Langganan Akun Aplikasi Premium &amp; AI Tools Terpercaya &bull; D Store Indonesia
-              </h3>
+        {/* TEXT BERJALAN (RUNNING TEXT MARQUEE) - PENEGASAN BEBAS JUAL KEMBALI / RESELL */}
+        <div className="relative overflow-hidden rounded-2xl bg-zinc-950 text-white py-3.5 border border-zinc-900 shadow-sm select-none">
+          <div className="animate-marquee flex items-center gap-8 whitespace-nowrap">
+            <div className="flex items-center gap-6 shrink-0 text-xs sm:text-[13px] font-medium tracking-wide">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-emerald-500 text-black font-extrabold text-[10px] tracking-wider uppercase">
+                Bebas Resell
+              </span>
+              <span className="font-bold text-white">
+                Boleh loh kalian jual lagi dengan harga kalian sendiri!
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
+              <span className="text-zinc-300">
+                Margin keuntungan 100% bebas Anda tentukan
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
+              <span className="text-zinc-300">
+                Beli satuan tetap dapat harga grosir termurah
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
+              <span className="text-zinc-300">
+                100% Akun Legal, Resmi &amp; Bergaransi Penuh
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
+              <span className="text-zinc-300">
+                Proses kilat 5 - 15 menit langsung aktif siap pakai
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
+              <span className="text-zinc-300">
+                Customer Service siap support 24 jam nonstop
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
             </div>
-            <div className="flex items-center gap-1.5 text-xs font-medium text-zinc-500 shrink-0">
-              <span className="hidden sm:inline text-[11px]">{showSeoText ? 'Tutup' : 'Pelajari'}</span>
-              <div className="w-6 h-6 rounded-full bg-zinc-100 flex items-center justify-center text-zinc-700 transition-transform duration-200">
-                {showSeoText ? <ChevronUp className="w-3.5 h-3.5" /> : <ChevronDown className="w-3.5 h-3.5" />}
-              </div>
-            </div>
-          </button>
 
-          {showSeoText && (
-            <div className="px-4 pb-5 pt-1 sm:px-5 border-t border-zinc-100 text-xs text-zinc-600 space-y-3 leading-relaxed bg-zinc-50/30">
-              <p>
-                D Store Indonesia adalah platform terpercaya penyedia lisensi dan akun aplikasi premium legal, mulai dari AI Tools (ChatGPT Plus, Cursor Pro, Midjourney), Streaming 4K (Netflix, Disney+, YouTube Premium), Desain &amp; Kreator (Canva Pro, CapCut Pro), hingga Office dan Cloud Storage (Microsoft 365, Google One, Gmail Fresh).
-              </p>
-              <div className="pt-2">
-                <h4 className="font-semibold text-zinc-900 text-xs mb-1">Koleksi Lengkap Akun Premium Legal</h4>
-                <p>
-                  Semua akun yang kami sediakan memiliki jaminan kualitas terbaik dan bebas hambatan (anti-on hold). Kami melayani ribuan pelanggan aktif mulai dari pelajar, mahasiswa, desainer grafis, konten kreator, hingga agensi profesional.
-                </p>
-              </div>
-              <div className="pt-2">
-                <h4 className="font-semibold text-zinc-900 text-xs mb-1.5">Keunggulan Berbelanja di D Store Indonesia</h4>
-                <ul className="grid sm:grid-cols-2 gap-2 text-zinc-600">
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
-                    <span>100% Legal, Aman &amp; Bergaransi</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
-                    <span>Proses Kilat 5 - 15 Menit langsung aktif</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
-                    <span>QRIS Otomatis Semua Bank &amp; E-Wallet</span>
-                  </li>
-                  <li className="flex items-start gap-2">
-                    <span className="w-1.5 h-1.5 rounded-full bg-zinc-400 mt-1.5 shrink-0" />
-                    <span>Customer Service 24 Jam siap membantu</span>
-                  </li>
-                </ul>
-              </div>
+            <div className="flex items-center gap-6 shrink-0 text-xs sm:text-[13px] font-medium tracking-wide" aria-hidden="true">
+              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-emerald-500 text-black font-extrabold text-[10px] tracking-wider uppercase">
+                Bebas Resell
+              </span>
+              <span className="font-bold text-white">
+                Boleh loh kalian jual lagi dengan harga kalian sendiri!
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
+              <span className="text-zinc-300">
+                Margin keuntungan 100% bebas Anda tentukan
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
+              <span className="text-zinc-300">
+                Beli satuan tetap dapat harga grosir termurah
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
+              <span className="text-zinc-300">
+                100% Akun Legal, Resmi &amp; Bergaransi Penuh
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
+              <span className="text-zinc-300">
+                Proses kilat 5 - 15 menit langsung aktif siap pakai
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
+              <span className="text-zinc-300">
+                Customer Service siap support 24 jam nonstop
+              </span>
+              <span className="text-zinc-600 font-bold">•</span>
             </div>
-          )}
+          </div>
         </div>
       </section>
 
@@ -3161,43 +3167,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
             </div>
           </div>
 
-          {/* Pencarian Populer */}
-          <div className="pt-6 border-t border-zinc-200">
-            <h4 className="font-bold uppercase tracking-wider text-black text-xs mb-3">PENCARIAN POPULER</h4>
-            <div className="flex flex-wrap gap-x-3 gap-y-1.5 leading-relaxed">
-              {ZALORA_POPULAR_SEARCHES.map((s, i) => {
-                const sName = typeof s === 'string' ? s : s.name;
-                const sHref = typeof s === 'string' ? '/store' : s.href;
-                const isExternal = sHref.startsWith('http');
-                if (isExternal) {
-                  return (
-                    <span key={i} className="inline-flex items-center">
-                      <a 
-                        href={sHref}
-                        target="_blank"
-                        rel="noopener noreferrer"
-                        className="hover:text-black hover:underline cursor-pointer text-left"
-                      >
-                        {sName}
-                      </a>
-                      {i < ZALORA_POPULAR_SEARCHES.length - 1 && <span className="ml-3 text-zinc-300">|</span>}
-                    </span>
-                  );
-                }
-                return (
-                  <span key={i} className="inline-flex items-center">
-                    <Link 
-                      href={sHref}
-                      className="hover:text-black hover:underline cursor-pointer text-left"
-                    >
-                      {sName}
-                    </Link>
-                    {i < ZALORA_POPULAR_SEARCHES.length - 1 && <span className="ml-3 text-zinc-300">|</span>}
-                  </span>
-                );
-              })}
-            </div>
-          </div>
+
         </div>
       </section>
 

@@ -13,8 +13,7 @@ import {
   Home, 
   SlidersHorizontal,
   Check,
-  ChevronRight,
-  ExternalLink
+  ChevronRight
 } from 'lucide-react';
 
 export default function ProdukClient({ initialData }) {
@@ -137,20 +136,20 @@ export default function ProdukClient({ initialData }) {
     <div className="min-h-screen bg-[#F8F9FA] text-zinc-900 flex flex-col pb-24 md:pb-12">
       {/* Top Header */}
       <header className="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-zinc-200">
-        <div className="max-w-6xl mx-auto px-4 h-14 sm:h-16 flex items-center justify-between gap-3">
-          <div className="flex items-center gap-2.5">
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 h-13 sm:h-14 flex items-center justify-between gap-3">
+          <div className="flex items-center gap-2">
             <Link
               href="/"
-              className="p-1.5 -ml-1 text-zinc-600 hover:text-zinc-950 rounded-lg hover:bg-zinc-100 transition"
+              className="p-1 text-zinc-600 hover:text-zinc-950 rounded-xs hover:bg-zinc-100 transition"
               title="Kembali ke Beranda"
             >
-              <ArrowLeft className="w-5 h-5" />
+              <ArrowLeft className="w-4 h-4" />
             </Link>
             <Link href="/" className="flex items-center gap-1.5 group">
-              <span className="text-base sm:text-lg font-black tracking-tighter text-zinc-950 group-hover:text-black">
+              <span className="text-sm sm:text-base font-black tracking-tight text-zinc-950 group-hover:text-black">
                 D STORE
               </span>
-              <span className="text-[10px] uppercase font-bold tracking-wider bg-zinc-900 text-white px-2 py-0.5 rounded-full">
+              <span className="text-[9px] uppercase font-bold tracking-wider bg-zinc-900 text-white px-1.5 py-0.5 rounded-xs">
                 Katalog
               </span>
             </Link>
@@ -161,7 +160,7 @@ export default function ProdukClient({ initialData }) {
               href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Admin D Store, saya ingin tanya katalog produk.')}`}
               target="_blank"
               rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-1.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition"
+              className="inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1 rounded-xs bg-emerald-50 text-emerald-700 border border-emerald-200 hover:bg-emerald-100 transition"
             >
               <MessageCircle className="w-3.5 h-3.5" />
               <span className="hidden sm:inline">Hubungi Admin</span>
@@ -170,37 +169,36 @@ export default function ProdukClient({ initialData }) {
           </div>
         </div>
 
-        {/* Search & Category Filter Sub-Header */}
-        <div className="max-w-6xl mx-auto px-4 pb-3 pt-1">
-          <div className="flex flex-col sm:flex-row gap-2.5 sm:items-center">
+        {/* Search & Urutkan Berdampingan */}
+        <div className="max-w-6xl mx-auto px-3 sm:px-4 pb-2.5 pt-1">
+          <div className="flex flex-row items-center gap-2 w-full">
             {/* Search Input */}
-            <div className="relative flex-1">
-              <Search className="w-4 h-4 text-zinc-400 absolute left-3 top-1/2 -translate-y-1/2 pointer-events-none" />
+            <div className="relative flex-1 min-w-0">
+              <Search className="w-3.5 h-3.5 text-zinc-400 absolute left-2.5 top-1/2 -translate-y-1/2 pointer-events-none" />
               <input
                 type="text"
                 value={searchTerm}
                 onChange={(e) => setSearchTerm(e.target.value)}
-                placeholder="Cari produk (Netflix, ChatGPT, Canva, Spotify, dll)..."
-                className="w-full pl-9 pr-8 py-2 text-xs sm:text-sm bg-zinc-50 border border-zinc-200 rounded-xl focus:outline-none focus:border-zinc-900 focus:bg-white transition text-zinc-900 placeholder:text-zinc-400"
+                placeholder="Cari produk (Netflix, ChatGPT, Canva, Spotify...)..."
+                className="w-full pl-8 pr-7 py-1.5 text-xs bg-zinc-50 border border-zinc-200 rounded-xs focus:outline-none focus:border-zinc-900 focus:bg-white transition text-zinc-900 placeholder:text-zinc-400"
               />
               {searchTerm && (
                 <button
                   type="button"
                   onClick={() => setSearchTerm('')}
-                  className="absolute right-2.5 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 p-0.5"
+                  className="absolute right-2 top-1/2 -translate-y-1/2 text-zinc-400 hover:text-zinc-600 p-0.5"
                 >
-                  <X className="w-4 h-4" />
+                  <X className="w-3.5 h-3.5" />
                 </button>
               )}
             </div>
 
-            {/* Sort Select */}
-            <div className="flex items-center gap-1.5 shrink-0 self-end sm:self-auto">
-              <SlidersHorizontal className="w-3.5 h-3.5 text-zinc-500" />
+            {/* Sort Select: Harga Termurah Berdampingan */}
+            <div className="shrink-0 flex items-center">
               <select
                 value={sortBy}
                 onChange={(e) => setSortBy(e.target.value)}
-                className="text-xs bg-zinc-50 border border-zinc-200 rounded-xl px-2.5 py-2 font-medium text-zinc-800 focus:outline-none focus:border-zinc-900"
+                className="text-xs bg-zinc-50 border border-zinc-200 rounded-xs px-2.5 py-1.5 font-medium text-zinc-800 focus:outline-none focus:border-zinc-900 cursor-pointer"
               >
                 <option value="cheapest">Harga Termurah</option>
                 <option value="expensive">Harga Tertinggi</option>
@@ -210,7 +208,7 @@ export default function ProdukClient({ initialData }) {
           </div>
 
           {/* Category Chips Horizontal Scroll */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-2.5 pb-0.5">
+          <div className="flex items-center gap-1 overflow-x-auto no-scrollbar pt-2 pb-0.5">
             {categoryTabs.map((tab) => {
               const active = selectedCategory === tab.id;
               return (
@@ -218,9 +216,9 @@ export default function ProdukClient({ initialData }) {
                   key={tab.id}
                   type="button"
                   onClick={() => setSelectedCategory(tab.id)}
-                  className={`text-xs whitespace-nowrap px-3 py-1.5 rounded-full font-medium transition cursor-pointer shrink-0 ${
+                  className={`text-[11px] whitespace-nowrap px-2.5 py-1 rounded-xs font-medium transition cursor-pointer shrink-0 ${
                     active
-                      ? 'bg-zinc-900 text-white shadow-2xs font-semibold'
+                      ? 'bg-zinc-900 text-white font-semibold'
                       : 'bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-300 hover:text-zinc-900'
                   }`}
                 >
@@ -233,14 +231,14 @@ export default function ProdukClient({ initialData }) {
       </header>
 
       {/* Main Content */}
-      <main className="max-w-6xl mx-auto px-4 pt-6 w-full flex-1">
+      <main className="max-w-6xl mx-auto px-3 sm:px-4 pt-3.5 w-full flex-1">
         {/* Banner / Info Bar */}
-        <div className="flex items-center justify-between gap-2 mb-4">
+        <div className="flex items-center justify-between gap-2 mb-2.5">
           <div className="flex items-center gap-2">
-            <h1 className="text-base sm:text-lg font-bold text-zinc-950">
-              Katalog Seluruh Produk
+            <h1 className="text-xs sm:text-sm font-bold text-zinc-950">
+              Katalog Produk
             </h1>
-            <span className="text-xs text-zinc-500 bg-zinc-200/70 px-2 py-0.5 rounded-full font-semibold">
+            <span className="text-[10px] text-zinc-600 bg-zinc-200/80 px-1.5 py-0.2 rounded-xs font-semibold">
               {filteredProducts.length} Produk
             </span>
           </div>
@@ -252,12 +250,12 @@ export default function ProdukClient({ initialData }) {
 
         {/* Zero State */}
         {filteredProducts.length === 0 && (
-          <div className="bg-white border border-dashed border-zinc-300 rounded-2xl p-12 text-center my-8">
-            <Package className="w-10 h-10 text-zinc-400 mx-auto mb-3" />
-            <h3 className="text-sm font-bold text-zinc-800 mb-1">
+          <div className="bg-white border border-dashed border-zinc-300 rounded-xs p-8 text-center my-4">
+            <Package className="w-8 h-8 text-zinc-400 mx-auto mb-2" />
+            <h3 className="text-xs font-bold text-zinc-800 mb-1">
               Tidak ada produk yang cocok
             </h3>
-            <p className="text-xs text-zinc-500 max-w-sm mx-auto mb-4">
+            <p className="text-[11px] text-zinc-500 max-w-sm mx-auto mb-3">
               Coba gunakan kata kunci pencarian lain atau pilih kategori yang berbeda.
             </p>
             <button
@@ -266,15 +264,15 @@ export default function ProdukClient({ initialData }) {
                 setSearchTerm('');
                 setSelectedCategory('ALL');
               }}
-              className="text-xs font-semibold px-4 py-2 bg-zinc-900 text-white rounded-xl hover:bg-black transition"
+              className="text-xs font-semibold px-3 py-1.5 bg-zinc-900 text-white rounded-xs hover:bg-black transition"
             >
               Reset Filter
             </button>
           </div>
         )}
 
-        {/* Product Cards Grid - NO IMAGES */}
-        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-3.5 sm:gap-4">
+        {/* Product Cards Grid: JARAK MINIM (gap-1.5 sm:gap-2) & SIKU MINIM LENGKUNGAN (rounded-xs / rounded-sm) */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-1.5 sm:gap-2">
           {filteredProducts.map((prod) => {
             const pVars = productVariantsMap[prod.id] || [];
             const minPrice = pVars[0]?.price || prod.price || 0;
@@ -284,36 +282,36 @@ export default function ProdukClient({ initialData }) {
               <div
                 key={prod.id}
                 onClick={() => handleOpenProduct(prod)}
-                className="group bg-white border border-zinc-200 hover:border-zinc-900 rounded-2xl p-4 sm:p-5 transition shadow-2xs hover:shadow-md cursor-pointer flex flex-col justify-between"
+                className="group bg-white border border-zinc-200 hover:border-zinc-900 rounded-xs p-3 transition shadow-2xs cursor-pointer flex flex-col justify-between"
               >
                 <div>
-                  {/* Top Bar: Brand Badge & Category */}
-                  <div className="flex items-center justify-between gap-2 mb-2.5">
-                    <span className="inline-block bg-zinc-900 text-white font-extrabold text-[10px] tracking-wider px-2.5 py-1 rounded-md uppercase">
+                  {/* Top Bar: Brand Badge & Varian Count */}
+                  <div className="flex items-center justify-between gap-2 mb-1.5">
+                    <span className="inline-block bg-zinc-900 text-white font-extrabold text-[9px] tracking-wider px-1.5 py-0.5 rounded-xs uppercase">
                       {brandLabel}
                     </span>
-                    <span className="text-[11px] font-medium text-zinc-500 bg-zinc-100 px-2 py-0.5 rounded-md">
+                    <span className="text-[10px] font-medium text-zinc-500 bg-zinc-100 px-1.5 py-0.2 rounded-xs">
                       {pVars.length} Varian
                     </span>
                   </div>
 
                   {/* Product Title */}
-                  <h3 className="text-sm sm:text-base font-bold text-zinc-900 group-hover:text-black line-clamp-2 leading-snug mb-2">
+                  <h3 className="text-xs sm:text-sm font-bold text-zinc-900 group-hover:text-black line-clamp-1 leading-snug mb-1.5">
                     {prod.name}
                   </h3>
 
-                  {/* Description / Variants chips preview */}
-                  <div className="flex flex-wrap gap-1 mb-4">
+                  {/* Variants Preview Chips */}
+                  <div className="flex flex-wrap gap-1 mb-2.5">
                     {pVars.slice(0, 3).map((v, i) => (
                       <span
                         key={i}
-                        className="text-[10px] font-medium text-zinc-600 bg-zinc-50 border border-zinc-200/80 px-2 py-0.5 rounded"
+                        className="text-[9px] font-medium text-zinc-600 bg-zinc-50 border border-zinc-200/80 px-1.5 py-0.2 rounded-xs"
                       >
                         {v.name.replace(prod.name, '').trim() || v.name}
                       </span>
                     ))}
                     {pVars.length > 3 && (
-                      <span className="text-[10px] font-medium text-zinc-400 self-center">
+                      <span className="text-[9px] font-medium text-zinc-400 self-center">
                         +{pVars.length - 3} lainnya
                       </span>
                     )}
@@ -321,12 +319,12 @@ export default function ProdukClient({ initialData }) {
                 </div>
 
                 {/* Bottom Row: Price & Pilih Paket Button */}
-                <div className="pt-3 border-t border-zinc-100 flex items-center justify-between gap-2">
+                <div className="pt-2 border-t border-zinc-100 flex items-center justify-between gap-2">
                   <div>
-                    <span className="block text-[10px] text-zinc-400 font-medium">
+                    <span className="block text-[9px] text-zinc-400 font-medium">
                       Mulai dari
                     </span>
-                    <span className="text-sm sm:text-base font-black text-emerald-600">
+                    <span className="text-xs sm:text-sm font-black text-emerald-600">
                       {formatRupiah(minPrice)}
                     </span>
                   </div>
@@ -337,10 +335,10 @@ export default function ProdukClient({ initialData }) {
                       e.stopPropagation();
                       handleOpenProduct(prod);
                     }}
-                    className="inline-flex items-center gap-1 text-xs font-bold px-3 py-1.5 rounded-xl bg-zinc-900 text-white group-hover:bg-black transition shadow-2xs"
+                    className="inline-flex items-center gap-1 text-[11px] font-bold px-2.5 py-1 rounded-xs bg-zinc-900 text-white group-hover:bg-black transition"
                   >
                     <span>Pilih Paket</span>
-                    <ChevronRight className="w-3.5 h-3.5" />
+                    <ChevronRight className="w-3 h-3" />
                   </button>
                 </div>
               </div>
@@ -349,39 +347,39 @@ export default function ProdukClient({ initialData }) {
         </div>
       </main>
 
-      {/* Modal Detail & Pilih Paket */}
+      {/* Modal Detail & Pilih Paket: Sikunya Minim Lengkungan (rounded-xs / rounded-sm) */}
       {selectedProduct && (
-        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-4 animate-in fade-in duration-150">
+        <div className="fixed inset-0 z-50 bg-black/60 backdrop-blur-xs flex items-end sm:items-center justify-center p-0 sm:p-3 animate-in fade-in duration-150">
           <div 
-            className="bg-white w-full sm:max-w-lg rounded-t-3xl sm:rounded-2xl p-5 sm:p-6 max-h-[88vh] flex flex-col shadow-2xl animate-in slide-in-from-bottom-4 duration-200"
+            className="bg-white w-full sm:max-w-md rounded-t-sm sm:rounded-xs p-4 sm:p-5 max-h-[85vh] flex flex-col shadow-2xl animate-in slide-in-from-bottom-2 duration-150"
             onClick={(e) => e.stopPropagation()}
           >
             {/* Modal Header */}
-            <div className="flex items-start justify-between gap-3 pb-3 border-b border-zinc-200">
+            <div className="flex items-start justify-between gap-3 pb-2.5 border-b border-zinc-200">
               <div>
-                <span className="inline-block bg-zinc-900 text-white font-extrabold text-[10px] tracking-wider px-2 py-0.5 rounded uppercase mb-1.5">
+                <span className="inline-block bg-zinc-900 text-white font-extrabold text-[9px] tracking-wider px-1.5 py-0.5 rounded-xs uppercase mb-1">
                   {selectedProduct.brand || 'D STORE'}
                 </span>
-                <h2 className="text-base sm:text-lg font-bold text-zinc-950 leading-snug">
+                <h2 className="text-sm sm:text-base font-bold text-zinc-950 leading-snug">
                   {selectedProduct.name}
                 </h2>
-                <div className="flex items-center gap-1.5 text-xs text-emerald-600 font-semibold mt-1">
-                  <ShieldCheck className="w-3.5 h-3.5" />
+                <div className="flex items-center gap-1 text-[11px] text-emerald-600 font-semibold mt-0.5">
+                  <ShieldCheck className="w-3 h-3" />
                   <span>Garansi Resmi & Legal</span>
                 </div>
               </div>
               <button
                 type="button"
                 onClick={() => setSelectedProduct(null)}
-                className="p-1 text-zinc-400 hover:text-zinc-700 rounded-lg hover:bg-zinc-100 transition"
+                className="p-1 text-zinc-400 hover:text-zinc-700 rounded-xs hover:bg-zinc-100 transition"
               >
-                <X className="w-5 h-5" />
+                <X className="w-4 h-4" />
               </button>
             </div>
 
             {/* Modal Body: List of Packages/Variants */}
-            <div className="py-4 overflow-y-auto space-y-2 flex-1">
-              <span className="block text-xs font-bold text-zinc-800 uppercase tracking-wider mb-2">
+            <div className="py-3 overflow-y-auto space-y-1.5 flex-1">
+              <span className="block text-[11px] font-bold text-zinc-800 uppercase tracking-wider mb-1.5">
                 Pilih Durasi / Paket
               </span>
               {(productVariantsMap[selectedProduct.id] || []).map((v) => {
@@ -390,15 +388,15 @@ export default function ProdukClient({ initialData }) {
                   <div
                     key={v.id}
                     onClick={() => setSelectedVariant(v)}
-                    className={`p-3 rounded-xl border transition cursor-pointer flex items-center justify-between gap-3 ${
+                    className={`p-2.5 rounded-xs border transition cursor-pointer flex items-center justify-between gap-2.5 ${
                       isSelected
-                        ? 'border-zinc-950 bg-zinc-50 shadow-2xs'
+                        ? 'border-zinc-950 bg-zinc-50'
                         : 'border-zinc-200 hover:border-zinc-400 bg-white'
                     }`}
                   >
-                    <div className="flex items-center gap-2.5 min-w-0">
+                    <div className="flex items-center gap-2 min-w-0">
                       <div
-                        className={`w-4 h-4 rounded-full border flex items-center justify-center shrink-0 ${
+                        className={`w-3.5 h-3.5 rounded-xs border flex items-center justify-center shrink-0 ${
                           isSelected
                             ? 'border-zinc-950 bg-zinc-950 text-white'
                             : 'border-zinc-300 bg-white'
@@ -407,18 +405,18 @@ export default function ProdukClient({ initialData }) {
                         {isSelected && <Check className="w-2.5 h-2.5" />}
                       </div>
                       <div className="min-w-0">
-                        <span className="block text-xs sm:text-sm font-bold text-zinc-900 truncate">
+                        <span className="block text-xs font-bold text-zinc-900 truncate">
                           {v.name}
                         </span>
                         {v.supplierOffers?.[0]?.note && (
-                          <span className="block text-[11px] text-zinc-500 line-clamp-1 mt-0.5">
+                          <span className="block text-[10px] text-zinc-500 line-clamp-1">
                             {v.supplierOffers[0].note}
                           </span>
                         )}
                       </div>
                     </div>
                     <div className="text-right shrink-0">
-                      <span className="text-xs sm:text-sm font-black text-emerald-600">
+                      <span className="text-xs font-black text-emerald-600">
                         {formatRupiah(v.price)}
                       </span>
                     </div>
@@ -428,17 +426,17 @@ export default function ProdukClient({ initialData }) {
             </div>
 
             {/* Modal Footer: Action */}
-            <div className="pt-3 border-t border-zinc-200 flex flex-col gap-2">
+            <div className="pt-2.5 border-t border-zinc-200 flex flex-col gap-2">
               <div className="flex items-center justify-between text-xs">
                 <span className="text-zinc-500 font-medium">Total Harga:</span>
-                <span className="text-base font-black text-zinc-950">
+                <span className="text-sm font-black text-zinc-950">
                   {formatRupiah(selectedVariant?.price || 0)}
                 </span>
               </div>
               <button
                 type="button"
                 onClick={handleOrderWhatsApp}
-                className="w-full py-3 px-4 rounded-xl bg-zinc-900 hover:bg-black text-white font-bold text-xs sm:text-sm transition flex items-center justify-center gap-2 shadow-sm"
+                className="w-full py-2.5 px-3 rounded-xs bg-zinc-900 hover:bg-black text-white font-bold text-xs transition flex items-center justify-center gap-2"
               >
                 <MessageCircle className="w-4 h-4 text-emerald-400" />
                 <span>Pesan Sekarang via WhatsApp</span>
@@ -450,13 +448,13 @@ export default function ProdukClient({ initialData }) {
 
       {/* Floating Bottom Navigation Bar (Mobile) */}
       <div className="fixed bottom-3 inset-x-0 mx-auto z-40 w-[88%] max-w-[320px] md:hidden pointer-events-none">
-        <div className="pointer-events-auto rounded-full border border-black/10 bg-white/95 px-3 py-1 shadow-lg backdrop-blur-md">
+        <div className="pointer-events-auto rounded-xs border border-black/10 bg-white/95 px-3 py-1 shadow-md backdrop-blur-md">
           <div className="flex items-center justify-between">
             <Link
               href="/"
-              className="flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 text-zinc-500 hover:text-black transition"
+              className="flex h-[42px] flex-1 flex-col items-center justify-center gap-y-0.5 text-zinc-500 hover:text-black transition"
             >
-              <Home className="w-5 h-5" />
+              <Home className="w-4 h-4" />
               <span className="text-[10px] font-medium leading-tight">Home</span>
             </Link>
 
@@ -465,14 +463,14 @@ export default function ProdukClient({ initialData }) {
               onClick={() => {
                 window.scrollTo({ top: 0, behavior: 'smooth' });
               }}
-              className="flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 text-zinc-500 hover:text-black transition"
+              className="flex h-[42px] flex-1 flex-col items-center justify-center gap-y-0.5 text-zinc-500 hover:text-black transition"
             >
-              <SlidersHorizontal className="w-5 h-5" />
+              <SlidersHorizontal className="w-4 h-4" />
               <span className="text-[10px] font-medium leading-tight">Kategori</span>
             </button>
 
-            <div className="flex h-[44px] flex-1 flex-col items-center justify-center gap-y-0.5 text-zinc-950 font-bold">
-              <Package className="w-5 h-5 text-zinc-950" />
+            <div className="flex h-[42px] flex-1 flex-col items-center justify-center gap-y-0.5 text-zinc-950 font-bold">
+              <Package className="w-4 h-4 text-zinc-950" />
               <span className="text-[10px] font-bold leading-tight">Produk</span>
             </div>
           </div>

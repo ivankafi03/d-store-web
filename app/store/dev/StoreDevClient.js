@@ -3039,7 +3039,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                   return (
                     <div
                       key={prod.sku || idx}
-                      className={`product-item__wrapper shrink-0 w-[140px] sm:w-[170px] md:w-[200px] flex flex-col bg-white rounded-lg select-none relative cursor-pointer ${
+                      className={`product-item__wrapper shrink-0 w-[145px] sm:w-[175px] md:w-[210px] bg-white rounded-lg p-2 md:p-2.5 flex flex-col justify-between border border-zinc-100 hover:shadow-xs transition select-none cursor-pointer relative ${
                         isEditMode ? 'ring-2 ring-blue-500/80 hover:ring-blue-400' : ''
                       }`}
                       style={{ touchAction: 'pan-x pan-y' }}
@@ -3106,7 +3106,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                         </button>
                       )}
                       <div
-                        className="no-decoration product-item__product-image-wrapper flex items-center justify-center aspect-[3/4] w-full overflow-hidden rounded-lg bg-gray-50 cursor-pointer relative p-2.5"
+                        className="product-item__product-image-wrapper aspect-[3/4] bg-[#f7f7f7] rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer p-2"
                         onClick={(e) => {
                           if (isEditMode) {
                             e.preventDefault();
@@ -3142,7 +3142,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                         />
                       </div>
 
-                      <div className="product-item__contents w-full relative mt-2 mb-2 flex-1 flex flex-col">
+                      <div className="product-item__contents w-full relative mt-2 mb-2 flex-1 flex flex-col cursor-pointer">
                         <div 
                           className="no-decoration block pr-6 cursor-pointer" 
                           onClick={(e) => {

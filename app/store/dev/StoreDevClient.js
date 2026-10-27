@@ -3064,70 +3064,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           ))}
         </div>
 
-        {/* TEXT BERJALAN (RUNNING TEXT MARQUEE) - PENEGASAN BEBAS JUAL KEMBALI / RESELL */}
-        <div className="relative overflow-hidden rounded-2xl bg-zinc-950 text-white py-3.5 border border-zinc-900 shadow-sm select-none">
-          <div className="animate-marquee flex items-center gap-8 whitespace-nowrap">
-            <div className="flex items-center gap-6 shrink-0 text-xs sm:text-[13px] font-medium tracking-wide">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-emerald-500 text-black font-extrabold text-[10px] tracking-wider uppercase">
-                Bebas Resell
-              </span>
-              <span className="font-bold text-white">
-                Boleh loh kalian jual lagi dengan harga kalian sendiri!
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-              <span className="text-zinc-300">
-                Margin keuntungan 100% bebas Anda tentukan
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-              <span className="text-zinc-300">
-                Beli satuan tetap dapat harga grosir termurah
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-              <span className="text-zinc-300">
-                100% Akun Legal, Resmi &amp; Bergaransi Penuh
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-              <span className="text-zinc-300">
-                Proses kilat 5 - 15 menit langsung aktif siap pakai
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-              <span className="text-zinc-300">
-                Customer Service siap support 24 jam nonstop
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-            </div>
 
-            <div className="flex items-center gap-6 shrink-0 text-xs sm:text-[13px] font-medium tracking-wide" aria-hidden="true">
-              <span className="inline-flex items-center px-2.5 py-0.5 rounded-full bg-emerald-500 text-black font-extrabold text-[10px] tracking-wider uppercase">
-                Bebas Resell
-              </span>
-              <span className="font-bold text-white">
-                Boleh loh kalian jual lagi dengan harga kalian sendiri!
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-              <span className="text-zinc-300">
-                Margin keuntungan 100% bebas Anda tentukan
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-              <span className="text-zinc-300">
-                Beli satuan tetap dapat harga grosir termurah
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-              <span className="text-zinc-300">
-                100% Akun Legal, Resmi &amp; Bergaransi Penuh
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-              <span className="text-zinc-300">
-                Proses kilat 5 - 15 menit langsung aktif siap pakai
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-              <span className="text-zinc-300">
-                Customer Service siap support 24 jam nonstop
-              </span>
-              <span className="text-zinc-600 font-bold">•</span>
-            </div>
-          </div>
-        </div>
       </section>
 
       {/* =========================================================

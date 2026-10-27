@@ -237,25 +237,71 @@ export default function ProdukClient({ initialData }) {
             </div>
           </div>
 
-          {/* Category Chips Horizontal Scroll */}
-          <div className="flex items-center gap-1.5 overflow-x-auto no-scrollbar pt-2 pb-0.5">
-            {categoryTabs.map((tab) => {
-              const active = selectedCategory === tab.id;
-              return (
-                <button
-                  key={tab.id}
-                  type="button"
-                  onClick={() => setSelectedCategory(tab.id)}
-                  className={`text-[11px] whitespace-nowrap px-3 py-1.5 rounded-md font-medium transition cursor-pointer shrink-0 ${
-                    active
-                      ? 'bg-zinc-900 text-white font-semibold shadow-2xs'
-                      : 'bg-white text-zinc-600 border border-zinc-200 hover:border-zinc-300 hover:text-zinc-900'
-                  }`}
-                >
-                  {tab.name}
-                </button>
-              );
-            })}
+          {/* Text Berjalan (Running Text Marquee): Penegasan Bebas Resell */}
+          <div className="pt-2 pb-0.5 overflow-hidden select-none">
+            <div className="relative overflow-hidden rounded-md bg-zinc-950 text-white py-1 px-2 border border-zinc-900 shadow-2xs">
+              <div className="animate-marquee flex items-center gap-6 whitespace-nowrap">
+                <div className="flex items-center gap-6 shrink-0 text-[11px] font-medium tracking-wide">
+                  <span className="inline-flex items-center px-2 py-0.2 rounded-full bg-emerald-500 text-black font-extrabold text-[9px] uppercase tracking-wider">
+                    Bebas Resell
+                  </span>
+                  <span className="font-bold text-white">
+                    Boleh loh kalian jual lagi dengan harga kalian sendiri!
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                  <span className="text-zinc-300">
+                    Margin keuntungan 100% bebas Anda tentukan
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                  <span className="text-zinc-300">
+                    Beli satuan tetap dapat harga grosir termurah
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                  <span className="text-zinc-300">
+                    100% Akun Legal, Resmi &amp; Bergaransi Penuh
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                  <span className="text-zinc-300">
+                    Proses kilat 5 - 15 menit langsung aktif siap pakai
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                  <span className="text-zinc-300">
+                    Customer Service siap support 24 jam nonstop
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                </div>
+
+                <div className="flex items-center gap-6 shrink-0 text-[11px] font-medium tracking-wide" aria-hidden="true">
+                  <span className="inline-flex items-center px-2 py-0.2 rounded-full bg-emerald-500 text-black font-extrabold text-[9px] uppercase tracking-wider">
+                    Bebas Resell
+                  </span>
+                  <span className="font-bold text-white">
+                    Boleh loh kalian jual lagi dengan harga kalian sendiri!
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                  <span className="text-zinc-300">
+                    Margin keuntungan 100% bebas Anda tentukan
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                  <span className="text-zinc-300">
+                    Beli satuan tetap dapat harga grosir termurah
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                  <span className="text-zinc-300">
+                    100% Akun Legal, Resmi &amp; Bergaransi Penuh
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                  <span className="text-zinc-300">
+                    Proses kilat 5 - 15 menit langsung aktif siap pakai
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                  <span className="text-zinc-300">
+                    Customer Service siap support 24 jam nonstop
+                  </span>
+                  <span className="text-zinc-600 font-bold">•</span>
+                </div>
+              </div>
+            </div>
           </div>
         </div>
       </header>

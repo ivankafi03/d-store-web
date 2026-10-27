@@ -343,16 +343,8 @@ export default function WishlistClient({ initialProducts = [], initialVariants =
                         }}
                         className="p-2.5 sm:p-3 hover:bg-zinc-50 active:bg-zinc-100 rounded-xl flex items-center justify-between gap-3 cursor-pointer transition select-none group"
                       >
-                        <div className="flex items-center gap-2.5 sm:gap-3 min-w-0">
-                          <div className="w-10 h-10 sm:w-11 sm:h-11 shrink-0 rounded-lg overflow-hidden bg-zinc-100 border border-zinc-200 flex items-center justify-center">
-                            <img
-                              src={item.image}
-                              alt={item.name}
-                              className="w-full h-full object-cover group-hover:scale-105 transition duration-200"
-                            />
-                          </div>
-                          <div className="min-w-0">
-                            <div className="flex items-center gap-1.5">
+                        <div className="min-w-0 flex-1">
+                          <div className="flex items-center gap-1.5">
                               <span className="text-[9px] font-black uppercase tracking-wider px-1.5 py-0.5 rounded bg-zinc-100 text-zinc-800">
                                 {item.brand}
                               </span>
@@ -360,7 +352,6 @@ export default function WishlistClient({ initialProducts = [], initialVariants =
                             <div className="text-xs sm:text-sm font-bold text-zinc-900 truncate mt-0.5 group-hover:text-black">
                               {item.name}
                             </div>
-                          </div>
                         </div>
 
                         <div className="shrink-0 text-right">

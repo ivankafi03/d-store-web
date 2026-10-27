@@ -3371,8 +3371,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       <CategoriesModal
         isOpen={isCategoriesOpen}
         onClose={() => setIsCategoriesOpen(false)}
+        activeCategory={activeSegment === "all" ? "ALL" : activeSegment}
         onSelectCategory={(cat) => {
-          showNotification(`Membuka kategori ${cat.name}`);
+          if (cat.href) {
+            router.push(cat.href);
+          }
         }}
       />
 

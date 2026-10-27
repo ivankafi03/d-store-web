@@ -2738,40 +2738,42 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           <div style={{ paddingBottom: '0px' }}>
             <div className="slider-container relative select-none">
               <div aria-live="off" aria-atomic="true" tabIndex={-1} style={{ position: 'absolute', width: '1px', height: '1px', overflow: 'hidden', padding: '0px', margin: '-1px', clip: 'rect(0px, 0px, 0px, 0px)', whiteSpace: 'nowrap', border: '0px' }}>
-                {`Slide ${applyCarousel.currentIndex + 1} of 2`}
+                {applyList.length > 1 ? `Slide ${applyCarousel.currentIndex + 1} of ${applyList.length}` : 'Slide 1 of 1'}
               </div>
 
-              {/* Bullet Dots */}
-              <div className="slider-control-bottomcenter absolute z-10 bottom-1.5 left-1/2 -translate-x-1/2">
-                <ul style={{ display: 'flex', margin: '0px', padding: '0px', listStyleType: 'none' }}>
-                  {[0, 1].map((dotIdx) => {
-                    const isActive = applyCarousel.currentIndex === dotIdx;
-                    return (
-                      <li key={dotIdx} className={`paging-item ${isActive ? 'active' : ''}`} style={{ outline: 'none', padding: '0 6px' }}>
-                        <button
-                          className="banner__carousel-paging-dots--hide"
-                          type="button"
-                          aria-label={`slide ${dotIdx + 1} bullet`}
-                          aria-selected={isActive}
-                          onClick={() => applyCarousel.goToSlide(dotIdx)}
-                          style={{
-                            cursor: 'pointer',
-                            opacity: isActive ? 1 : 0.5,
-                            background: 'transparent',
-                            border: 'none',
-                            fill: 'black',
-                            padding: 0
-                          }}
-                        >
-                          <svg className="paging-dot" width="6" height="6" aria-hidden="true" focusable="false">
-                            <circle cx="3" cy="3" r="3" fill="#000" />
-                          </svg>
-                        </button>
-                      </li>
-                    );
-                  })}
-                </ul>
-              </div>
+              {/* Bullet Dots (Hanya jika slide lebih dari 1) */}
+              {applyList.length > 1 && (
+                <div className="slider-control-bottomcenter absolute z-10 bottom-1.5 left-1/2 -translate-x-1/2">
+                  <ul style={{ display: 'flex', margin: '0px', padding: '0px', listStyleType: 'none' }}>
+                    {applyList.map((_, dotIdx) => {
+                      const isActive = applyCarousel.currentIndex === dotIdx;
+                      return (
+                        <li key={dotIdx} className={`paging-item ${isActive ? 'active' : ''}`} style={{ outline: 'none', padding: '0 6px' }}>
+                          <button
+                            className="banner__carousel-paging-dots--hide"
+                            type="button"
+                            aria-label={`slide ${dotIdx + 1} bullet`}
+                            aria-selected={isActive}
+                            onClick={() => applyCarousel.goToSlide(dotIdx)}
+                            style={{
+                              cursor: 'pointer',
+                              opacity: isActive ? 1 : 0.5,
+                              background: 'transparent',
+                              border: 'none',
+                              fill: 'black',
+                              padding: 0
+                            }}
+                          >
+                            <svg className="paging-dot" width="6" height="6" aria-hidden="true" focusable="false">
+                              <circle cx="3" cy="3" r="3" fill="#000" />
+                            </svg>
+                          </button>
+                        </li>
+                      );
+                    })}
+                  </ul>
+                </div>
+              )}
 
               {/* Slider Frame */}
               <div

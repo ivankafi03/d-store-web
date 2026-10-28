@@ -44,6 +44,7 @@ import {
 } from '@/lib/zaloraMenData';
 import AppVariantModal from '@/app/components/AppVariantModal';
 import CategoriesModal from '@/app/components/CategoriesModal';
+import SmartEdgePanel from '@/app/components/SmartEdgePanel';
 import { getAppVariantData } from '@/lib/appVariantsData';
 import { buildUnifiedCatalog, searchCatalog, getResolvedProductImage } from '@/lib/catalogTemplates';
 import AdminEditToolbar from '@/app/components/AdminEditToolbar';
@@ -3268,6 +3269,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           onSave={handleSaveVisualItem}
         />
       )}
+
+      {/* Smart Edge Panel (Panel Pintar iPhone Glass) */}
+      <SmartEdgePanel waNumber="6281230112240" />
 
       {/* =========================================================
           16. FLOATING PILL MOBILE BOTTOM NAVIGATION BAR

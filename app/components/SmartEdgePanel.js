@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { X, Copy, Check, ExternalLink, MessageCircle, ShieldCheck, Zap, ChevronLeft } from 'lucide-react';
+import { X, Copy, Check, ExternalLink, MessageCircle, ShieldCheck, Zap } from 'lucide-react';
 
 function WhatsAppIcon({ className = "w-4 h-4" }) {
   return (
@@ -35,7 +35,6 @@ export default function SmartEdgePanel({
     setTimeout(() => setCopied(false), 2000);
   };
 
-  // Tutup panel ketika menekan tombol Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) {
@@ -48,152 +47,160 @@ export default function SmartEdgePanel({
 
   return (
     <>
-      {/* === HANDLE PANEL PINTAR (EDGE HANDLE SEPERTI HP SAMSUNG / INFINIX) === */}
+      {/* === HANDLE MELAYANG PERSIS SEPERTI IPHONE (ASSISTIVETOUCH / EDGE GLASS) DENGAN LOGO === */}
       {!isOpen && (
         <aside
           role="complementary"
           aria-label="Panel Pintar D Store"
           onClick={() => setIsOpen(true)}
-          className="fixed right-0 top-1/2 -translate-y-1/2 z-40 group cursor-pointer select-none"
+          className="fixed right-0 top-1/2 -translate-y-1/2 z-40 cursor-pointer select-none group"
         >
-          <div className="flex items-center">
-            {/* Grip Handle */}
-            <div className="w-8 sm:w-9 h-20 bg-zinc-950/90 hover:bg-black text-white border-l border-t border-b border-zinc-700/80 rounded-l-xl flex flex-col items-center justify-center gap-1.5 shadow-2xl backdrop-blur-md transition-all duration-200 group-hover:w-10 group-hover:border-emerald-500/60 active:scale-95">
-              <span className="relative flex h-2 w-2">
-                <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
-                <span className="relative inline-flex rounded-full h-2 w-2 bg-emerald-500" />
-              </span>
-              <WhatsAppIcon className="w-4 h-4 text-emerald-400 group-hover:scale-110 transition-transform" />
-              <div className="w-1 h-3 bg-zinc-600 rounded-full group-hover:bg-zinc-400 transition-colors" />
+          <div className="flex items-center justify-center pl-2 pr-1.5 py-2.5 rounded-l-2xl bg-white/95 backdrop-blur-md border-l border-t border-b border-zinc-200/90 shadow-xl shadow-black/5 hover:pl-3 hover:bg-white transition-all duration-200 active:scale-95">
+            <div className="flex flex-col items-center gap-1.5">
+              <div className="relative">
+                <img 
+                  src="/icon-192.png" 
+                  alt="Logo D Store" 
+                  className="w-6 h-6 rounded-lg object-cover shadow-2xs border border-zinc-200/80 group-hover:scale-105 transition-transform" 
+                />
+                <span className="absolute -top-1 -right-1 flex h-2.5 w-2.5">
+                  <span className="animate-ping absolute inline-flex h-full w-full rounded-full bg-emerald-400 opacity-75" />
+                  <span className="relative inline-flex rounded-full h-2.5 w-2.5 bg-emerald-500 border border-white" />
+                </span>
+              </div>
+              <div className="w-1 h-3 bg-zinc-300 rounded-full group-hover:bg-zinc-500 transition-colors" />
             </div>
           </div>
         </aside>
       )}
 
-      {/* === BACKDROP OVERLAY === */}
+      {/* === BACKDROP OVERLAY LEMBUT === */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/50 backdrop-blur-xs z-50 transition-opacity animate-in fade-in duration-200"
+          className="fixed inset-0 bg-black/40 backdrop-blur-xs z-50 transition-opacity animate-in fade-in duration-200"
           onClick={() => setIsOpen(false)}
         />
       )}
 
-      {/* === PANEL PINTAR FLOATING BODY (EDGE SLIDEOUT) === */}
+      {/* === PANEL PINTAR IPHONE GLASS CARD === */}
       <div
-        className={`fixed right-0 top-4 bottom-4 sm:top-6 sm:bottom-6 z-50 w-[310px] sm:w-[350px] max-w-[92vw] bg-zinc-950 text-white border-l border-y border-zinc-800/90 rounded-l-2xl shadow-2xl flex flex-col overflow-hidden transition-transform duration-300 ease-out font-sans ${
-          isOpen ? 'translate-x-0' : 'translate-x-full pointer-events-none'
+        className={`fixed right-2 sm:right-5 top-1/2 -translate-y-1/2 z-50 w-[315px] sm:w-[360px] max-w-[94vw] max-h-[90vh] bg-white/95 backdrop-blur-md border border-zinc-200/90 text-zinc-900 rounded-3xl shadow-2xl overflow-hidden flex flex-col font-sans transition-all duration-200 ease-out ${
+          isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'
         }`}
         onClick={(e) => e.stopPropagation()}
       >
-        {/* Glow Ambient Effect */}
-        <div className="absolute -top-12 -right-12 w-44 h-44 bg-emerald-500/15 rounded-full blur-3xl pointer-events-none" />
-
         {/* Panel Header */}
-        <div className="p-4 pb-3 border-b border-zinc-800/80 flex items-center justify-between relative z-10 bg-zinc-950/80 backdrop-blur-sm">
-          <div className="flex items-center gap-2">
-            <span className="px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 border border-emerald-500/30 text-[9px] font-black uppercase tracking-wider flex items-center gap-1.5">
-              <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-              Panel Pintar
-            </span>
-            <span className="text-xs font-bold text-zinc-300">Komunitas &amp; CS</span>
+        <div className="px-4 py-3.5 border-b border-zinc-100 flex items-center justify-between bg-white/60">
+          <div className="flex items-center gap-2.5">
+            <img 
+              src="/icon-192.png" 
+              alt="Logo" 
+              className="w-7 h-7 rounded-xl object-cover border border-zinc-200/80 shadow-2xs" 
+            />
+            <div>
+              <div className="text-xs font-bold text-zinc-950 leading-tight">
+                Panel Pintar
+              </div>
+              <div className="text-[10px] text-zinc-500 font-medium">
+                Komunitas &amp; CS
+              </div>
+            </div>
           </div>
 
           <button
             type="button"
             onClick={() => setIsOpen(false)}
-            className="w-7 h-7 rounded-lg bg-zinc-900 hover:bg-zinc-800 text-zinc-400 hover:text-white flex items-center justify-center transition cursor-pointer"
+            className="w-7 h-7 rounded-full bg-zinc-100 hover:bg-zinc-200 text-zinc-600 flex items-center justify-center transition cursor-pointer"
             aria-label="Tutup Panel Pintar"
           >
-            <X className="w-4 h-4" />
+            <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
         {/* Panel Body (Scrollable) */}
-        <div className="p-4 flex-1 overflow-y-auto space-y-3.5 relative z-10 no-scrollbar">
+        <div className="p-3.5 flex-1 overflow-y-auto space-y-3 no-scrollbar">
 
-          {/* Card Utama: Grup WhatsApp Komunitas */}
-          <div className="rounded-xl border border-zinc-800 bg-gradient-to-b from-zinc-900 to-zinc-950 p-3.5 space-y-3 shadow-sm relative overflow-hidden">
-            <div className="flex items-start justify-between gap-2">
-              <div className="space-y-0.5">
-                <div className="flex items-center gap-1.5">
-                  <WhatsAppIcon className="w-4 h-4 text-emerald-400" />
-                  <h4 className="text-xs font-bold text-white tracking-tight">
-                    Grup WhatsApp Resmi
-                  </h4>
-                </div>
-                <p className="text-[11px] text-zinc-400 leading-relaxed">
-                  Dapatkan info restock akun kilat, drop lisensi digital, dan promo flash harian sebelum kuota habis.
-                </p>
+          {/* Card 1: Grup WhatsApp Resmi */}
+          <div className="rounded-2xl p-3.5 bg-zinc-50/90 border border-zinc-200/80 space-y-2.5">
+            <div className="space-y-1">
+              <div className="flex items-center gap-1.5">
+                <WhatsAppIcon className="w-4 h-4 text-emerald-600" />
+                <h4 className="text-xs font-bold text-zinc-950">
+                  Grup WhatsApp Resmi
+                </h4>
               </div>
+              <p className="text-[11px] text-zinc-600 leading-relaxed">
+                Dapatkan info restock akun kilat, drop lisensi digital, dan promo flash harian sebelum kuota habis.
+              </p>
             </div>
 
-            <div className="grid grid-cols-2 gap-1.5 text-[10px] text-zinc-400 bg-zinc-950/60 p-2 rounded-lg border border-zinc-800/60">
-              <div className="flex items-center gap-1">
-                <Zap className="w-3 h-3 text-amber-400 shrink-0" />
+            <div className="flex items-center gap-2 flex-wrap">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[10px] font-semibold">
+                <Zap className="w-3 h-3 text-emerald-600" />
                 <span>Restock Cepat</span>
-              </div>
-              <div className="flex items-center gap-1">
-                <ShieldCheck className="w-3 h-3 text-emerald-400 shrink-0" />
+              </span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-zinc-100 text-zinc-700 border border-zinc-200 text-[10px] font-semibold">
+                <ShieldCheck className="w-3 h-3 text-zinc-600" />
                 <span>Garansi Resmi</span>
-              </div>
+              </span>
             </div>
 
-            <div className="space-y-2 pt-0.5">
+            <div className="space-y-1.5 pt-1">
               <a
                 href={groupUrl}
                 target="_blank"
                 rel="noreferrer"
-                className="w-full py-2.5 px-3 rounded-lg bg-emerald-500 hover:bg-emerald-400 active:scale-98 text-zinc-950 font-bold text-xs flex items-center justify-center gap-1.5 transition shadow-sm cursor-pointer"
+                className="w-full py-2.5 px-3 rounded-xl bg-zinc-950 hover:bg-black active:scale-98 text-white font-bold text-xs flex items-center justify-center gap-2 transition shadow-xs cursor-pointer"
               >
-                <WhatsAppIcon className="w-3.5 h-3.5 text-zinc-950" />
+                <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-400" />
                 <span>Gabung Grup WhatsApp</span>
-                <ExternalLink className="w-3.5 h-3.5" />
+                <ExternalLink className="w-3.5 h-3.5 opacity-70" />
               </a>
 
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="w-full py-2 px-3 rounded-lg bg-zinc-800 hover:bg-zinc-700/80 active:scale-98 text-zinc-300 text-xs font-semibold flex items-center justify-center gap-1.5 transition border border-zinc-700/80 cursor-pointer"
+                className="w-full py-2 px-3 rounded-xl bg-white hover:bg-zinc-100 active:scale-98 text-zinc-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition border border-zinc-200 shadow-2xs cursor-pointer"
               >
-                {copied ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-zinc-400" />}
+                {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-zinc-400" />}
                 <span>{copied ? 'Tautan Grup Tersalin' : 'Salin Tautan Undangan'}</span>
               </button>
             </div>
           </div>
 
-          {/* Card Kontak Admin WhatsApp */}
-          <div className="rounded-xl border border-zinc-800/80 bg-zinc-900/60 p-3 space-y-2">
+          {/* Card 2: Customer Support */}
+          <div className="rounded-2xl p-3.5 bg-zinc-50/90 border border-zinc-200/80 space-y-2">
             <div className="flex items-center justify-between">
-              <span className="text-[11px] font-bold text-zinc-200">Customer Support</span>
-              <span className="text-[10px] text-emerald-400 font-semibold flex items-center gap-1">
-                <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                Online
+              <span className="font-bold text-xs text-zinc-950">Customer Support</span>
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50 text-emerald-700 border border-emerald-200/80 text-[10px] font-semibold">
+                <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
+                <span>Online</span>
               </span>
             </div>
-            <p className="text-[11px] text-zinc-400 leading-relaxed">
+            <p className="text-[11px] text-zinc-600 leading-relaxed">
               Ada kendala, ingin tanya stok tertentu, atau transaksi custom? Hubungi admin langsung via WhatsApp.
             </p>
             <a
               href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Admin D Store, saya ingin tanya katalog produk.')}`}
               target="_blank"
               rel="noreferrer"
-              className="w-full py-2 px-3 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-white text-xs font-semibold flex items-center justify-center gap-2 transition border border-zinc-700 cursor-pointer"
+              className="w-full py-2 px-3 rounded-xl bg-white hover:bg-zinc-100 active:scale-98 text-zinc-900 text-xs font-semibold flex items-center justify-center gap-2 transition border border-zinc-200 shadow-2xs cursor-pointer"
             >
-              <MessageCircle className="w-3.5 h-3.5 text-emerald-400" />
+              <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
               <span>Chat Admin WhatsApp</span>
             </a>
           </div>
 
-          {/* Info Keterlambatan Update */}
-          <div className="p-2.5 rounded-lg bg-zinc-900/40 border border-zinc-800/60 text-[10px] text-zinc-400 leading-relaxed">
-            <span className="font-semibold text-zinc-300">Catatan:</span> Produk dan varian bisa saja kosong karena keterlambatan update stok sistem.
+          {/* Section 3: Catatan Keterlambatan Update */}
+          <div className="px-3 py-2 rounded-xl bg-zinc-50 border border-zinc-200/80 text-[10px] text-zinc-500 leading-relaxed">
+            <span className="font-semibold text-zinc-700">Catatan:</span> Produk dan varian bisa saja kosong karena keterlambatan update stok sistem.
           </div>
 
         </div>
 
         {/* Panel Footer */}
-        <div className="p-3 border-t border-zinc-800/80 bg-zinc-950/80 text-center relative z-10">
-          <span className="text-[10px] text-zinc-500 font-medium">
+        <div className="py-2.5 px-4 border-t border-zinc-100 bg-white/60 text-center">
+          <span className="text-[10px] text-zinc-400 font-semibold tracking-wider uppercase">
             D STORE OFFICIAL &bull; LISENSI RESMI BERGARANSI
           </span>
         </div>

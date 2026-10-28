@@ -963,8 +963,8 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       if (saved) {
         const parsed = JSON.parse(saved);
 
-        if (parsed.catalogVersion !== '2026-10-28-v2-exact-15-jfy') {
-          parsed.catalogVersion = '2026-10-28-v2-exact-15-jfy';
+        if (parsed.catalogVersion !== '2026-10-28-v3-bw-categories') {
+          parsed.catalogVersion = '2026-10-28-v3-bw-categories';
           try { localStorage.setItem('d_store_visual_editor_data', JSON.stringify(parsed)); } catch (e) {}
         }
 
@@ -1205,7 +1205,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
     }
 
     const fullPayload = {
-      catalogVersion: '2026-10-28-v2-exact-15-jfy',
+      catalogVersion: '2026-10-28-v3-bw-categories',
       heroCarouselItems: newHeroItems,
       mainHeroBanner: newMainHero,
       topTierProducts: newTopTier,
@@ -1263,7 +1263,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
 
       if (!dataToSync) {
         dataToSync = {
-          catalogVersion: '2026-10-28-v2-exact-15-jfy',
+          catalogVersion: '2026-10-28-v3-bw-categories',
           heroCarouselItems,
           mainHeroBanner,
           topTierProducts,
@@ -1283,7 +1283,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           saveList
         };
       } else {
-        dataToSync.catalogVersion = '2026-10-28-v2-exact-15-jfy';
+        dataToSync.catalogVersion = '2026-10-28-v3-bw-categories';
       }
 
       const res = await fetch("/api/store/banners", {
@@ -2460,7 +2460,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                   data-placement-id="static"
                   data-entry-id={'trend-slide-' + idx}
                 >
-                  <div className={'aspect-[7/12] w-full overflow-hidden rounded-xl bg-zinc-900 relative shadow-xs transition duration-200 hover:shadow-md hover:scale-[1.01] ' + (
+                  <div className={'aspect-[1414/2000] w-full overflow-hidden rounded-xl bg-zinc-900 relative shadow-xs transition duration-200 hover:shadow-md hover:scale-[1.01] ' + (
                     isEditMode ? 'ring-2 ring-blue-500/80 hover:ring-blue-400' : ''
                   )}>
                     {isEditMode && (

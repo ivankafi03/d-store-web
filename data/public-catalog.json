@@ -1,5 +1,5 @@
 {
-  "catalogVersion": "2026-10-28-v2-exact-15-jfy",
+  "catalogVersion": "2026-10-28-v3-bw-categories",
   "updatedAt": "2026-10-27T15:34:38.211147Z",
   "categories": [
     {
@@ -10286,58 +10286,58 @@
     ],
     "trending": [
       {
-        "title": "AI TOOLS & CODING",
-        "label": "ChatGPT Plus, Gemini & Cursor",
-        "img": "/uploads/1-1792073494966.webp",
+        "title": "AI & TOOLS",
+        "label": "ChatGPT Plus, Gemini & AI Coding",
+        "img": "/uploads/trend_ai_tools_bw.webp",
         "segmentId": "ai",
         "slug": "ai-tools"
       },
       {
-        "title": "STREAMING 4K CINEMA",
+        "title": "STREAMING",
         "label": "Netflix, YouTube & Disney+",
-        "img": "/uploads/2-1792073509953.webp",
+        "img": "/uploads/trend_streaming_bw.webp",
         "segmentId": "streaming",
         "slug": "streaming"
       },
       {
-        "title": "DESAIN & KREATOR",
+        "title": "DESAIN & VIDEO",
         "label": "Canva Pro & Adobe Master",
-        "img": "/uploads/5-1792073530614.webp",
+        "img": "/uploads/trend_desain_video_bw.webp",
         "segmentId": "design",
         "slug": "graphic-design"
       },
       {
-        "title": "MUSIK & AUDIO HIFI",
+        "title": "MUSIK & AUDIO",
         "label": "Spotify HiFi & Apple Music",
-        "img": "/uploads/3-1792073547591.webp",
+        "img": "/uploads/trend_music_bw.webp",
         "segmentId": "music",
         "slug": "music-audio"
       },
       {
         "title": "EDUKASI & BAHASA",
         "label": "Duolingo, Grammarly & Scribd",
-        "img": "/uploads/trend_edukasi_bahasa.webp",
+        "img": "/uploads/trend_edukasi_bw.webp",
         "segmentId": "edukasi",
         "slug": "edukasi"
       },
       {
-        "title": "VPN & PRIVASI SIBER",
+        "title": "VPN & KEAMANAN",
         "label": "Surfshark, Nord & Express",
-        "img": "/uploads/4-1792073557122.webp",
+        "img": "/uploads/trend_vpn_bw.webp",
         "segmentId": "vpn",
         "slug": "vpn-security"
       },
       {
-        "title": "OFFICE & CLOUD",
+        "title": "OFFICE & AKUN",
         "label": "Office 365, Google & Zoom",
-        "img": "/uploads/6-1792073571781.webp",
+        "img": "/uploads/trend_office_akun_bw.webp",
         "segmentId": "office",
         "slug": "office-tools"
       },
       {
         "title": "SEMUA PRODUK",
         "label": "77+ Katalog Lengkap D Store",
-        "img": "/uploads/trend_semua_produk.webp",
+        "img": "/uploads/trend_semua_produk_bw.webp",
         "segmentId": "all",
         "slug": "all"
       }
@@ -11072,58 +11072,58 @@
       ],
       "trendList": [
         {
-          "title": "AI TOOLS & CODING",
-          "label": "ChatGPT Plus, Gemini & Cursor",
-          "img": "/uploads/1-1792073494966.webp",
+          "title": "AI & TOOLS",
+          "label": "ChatGPT Plus, Gemini & AI Coding",
+          "img": "/uploads/trend_ai_tools_bw.webp",
           "segmentId": "ai",
           "slug": "ai-tools"
         },
         {
-          "title": "STREAMING 4K CINEMA",
+          "title": "STREAMING",
           "label": "Netflix, YouTube & Disney+",
-          "img": "/uploads/2-1792073509953.webp",
+          "img": "/uploads/trend_streaming_bw.webp",
           "segmentId": "streaming",
           "slug": "streaming"
         },
         {
-          "title": "DESAIN & KREATOR",
+          "title": "DESAIN & VIDEO",
           "label": "Canva Pro & Adobe Master",
-          "img": "/uploads/5-1792073530614.webp",
+          "img": "/uploads/trend_desain_video_bw.webp",
           "segmentId": "design",
           "slug": "graphic-design"
         },
         {
-          "title": "MUSIK & AUDIO HIFI",
+          "title": "MUSIK & AUDIO",
           "label": "Spotify HiFi & Apple Music",
-          "img": "/uploads/3-1792073547591.webp",
+          "img": "/uploads/trend_music_bw.webp",
           "segmentId": "music",
           "slug": "music-audio"
         },
         {
           "title": "EDUKASI & BAHASA",
           "label": "Duolingo, Grammarly & Scribd",
-          "img": "/uploads/trend_edukasi_bahasa.webp",
+          "img": "/uploads/trend_edukasi_bw.webp",
           "segmentId": "edukasi",
           "slug": "edukasi"
         },
         {
-          "title": "VPN & PRIVASI SIBER",
+          "title": "VPN & KEAMANAN",
           "label": "Surfshark, Nord & Express",
-          "img": "/uploads/4-1792073557122.webp",
+          "img": "/uploads/trend_vpn_bw.webp",
           "segmentId": "vpn",
           "slug": "vpn-security"
         },
         {
-          "title": "OFFICE & CLOUD",
+          "title": "OFFICE & AKUN",
           "label": "Office 365, Google & Zoom",
-          "img": "/uploads/6-1792073571781.webp",
+          "img": "/uploads/trend_office_akun_bw.webp",
           "segmentId": "office",
           "slug": "office-tools"
         },
         {
           "title": "SEMUA PRODUK",
           "label": "77+ Katalog Lengkap D Store",
-          "img": "/uploads/trend_semua_produk.webp",
+          "img": "/uploads/trend_semua_produk_bw.webp",
           "segmentId": "all",
           "slug": "all"
         }
@@ -11292,7 +11292,7 @@
           "link": "#"
         }
       ],
-      "catalogVersion": "2026-10-28-v2-exact-15-jfy"
+      "catalogVersion": "2026-10-28-v3-bw-categories"
     },
     "topTierBanner": {
       "id": "toptier-banner",
@@ -12350,58 +12350,58 @@
     ],
     "trendList": [
       {
-        "title": "AI TOOLS & CODING",
-        "label": "ChatGPT Plus, Gemini & Cursor",
-        "img": "/uploads/1-1792073494966.webp",
+        "title": "AI & TOOLS",
+        "label": "ChatGPT Plus, Gemini & AI Coding",
+        "img": "/uploads/trend_ai_tools_bw.webp",
         "segmentId": "ai",
         "slug": "ai-tools"
       },
       {
-        "title": "STREAMING 4K CINEMA",
+        "title": "STREAMING",
         "label": "Netflix, YouTube & Disney+",
-        "img": "/uploads/2-1792073509953.webp",
+        "img": "/uploads/trend_streaming_bw.webp",
         "segmentId": "streaming",
         "slug": "streaming"
       },
       {
-        "title": "DESAIN & KREATOR",
+        "title": "DESAIN & VIDEO",
         "label": "Canva Pro & Adobe Master",
-        "img": "/uploads/5-1792073530614.webp",
+        "img": "/uploads/trend_desain_video_bw.webp",
         "segmentId": "design",
         "slug": "graphic-design"
       },
       {
-        "title": "MUSIK & AUDIO HIFI",
+        "title": "MUSIK & AUDIO",
         "label": "Spotify HiFi & Apple Music",
-        "img": "/uploads/3-1792073547591.webp",
+        "img": "/uploads/trend_music_bw.webp",
         "segmentId": "music",
         "slug": "music-audio"
       },
       {
         "title": "EDUKASI & BAHASA",
         "label": "Duolingo, Grammarly & Scribd",
-        "img": "/uploads/trend_edukasi_bahasa.webp",
+        "img": "/uploads/trend_edukasi_bw.webp",
         "segmentId": "edukasi",
         "slug": "edukasi"
       },
       {
-        "title": "VPN & PRIVASI SIBER",
+        "title": "VPN & KEAMANAN",
         "label": "Surfshark, Nord & Express",
-        "img": "/uploads/4-1792073557122.webp",
+        "img": "/uploads/trend_vpn_bw.webp",
         "segmentId": "vpn",
         "slug": "vpn-security"
       },
       {
-        "title": "OFFICE & CLOUD",
+        "title": "OFFICE & AKUN",
         "label": "Office 365, Google & Zoom",
-        "img": "/uploads/6-1792073571781.webp",
+        "img": "/uploads/trend_office_akun_bw.webp",
         "segmentId": "office",
         "slug": "office-tools"
       },
       {
         "title": "SEMUA PRODUK",
         "label": "77+ Katalog Lengkap D Store",
-        "img": "/uploads/trend_semua_produk.webp",
+        "img": "/uploads/trend_semua_produk_bw.webp",
         "segmentId": "all",
         "slug": "all"
       }
@@ -12570,7 +12570,7 @@
         "link": "#"
       }
     ],
-    "catalogVersion": "2026-10-28-v2-exact-15-jfy"
+    "catalogVersion": "2026-10-28-v3-bw-categories"
   },
   "categoryOverrides": {}
 }

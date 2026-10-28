@@ -2051,31 +2051,20 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
 
           {/* Pure Black Fluid Swaying Wave Typography - Full Size, Zero Box/Card */}
           <div 
-            className="wave-body-container select-none text-center px-4 py-2 flex flex-col items-center justify-center w-full"
+            className="wave-body-container select-none text-center px-2 py-4 sm:py-6 flex items-center justify-center w-full"
             style={{ filter: 'url(#water-wave-filter)' }}
           >
-            <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-widest uppercase text-black leading-tight sm:leading-none">
-              {'D-One'.split('').map((char, cIdx) => (
-                <span 
-                  key={cIdx} 
-                  className="wave-letter" 
-                  style={{ animationDelay: `${cIdx * 0.14}s` }}
-                >
-                  {char}
-                </span>
-              ))}
-            </h2>
-            <p className="mt-2 sm:mt-4 text-sm sm:text-lg md:text-2xl lg:text-3xl font-black tracking-widest uppercase text-black">
+            <h2 className="text-[26px] sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-wider sm:tracking-widest uppercase text-black leading-tight whitespace-nowrap">
               {'Born to Be Number One'.split('').map((char, cIdx) => (
                 <span 
                   key={cIdx} 
                   className="wave-letter" 
-                  style={{ animationDelay: `${0.4 + cIdx * 0.05}s` }}
+                  style={{ animationDelay: `${cIdx * 0.08}s` }}
                 >
                   {char === ' ' ? '\u00A0' : char}
                 </span>
               ))}
-            </p>
+            </h2>
           </div>
         </div>
       </section>

@@ -1,6 +1,6 @@
 'use client';
 
-import { useState, useMemo, useEffect } from 'react';
+import { useState, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
 import { useRouter } from 'next/navigation';
 import { 
@@ -14,6 +14,9 @@ import {
   SlidersHorizontal,
   Check,
   ChevronRight,
+  ChevronDown,
+  ArrowUpDown,
+  Info,
   Layers,
   Cpu,
   Film,
@@ -24,6 +27,12 @@ import {
   Briefcase
 } from 'lucide-react';
 import { resolveCategorySlug } from '@/lib/categories';
+
+const SORT_OPTIONS = [
+  { value: 'cheapest', label: 'Harga Termurah' },
+  { value: 'expensive', label: 'Harga Tertinggi' },
+  { value: 'az', label: 'Nama A - Z' },
+];
 
 const CATEGORY_SHORT_NAMES = {
   'cat_1': 'AI & Tools',
@@ -67,6 +76,8 @@ export default function CategoryStoreClient({
   const [selectedProduct, setSelectedProduct] = useState(null);
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
+  const [isSortOpen, setIsSortOpen] = useState(false);
+  const sortRef = useRef(null);
 
   const products = initialProducts || [];
   const variants = initialVariants || [];
@@ -82,6 +93,21 @@ export default function CategoryStoreClient({
       };
     }
   }, [isCategoryModalOpen, selectedProduct]);
+
+  // Tutup dropdown sort saat klik di luar
+  useEffect(() => {
+    const handleClickOutside = (e) => {
+      if (sortRef.current && !sortRef.current.contains(e.target)) {
+        setIsSortOpen(false);
+      }
+    };
+    if (isSortOpen) {
+      document.addEventListener('mousedown', handleClickOutside);
+    }
+    return () => {
+      document.removeEventListener('mousedown', handleClickOutside);
+    };
+  }, [isSortOpen]);
 
   // Map variants to product IDs
   const productVariantsMap = useMemo(() => {
@@ -244,16 +270,48 @@ export default function CategoryStoreClient({
             </div>
 
             {/* Sort Select */}
-            <div className="shrink-0 flex items-center">
-              <select
-                value={sortBy}
-                onChange={(e) => setSortBy(e.target.value)}
-                className="text-xs bg-zinc-50 border border-zinc-200 rounded-lg px-2.5 py-2 font-medium text-zinc-800 focus:outline-none focus:border-zinc-900 cursor-pointer"
+            <div className="relative shrink-0 flex items-center" ref={sortRef}>
+              <button
+                type="button"
+                onClick={() => setIsSortOpen((prev) => !prev)}
+                className="flex items-center gap-1.5 text-xs bg-zinc-50 hover:bg-zinc-100 border border-zinc-200/90 rounded-lg px-2.5 py-2 font-semibold text-zinc-800 focus:outline-none focus:border-zinc-900 transition cursor-pointer select-none shadow-2xs active:scale-98"
+                aria-label="Pilih urutan produk"
               >
-                <option value="cheapest">Harga Termurah</option>
-                <option value="expensive">Harga Tertinggi</option>
-                <option value="az">Nama A - Z</option>
-              </select>
+                <ArrowUpDown className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
+                <span className="text-zinc-900 font-semibold">
+                  {SORT_OPTIONS.find((o) => o.value === sortBy)?.label || 'Urutkan'}
+                </span>
+                <ChevronDown className={`w-3.5 h-3.5 text-zinc-400 transition-transform duration-200 shrink-0 ${isSortOpen ? 'rotate-180 text-zinc-900' : ''}`} />
+              </button>
+
+              {isSortOpen && (
+                <div className="absolute right-0 top-full mt-1.5 w-48 bg-white border border-zinc-200/90 rounded-xl shadow-xl py-1 z-40 animate-in fade-in zoom-in-95 duration-150">
+                  <div className="px-3 py-1.5 text-[10px] font-bold text-zinc-400 uppercase tracking-wider border-b border-zinc-100 mb-1">
+                    Urutkan Berdasarkan
+                  </div>
+                  {SORT_OPTIONS.map((opt) => {
+                    const isActive = sortBy === opt.value;
+                    return (
+                      <button
+                        key={opt.value}
+                        type="button"
+                        onClick={() => {
+                          setSortBy(opt.value);
+                          setIsSortOpen(false);
+                        }}
+                        className={`w-full px-3 py-2 text-left text-xs flex items-center justify-between transition cursor-pointer ${
+                          isActive
+                            ? 'bg-zinc-100 text-zinc-950 font-bold'
+                            : 'text-zinc-600 hover:bg-zinc-50 hover:text-zinc-900 font-medium'
+                        }`}
+                      >
+                        <span>{opt.label}</span>
+                        {isActive && <Check className="w-3.5 h-3.5 text-zinc-950" />}
+                      </button>
+                    );
+                  })}
+                </div>
+              )}
             </div>
           </div>
 
@@ -486,6 +544,12 @@ export default function CategoryStoreClient({
               className="py-2.5 overflow-y-auto overscroll-contain space-y-1.5 flex-1 touch-pan-y" 
               style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}
             >
+              {/* Notice Keterlambatan Update */}
+              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-50 border border-zinc-200/80 text-[11px] text-zinc-600 mb-2">
+                <Info className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
+                <span>Produk dan varian bisa saja kosong karena keterlambatan update.</span>
+              </div>
+
               <span className="block text-[11px] font-bold text-zinc-800 uppercase tracking-wider mb-1.5">
                 Pilih Durasi / Paket
               </span>

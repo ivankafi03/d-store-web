@@ -2231,7 +2231,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                         </button>
                       )}
                       <div 
-                        className="product-item__product-image-wrapper aspect-[3/4] bg-[#f7f7f7] rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer p-0"
+                        className="product-item__product-image-wrapper aspect-[3/4] bg-white rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer p-0"
                         onClick={(e) => {
                           if (isEditMode) {
                             e.preventDefault();
@@ -2819,7 +2819,7 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                         </button>
                       )}
                       <div
-                        className="product-item__product-image-wrapper aspect-[3/4] bg-[#f7f7f7] rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer p-0"
+                        className="product-item__product-image-wrapper aspect-[3/4] bg-white rounded-lg overflow-hidden flex items-center justify-center relative block cursor-pointer p-0"
                         onClick={(e) => {
                           if (isEditMode) {
                             e.preventDefault();

@@ -572,7 +572,7 @@ export default function WishlistClient({ initialProducts = [], initialVariants =
                   {/* Foto Produk */}
                   <div 
                     onClick={() => handleProductClick(prod)}
-                    className="product-item__product-image-wrapper aspect-[3/4] bg-[#F7F7F7] rounded-lg overflow-hidden flex items-center justify-center relative cursor-pointer"
+                    className="product-item__product-image-wrapper aspect-[3/4] bg-white rounded-lg overflow-hidden flex items-center justify-center relative cursor-pointer"
                   >
                     {prod.image ? (
                       <img

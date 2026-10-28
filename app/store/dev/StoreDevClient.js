@@ -2033,43 +2033,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       </section>
 
       {/* =========================================================
-          5. D-ONE WAVE TYPOGRAPHY SECTION (Banner & Slider Dihapus)
-      ========================================================= */}
-      <section className="w-full max-w-[1240px] mx-auto px-4 py-6 md:py-10">
-        <div className="w-full min-h-[160px] sm:min-h-[200px] md:min-h-[250px] flex items-center justify-center relative overflow-visible">
-          {/* SVG Filter for Fluid Water Distortion */}
-          <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
-            <defs>
-              <filter id="water-wave-filter">
-                <feTurbulence type="fractalNoise" baseFrequency="0.015 0.04" numOctaves="2" result="noise">
-                  <animate attributeName="baseFrequency" dur="6s" values="0.015 0.04;0.025 0.07;0.015 0.04" repeatCount="indefinite" />
-                </feTurbulence>
-                <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
-              </filter>
-            </defs>
-          </svg>
-
-          {/* Pure Black Fluid Swaying Wave Typography - Full Size, Zero Box/Card */}
-          <div 
-            className="wave-body-container select-none text-center px-2 py-4 sm:py-6 flex items-center justify-center w-full"
-            style={{ filter: 'url(#water-wave-filter)' }}
-          >
-            <h2 className="text-[26px] sm:text-4xl md:text-6xl lg:text-7xl xl:text-8xl font-black tracking-wider sm:tracking-widest uppercase text-black leading-tight whitespace-nowrap">
-              {'Born to Be Number One'.split('').map((char, cIdx) => (
-                <span 
-                  key={cIdx} 
-                  className="wave-letter" 
-                  style={{ animationDelay: `${cIdx * 0.08}s` }}
-                >
-                  {char === ' ' ? '\u00A0' : char}
-                </span>
-              ))}
-            </h2>
-          </div>
-        </div>
-      </section>
-
-      {/* =========================================================
           6. BRANDS THAT GOT YOU LOOKING (Exact Zalora Grid Structure)
       ========================================================= */}
       <section className="max-w-[1240px] mx-auto px-4 py-4 md:py-8">
@@ -3251,8 +3214,16 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       <footer className="mt-auto w-full border-t border-zinc-200 bg-white text-zinc-500 py-6 pb-20 sm:pb-6 text-xs">
         <div className="max-w-[1240px] mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3 text-center sm:text-left">
-            <span className="font-black text-sm tracking-[0.16em] uppercase text-zinc-950">
-              D STORE
+            <span className="font-black text-sm tracking-[0.16em] uppercase text-zinc-950 inline-flex items-center wave-body-container select-none">
+              {'Born to Be Number One'.split('').map((char, cIdx) => (
+                <span 
+                  key={cIdx} 
+                  className="wave-letter" 
+                  style={{ animationDelay: `${cIdx * 0.08}s` }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              ))}
             </span>
             <span className="hidden sm:inline text-zinc-300">•</span>
             <span className="text-[11px] text-zinc-500">

@@ -2033,189 +2033,54 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       </section>
 
       {/* =========================================================
-          5. SECONDARY APP SLIDER (FATSKINNY 1920x480 - Exact Zalora Structure)
+          5. D-ONE WAVE TYPOGRAPHY SECTION (Banner & Slider Dihapus)
       ========================================================= */}
-      <div className="post-type-wrapper banner-wrapper">
-        <div className="banner__details-wrapper max-w-[1240px] mx-auto px-4 py-3 md:py-6">
-          <div className="banner__hero-wrapper">
-            <div style={{ paddingBottom: '0px' }}>
-              <div className="slider-container relative select-none">
-                <div
-                  aria-live="off"
-                  aria-atomic="true"
-                  tabIndex={-1}
-                  style={{
-                    position: 'absolute',
-                    width: '1px',
-                    height: '1px',
-                    overflow: 'hidden',
-                    padding: '0px',
-                    margin: '-1px',
-                    clip: 'rect(0px, 0px, 0px, 0px)',
-                    whiteSpace: 'nowrap',
-                    border: '0px'
-                  }}
-                >
-                  {`Slide ${speedCarousel.currentIndex + 1} of 2`}
-                </div>
+      <section className="banner__details-wrapper max-w-[1240px] mx-auto px-4 py-3 md:py-6">
+        <div className="banner__hero-wrapper">
+          <div className="w-full aspect-[16/6] sm:aspect-[3.2/1] md:aspect-[4/1] max-h-[240px] flex items-center justify-center overflow-hidden bg-white border border-zinc-200/90 rounded-2xl shadow-xs">
+            {/* SVG Filter for Fluid Water Distortion */}
+            <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+              <defs>
+                <filter id="water-wave-filter">
+                  <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="2" result="noise">
+                    <animate attributeName="baseFrequency" dur="6s" values="0.02 0.05;0.03 0.08;0.02 0.05" repeatCount="indefinite" />
+                  </feTurbulence>
+                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" />
+                </filter>
+              </defs>
+            </svg>
 
-                {/* Bottom Pagination Dots */}
-                <div className="slider-control-bottomcenter absolute z-10 bottom-0 left-1/2 -translate-x-1/2">
-                  <ul style={{ position: 'relative', top: '-10px', display: 'flex', margin: '0px', padding: '0px', listStyleType: 'none' }}>
-                    {[0, 1].map((dotIdx) => (
-                      <li key={dotIdx} className={`paging-item ${speedCarousel.currentIndex === dotIdx ? 'active' : ''}`} style={{ outline: 'none', padding: '0 6px' }}>
-                        <button
-                          className="banner__carousel-paging-dots--hide"
-                          type="button"
-                          aria-label={`slide ${dotIdx + 1} bullet`}
-                          aria-selected={speedCarousel.currentIndex === dotIdx}
-                          onClick={() => speedCarousel.goToSlide(dotIdx)}
-                          style={{
-                            cursor: 'pointer',
-                            opacity: speedCarousel.currentIndex === dotIdx ? 1 : 0.5,
-                            background: 'transparent',
-                            border: 'none',
-                            fill: 'black',
-                            padding: 0
-                          }}
-                        >
-                          <svg className="paging-dot" width="6" height="6" aria-hidden="true" focusable="false">
-                            <circle cx="3" cy="3" r="3" fill="#000" />
-                          </svg>
-                        </button>
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-
-                {/* Slider Frame */}
-                <div
-                  ref={speedCarousel.containerRef}
-                  {...speedCarousel.handlers}
-                  className="slider-frame flex overflow-x-auto snap-x snap-mandatory no-scrollbar w-full relative outline-none h-auto cursor-grab active:cursor-grabbing rounded-xl select-none"
-                  style={{ WebkitOverflowScrolling: 'touch', scrollbarWidth: 'none', touchAction: 'pan-x pan-y' }}
-                  aria-label="carousel-slider"
-                  role="region"
-                  tabIndex={-1}
-                >
-                  {speedDealsList.map((deal, idx) => (
-                    <div
-                      key={idx}
-                      className="shrink-0 w-full min-w-full snap-start snap-always px-2"
-                    >
-                      <a
-                        className="no-decoration banner__media-link block select-none relative"
-                        href={deal.link}
-                        onClick={(e) => {
-                          e.preventDefault();
-                          if (speedCarousel.wasDragged()) return;
-                          if (isEditMode) {
-                            setVisualEditingItem({
-                              type: 'speed-deal',
-                              index: idx,
-                              id: `deal-${idx}`,
-                              name: deal.title,
-                              brand: deal.brand || 'D STORE',
-                              image: deal.img,
-                              link: deal.link,
-                              recommendation: {
-                                dimensions: '1200 x 450 px / 1080 x 450 px (Rasio ~2.5:1)',
-                                aspectRatio: '2.5:1 hingga 3:1',
-                                tips: 'Paling pas untuk mobile dan desktop. Pastikan teks penting tidak menempel ke tepi layar.'
-                              }
-                            });
-                          } else {
-                            handleProductOrAppClick({
-                              name: deal.title,
-                              title: deal.title,
-                              link: deal.link,
-                              image: deal.img
-                            });
-                          }
-                        }}
-                        data-placement-id="static"
-                        data-entry-id={deal.entryId || `fatskinny-slide-${idx}`}
-                        draggable={false}
-                      >
-                        <div className={`banner__media-item-wrapper rounded-2xl overflow-hidden shadow-xs hover:shadow-md transition w-full aspect-[16/6] sm:aspect-[3.2/1] md:aspect-[4/1] max-h-[240px] bg-transparent border-0 outline-none relative ${
-                          isEditMode ? 'ring-2 ring-blue-500/80 hover:ring-blue-400' : ''
-                        }`}>
-                          {isEditMode && (
-                            <div className="absolute top-2.5 right-2.5 z-20 bg-blue-600 text-white text-[9px] font-bold px-1.5 py-0.5 rounded shadow">
-                              Edit Banner
-                            </div>
-                          )}
-                          {(deal.img === '/uploads/banner_reseller_desktop.webp' || deal.img === '/uploads/banner_reseller_neo_brutalism.webp' || deal.img?.includes('pilihan_utama_ratusan_reseller')) ? (
-                            <>
-                              <img
-                                className="block sm:hidden unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
-                                fetchPriority={idx === 0 ? "high" : "auto"}
-                                src="/uploads/banner_reseller_mobile.webp"
-                                alt={deal.title}
-                                draggable="false"
-                              />
-                              <img
-                                className="hidden sm:block unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
-                                fetchPriority={idx === 0 ? "high" : "auto"}
-                                src="/uploads/banner_reseller_desktop.webp"
-                                alt={deal.title}
-                                draggable="false"
-                              />
-                            </>
-                          ) : (
-                            <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-white border border-zinc-200/90 rounded-2xl">
-                              {/* Soft water ripple SVG filter effect */}
-                              <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
-                                <defs>
-                                  <filter id="water-wave-filter">
-                                    <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="2" result="noise">
-                                      <animate attributeName="baseFrequency" dur="6s" values="0.02 0.05;0.03 0.08;0.02 0.05" repeatCount="indefinite" />
-                                    </feTurbulence>
-                                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" />
-                                  </filter>
-                                </defs>
-                              </svg>
-
-                              {/* Water Wave Liak-Liuk Typography in Pure Black */}
-                              <div 
-                                className="wave-body-container select-none text-center px-4 py-3 flex flex-col items-center justify-center"
-                                style={{ filter: 'url(#water-wave-filter)' }}
-                              >
-                                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-widest uppercase text-black">
-                                  {'D-One'.split('').map((char, cIdx) => (
-                                    <span 
-                                      key={cIdx} 
-                                      className="wave-letter" 
-                                      style={{ animationDelay: `${cIdx * 0.15}s` }}
-                                    >
-                                      {char}
-                                    </span>
-                                  ))}
-                                </h2>
-                                <p className="mt-1 sm:mt-2 text-xs sm:text-sm md:text-base lg:text-lg font-black tracking-wider uppercase text-zinc-950">
-                                  {'Born to Be Number One'.split('').map((char, cIdx) => (
-                                    <span 
-                                      key={cIdx} 
-                                      className="wave-letter" 
-                                      style={{ animationDelay: `${0.5 + cIdx * 0.06}s` }}
-                                    >
-                                      {char === ' ' ? '\u00A0' : char}
-                                    </span>
-                                  ))}
-                                </p>
-                              </div>
-                            </div>
-                          )}
-                        </div>
-                      </a>
-                    </div>
-                  ))}
-                </div>
-              </div>
+            {/* Pure Black Fluid Swaying Wave Typography */}
+            <div 
+              className="wave-body-container select-none text-center px-4 py-3 flex flex-col items-center justify-center"
+              style={{ filter: 'url(#water-wave-filter)' }}
+            >
+              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-widest uppercase text-black leading-none">
+                {'D-One'.split('').map((char, cIdx) => (
+                  <span 
+                    key={cIdx} 
+                    className="wave-letter" 
+                    style={{ animationDelay: `${cIdx * 0.15}s` }}
+                  >
+                    {char}
+                  </span>
+                ))}
+              </h2>
+              <p className="mt-1.5 sm:mt-2.5 text-xs sm:text-sm md:text-base lg:text-lg font-black tracking-wider uppercase text-zinc-950">
+                {'Born to Be Number One'.split('').map((char, cIdx) => (
+                  <span 
+                    key={cIdx} 
+                    className="wave-letter" 
+                    style={{ animationDelay: `${0.5 + cIdx * 0.06}s` }}
+                  >
+                    {char === ' ' ? '\u00A0' : char}
+                  </span>
+                ))}
+              </p>
             </div>
           </div>
         </div>
-      </div>
+      </section>
 
       {/* =========================================================
           6. BRANDS THAT GOT YOU LOOKING (Exact Zalora Grid Structure)

@@ -39,6 +39,21 @@ export default function SmartEdgePanel({
     setTimeout(() => setCopied(false), 2000);
   };
 
+  // Kunci scroll body dan cegah layar memantul/naik saat modal terbuka
+  useEffect(() => {
+    if (isOpen) {
+      const originalOverflow = document.body.style.overflow;
+      const originalTouchAction = document.body.style.touchAction;
+      document.body.style.overflow = 'hidden';
+      document.body.style.touchAction = 'none';
+      return () => {
+        document.body.style.overflow = originalOverflow;
+        document.body.style.touchAction = originalTouchAction;
+      };
+    }
+  }, [isOpen]);
+
+  // Tutup panel ketika menekan tombol Escape
   useEffect(() => {
     const handleKeyDown = (e) => {
       if (e.key === 'Escape' && isOpen) {
@@ -51,7 +66,7 @@ export default function SmartEdgePanel({
 
   return (
     <>
-      {/* === HANDLE MELAYANG DI TEPI LAYAR (IPHONE FROSTED GLASS & LOGO WHATSAPP) === */}
+      {/* === HANDLE MELAYANG DI TEPI LAYAR (AUTHENTIC IPHONE LIQUID GLASS) === */}
       {!isOpen && (
         <aside
           role="complementary"
@@ -59,7 +74,15 @@ export default function SmartEdgePanel({
           onClick={() => setIsOpen(true)}
           className="fixed right-0 top-1/2 -translate-y-1/2 z-40 cursor-pointer select-none group"
         >
-          <div className="flex items-center justify-center pl-2.5 pr-2 py-3 rounded-l-2xl bg-white/70 hover:bg-white/85 backdrop-blur-xl border-l border-t border-b border-white/80 shadow-[0_8px_30px_rgb(0,0,0,0.12)] hover:pl-3.5 transition-all duration-200 active:scale-95">
+          <div 
+            className="flex items-center justify-center pl-2.5 pr-2 py-3 rounded-l-2xl border-l border-t border-b border-white/70 shadow-lg hover:pl-3.5 transition-all duration-200 active:scale-95"
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.35)',
+              backdropFilter: 'blur(25px) saturate(190%)',
+              WebkitBackdropFilter: 'blur(25px) saturate(190%)',
+              boxShadow: '0 8px 30px rgba(0, 0, 0, 0.1), inset 0 1px 1px rgba(255, 255, 255, 0.9)'
+            }}
+          >
             <div className="flex flex-col items-center gap-1.5">
               <div className="relative">
                 <WhatsAppLogo className="w-6 h-6 drop-shadow-xs group-hover:scale-110 transition-transform" />
@@ -74,23 +97,33 @@ export default function SmartEdgePanel({
         </aside>
       )}
 
-      {/* === BACKDROP OVERLAY DENGAN BLUR OPTIK === */}
+      {/* === BACKDROP OVERLAY LEMBUT & CEGAH TOUCH SCROLL === */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/35 backdrop-blur-xs z-50 transition-opacity animate-in fade-in duration-200"
+          className="fixed inset-0 bg-black/30 backdrop-blur-xs z-50 transition-opacity animate-in fade-in duration-200 touch-none overscroll-none"
           onClick={() => setIsOpen(false)}
+          onTouchMove={(e) => e.preventDefault()}
         />
       )}
 
-      {/* === PANEL PINTAR DENGAN TEMA IPHONE LIQUID FROSTED GLASS ASLI === */}
+      {/* === PANEL PINTAR IPHONE LIQUID FROSTED GLASS ASLI === */}
       <div
-        className={`fixed right-2 sm:right-5 top-1/2 -translate-y-1/2 z-50 w-[315px] sm:w-[360px] max-w-[94vw] max-h-[90vh] bg-white/75 backdrop-blur-2xl border border-white/80 text-zinc-900 rounded-3xl shadow-[0_20px_50px_rgba(0,0,0,0.18)] overflow-hidden flex flex-col font-sans transition-all duration-200 ease-out ${
+        className={`fixed right-2 sm:right-5 top-1/2 -translate-y-1/2 z-50 w-[315px] sm:w-[360px] max-w-[94vw] max-h-[85dvh] text-zinc-900 rounded-3xl overflow-hidden flex flex-col font-sans transition-all duration-200 ease-out border border-white/60 ${
           isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'
         }`}
+        style={{
+          backgroundColor: 'rgba(255, 255, 255, 0.38)',
+          backdropFilter: 'blur(35px) saturate(200%)',
+          WebkitBackdropFilter: 'blur(35px) saturate(200%)',
+          boxShadow: '0 20px 60px rgba(0, 0, 0, 0.15), inset 0 1px 1.5px 0 rgba(255, 255, 255, 0.85), inset 0 -1px 1px 0 rgba(255, 255, 255, 0.25)'
+        }}
         onClick={(e) => e.stopPropagation()}
       >
         {/* Panel Header */}
-        <div className="px-4 py-3.5 border-b border-white/60 flex items-center justify-between bg-white/40 backdrop-blur-sm">
+        <div 
+          className="px-4 py-3.5 border-b border-white/40 flex items-center justify-between"
+          style={{ backgroundColor: 'rgba(255, 255, 255, 0.25)' }}
+        >
           <div className="flex items-center gap-2.5">
             <WhatsAppLogo className="w-7 h-7 drop-shadow-xs" />
             <div>
@@ -106,18 +139,33 @@ export default function SmartEdgePanel({
           <button
             type="button"
             onClick={() => setIsOpen(false)}
-            className="w-7 h-7 rounded-full bg-white/80 hover:bg-white text-zinc-600 hover:text-zinc-950 border border-white/60 shadow-2xs flex items-center justify-center transition cursor-pointer"
+            className="w-7 h-7 rounded-full text-zinc-600 hover:text-zinc-950 border border-white/70 shadow-2xs flex items-center justify-center transition cursor-pointer"
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.5)',
+              backdropFilter: 'blur(10px)'
+            }}
             aria-label="Tutup Panel Pintar"
           >
             <X className="w-3.5 h-3.5" />
           </button>
         </div>
 
-        {/* Panel Body (Scrollable) */}
-        <div className="p-3.5 flex-1 overflow-y-auto space-y-3 no-scrollbar">
+        {/* Panel Body (Scrollable dengan overscroll-contain) */}
+        <div 
+          className="p-3.5 flex-1 overflow-y-auto space-y-3 no-scrollbar overscroll-contain touch-pan-y"
+          style={{ WebkitOverflowScrolling: 'touch', overscrollBehavior: 'contain' }}
+        >
 
-          {/* Card 1: Grup WhatsApp Resmi */}
-          <div className="rounded-2xl p-3.5 bg-white/60 backdrop-blur-md border border-white/80 shadow-xs space-y-2.5">
+          {/* Card 1: Grup WhatsApp Resmi (Glass Card) */}
+          <div 
+            className="rounded-2xl p-3.5 border border-white/60 space-y-2.5"
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.32)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              boxShadow: 'inset 0 1px 1px rgba(255, 255, 255, 0.7)'
+            }}
+          >
             <div className="space-y-1">
               <div className="flex items-center gap-1.5">
                 <WhatsAppLogo className="w-4 h-4" />
@@ -131,11 +179,11 @@ export default function SmartEdgePanel({
             </div>
 
             <div className="flex items-center gap-2 flex-wrap">
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50/90 text-emerald-800 border border-emerald-200 text-[10px] font-semibold">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 border border-emerald-500/25 text-[10px] font-semibold">
                 <Zap className="w-3 h-3 text-emerald-600" />
                 <span>Restock Cepat</span>
               </span>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/80 text-zinc-700 border border-zinc-200/80 text-[10px] font-semibold">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-white/40 text-zinc-700 border border-white/60 text-[10px] font-semibold">
                 <ShieldCheck className="w-3 h-3 text-zinc-600" />
                 <span>Garansi Resmi</span>
               </span>
@@ -156,7 +204,11 @@ export default function SmartEdgePanel({
               <button
                 type="button"
                 onClick={handleCopyLink}
-                className="w-full py-2 px-3 rounded-xl bg-white/90 hover:bg-white active:scale-98 text-zinc-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition border border-white/90 shadow-2xs cursor-pointer"
+                className="w-full py-2 px-3 rounded-xl active:scale-98 text-zinc-700 text-xs font-semibold flex items-center justify-center gap-1.5 transition border border-white/80 shadow-2xs cursor-pointer"
+                style={{
+                  backgroundColor: 'rgba(255, 255, 255, 0.55)',
+                  backdropFilter: 'blur(10px)'
+                }}
               >
                 {copied ? <Check className="w-3.5 h-3.5 text-emerald-600" /> : <Copy className="w-3.5 h-3.5 text-zinc-400" />}
                 <span>{copied ? 'Tautan Grup Tersalin' : 'Salin Tautan Undangan'}</span>
@@ -164,11 +216,19 @@ export default function SmartEdgePanel({
             </div>
           </div>
 
-          {/* Card 2: Customer Support */}
-          <div className="rounded-2xl p-3.5 bg-white/60 backdrop-blur-md border border-white/80 shadow-xs space-y-2">
+          {/* Card 2: Customer Support (Glass Card) */}
+          <div 
+            className="rounded-2xl p-3.5 border border-white/60 space-y-2"
+            style={{
+              backgroundColor: 'rgba(255, 255, 255, 0.32)',
+              backdropFilter: 'blur(20px)',
+              WebkitBackdropFilter: 'blur(20px)',
+              boxShadow: 'inset 0 1px 1px rgba(255, 255, 255, 0.7)'
+            }}
+          >
             <div className="flex items-center justify-between">
               <span className="font-bold text-xs text-zinc-950">Customer Support</span>
-              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-50/90 text-emerald-800 border border-emerald-200 text-[10px] font-semibold">
+              <span className="inline-flex items-center gap-1 px-2 py-0.5 rounded-full bg-emerald-500/15 text-emerald-800 border border-emerald-500/25 text-[10px] font-semibold">
                 <span className="w-1.5 h-1.5 rounded-full bg-emerald-500 animate-pulse" />
                 <span>Online</span>
               </span>
@@ -180,7 +240,11 @@ export default function SmartEdgePanel({
               href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Admin D Store, saya ingin tanya katalog produk.')}`}
               target="_blank"
               rel="noreferrer"
-              className="w-full py-2 px-3 rounded-xl bg-white/90 hover:bg-white active:scale-98 text-zinc-900 text-xs font-semibold flex items-center justify-center gap-2 transition border border-white/90 shadow-2xs cursor-pointer"
+              className="w-full py-2 px-3 rounded-xl active:scale-98 text-zinc-900 text-xs font-semibold flex items-center justify-center gap-2 transition border border-white/80 shadow-2xs cursor-pointer"
+              style={{
+                backgroundColor: 'rgba(255, 255, 255, 0.55)',
+                backdropFilter: 'blur(10px)'
+              }}
             >
               <MessageCircle className="w-3.5 h-3.5 text-emerald-600" />
               <span>Chat Admin WhatsApp</span>
@@ -188,14 +252,20 @@ export default function SmartEdgePanel({
           </div>
 
           {/* Section 3: Catatan Keterlambatan Update */}
-          <div className="px-3 py-2 rounded-xl bg-white/50 backdrop-blur-sm border border-white/70 text-[10px] text-zinc-600 leading-relaxed">
+          <div 
+            className="px-3 py-2 rounded-xl border border-white/50 text-[10px] text-zinc-600 leading-relaxed"
+            style={{ backgroundColor: 'rgba(255, 255, 255, 0.25)' }}
+          >
             <span className="font-semibold text-zinc-800">Catatan:</span> Produk dan varian bisa saja kosong karena keterlambatan update stok sistem.
           </div>
 
         </div>
 
         {/* Panel Footer */}
-        <div className="py-2.5 px-4 border-t border-white/60 bg-white/40 text-center">
+        <div 
+          className="py-2.5 px-4 border-t border-white/40 text-center"
+          style={{ backgroundColor: 'rgba(255, 255, 255, 0.2)' }}
+        >
           <span className="text-[10px] text-zinc-500 font-semibold tracking-wider uppercase">
             D STORE OFFICIAL &bull; LISENSI RESMI BERGARANSI
           </span>

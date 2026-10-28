@@ -102,10 +102,15 @@ export default function SmartEdgePanel({
         </aside>
       )}
 
-      {/* === BACKDROP OVERLAY LEMBUT & CEGAH TOUCH SCROLL === */}
+      {/* === BACKDROP OVERLAY LEMBUT & CEGAH TOUCH SCROLL (DI ATAS SEMUA ELEMEN TERMASUK BOTTOM NAV) === */}
       {isOpen && (
         <div
-          className="fixed inset-0 bg-black/30 backdrop-blur-xs z-50 transition-opacity animate-in fade-in duration-200 touch-none overscroll-none"
+          className="fixed inset-0 z-[100] transition-opacity animate-in fade-in duration-200 touch-none overscroll-none"
+          style={{
+            backgroundColor: 'rgba(0, 0, 0, 0.45)',
+            backdropFilter: 'blur(16px)',
+            WebkitBackdropFilter: 'blur(16px)'
+          }}
           onClick={() => setIsOpen(false)}
           onTouchMove={(e) => e.preventDefault()}
         />
@@ -113,7 +118,7 @@ export default function SmartEdgePanel({
 
       {/* === PANEL PINTAR IPHONE LIQUID FROSTED GLASS ASLI === */}
       <div
-        className={`fixed right-2 sm:right-5 top-1/2 -translate-y-1/2 z-50 w-[315px] sm:w-[360px] max-w-[94vw] max-h-[85dvh] text-zinc-900 rounded-3xl overflow-hidden flex flex-col font-sans transition-all duration-200 ease-out border border-white/60 ${
+        className={`fixed right-2 sm:right-5 top-1/2 -translate-y-1/2 z-[105] w-[315px] sm:w-[360px] max-w-[94vw] max-h-[85dvh] text-zinc-900 rounded-3xl overflow-hidden flex flex-col font-sans transition-all duration-200 ease-out border border-white/60 ${
           isOpen ? 'scale-100 opacity-100' : 'scale-95 opacity-0 pointer-events-none'
         }`}
         style={{

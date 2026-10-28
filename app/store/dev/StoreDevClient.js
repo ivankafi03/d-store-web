@@ -3270,9 +3270,6 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
         />
       )}
 
-      {/* Smart Edge Panel (Panel Pintar iPhone Glass) */}
-      <SmartEdgePanel waNumber="6281230112240" />
-
       {/* =========================================================
           16. FLOATING PILL MOBILE BOTTOM NAVIGATION BAR
           (3 Menu: Home, Kategori, Produk)
@@ -3323,6 +3320,9 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
           </div>
         </div>
       </div>
+
+      {/* Smart Edge Panel (Panel Pintar iPhone Glass) */}
+      <SmartEdgePanel waNumber="6281230112240" />
 
     </div>
   );

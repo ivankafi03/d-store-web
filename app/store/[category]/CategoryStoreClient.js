@@ -720,7 +720,9 @@ export default function CategoryStoreClient({
       )}
 
       {/* Floating Bottom Navigation Bar (Mobile) */}
-      <div className="fixed bottom-3 inset-x-0 mx-auto z-40 w-[88%] max-w-[320px] md:hidden pointer-events-none">
+      <div className={`fixed bottom-3 inset-x-0 mx-auto z-40 w-[88%] max-w-[320px] md:hidden pointer-events-none transition-all duration-200 ${
+        isGroupPanelOpen ? 'opacity-25 blur-xs scale-95' : ''
+      }`}>
         <div className="rounded-full iphone-glass-bottom-card px-2 py-1 pointer-events-auto overflow-hidden border border-zinc-200/80 bg-white/95 backdrop-blur-md">
           <div className="relative flex items-center justify-around px-0.5">
             <Link
@@ -752,6 +754,9 @@ export default function CategoryStoreClient({
           </div>
         </div>
       </div>
+
+      {/* Smart Edge Panel (Panel Pintar HP) - Diletakkan paling akhir di DOM agar overlay blur di atas bottom nav */}
+      <SmartEdgePanel isOpen={isGroupPanelOpen} onToggle={setIsGroupPanelOpen} waNumber={waNumber} />
     </div>
   );
 }

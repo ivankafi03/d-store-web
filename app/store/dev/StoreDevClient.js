@@ -2163,13 +2163,28 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               />
                             </>
                           ) : (
-                            <img
-                              className="unit-element__media-image banner__media-image w-full h-full object-cover object-center pointer-events-none"
-                              fetchPriority={idx === 0 ? "high" : "auto"}
-                              src={deal.img}
-                              alt={deal.title}
-                              draggable="false"
-                            />
+                            <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-gradient-to-r from-zinc-950 via-slate-900 to-zinc-950">
+                              {/* Background Image with Dark Vignette Overlay */}
+                              <img
+                                className="unit-element__media-image banner__media-image absolute inset-0 w-full h-full object-cover object-center pointer-events-none opacity-40 brightness-75 contrast-125 scale-105"
+                                fetchPriority={idx === 0 ? "high" : "auto"}
+                                src={deal.img}
+                                alt={deal.title}
+                                draggable="false"
+                              />
+                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/60 pointer-events-none" />
+                              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-500/15 via-transparent to-transparent pointer-events-none" />
+
+                              {/* Animated Water Wave Typography */}
+                              <div className="relative z-10 text-center px-4 py-3 select-none flex flex-col items-center justify-center">
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-widest uppercase water-wave-text-title drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
+                                  D-One
+                                </h2>
+                                <p className="mt-1 sm:mt-2 text-xs sm:text-sm md:text-base lg:text-lg font-extrabold tracking-wider uppercase water-wave-text-subtitle drop-shadow-md">
+                                  Born to Be Number One
+                                </p>
+                              </div>
+                            </div>
                           )}
                         </div>
                       </a>

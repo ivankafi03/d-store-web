@@ -3077,12 +3077,12 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       <footer className="mt-auto w-full border-t border-zinc-200 bg-white text-zinc-500 py-6 pb-20 sm:pb-6 text-xs">
         <div className="max-w-[1240px] mx-auto px-4 flex flex-col sm:flex-row items-center justify-between gap-4">
           <div className="flex flex-col sm:flex-row items-center gap-1.5 sm:gap-3 text-center sm:text-left">
-            <span className="font-black text-sm tracking-[0.16em] uppercase text-zinc-950 inline-flex items-center wave-body-container select-none">
+            <span className="font-black text-xs sm:text-sm tracking-normal uppercase text-zinc-950 inline-flex items-center wave-body-container select-none">
               {'Born to Be Number One'.split('').map((char, cIdx) => (
                 <span 
                   key={cIdx} 
                   className="wave-letter" 
-                  style={{ animationDelay: `${cIdx * 0.08}s` }}
+                  style={{ animationDelay: `${cIdx * 0.06}s` }}
                 >
                   {char === ' ' ? '\u00A0' : char}
                 </span>

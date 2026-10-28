@@ -3089,9 +3089,11 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
               ))}
             </span>
             <span className="hidden sm:inline text-zinc-300">•</span>
-            <span className="text-[11px] text-zinc-500">
-              &copy; 2026 D STORE OFFICIAL. Seluruh Hak Cipta Dilindungi.
-            </span>
+            <div className="flex flex-col sm:flex-row items-center sm:items-baseline gap-0.5 sm:gap-1 text-[11px] text-zinc-500 text-center sm:text-left">
+              <span>&copy; 2026 D STORE OFFICIAL</span>
+              <span className="hidden sm:inline text-zinc-300">•</span>
+              <span>Seluruh Hak Cipta Dilindungi</span>
+            </div>
           </div>
 
           <div className="flex items-center gap-4 sm:gap-6 text-[11px] text-zinc-600">

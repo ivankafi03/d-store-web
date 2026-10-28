@@ -2,6 +2,7 @@
 
 import { useState, useMemo, useEffect, useRef } from 'react';
 import Link from 'next/link';
+import SmartEdgePanel from '@/app/components/SmartEdgePanel';
 import { useRouter } from 'next/navigation';
 import { 
   Search, 
@@ -88,7 +89,7 @@ export default function CategoryStoreClient({
   const [selectedVariant, setSelectedVariant] = useState(null);
   const [isCategoryModalOpen, setIsCategoryModalOpen] = useState(false);
   const [isSortOpen, setIsSortOpen] = useState(false);
-  const [isGroupPanelOpen, setIsGroupPanelOpen] = useState(true);
+  const [isGroupPanelOpen, setIsGroupPanelOpen] = useState(false);
   const [copiedGroup, setCopiedGroup] = useState(false);
 
   const handleCopyGroupLink = () => {
@@ -276,68 +277,6 @@ export default function CategoryStoreClient({
             </a>
           </div>
         </div>
-
-        {/* Panel Pintar Gabung Grup WA */}
-        {isGroupPanelOpen && (
-          <div className="max-w-6xl mx-auto px-3 sm:px-4 pt-2.5 pb-1">
-            <div className="relative overflow-hidden rounded-xl border border-zinc-900 bg-gradient-to-r from-zinc-950 via-zinc-900 to-zinc-950 text-white p-3.5 sm:p-4 shadow-md animate-in fade-in slide-in-from-top-2 duration-200">
-              {/* Background Glow */}
-              <div className="absolute -right-8 -bottom-8 w-36 h-36 bg-emerald-500/10 rounded-full blur-2xl pointer-events-none" />
-
-              <div className="relative flex flex-col md:flex-row md:items-center justify-between gap-3">
-                <div className="space-y-1 pr-6 md:pr-0">
-                  <div className="flex items-center gap-2 flex-wrap">
-                    <span className="inline-flex items-center gap-1.5 px-2 py-0.5 rounded-full bg-emerald-500/20 text-emerald-400 text-[10px] font-bold tracking-wide uppercase border border-emerald-500/30">
-                      <span className="w-1.5 h-1.5 rounded-full bg-emerald-400 animate-pulse" />
-                      Komunitas Resmi
-                    </span>
-                    <span className="text-[10px] text-zinc-400 font-medium">
-                      Update Stok Restock &amp; Flash Drop
-                    </span>
-                  </div>
-                  <h3 className="text-xs sm:text-sm font-bold text-white tracking-tight">
-                    Komunitas WhatsApp D Store Official
-                  </h3>
-                  <p className="text-[11px] text-zinc-300 max-w-xl leading-relaxed">
-                    Dapatkan info ketersediaan stok terupdate, restock kilat, dan promo khusus member secara real-time sebelum kehabisan slot.
-                  </p>
-                </div>
-
-                <div className="flex items-center gap-2 shrink-0 pt-1 md:pt-0">
-                  <button
-                    type="button"
-                    onClick={handleCopyGroupLink}
-                    className="inline-flex items-center gap-1.5 text-xs font-semibold px-3 py-2 rounded-lg bg-zinc-800 hover:bg-zinc-700 text-zinc-200 border border-zinc-700/80 transition active:scale-95 cursor-pointer"
-                    title="Salin tautan grup WhatsApp"
-                  >
-                    {copiedGroup ? <Check className="w-3.5 h-3.5 text-emerald-400" /> : <Copy className="w-3.5 h-3.5 text-zinc-400" />}
-                    <span>{copiedGroup ? 'Tersalin' : 'Salin Link'}</span>
-                  </button>
-
-                  <a
-                    href="https://chat.whatsapp.com/EABjpw4T4om1z4pM5RMLcf"
-                    target="_blank"
-                    rel="noreferrer"
-                    className="inline-flex items-center gap-1.5 text-xs font-bold px-3.5 py-2 rounded-lg bg-emerald-500 hover:bg-emerald-400 text-zinc-950 transition active:scale-95 shadow-xs cursor-pointer"
-                  >
-                    <WhatsAppIcon className="w-3.5 h-3.5 text-zinc-950" />
-                    <span>Gabung Grup</span>
-                    <ExternalLink className="w-3.5 h-3.5 opacity-70" />
-                  </a>
-
-                  <button
-                    type="button"
-                    onClick={() => setIsGroupPanelOpen(false)}
-                    className="p-1.5 text-zinc-400 hover:text-white rounded-md hover:bg-zinc-800 transition cursor-pointer ml-0.5"
-                    aria-label="Tutup panel komunitas"
-                  >
-                    <X className="w-4 h-4" />
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        )}
 
         {/* Search & Urutkan Berdampingan */}
         <div className="max-w-6xl mx-auto px-3 sm:px-4 pb-2.5 pt-1.5">
@@ -710,6 +649,9 @@ export default function CategoryStoreClient({
           </div>
         </div>
       )}
+
+      {/* Smart Edge Panel (Panel Pintar HP) */}
+      <SmartEdgePanel isOpen={isGroupPanelOpen} onToggle={setIsGroupPanelOpen} waNumber={waNumber} />
 
       {/* Modal Bottom Sheet: Pilih Kategori */}
       {isCategoryModalOpen && (

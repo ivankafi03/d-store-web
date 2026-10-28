@@ -2035,49 +2035,47 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
       {/* =========================================================
           5. D-ONE WAVE TYPOGRAPHY SECTION (Banner & Slider Dihapus)
       ========================================================= */}
-      <section className="banner__details-wrapper max-w-[1240px] mx-auto px-4 py-3 md:py-6">
-        <div className="banner__hero-wrapper">
-          <div className="w-full aspect-[16/6] sm:aspect-[3.2/1] md:aspect-[4/1] max-h-[240px] flex items-center justify-center overflow-hidden bg-white border border-zinc-200/90 rounded-2xl shadow-xs">
-            {/* SVG Filter for Fluid Water Distortion */}
-            <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
-              <defs>
-                <filter id="water-wave-filter">
-                  <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="2" result="noise">
-                    <animate attributeName="baseFrequency" dur="6s" values="0.02 0.05;0.03 0.08;0.02 0.05" repeatCount="indefinite" />
-                  </feTurbulence>
-                  <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" />
-                </filter>
-              </defs>
-            </svg>
+      <section className="w-full max-w-[1240px] mx-auto px-4 py-6 md:py-10">
+        <div className="w-full min-h-[160px] sm:min-h-[200px] md:min-h-[250px] flex items-center justify-center relative overflow-visible">
+          {/* SVG Filter for Fluid Water Distortion */}
+          <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+            <defs>
+              <filter id="water-wave-filter">
+                <feTurbulence type="fractalNoise" baseFrequency="0.015 0.04" numOctaves="2" result="noise">
+                  <animate attributeName="baseFrequency" dur="6s" values="0.015 0.04;0.025 0.07;0.015 0.04" repeatCount="indefinite" />
+                </feTurbulence>
+                <feDisplacementMap in="SourceGraphic" in2="noise" scale="5" xChannelSelector="R" yChannelSelector="G" />
+              </filter>
+            </defs>
+          </svg>
 
-            {/* Pure Black Fluid Swaying Wave Typography */}
-            <div 
-              className="wave-body-container select-none text-center px-4 py-3 flex flex-col items-center justify-center"
-              style={{ filter: 'url(#water-wave-filter)' }}
-            >
-              <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-widest uppercase text-black leading-none">
-                {'D-One'.split('').map((char, cIdx) => (
-                  <span 
-                    key={cIdx} 
-                    className="wave-letter" 
-                    style={{ animationDelay: `${cIdx * 0.15}s` }}
-                  >
-                    {char}
-                  </span>
-                ))}
-              </h2>
-              <p className="mt-1.5 sm:mt-2.5 text-xs sm:text-sm md:text-base lg:text-lg font-black tracking-wider uppercase text-zinc-950">
-                {'Born to Be Number One'.split('').map((char, cIdx) => (
-                  <span 
-                    key={cIdx} 
-                    className="wave-letter" 
-                    style={{ animationDelay: `${0.5 + cIdx * 0.06}s` }}
-                  >
-                    {char === ' ' ? '\u00A0' : char}
-                  </span>
-                ))}
-              </p>
-            </div>
+          {/* Pure Black Fluid Swaying Wave Typography - Full Size, Zero Box/Card */}
+          <div 
+            className="wave-body-container select-none text-center px-4 py-2 flex flex-col items-center justify-center w-full"
+            style={{ filter: 'url(#water-wave-filter)' }}
+          >
+            <h2 className="text-5xl sm:text-7xl md:text-8xl lg:text-9xl font-black tracking-widest uppercase text-black leading-tight sm:leading-none">
+              {'D-One'.split('').map((char, cIdx) => (
+                <span 
+                  key={cIdx} 
+                  className="wave-letter" 
+                  style={{ animationDelay: `${cIdx * 0.14}s` }}
+                >
+                  {char}
+                </span>
+              ))}
+            </h2>
+            <p className="mt-2 sm:mt-4 text-sm sm:text-lg md:text-2xl lg:text-3xl font-black tracking-widest uppercase text-black">
+              {'Born to Be Number One'.split('').map((char, cIdx) => (
+                <span 
+                  key={cIdx} 
+                  className="wave-letter" 
+                  style={{ animationDelay: `${0.4 + cIdx * 0.05}s` }}
+                >
+                  {char === ' ' ? '\u00A0' : char}
+                </span>
+              ))}
+            </p>
           </div>
         </div>
       </section>

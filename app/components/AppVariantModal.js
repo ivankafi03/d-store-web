@@ -2,7 +2,7 @@
 
 import { useState } from 'react';
 import Link from 'next/link';
-import { X } from 'lucide-react';
+import { X, Info } from 'lucide-react';
 
 export default function AppVariantModal({ appData: propAppData, app, onClose, onAddToCart, onShowNotification }) {
   const appData = propAppData || app;
@@ -137,6 +137,11 @@ export default function AppVariantModal({ appData: propAppData, app, onClose, on
           {/* TAB 1: PAKET */}
           {activeTab === 'paket' && (
             <div className="space-y-3">
+              <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-50 border border-zinc-200/80 text-[11px] text-zinc-600">
+                <Info className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
+                <span>Produk dan varian bisa saja kosong karena keterlambatan update.</span>
+              </div>
+
               <div className="space-y-1.5">
                 <div className="text-[11px] font-semibold uppercase tracking-wider text-zinc-500">
                   Pilih Durasi / Varian

@@ -3,7 +3,7 @@
 import { useState, useEffect, use } from 'react';
 import Link from 'next/link';
 import { notFound } from 'next/navigation';
-import { ArrowLeft } from 'lucide-react';
+import { ArrowLeft, Info } from 'lucide-react';
 import { APP_VARIANTS_DATA, getAppVariantData } from '@/lib/appVariantsData';
 
 export default function AppDetailPage({ params }) {
@@ -184,6 +184,11 @@ export default function AppDetailPage({ params }) {
             <span className="text-xs text-zinc-400">
               {appData.packages?.length} Varian
             </span>
+          </div>
+
+          <div className="flex items-center gap-2 px-3 py-2 rounded-lg bg-zinc-50 border border-zinc-200/80 text-[11px] text-zinc-600">
+            <Info className="w-3.5 h-3.5 text-zinc-500 shrink-0" />
+            <span>Produk dan varian bisa saja kosong karena keterlambatan update.</span>
           </div>
 
           <div className="grid grid-cols-1 md:grid-cols-2 gap-2 sm:gap-2.5">

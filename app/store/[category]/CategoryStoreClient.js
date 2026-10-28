@@ -251,31 +251,7 @@ export default function CategoryStoreClient({
             </Link>
           </div>
 
-          <div className="flex items-center gap-1.5 sm:gap-2">
-            <button
-              type="button"
-              onClick={() => setIsGroupPanelOpen((prev) => !prev)}
-              className={`inline-flex items-center gap-1.5 text-xs font-semibold px-2.5 py-1.5 rounded-lg border transition active:scale-95 cursor-pointer shadow-2xs ${
-                isGroupPanelOpen 
-                  ? 'bg-emerald-50 border-emerald-300 text-emerald-800' 
-                  : 'bg-white border-zinc-200 hover:bg-zinc-50 text-zinc-800'
-              }`}
-              title="Panel Komunitas WhatsApp"
-            >
-              <Users className="w-3.5 h-3.5 text-emerald-600" />
-              <span className="text-xs font-bold">Grup WA</span>
-            </button>
-
-            <a
-              href={`https://wa.me/${waNumber}?text=${encodeURIComponent('Halo Admin D Store, saya ingin tanya katalog produk.')}`}
-              target="_blank"
-              rel="noreferrer"
-              className="inline-flex items-center gap-1.5 text-xs font-bold px-3 py-1.5 rounded-lg bg-zinc-950 hover:bg-black text-white shadow-2xs transition active:scale-95 cursor-pointer"
-            >
-              <WhatsAppIcon className="w-3.5 h-3.5 text-emerald-400" />
-              <span>Chat Admin</span>
-            </a>
-          </div>
+          <div className="flex items-center gap-2" />
         </div>
 
         {/* Search & Urutkan Berdampingan */}

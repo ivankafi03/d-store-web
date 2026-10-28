@@ -2163,25 +2163,45 @@ export default function ZaloraMenDevPage({ isAdminMode: propAdminMode, initialDa
                               />
                             </>
                           ) : (
-                            <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-gradient-to-r from-zinc-950 via-slate-900 to-zinc-950">
-                              {/* Background Image with Dark Vignette Overlay */}
-                              <img
-                                className="unit-element__media-image banner__media-image absolute inset-0 w-full h-full object-cover object-center pointer-events-none opacity-40 brightness-75 contrast-125 scale-105"
-                                fetchPriority={idx === 0 ? "high" : "auto"}
-                                src={deal.img}
-                                alt={deal.title}
-                                draggable="false"
-                              />
-                              <div className="absolute inset-0 bg-gradient-to-t from-black/80 via-black/40 to-black/60 pointer-events-none" />
-                              <div className="absolute inset-0 bg-[radial-gradient(ellipse_at_center,_var(--tw-gradient-stops))] from-sky-500/15 via-transparent to-transparent pointer-events-none" />
+                            <div className="relative w-full h-full flex items-center justify-center overflow-hidden bg-white border border-zinc-200/90 rounded-2xl">
+                              {/* Soft water ripple SVG filter effect */}
+                              <svg className="absolute w-0 h-0 pointer-events-none" aria-hidden="true">
+                                <defs>
+                                  <filter id="water-wave-filter">
+                                    <feTurbulence type="fractalNoise" baseFrequency="0.02 0.05" numOctaves="2" result="noise">
+                                      <animate attributeName="baseFrequency" dur="6s" values="0.02 0.05;0.03 0.08;0.02 0.05" repeatCount="indefinite" />
+                                    </feTurbulence>
+                                    <feDisplacementMap in="SourceGraphic" in2="noise" scale="4" xChannelSelector="R" yChannelSelector="G" />
+                                  </filter>
+                                </defs>
+                              </svg>
 
-                              {/* Animated Water Wave Typography */}
-                              <div className="relative z-10 text-center px-4 py-3 select-none flex flex-col items-center justify-center">
-                                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-widest uppercase water-wave-text-title drop-shadow-[0_10px_25px_rgba(0,0,0,0.8)]">
-                                  D-One
+                              {/* Water Wave Liak-Liuk Typography in Pure Black */}
+                              <div 
+                                className="wave-body-container select-none text-center px-4 py-3 flex flex-col items-center justify-center"
+                                style={{ filter: 'url(#water-wave-filter)' }}
+                              >
+                                <h2 className="text-3xl sm:text-4xl md:text-5xl lg:text-6xl font-black tracking-widest uppercase text-black">
+                                  {'D-One'.split('').map((char, cIdx) => (
+                                    <span 
+                                      key={cIdx} 
+                                      className="wave-letter" 
+                                      style={{ animationDelay: `${cIdx * 0.15}s` }}
+                                    >
+                                      {char}
+                                    </span>
+                                  ))}
                                 </h2>
-                                <p className="mt-1 sm:mt-2 text-xs sm:text-sm md:text-base lg:text-lg font-extrabold tracking-wider uppercase water-wave-text-subtitle drop-shadow-md">
-                                  Born to Be Number One
+                                <p className="mt-1 sm:mt-2 text-xs sm:text-sm md:text-base lg:text-lg font-black tracking-wider uppercase text-zinc-950">
+                                  {'Born to Be Number One'.split('').map((char, cIdx) => (
+                                    <span 
+                                      key={cIdx} 
+                                      className="wave-letter" 
+                                      style={{ animationDelay: `${0.5 + cIdx * 0.06}s` }}
+                                    >
+                                      {char === ' ' ? '\u00A0' : char}
+                                    </span>
+                                  ))}
                                 </p>
                               </div>
                             </div>

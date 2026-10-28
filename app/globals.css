@@ -506,66 +506,52 @@ button, a, [role="button"], .cursor-pointer {
   outline: none !important;
 }
 
-
-/* Water Wave Text Animation */
-@keyframes waterWaveFlow {
+/* Liquid Swaying / Wave Body Distortion for Text */
+@keyframes fluidSwayLeftRight {
   0% {
-    background-position: 0% 50%;
+    transform: skewX(0deg) skewY(0deg) rotate(0deg);
   }
-  50% {
-    background-position: 100% 50%;
+  20% {
+    transform: skewX(4.5deg) skewY(0.8deg) rotate(0.8deg);
+  }
+  40% {
+    transform: skewX(-3.5deg) skewY(-0.6deg) rotate(-0.6deg);
+  }
+  60% {
+    transform: skewX(4deg) skewY(-0.8deg) rotate(0.6deg);
+  }
+  80% {
+    transform: skewX(-4deg) skewY(0.6deg) rotate(-0.8deg);
   }
   100% {
-    background-position: 0% 50%;
+    transform: skewX(0deg) skewY(0deg) rotate(0deg);
   }
 }
 
-@keyframes waterSurfaceWave {
+@keyframes waveLetterSway {
   0%, 100% {
-    transform: translateY(0px) rotate(0deg);
+    transform: translateY(0px) skewX(0deg) rotate(0deg);
   }
   25% {
-    transform: translateY(-4px) rotate(0.6deg);
+    transform: translateY(-2px) skewX(5deg) rotate(1.5deg);
   }
   50% {
-    transform: translateY(2px) rotate(-0.4deg);
+    transform: translateY(2px) skewX(-4deg) rotate(-1.5deg);
   }
   75% {
-    transform: translateY(-2px) rotate(0.3deg);
+    transform: translateY(-1px) skewX(4deg) rotate(1deg);
   }
 }
 
-.water-wave-text-title {
-  background: linear-gradient(
-    135deg,
-    #ffffff 0%,
-    #67e8f9 25%,
-    #38bdf8 50%,
-    #60a5fa 75%,
-    #ffffff 100%
-  );
-  background-size: 250% 250%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: waterWaveFlow 4s ease-in-out infinite, waterSurfaceWave 3.5s ease-in-out infinite;
-  text-shadow: 0 4px 20px rgba(56, 189, 248, 0.35);
-  display: inline-block;
+.wave-body-container {
+  transform-origin: center bottom;
+  animation: fluidSwayLeftRight 4.5s ease-in-out infinite;
+  will-change: transform;
 }
 
-.water-wave-text-subtitle {
-  background: linear-gradient(
-    135deg,
-    #e2e8f0 0%,
-    #93c5fd 30%,
-    #38bdf8 60%,
-    #c4b5fd 85%,
-    #f8fafc 100%
-  );
-  background-size: 250% 250%;
-  -webkit-background-clip: text;
-  background-clip: text;
-  color: transparent;
-  animation: waterWaveFlow 5s ease-in-out infinite, waterSurfaceWave 4s ease-in-out infinite reverse;
+.wave-letter {
   display: inline-block;
+  transform-origin: center bottom;
+  animation: waveLetterSway 3s ease-in-out infinite;
+  will-change: transform;
 }
